@@ -16,7 +16,8 @@ public class SO_Event : ScriptableObject
         public string selectionUnderText; 
         [TextArea(2, 2)]
         public string selectionEndText;
-        //아이템 
+        //아이템
+        public int addSpeed;
     }
 
     public Sprite EventSprite;

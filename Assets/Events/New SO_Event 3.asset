@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc52c99cfa32c8b49a16d68e16abd314, type: 3}
-  m_Name: New SO_Event
+  m_Name: New SO_Event 3
   m_EditorClassIdentifier: Assembly-CSharp::SO_Event
   EventSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  EventText: 'When you were here before
-
-    Couldn''t look you in the eye
-
-'
+  EventText: You're just like an angel
   Selections:
+  - selectionText: 12341342
+    selectionUnderText: 123
+    selectionEndText: 13241234
+    addSpeed: 0
   - selectionText: 12341342
     selectionUnderText: 123
     selectionEndText: 13241234
