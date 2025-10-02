@@ -1,23 +1,25 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    // Components
     protected SpriteRenderer    sprite;
     protected Rigidbody2D       rigid2D;
     protected Rigidbody2D       targetRigid;
     protected Collider2D        collision;
     protected Animator          animator;
 
-    [Header("스펙")]
+    [Header("Enemy 제원")]
     [SerializeField] protected float maxHP      = 50;
     [SerializeField] protected float moveSpeed  = 2.0f;
     [SerializeField] protected float damage     = 0.0f;
 
-    private float currentHP;
-    private bool isAlive;
+    private float   currentHP;
+    private bool    isAlive;
 
-    private float moveDirection;
+    private float   moveDirection;
 
 
     private void Awake()
@@ -53,17 +55,26 @@ public class Enemy : MonoBehaviour
 
         currentHP -= damageAmount;
 
-        if (currentHP <= 0) Die();
+        if (currentHP <= 0) StartCoroutine(Die());
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
-        isAlive = false;
-
         collision.enabled = false;
 
         animator.SetTrigger("Die");
 
         /* rigid2D.linearVelocityX = 현재 기차 이동속도만큼 왼쪽으로*/
+
+        yield return new WaitForSeconds(3.0f/*사망 애니메이션 길이만큼*/);
+
+        collision.enabled   = true;
+        isAlive             = false;
+        enabled             = false;
+    }
+
+    private void OnDisable()
+    {
+        
     }
 }

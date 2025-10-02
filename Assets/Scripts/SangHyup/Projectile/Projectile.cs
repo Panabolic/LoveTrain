@@ -24,10 +24,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    protected virtual void OnHitTarget()
-    {
-        Deactivate();
-    }
+    protected virtual void OnHitTarget() { }
 
     protected virtual void Deactivate()
     {

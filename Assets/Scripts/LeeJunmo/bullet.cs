@@ -14,4 +14,9 @@ public class Bullet : Projectile
     {
         rigid2D.linearVelocity = direction.normalized * speed;
     }
+
+    protected override void OnHitTarget()
+    {
+        Deactivate();
+    }
 }
