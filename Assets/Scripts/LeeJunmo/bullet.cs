@@ -1,20 +1,17 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : Projectile
 {
-    public float speed = 10f; // �ν����Ϳ��� ������ �� �ִ� źȯ�� �ӵ�
+    protected float speed = 0.0f;
 
-    private Rigidbody2D rb;
-
-    void Awake()
+    private void Start()
     {
-        // Rigidbody2D ������Ʈ ��������
-        rb = GetComponent<Rigidbody2D>();
+        speed = 10.0f;
+        damage = 10.0f;
     }
 
-    public void Launch(Vector2 direction)
+    public override void Launch(Vector2 direction)
     {
-        // Rigidbody2D�� ���� ���� źȯ �߻�
-        rb.linearVelocity = direction.normalized * speed;
+        rigid2D.linearVelocity = direction.normalized * speed;
     }
 }
