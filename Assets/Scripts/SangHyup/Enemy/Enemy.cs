@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator Die()
     {
-        collision.enabled = false;
+        collision.enabled = false;  //Collision ¿·Ω√ false
 
         animator.SetTrigger("Die");
 
