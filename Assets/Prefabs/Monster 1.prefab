@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4126802451865134325}
   m_Layer: 0
   m_Name: Monster 1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,3 +172,5 @@ MonoBehaviour:
   trainController: {fileID: 0}
   target: {fileID: 0}
   baseMoveSpeed: 5
+  minSpeedMultiplier: 0.5
+  maxSpeedMultiplier: 2
