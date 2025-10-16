@@ -1,55 +1,45 @@
-using System.Collections;
-using Unity.Cinemachine;
+Ôªøusing System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     // Components
     protected SpriteRenderer    sprite;
-    protected Rigidbody2D       rigid2D;
-    protected Rigidbody2D       targetRigid;
     protected Collider2D        collision;
     protected Animator          animator;
 
-    [Header("Enemy ¡¶ø¯")]
-    [SerializeField] protected float maxHP      = 50;
-    [SerializeField] protected float moveSpeed  = 2.0f;
-    [SerializeField] protected float damage     = 0.0f;
+    [Header("Enemy Specification")]
+    [Tooltip("Í∏∞Î≥∏ Ï≤¥Î†•")]
+    [SerializeField] protected float maxHP;
+    [Tooltip("ÎåÄÎØ∏ÏßÄ(km/h Îã®ÏúÑ)")]
+    [SerializeField] protected float damage;
 
-    private float   currentHP;
-    private bool    isAlive;
+    protected float currentHP;
+    protected bool  isAlive = true;
+    
+    protected float deathToDeactive; // ÏÇ¨ÎßùÏóêÏÑú ÎπÑÌôúÏÑ±ÌôîÍπåÏßÄ Í±∏Î¶¨Îäî ÏãúÍ∞Ñ
 
-    private float   moveDirection;
+    // Target Components
+    protected Rigidbody2D targetRigid;
 
 
     private void Awake()
     {
         sprite      = GetComponent<SpriteRenderer>();
-        rigid2D     = GetComponent<Rigidbody2D>();
-        targetRigid = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
         collision   = GetComponent<Collider2D>();
         animator    = GetComponent<Animator>();
 
+        // Get Target Components
+        targetRigid     = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
     {
-        currentHP = maxHP;
-
-        isAlive = true;
+        currentHP   = maxHP;
+        isAlive     = true;
     }
 
-    private void FixedUpdate()
-    {
-        if (!isAlive) return;
-
-        moveDirection = Mathf.Sign(targetRigid.position.x - rigid2D.position.x);
-        Vector2 nextXPosition = new Vector2(moveDirection * moveSpeed, rigid2D.position.y) * Time.fixedDeltaTime;
-        rigid2D.MovePosition(rigid2D.position + nextXPosition);
-        rigid2D.linearVelocity = Vector2.zero;
-    }
-
-    public void TakeDamage(float damageAmount)
+    public virtual void TakeDamage(float damageAmount)
     {
         if (!isAlive) return;
 
@@ -58,23 +48,12 @@ public class Enemy : MonoBehaviour
         if (currentHP <= 0) StartCoroutine(Die());
     }
 
-    private IEnumerator Die()
+    protected virtual IEnumerator Die()
     {
-        collision.enabled = false;  //Collision ¿·Ω√ false
+        collision.enabled = false;  //Collision Ïû†Ïãú false
 
         animator.SetTrigger("Die");
 
-        /* rigid2D.linearVelocityX = «ˆ¿Á ±‚¬˜ ¿Ãµøº”µµ∏∏≈≠ øﬁ¬ ¿∏∑Œ*/
-
-        yield return new WaitForSeconds(3.0f/*ªÁ∏¡ æ÷¥œ∏ﬁ¿Ãº« ±Ê¿Ã∏∏≈≠*/);
-
-        collision.enabled   = true;
-        isAlive             = false;
-        enabled             = false;
-    }
-
-    private void OnDisable()
-    {
-        
+        yield return new WaitForSeconds(deathToDeactive);
     }
 }
