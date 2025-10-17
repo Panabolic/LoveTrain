@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class Enemy : MonoBehaviour
 {
@@ -35,8 +36,12 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        // 체력 충전, isAlive는 true, Collider 활성화
+
         currentHP   = maxHP;
         isAlive     = true;
+
+        Physics2D.IgnoreCollision(collision, targetRigid.GetComponent<Collider2D>(), true);
     }
 
     public virtual void TakeDamage(float damageAmount)
@@ -50,7 +55,9 @@ public class Enemy : MonoBehaviour
 
     protected virtual IEnumerator Die()
     {
-        collision.enabled = false;  //Collision 잠시 false
+        isAlive = false;
+
+        Physics2D.IgnoreCollision(collision, targetRigid.GetComponent<Collider2D>(), false);
 
         animator.SetTrigger("Die");
 

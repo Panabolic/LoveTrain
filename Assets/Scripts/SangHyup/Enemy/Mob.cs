@@ -89,7 +89,6 @@ public class Mob : Enemy
     {
         yield return base.Die();
 
-        isAlive = false;
         enabled = false;
     }
 }
