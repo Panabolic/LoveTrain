@@ -23,17 +23,17 @@ public class Enemy : MonoBehaviour
     protected Rigidbody2D targetRigid;
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         sprite      = GetComponent<SpriteRenderer>();
         collision   = GetComponent<Collider2D>();
         animator    = GetComponent<Animator>();
 
         // Get Target Components
-        targetRigid     = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
+        targetRigid = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         currentHP   = maxHP;
         isAlive     = true;

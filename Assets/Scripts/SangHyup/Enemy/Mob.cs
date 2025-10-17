@@ -19,19 +19,26 @@ public class Mob : Enemy
     protected TrainController trainController;
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         rigid2D = GetComponent<Rigidbody2D>();
 
         // Get Target Components
         trainController = GameObject.FindWithTag("Player").GetComponent<TrainController>();
     }
 
-    void Start()
+    protected virtual void Start()
     {
-        if (trainController == null || targetRigid == null)
+        if (targetRigid == null)
         {
-            Debug.LogError("TrainController 또는 Target이 연결되지 않았습니다!", this.gameObject);
+            Debug.LogError("Target이 연결되지 않았습니다!", this.gameObject);
+            this.enabled = false;
+        }
+        if (trainController == null)
+        {
+            Debug.LogError("TrainController이 연결되지 않았습니다!", this.gameObject);
             this.enabled = false;
         }
     }
@@ -74,7 +81,7 @@ public class Mob : Enemy
         // 이동 로직
         if (finalMoveSpeed > 0)
         {
-            transform.position = Vector2.MoveTowards(transform.position, targetRigid.position, finalMoveSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, targetRigid.position, finalMoveSpeed * Time.fixedDeltaTime);
         }
     }
 
