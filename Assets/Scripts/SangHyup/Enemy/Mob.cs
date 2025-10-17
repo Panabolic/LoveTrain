@@ -89,7 +89,6 @@ public class Mob : Enemy
     {
         yield return base.Die();
 
-        collision.enabled = true;
         isAlive = false;
         enabled = false;
     }

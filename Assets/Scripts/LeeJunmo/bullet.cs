@@ -4,8 +4,9 @@ public class Bullet : Projectile
 {
     protected float speed = 0.0f;
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
         speed = 10.0f;
         damage = 10.0f;
     }

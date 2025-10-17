@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
 
     protected Rigidbody2D rigid2D;
 
-    void Awake()
+    protected virtual void Awake()
     {
         rigid2D = GetComponent<Rigidbody2D>();
     }
