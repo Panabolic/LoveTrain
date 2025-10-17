@@ -45,8 +45,6 @@ public class Mob : Enemy
 
     private void FixedUpdate()
     {
-        if (!isAlive) return;
-
         // 이동 로직 구버전
         //moveDirection = Mathf.Sign(targetRigid.position.x - rigid2D.position.x);
         //Vector2 nextXPosition = new Vector2(moveDirection * moveSpeed, rigid2D.position.y) * Time.fixedDeltaTime;
@@ -75,6 +73,9 @@ public class Mob : Enemy
             currentMultiplier = Mathf.Lerp(maxSpeedMultiplier, minSpeedMultiplier, speedRate);
         }
 
+        // 죽으면
+        if (!isAlive) moveSpeed = 6.0f;
+
         // 최종 속력 = 적의 기본 속력 * 현재 계산된 배율
         float finalMoveSpeed = moveSpeed * currentMultiplier;
 
@@ -85,10 +86,26 @@ public class Mob : Enemy
         }
     }
 
+    protected virtual void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("FrontCar"))
+        {
+            targetRigid.GetComponent<Train>().TakeDamage(damage, TrainCar.front);
+
+            StartCoroutine(Die());
+        }
+        else if (other.CompareTag("RearCar"))
+        {
+            targetRigid.GetComponent<Train>().TakeDamage(damage, TrainCar.rear);
+
+            StartCoroutine(Die());
+        }
+    }
+
     protected override IEnumerator Die()
     {
         yield return base.Die();
 
-        enabled = false;
+        sprite.enabled = false;
     }
 }

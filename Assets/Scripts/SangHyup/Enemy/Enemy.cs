@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Splines;
 
 public class Enemy : MonoBehaviour
 {
@@ -38,9 +37,11 @@ public class Enemy : MonoBehaviour
     {
         // 체력 충전, isAlive는 true, Collider 활성화
 
-        currentHP   = maxHP;
-        isAlive     = true;
+        currentHP       = maxHP;
+        isAlive         = true;
+        sprite.enabled  = true;
 
+        // foreach문 만들어야 됨
         Physics2D.IgnoreCollision(collision, targetRigid.GetComponent<Collider2D>(), true);
     }
 

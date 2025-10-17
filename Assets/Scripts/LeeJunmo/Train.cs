@@ -1,9 +1,23 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem; // 이 줄을 추가하세요!
+
+public enum TrainCar
+{
+    front, middle, rear
+}
 
 public class Train : MonoBehaviour
 {
     public float moveSpeed = 5.0f;
+
+    //private List<Collider2D> carColliders;
+
+    private void Awake()
+    {
+        //carColliders = GetComponentsInChildren<Collider2D>().ToList();
+    }
 
     void Update()
     {
@@ -20,4 +34,24 @@ public class Train : MonoBehaviour
             transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
         }
     }
+
+    public virtual void TakeDamage(float damageAmount, TrainCar trainCar)
+    {
+        switch(trainCar)
+        {
+            case TrainCar.front:
+
+                break;
+
+            case TrainCar.middle:
+
+                break;
+
+            case TrainCar.rear:
+
+                break;
+        }
+    }
+
+    //public List<Collider2D> GetCarColliders() { return carColliders; }
 }
