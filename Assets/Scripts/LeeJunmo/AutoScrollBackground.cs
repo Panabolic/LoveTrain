@@ -1,14 +1,14 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class AutoScrollBackground : MonoBehaviour
 {
-    [Tooltip("¼Óµµ Á¤º¸¸¦ °¡Á®¿Ã TrainController¸¦ ¿©±â¿¡ ¿¬°áÇØÁÖ¼¼¿ä.")]
+    [Tooltip("ì†ë„ ì •ë³´ë¥¼ ê°€ì ¸ì˜¬ TrainControllerë¥¼ ì—¬ê¸°ì— ì—°ê²°í•´ì£¼ì„¸ìš”.")]
     public TrainController trainController;
 
-    [Tooltip("Ä«¸Ş¶ó¸¦ ±âÁØÀ¸·Î ¹è°æ À§Ä¡¸¦ Àç¼³Á¤ÇÕ´Ï´Ù.")]
+    [Tooltip("ì¹´ë©”ë¼ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë°°ê²½ ìœ„ì¹˜ë¥¼ ì¬ì„¤ì •í•©ë‹ˆë‹¤.")]
     public Transform cameraTransform;
 
-    [Tooltip("°ü¸®ÇÒ ¹è°æ ·¹ÀÌ¾îµéÀ» µî·ÏÇØÁÖ¼¼¿ä.")]
+    [Tooltip("ê´€ë¦¬í•  ë°°ê²½ ë ˆì´ì–´ë“¤ì„ ë“±ë¡í•´ì£¼ì„¸ìš”.")]
     public ParallaxLayer[] layers;
 
     private float spriteWidth;
@@ -19,8 +19,9 @@ public class AutoScrollBackground : MonoBehaviour
 
         if (trainController == null)
         {
-            Debug.LogError("TrainController°¡ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù! ÀÎ½ºÆåÅÍ¿¡¼­ ¿¬°áÇØÁÖ¼¼¿ä.", this.gameObject);
+            Debug.LogError("TrainControllerê°€ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤! ì¸ìŠ¤í™í„°ì—ì„œ ì—°ê²°í•´ì£¼ì„¸ìš”.", this.gameObject);
             this.enabled = false;
+            return;
         }
     }
 
@@ -28,34 +29,39 @@ public class AutoScrollBackground : MonoBehaviour
     {
         if (trainController == null) return;
 
-        // TrainController·ÎºÎÅÍ ÇöÀç ¼Ó·ÂÀ» ½Ç½Ã°£À¸·Î ¹Ş¾Æ¿É´Ï´Ù.
+        // âœ¨ ì´ì œ TrainController.CurrentSpeedê°€ ì •ìƒì ìœ¼ë¡œ ì‘ë™í•˜ë¯€ë¡œ ì´ ì½”ë“œëŠ” ìœ íš¨í•©ë‹ˆë‹¤.
         float currentTrainSpeed = trainController.CurrentSpeed;
 
-        // °¢ ·¹ÀÌ¾î¸¦ ÆĞ·²·¢½º ¿ä¼Ò¿¡ ¸Â°Ô ÀÌµ¿½ÃÅµ´Ï´Ù.
+        // ê° ë ˆì´ì–´ë¥¼ íŒ¨ëŸ´ë™ìŠ¤ ìš”ì†Œì— ë§ê²Œ ì´ë™ì‹œí‚µë‹ˆë‹¤.
         foreach (ParallaxLayer layer in layers)
         {
+            // ì†ë„ê°€ 0ì´ë©´ ì›€ì§ì´ì§€ ì•Šìœ¼ë¯€ë¡œ ê³„ì‚°í•  í•„ìš”ê°€ ì—†ìŠµë‹ˆë‹¤.
+            if (Mathf.Approximately(currentTrainSpeed, 0)) continue;
+
             float movement = currentTrainSpeed * layer.parallaxFactor * Time.deltaTime;
             layer.layerTransform.position -= new Vector3(movement, 0, 0);
         }
 
-        // ¹è°æ ÀÌ¹ÌÁö°¡ È­¸é ¹ÛÀ¸·Î ³ª°¡¸é ¹İ´ëÆíÀ¸·Î ¿Å°Ü¼­ ¹«ÇÑ ½ºÅ©·Ñ È¿°ú¸¦ Áİ´Ï´Ù.
+        // ë°°ê²½ ì´ë¯¸ì§€ê°€ í™”ë©´ ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´ ë°˜ëŒ€í¸ìœ¼ë¡œ ì˜®ê²¨ì„œ ë¬´í•œ ìŠ¤í¬ë¡¤ íš¨ê³¼ë¥¼ ì¤ë‹ˆë‹¤.
+        // ì´ ë¡œì§ì€ currentTrainSpeedë¥¼ ê¸°ë°˜ìœ¼ë¡œ í•˜ë¯€ë¡œ ìˆ˜ì •í•  í•„ìš”ê°€ ì—†ìŠµë‹ˆë‹¤.
         foreach (ParallaxLayer layer in layers)
         {
-            if (layer.layerTransform.childCount == 0) continue;
+            if (layer.layerTransform.childCount < 2) continue; // ìì‹ ì˜¤ë¸Œì íŠ¸ê°€ 2ê°œ ë¯¸ë§Œì´ë©´ ë¬´í•œ ìŠ¤í¬ë¡¤ ë¶ˆê°€
 
+            // spriteWidthëŠ” í•œ ë²ˆë§Œ ê³„ì‚°í•´ë„ ë˜ì§€ë§Œ, ìœ ì—°ì„±ì„ ìœ„í•´ Updateì— ë‘¡ë‹ˆë‹¤.
             spriteWidth = layer.layerTransform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x;
 
-            if (currentTrainSpeed > 0 && cameraTransform.position.x - layer.layerTransform.GetChild(0).position.x >= spriteWidth)
+            Transform leftChild = layer.layerTransform.GetChild(0);
+            Transform rightChild = layer.layerTransform.GetChild(1);
+
+            // ì¹´ë©”ë¼ì™€ ì´ë¯¸ì§€ì˜ ìƒëŒ€ ìœ„ì¹˜ë¥¼ ê³„ì‚°í•˜ì—¬ ì¬ë°°ì¹˜ ì—¬ë¶€ë¥¼ ê²°ì •í•©ë‹ˆë‹¤.
+            if (currentTrainSpeed > 0 && cameraTransform.position.x > rightChild.position.x)
             {
-                Transform leftChild = layer.layerTransform.GetChild(0);
-                Transform rightChild = layer.layerTransform.GetChild(1);
                 leftChild.position = new Vector3(rightChild.position.x + spriteWidth, leftChild.position.y, leftChild.position.z);
                 leftChild.SetAsLastSibling();
             }
-            else if (currentTrainSpeed < 0 && cameraTransform.position.x - layer.layerTransform.GetChild(1).position.x <= -spriteWidth)
+            else if (currentTrainSpeed < 0 && cameraTransform.position.x < leftChild.position.x)
             {
-                Transform leftChild = layer.layerTransform.GetChild(0);
-                Transform rightChild = layer.layerTransform.GetChild(1);
                 rightChild.position = new Vector3(leftChild.position.x - spriteWidth, rightChild.position.y, rightChild.position.z);
                 rightChild.SetAsFirstSibling();
             }

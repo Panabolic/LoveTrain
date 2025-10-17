@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public class Mob : Enemy
@@ -6,39 +6,35 @@ public class Mob : Enemy
     // Components
     protected Rigidbody2D rigid2D;
 
-    [Tooltip("±âº» ¼Óµµ")]
+    [Tooltip("ê¸°ë³¸ ì†ë„")]
     [SerializeField] protected float moveSpeed = 2.0f;
-    [Tooltip("Àû¿ëµÉ ÃÖÀú ¼Óµµ ¹èÀ² (¿¹: 0.5 = 50%)")]
+    [Tooltip("ì ìš©ë  ìµœì € ì†ë„ ë°°ìœ¨ (ì˜ˆ: 0.5 = 50%)")]
     [SerializeField] protected float minSpeedMultiplier = 0.5f;
-    [Tooltip("Àû¿ëµÉ ÃÖ°í ¼Óµµ ¹èÀ² (¿¹: 2.0 = 200%)")]
+    [Tooltip("ì ìš©ë  ìµœê³  ì†ë„ ë°°ìœ¨ (ì˜ˆ: 2.0 = 200%)")]
     [SerializeField] protected float maxSpeedMultiplier = 2.0f;
-
-    //private float moveDirection;
 
     // Target Components
     protected TrainController trainController;
 
-
     protected override void Awake()
     {
         base.Awake();
-
         rigid2D = GetComponent<Rigidbody2D>();
-
-        // Get Target Components
+        // "Player" íƒœê·¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ì—ì„œ TrainControllerë¥¼ ì°¾ì•„ì˜µë‹ˆë‹¤.
         trainController = GameObject.FindWithTag("Player").GetComponent<TrainController>();
     }
 
     protected virtual void Start()
     {
+        // targetRigidëŠ” Enemy ë¶€ëª¨ í´ë˜ìŠ¤ì— ìˆë‹¤ê³  ê°€ì •í•©ë‹ˆë‹¤.
         if (targetRigid == null)
         {
-            Debug.LogError("TargetÀÌ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù!", this.gameObject);
+            Debug.LogError("Targetì´ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤!", this.gameObject);
             this.enabled = false;
         }
         if (trainController == null)
         {
-            Debug.LogError("TrainControllerÀÌ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù!", this.gameObject);
+            Debug.LogError("TrainControllerë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤! 'Player' íƒœê·¸ë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”.", this.gameObject);
             this.enabled = false;
         }
     }
@@ -47,40 +43,36 @@ public class Mob : Enemy
     {
         if (!isAlive) return;
 
-        // ÀÌµ¿ ·ÎÁ÷ ±¸¹öÀü
-        //moveDirection = Mathf.Sign(targetRigid.position.x - rigid2D.position.x);
-        //Vector2 nextXPosition = new Vector2(moveDirection * moveSpeed, rigid2D.position.y) * Time.fixedDeltaTime;
-        //rigid2D.MovePosition(rigid2D.position + nextXPosition);
-        //rigid2D.linearVelocity = Vector2.zero;
-
-        // ±âÂ÷ÀÇ ÇöÀç ¼Ó·Â°ú ¼Ó·Â ºñÀ²(0.0 ~ 1.0)À» °è»ê
-        float currentTrainSpeed = trainController.CurrentSpeed;
-        float speedRate = Mathf.InverseLerp(trainController.minSpeed, trainController.maxSpeed, currentTrainSpeed);
+        // âœ¨ [í•µì‹¬ ìˆ˜ì •] ê¸°ì°¨ì˜ ì ˆëŒ€ ì†ë„ ëŒ€ì‹ , 'ì†ë„ í¼ì„¼í‹°ì§€'ë¥¼ ê¸°ì¤€ìœ¼ë¡œ 0~1 ì‚¬ì´ì˜ ë¹„ìœ¨ì„ ê³„ì‚°í•©ë‹ˆë‹¤.
+        float speedRate = Mathf.InverseLerp(
+            trainController.MinSpeedPercentage,
+            trainController.MaxSpeedPercentage,
+            trainController.CurrentSpeedPercentage
+        );
 
         float currentMultiplier;
 
-        // ÀÚ½ÅÀÇ XÁÂÇ¥¿Í ±âÂ÷ÀÇ XÁÂÇ¥¸¦ ºñ±³ÇÏ¿© ¾Õ/µÚ¸¦ ÆÇ´Ü
+        // ìì‹ ì˜ Xì¢Œí‘œì™€ ê¸°ì°¨ì˜ Xì¢Œí‘œë¥¼ ë¹„êµí•˜ì—¬ ì•/ë’¤ë¥¼ íŒë‹¨ (ì´ ë¡œì§ì€ ê·¸ëŒ€ë¡œ ìœ ì§€)
         if (transform.position.x > targetRigid.position.x)
         {
-            // [»óÈ²] ³»°¡ ±âÂ÷º¸´Ù ¾Õ¿¡ ÀÖÀ» ¶§
-            // ±âÂ÷ ¼Óµµ¿Í ¹èÀ²ÀÌ Á¤ºñ·Ê °ü°è°¡ µË´Ï´Ù.
-            // ±âÂ÷°¡ »¡¶óÁú¼ö·Ï(speedPercentage ¡æ 1.0), ¹èÀ²µµ ÃÖ´ëÄ¡(maxMultiplier)¿¡ °¡±î¿öÁı´Ï´Ù.
+            // [ìƒí™©] ë‚´ê°€ ê¸°ì°¨ë³´ë‹¤ ì•ì— ìˆì„ ë•Œ
+            // ê¸°ì°¨ê°€ ë¹¨ë¼ì§ˆìˆ˜ë¡(speedRate â†’ 1.0), ë‚˜ë„ ìµœëŒ€ ë°°ìœ¨(maxMultiplier)ë¡œ ë¹¨ë¼ì§‘ë‹ˆë‹¤.
             currentMultiplier = Mathf.Lerp(minSpeedMultiplier, maxSpeedMultiplier, speedRate);
         }
         else
         {
-            // [»óÈ²] ³»°¡ ±âÂ÷º¸´Ù µÚ¿¡ ÀÖÀ» ¶§
-            // ±âÂ÷ ¼Óµµ¿Í ¹èÀ²ÀÌ ¹İºñ·Ê °ü°è°¡ µË´Ï´Ù.
-            // LerpÀÇ min, max ¼ø¼­¸¦ ¹Ù²ã¼­, ±âÂ÷°¡ »¡¶óÁú¼ö·Ï(speedPercentage ¡æ 1.0) ¹èÀ²Àº ÃÖ¼ÒÄ¡(minMultiplier)¿¡ °¡±î¿öÁı´Ï´Ù.
+            // [ìƒí™©] ë‚´ê°€ ê¸°ì°¨ë³´ë‹¤ ë’¤ì— ìˆì„ ë•Œ
+            // ê¸°ì°¨ê°€ ë¹¨ë¼ì§ˆìˆ˜ë¡(speedRate â†’ 1.0), ë‚˜ëŠ” ìµœì†Œ ë°°ìœ¨(minMultiplier)ë¡œ ëŠë ¤ì§‘ë‹ˆë‹¤. (ë”°ë¼ì¡ê¸° ì–´ë ¤ì›Œì§)
             currentMultiplier = Mathf.Lerp(maxSpeedMultiplier, minSpeedMultiplier, speedRate);
         }
 
-        // ÃÖÁ¾ ¼Ó·Â = ÀûÀÇ ±âº» ¼Ó·Â * ÇöÀç °è»êµÈ ¹èÀ²
+        // ìµœì¢… ì†ë ¥ = ì ì˜ ê¸°ë³¸ ì†ë ¥ * í˜„ì¬ ê³„ì‚°ëœ ë°°ìœ¨
         float finalMoveSpeed = moveSpeed * currentMultiplier;
 
-        // ÀÌµ¿ ·ÎÁ÷
+        // ì´ë™ ë¡œì§ (ê¸°ì¡´ê³¼ ë™ì¼)
         if (finalMoveSpeed > 0)
         {
+            // ë¬¼ë¦¬ ê¸°ë°˜ ì´ë™ì´ ì•„ë‹ˆë¼ë©´ transform.positionì„ ì§ì ‘ ì¡°ì‘í•˜ëŠ” ê²ƒì´ ë” ê°„ë‹¨í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
             transform.position = Vector2.MoveTowards(transform.position, targetRigid.position, finalMoveSpeed * Time.fixedDeltaTime);
         }
     }
@@ -88,7 +80,6 @@ public class Mob : Enemy
     protected override IEnumerator Die()
     {
         yield return base.Die();
-
         isAlive = false;
         enabled = false;
     }
