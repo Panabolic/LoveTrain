@@ -12,7 +12,11 @@ public class Train : MonoBehaviour
 {
     public float moveSpeed = 5.0f;
 
-    //private List<Collider2D> carColliders;
+    /*private List<Collider2D> carColliders = new List<Collider2D>();
+    public IReadOnlyList<Collider2D> CarColliders
+    {
+        get { return carColliders; }
+    }*/
 
     private void Awake()
     {
