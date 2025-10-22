@@ -1,12 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public enum EnemyName
+{
+    Monster,
+    FlyMonster
+}
+
 public class PoolManager : MonoBehaviour
 {
     public static PoolManager instance;
 
-    public GameObject[] enemies;
-    private List<GameObject>[] pools;
+    [SerializeField] private GameObject[]       enemies;    // Enemy prefab array
+                     private List<GameObject>[] pools;      // Array of pooled enemy lists
+
 
     private void Awake()
     {
@@ -23,7 +30,7 @@ public class PoolManager : MonoBehaviour
     private void Start()
     {
         pools = new List<GameObject>[enemies.Length];
-
+        
         for (int i = 0; i < pools.Length; i++)
         {
             pools[i] = new List<GameObject>();
@@ -54,4 +61,6 @@ public class PoolManager : MonoBehaviour
 
         return selected;
     }
+
+    public int GetPooledEnemyCount(EnemyName enemyName) { return pools[(int)enemyName].Count; }
 }

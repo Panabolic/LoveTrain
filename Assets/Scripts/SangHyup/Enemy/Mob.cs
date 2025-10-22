@@ -16,6 +16,9 @@ public class Mob : Enemy
     // Target Components
     protected TrainController trainController;
 
+    public System.Action<Mob> OnDied;
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -24,26 +27,27 @@ public class Mob : Enemy
         trainController = GameObject.FindWithTag("Player").GetComponent<TrainController>();
     }
 
-    protected virtual void Start()
+    protected override void Start()
     {
-        // targetRigid는 Enemy 부모 클래스에 있다고 가정합니다.
-        if (targetRigid == null)
-        {
-            Debug.LogError("Target이 연결되지 않았습니다!", this.gameObject);
-            this.enabled = false;
-        }
-        if (trainController == null)
-        {
-            Debug.LogError("TrainController를 찾을 수 없습니다! 'Player' 태그를 확인해주세요.", this.gameObject);
-            this.enabled = false;
-        }
+        base.Start();
+
+        // Die 애니메이션 추가 전까진 임시로
+        deathToDeactive = 3.0f;
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        // init Default value
+        moveSpeed = 2.0f;
     }
 
     private void FixedUpdate()
     {
-        if (!isAlive) return;
+        //if (!isAlive) return;
 
-        // 핵심 수정] 기차의 절대 속도 대신, '속도 퍼센티지'를 기준으로 0~1 사이의 비율을 계산합니다.
+        // 기차의 절대 속도 대신, '속도 퍼센티지'를 기준으로 0~1 사이의 비율을 계산합니다.
         float speedRate = Mathf.InverseLerp(
             trainController.MinSpeedPercentage,
             trainController.MaxSpeedPercentage,
@@ -66,8 +70,15 @@ public class Mob : Enemy
             currentMultiplier = Mathf.Lerp(maxSpeedMultiplier, minSpeedMultiplier, speedRate);
         }
 
-        // ������
-        if (!isAlive) moveSpeed = 6.0f;
+        // 죽으면 왼쪽으로 확 날라가게
+        if (!isAlive)
+        {
+            float _finalMoveSpeed = 20.0f * currentMultiplier;
+
+            transform.position = Vector2.MoveTowards(transform.position,
+                                                    new Vector2(transform.position.x - 1, transform.position.y),
+                                                    _finalMoveSpeed * Time.fixedDeltaTime);
+        }
 
         // 최종 속력 = 적의 기본 속력 * 현재 계산된 배율
         float finalMoveSpeed = moveSpeed * currentMultiplier;
@@ -80,17 +91,11 @@ public class Mob : Enemy
         }
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.CompareTag("FrontCar"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Train")) // Collision은 TrainF,M,R가 가지고 있지만 Train이 잡힘
         {
-            targetRigid.GetComponent<Train>().TakeDamage(damage, TrainCar.front);
-
-            StartCoroutine(Die());
-        }
-        else if (other.CompareTag("RearCar"))
-        {
-            targetRigid.GetComponent<Train>().TakeDamage(damage, TrainCar.rear);
+            collision.transform.GetComponent<Train>().TakeDamage(damage, TrainCar.front);
 
             StartCoroutine(Die());
         }
@@ -100,6 +105,11 @@ public class Mob : Enemy
     {
         yield return base.Die();
 
+        yield return new WaitForSeconds(1.0f);
+
         sprite.enabled = false;
+        gameObject.SetActive(false);
+
+        if (OnDied != null) OnDied(this);
     }
 }

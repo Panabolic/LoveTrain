@@ -33,16 +33,27 @@ public class Enemy : MonoBehaviour
         targetRigid = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
     }
 
+    protected virtual void Start()
+    {
+        // deathToDeactive 값 세팅
+        AnimationClip[] animationClips =  animator.runtimeAnimatorController.animationClips;
+
+        foreach (AnimationClip clip in animationClips)
+        {
+            if (clip.name == "Die") deathToDeactive = clip.length;
+        }
+    }
+
     protected virtual void OnEnable()
     {
-        // 체력 충전, isAlive는 true, Collider 활성화
-
+        // init Default value
         currentHP       = maxHP;
         isAlive         = true;
         sprite.enabled  = true;
+        sprite.color    = Color.red;
 
-        // foreach문 만들어야 됨
-        Physics2D.IgnoreCollision(collision, targetRigid.GetComponent<Collider2D>(), true);
+        // Layer 변경
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
     }
 
     public virtual void TakeDamage(float damageAmount)
@@ -58,9 +69,12 @@ public class Enemy : MonoBehaviour
     {
         isAlive = false;
 
-        Physics2D.IgnoreCollision(collision, targetRigid.GetComponent<Collider2D>(), false);
+        // Layer 변경
+        gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
 
-        animator.SetTrigger("Die");
+        // 임시 색깔
+        sprite.color = Color.darkRed;
+        //animator.SetTrigger("Die");
 
         yield return new WaitForSeconds(deathToDeactive);
     }
