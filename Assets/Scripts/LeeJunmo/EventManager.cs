@@ -1,10 +1,10 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using NUnit.Framework;
-using System.Collections; // ÄÚ·çÆ¾ »ç¿ëÀ» À§ÇØ Ãß°¡
+using System.Collections; // ì½”ë£¨í‹´ ì‚¬ìš©ì„ ìœ„í•´ ì¶”ê°€
 using UnityEngine.InputSystem;
 public class EventManager : MonoBehaviour
 {
@@ -17,15 +17,14 @@ public class EventManager : MonoBehaviour
     [SerializeField]
     private GameObject eventSelections;
     [SerializeField]
-    private TextMeshProUGUI eventTextBox; // TextMeshProUGUI ÄÄÆ÷³ÍÆ®¸¦ Á÷Á¢ ÂüÁ¶ÇÏµµ·Ï º¯°æ
+    private TextMeshProUGUI eventTextBox; // TextMeshProUGUI ì»´í¬ë„ŒíŠ¸ë¥¼ ì§ì ‘ ì°¸ì¡°í•˜ë„ë¡ ë³€ê²½
+    [Header("í…ìŠ¤íŠ¸ ì»´í¬ë„ŒíŠ¸")]
     [SerializeField]
-    private ScrollRect eventScrollRect; // <<-- ScrollRect ÄÄÆ÷³ÍÆ® ÂüÁ¶¸¦ Ãß°¡ÇÕ´Ï´Ù.
-    [SerializeField]
-    private Scrollbar verticalScrollbar; // <<-- ¼öÁ÷ ½ºÅ©·Ñ¹Ù ÄÄÆ÷³ÍÆ® ÂüÁ¶¸¦ Ãß°¡ÇÕ´Ï´Ù.
+    private TextMeshProUGUI eventTitleBox; // âœ¨ [ì¶”ê°€] ì œëª© í…ìŠ¤íŠ¸
 
-    // --- ÅØ½ºÆ® Ãâ·ÂÀ» À§ÇÑ º¯¼öµé ---
-    private Tween currentTypingTween; // ÇöÀç ½ÇÇà ÁßÀÎ DOText Æ®À©À» Á¦¾îÇÏ±â À§ÇÑ º¯¼ö
-    private bool isTyping = false; // ÅØ½ºÆ®°¡ Å¸ÀÌÇÎ ÁßÀÎÁö È®ÀÎÇÏ´Â ÇÃ·¡±×
+    // --- í…ìŠ¤íŠ¸ ì¶œë ¥ì„ ìœ„í•œ ë³€ìˆ˜ë“¤ ---
+    private Tween currentTypingTween; // í˜„ì¬ ì‹¤í–‰ ì¤‘ì¸ DOText íŠ¸ìœˆì„ ì œì–´í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
+    private bool isTyping = false; // í…ìŠ¤íŠ¸ê°€ íƒ€ì´í•‘ ì¤‘ì¸ì§€ í™•ì¸í•˜ëŠ” í”Œë˜ê·¸
 
     private void Awake()
     {
@@ -49,7 +48,7 @@ public class EventManager : MonoBehaviour
         eventImage.GetComponent<Image>().sprite = e.EventSprite;
         InitSelection();
 
-        // ±âÁ¸¿¡ ½ÇÇà ÁßÀÎ ÄÚ·çÆ¾ÀÌ ÀÖ´Ù¸é ÁßÁöÇÏ°í »õ·Î ½ÃÀÛ
+        // ê¸°ì¡´ì— ì‹¤í–‰ ì¤‘ì¸ ì½”ë£¨í‹´ì´ ìˆë‹¤ë©´ ì¤‘ì§€í•˜ê³  ìƒˆë¡œ ì‹œì‘
         StopAllCoroutines();
         StartCoroutine(TypeText(e.EventText));
     }
@@ -62,25 +61,25 @@ public class EventManager : MonoBehaviour
         eventUIPanel.SetActive(true);
         eventImage.GetComponent<Image>().sprite = e.EventSprite;
 
-        // ±âÁ¸¿¡ ½ÇÇà ÁßÀÎ ÄÚ·çÆ¾ÀÌ ÀÖ´Ù¸é ÁßÁöÇÏ°í »õ·Î ½ÃÀÛ
+        // ê¸°ì¡´ì— ì‹¤í–‰ ì¤‘ì¸ ì½”ë£¨í‹´ì´ ìˆë‹¤ë©´ ì¤‘ì§€í•˜ê³  ìƒˆë¡œ ì‹œì‘
         StopAllCoroutines();
         StartCoroutine(TypeText(e.EventText));
     }
 
 
     /// <summary>
-    /// DOTweenÀ» »ç¿ëÇØ ÅØ½ºÆ®¸¦ Ãâ·ÂÇÏ°í, Ãâ·ÂÀÌ ³¡³ª¸é ½ºÅ©·ÑÀ» È°¼ºÈ­ÇÏ´Â ÄÚ·çÆ¾
+    /// DOTweenì„ ì‚¬ìš©í•´ í…ìŠ¤íŠ¸ë¥¼ ì¶œë ¥í•˜ê³ , ì¶œë ¥ì´ ëë‚˜ë©´ ìŠ¤í¬ë¡¤ì„ í™œì„±í™”í•˜ëŠ” ì½”ë£¨í‹´
     /// </summary>
     private IEnumerator TypeText(string textToType)
     {
-        // --- 1. ÄÚ·çÆ¾ ½ÃÀÛ ½Ã ½ºÅ©·Ñ ±â´É ºñÈ°¼ºÈ­ ---
+        // --- 1. ì½”ë£¨í‹´ ì‹œì‘ ì‹œ ìŠ¤í¬ë¡¤ ê¸°ëŠ¥ ë¹„í™œì„±í™” ---
         if (eventScrollRect != null)
         {
-            eventScrollRect.enabled = false; // »ç¿ëÀÚ ½ºÅ©·Ñ ÀÔ·ÂÀ» ¸·½À´Ï´Ù.
+            eventScrollRect.enabled = false; // ì‚¬ìš©ì ìŠ¤í¬ë¡¤ ì…ë ¥ì„ ë§‰ìŠµë‹ˆë‹¤.
         }
         if (verticalScrollbar != null)
         {
-            verticalScrollbar.gameObject.SetActive(false); // ½ºÅ©·Ñ¹Ù¸¦ ¼û±é´Ï´Ù.
+            verticalScrollbar.gameObject.SetActive(false); // ìŠ¤í¬ë¡¤ë°”ë¥¼ ìˆ¨ê¹ë‹ˆë‹¤.
         }
 
         string fullText = "";
@@ -92,53 +91,53 @@ public class EventManager : MonoBehaviour
         {
             string trimmedLine = line.Trim();
             int charCount = trimmedLine.Length;
-            // »õ ÁÙÀÇ ±æÀÌ¿¡ ºñ·ÊÇÑ Á¤È®ÇÑ ½Ã°£
+            // ìƒˆ ì¤„ì˜ ê¸¸ì´ì— ë¹„ë¡€í•œ ì •í™•í•œ ì‹œê°„
             float duration = charCount * 0.05f;
 
             isTyping = true;
 
-            // --- DOText ´ë½Å DOTween.To()¸¦ »ç¿ëÇÕ´Ï´Ù ---
-            // 0ºÎÅÍ »õ ÁÙÀÇ ±ÛÀÚ ¼ö(charCount)±îÁö ¼ıÀÚ¸¦ º¯È­½ÃÅ°´Â ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ¸¸µì´Ï´Ù.
+            // --- DOText ëŒ€ì‹  DOTween.To()ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤ ---
+            // 0ë¶€í„° ìƒˆ ì¤„ì˜ ê¸€ì ìˆ˜(charCount)ê¹Œì§€ ìˆ«ìë¥¼ ë³€í™”ì‹œí‚¤ëŠ” ì• ë‹ˆë©”ì´ì…˜ì„ ë§Œë“­ë‹ˆë‹¤.
             currentTypingTween = DOTween.To(
-                () => 0, // ½ÃÀÛ °ª
-                (charIndex) => { // ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ÁøÇàµÇ´Â µ¿¾È ¸Å ÇÁ·¹ÀÓ ½ÇÇà
-                                 // ÀÌÀü ÅØ½ºÆ® + ÇöÀç ÁÙÀÇ ÀÏºÎ¸¦ ÇÕÃÄ¼­ ½Ç½Ã°£À¸·Î Ç¥½Ã
+                () => 0, // ì‹œì‘ ê°’
+                (charIndex) => { // ì• ë‹ˆë©”ì´ì…˜ì´ ì§„í–‰ë˜ëŠ” ë™ì•ˆ ë§¤ í”„ë ˆì„ ì‹¤í–‰
+                                 // ì´ì „ í…ìŠ¤íŠ¸ + í˜„ì¬ ì¤„ì˜ ì¼ë¶€ë¥¼ í•©ì³ì„œ ì‹¤ì‹œê°„ìœ¼ë¡œ í‘œì‹œ
                     eventTextBox.text = fullText + trimmedLine.Substring(0, charIndex);
                 },
-                charCount, // ÃÖÁ¾ °ª
-                duration   // Áö¼Ó ½Ã°£
+                charCount, // ìµœì¢… ê°’
+                duration   // ì§€ì† ì‹œê°„
             ).SetEase(Ease.Linear).OnComplete(() => {
                 isTyping = false;
             });
 
             yield return new WaitUntil(() => !isTyping);
 
-            // ÇÑ ÁÙÀÌ ³¡³ª¸é ÀüÃ¼ ÅØ½ºÆ®¸¦ ¾÷µ¥ÀÌÆ®ÇÏ°í ÁÙ¹Ù²ŞÀ» Ãß°¡
+            // í•œ ì¤„ì´ ëë‚˜ë©´ ì „ì²´ í…ìŠ¤íŠ¸ë¥¼ ì—…ë°ì´íŠ¸í•˜ê³  ì¤„ë°”ê¿ˆì„ ì¶”ê°€
             fullText += trimmedLine + "\n";
-            eventTextBox.text = fullText; // ÃÖÁ¾ ÅØ½ºÆ® º¸Á¤
+            eventTextBox.text = fullText; // ìµœì¢… í…ìŠ¤íŠ¸ ë³´ì •
 
             yield return new WaitForSeconds(0.5f);
         }
 
-        Debug.Log("ÅØ½ºÆ® Ãâ·Â ¿Ï·á");
+        Debug.Log("í…ìŠ¤íŠ¸ ì¶œë ¥ ì™„ë£Œ");
         InitSelection();
-        // --- 2. ¸ğµç ÅØ½ºÆ® Ãâ·ÂÀÌ ³¡³­ ÈÄ ½ºÅ©·Ñ ±â´É È°¼ºÈ­ ---
-        yield return null; // Content Fitter°¡ ÃÖÁ¾ ³ôÀÌ¸¦ °è»êÇÒ ½Ã°£À» Áİ´Ï´Ù.
+        // --- 2. ëª¨ë“  í…ìŠ¤íŠ¸ ì¶œë ¥ì´ ëë‚œ í›„ ìŠ¤í¬ë¡¤ ê¸°ëŠ¥ í™œì„±í™” ---
+        yield return null; // Content Fitterê°€ ìµœì¢… ë†’ì´ë¥¼ ê³„ì‚°í•  ì‹œê°„ì„ ì¤ë‹ˆë‹¤.
 
         if (eventScrollRect != null)
         {
-            // ½ºÅ©·ÑÀÌ ÇÊ¿äÇÒ °æ¿ì¿¡¸¸ ½ºÅ©·Ñ ±â´ÉÀ» ´Ù½Ã È°¼ºÈ­ÇÕ´Ï´Ù.
+            // ìŠ¤í¬ë¡¤ì´ í•„ìš”í•  ê²½ìš°ì—ë§Œ ìŠ¤í¬ë¡¤ ê¸°ëŠ¥ì„ ë‹¤ì‹œ í™œì„±í™”í•©ë‹ˆë‹¤.
             if (eventTextBox.rectTransform.rect.height > eventScrollRect.viewport.rect.height)
             {
                 eventScrollRect.enabled = true;
-                CheckScrollbarVisibility(); // ½ºÅ©·Ñ¹Ù¸¦ Ç¥½ÃÇÒÁö °áÁ¤
+                CheckScrollbarVisibility(); // ìŠ¤í¬ë¡¤ë°”ë¥¼ í‘œì‹œí• ì§€ ê²°ì •
             }
         }
     }
 
     private void Update()
     {
-        // ½ºÅµ ÀÔ·Â °¨Áö
+        // ìŠ¤í‚µ ì…ë ¥ ê°ì§€
         bool skipInputPressed = (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) ||
                                 (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame);
 
@@ -147,7 +146,7 @@ public class EventManager : MonoBehaviour
             currentTypingTween.Complete();
         }
 
-        // Å¸ÀÌÇÎ Áß ÀÚµ¿ ½ºÅ©·Ñ (»ç¿ëÀÚ ÀÔ·Â°ú ¹«°üÇÏ°Ô ÄÚµå·Î Á¦¾î)
+        // íƒ€ì´í•‘ ì¤‘ ìë™ ìŠ¤í¬ë¡¤ (ì‚¬ìš©ì ì…ë ¥ê³¼ ë¬´ê´€í•˜ê²Œ ì½”ë“œë¡œ ì œì–´)
         if (isTyping && eventScrollRect != null)
         {
             eventScrollRect.verticalNormalizedPosition = 0f;
@@ -158,7 +157,7 @@ public class EventManager : MonoBehaviour
     {
         if (eventScrollRect != null && verticalScrollbar != null)
         {
-            // Content(ÅØ½ºÆ®¹Ú½º)ÀÇ ³ôÀÌ°¡ Viewportº¸´Ù Å¬ ¶§¸¸ ½ºÅ©·Ñ¹Ù¸¦ È°¼ºÈ­ÇÕ´Ï´Ù.
+            // Content(í…ìŠ¤íŠ¸ë°•ìŠ¤)ì˜ ë†’ì´ê°€ Viewportë³´ë‹¤ í´ ë•Œë§Œ ìŠ¤í¬ë¡¤ë°”ë¥¼ í™œì„±í™”í•©ë‹ˆë‹¤.
             bool requiresScroll = eventTextBox.rectTransform.rect.height > eventScrollRect.viewport.rect.height;
             verticalScrollbar.gameObject.SetActive(requiresScroll);
         }
@@ -166,37 +165,37 @@ public class EventManager : MonoBehaviour
 
 
     /// <summary>
-    /// ¼±ÅÃÁö ¹öÆ°À» Å¬¸¯ÇßÀ» ¶§ È£ÃâµÉ ÇÔ¼ö
+    /// ì„ íƒì§€ ë²„íŠ¼ì„ í´ë¦­í–ˆì„ ë•Œ í˜¸ì¶œë  í•¨ìˆ˜
     /// </summary>
-    /// <param name="selectionIndex">¸î ¹øÂ° ¼±ÅÃÁö¸¦ °ñ¶ú´ÂÁö (0ºÎÅÍ ½ÃÀÛ)</param>
+    /// <param name="selectionIndex">ëª‡ ë²ˆì§¸ ì„ íƒì§€ë¥¼ ê³¨ëëŠ”ì§€ (0ë¶€í„° ì‹œì‘)</param>
     public void SelectionChoice(int selectionIndex)
     {
-        // ÇöÀç ÀÌº¥Æ® µ¥ÀÌÅÍ°¡ ¾øÀ¸¸é ÇÔ¼ö Á¾·á
+        // í˜„ì¬ ì´ë²¤íŠ¸ ë°ì´í„°ê°€ ì—†ìœ¼ë©´ í•¨ìˆ˜ ì¢…ë£Œ
         if (currentEvent == null) return;
 
-        // ´Ù¸¥ ¼±ÅÃÁö¸¦ ¶Ç ´©¸£Áö ¸øÇÏµµ·Ï ¼±ÅÃÁö UI¸¦ ºñÈ°¼ºÈ­
+        // ë‹¤ë¥¸ ì„ íƒì§€ë¥¼ ë˜ ëˆ„ë¥´ì§€ ëª»í•˜ë„ë¡ ì„ íƒì§€ UIë¥¼ ë¹„í™œì„±í™”
         if (eventSelections != null)
         {
             eventSelections.SetActive(false);
         }
 
-        // ¼±ÅÃÇÑ °á°ú ÅØ½ºÆ®¸¦ °¡Á®¿È
+        // ì„ íƒí•œ ê²°ê³¼ í…ìŠ¤íŠ¸ë¥¼ ê°€ì ¸ì˜´
         string resultText = currentEvent.Selections[selectionIndex].selectionEndText;
 
-        // °á°ú ÅØ½ºÆ®¸¦ Ãâ·ÂÇÏ´Â »õ·Î¿î ÄÚ·çÆ¾À» ½ÃÀÛ
+        // ê²°ê³¼ í…ìŠ¤íŠ¸ë¥¼ ì¶œë ¥í•˜ëŠ” ìƒˆë¡œìš´ ì½”ë£¨í‹´ì„ ì‹œì‘
         StartCoroutine(ShowResultText(resultText));
     }
 
     /// <summary>
-    /// °á°ú ÅØ½ºÆ®¸¦ Å¸ÀÌÇÎ È¿°ú·Î Ãâ·ÂÇÏ´Â ÄÚ·çÆ¾
+    /// ê²°ê³¼ í…ìŠ¤íŠ¸ë¥¼ íƒ€ì´í•‘ íš¨ê³¼ë¡œ ì¶œë ¥í•˜ëŠ” ì½”ë£¨í‹´
     /// </summary>
     private IEnumerator ShowResultText(string textToAnimate)
     {
-        // ±âÁ¸ ÅØ½ºÆ®¿¡ °ø¹éÀ» ¸¸µé±â À§ÇØ µÎ ¹ø ÁÙ¹Ù²Ş
+        // ê¸°ì¡´ í…ìŠ¤íŠ¸ì— ê³µë°±ì„ ë§Œë“¤ê¸° ìœ„í•´ ë‘ ë²ˆ ì¤„ë°”ê¿ˆ
         string fullText = eventTextBox.text + "\n";
         eventTextBox.text = fullText;
 
-        // ½ºÅ©·ÑÀÌ ÇÊ¿äÇÒ ¼ö ÀÖÀ¸´Ï ¸Ç ¾Æ·¡·Î ÀÌµ¿
+        // ìŠ¤í¬ë¡¤ì´ í•„ìš”í•  ìˆ˜ ìˆìœ¼ë‹ˆ ë§¨ ì•„ë˜ë¡œ ì´ë™
         yield return null;
         if (eventScrollRect != null) eventScrollRect.verticalNormalizedPosition = 0f;
 
@@ -206,7 +205,7 @@ public class EventManager : MonoBehaviour
 
         isTyping = true;
 
-        // ÀÌÀü¿¡ »ç¿ëÇß´ø DOTween.To() ¹æ½ÄÀ¸·Î °á°ú ÅØ½ºÆ®¸¦ Å¸ÀÌÇÎ
+        // ì´ì „ì— ì‚¬ìš©í–ˆë˜ DOTween.To() ë°©ì‹ìœ¼ë¡œ ê²°ê³¼ í…ìŠ¤íŠ¸ë¥¼ íƒ€ì´í•‘
         currentTypingTween = DOTween.To(
             () => 0,
             (charIndex) => {
@@ -218,10 +217,10 @@ public class EventManager : MonoBehaviour
             isTyping = false;
         });
 
-        // Å¸ÀÌÇÎÀÌ ³¡³¯ ¶§±îÁö ´ë±â
+        // íƒ€ì´í•‘ì´ ëë‚  ë•Œê¹Œì§€ ëŒ€ê¸°
         yield return new WaitUntil(() => !isTyping);
 
-        // ¸ğµç Ãâ·ÂÀÌ ³¡³µÀ¸´Ï ÃÖÁ¾ÀûÀ¸·Î ½ºÅ©·Ñ ±â´É È°¼ºÈ­ ¿©ºÎ °áÁ¤
+        // ëª¨ë“  ì¶œë ¥ì´ ëë‚¬ìœ¼ë‹ˆ ìµœì¢…ì ìœ¼ë¡œ ìŠ¤í¬ë¡¤ ê¸°ëŠ¥ í™œì„±í™” ì—¬ë¶€ ê²°ì •
         if (eventScrollRect != null)
         {
             if (eventTextBox.rectTransform.rect.height > eventScrollRect.viewport.rect.height)
@@ -235,36 +234,36 @@ public class EventManager : MonoBehaviour
     public void InitSelection()
     {
         eventSelections.SetActive(true);
-        // UI¿¡ ¹èÄ¡µÈ ¸ğµç ¼±ÅÃÁö ½½·Ô(Selection1, Selection2 µî)À» ¼øÈ¸ÇÕ´Ï´Ù.
+        // UIì— ë°°ì¹˜ëœ ëª¨ë“  ì„ íƒì§€ ìŠ¬ë¡¯(Selection1, Selection2 ë“±)ì„ ìˆœíšŒí•©ë‹ˆë‹¤.
         for (int i = 0; i < eventSelections.transform.childCount; i++)
         {
-            // ÇöÀç ¼ø¹øÀÇ UI ¼±ÅÃÁö ÀÚ½Ä ¿ÀºêÁ§Æ®¸¦ °¡Á®¿É´Ï´Ù. (¿¹: "Selection1")
+            // í˜„ì¬ ìˆœë²ˆì˜ UI ì„ íƒì§€ ìì‹ ì˜¤ë¸Œì íŠ¸ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤. (ì˜ˆ: "Selection1")
             Transform selectionUIObject = eventSelections.transform.GetChild(i);
 
-            // SO_Event¿¡ ÇöÀç UI ½½·Ô¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ°¡ ÀÖ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
+            // SO_Eventì— í˜„ì¬ UI ìŠ¬ë¡¯ì— í•´ë‹¹í•˜ëŠ” ë°ì´í„°ê°€ ìˆëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤.
             if (i < currentEvent.Selections.Count)
             {
-                // ÀÌÀü¿¡ ºñÈ°¼ºÈ­µÇ¾úÀ» ¼ö ÀÖÀ¸´Ï, UI ¿ÀºêÁ§Æ®¸¦ È°¼ºÈ­ÇÕ´Ï´Ù.
+                // ì´ì „ì— ë¹„í™œì„±í™”ë˜ì—ˆì„ ìˆ˜ ìˆìœ¼ë‹ˆ, UI ì˜¤ë¸Œì íŠ¸ë¥¼ í™œì„±í™”í•©ë‹ˆë‹¤.
                 selectionUIObject.gameObject.SetActive(true);
 
-                // ÀÌ UI ¿ÀºêÁ§Æ®ÀÇ ÀÚ½Äµé¿¡¼­ TextMeshPro ÄÄÆ÷³ÍÆ®¸¦ ¸ğµÎ Ã£½À´Ï´Ù.
-                // Ã¹ ¹øÂ° ÄÄÆ÷³ÍÆ®°¡ ¸ŞÀÎ ÅØ½ºÆ®, µÎ ¹øÂ°°¡ º¸Á¶ ÅØ½ºÆ®¶ó°í °¡Á¤ÇÕ´Ï´Ù.
+                // ì´ UI ì˜¤ë¸Œì íŠ¸ì˜ ìì‹ë“¤ì—ì„œ TextMeshPro ì»´í¬ë„ŒíŠ¸ë¥¼ ëª¨ë‘ ì°¾ìŠµë‹ˆë‹¤.
+                // ì²« ë²ˆì§¸ ì»´í¬ë„ŒíŠ¸ê°€ ë©”ì¸ í…ìŠ¤íŠ¸, ë‘ ë²ˆì§¸ê°€ ë³´ì¡° í…ìŠ¤íŠ¸ë¼ê³  ê°€ì •í•©ë‹ˆë‹¤.
                 TextMeshProUGUI[] texts = selectionUIObject.GetComponentsInChildren<TextMeshProUGUI>();
 
                 if (texts.Length >= 2)
                 {
-                    // ½ºÅ©¸³ÅÍºí ¿ÀºêÁ§Æ®ÀÇ ÅØ½ºÆ®¸¦ ÇÒ´çÇÕ´Ï´Ù.
+                    // ìŠ¤í¬ë¦½í„°ë¸” ì˜¤ë¸Œì íŠ¸ì˜ í…ìŠ¤íŠ¸ë¥¼ í• ë‹¹í•©ë‹ˆë‹¤.
                     texts[0].text = currentEvent.Selections[i].selectionText;
                     texts[1].text = currentEvent.Selections[i].selectionUnderText;
                 }
                 else
                 {
-                    Debug.LogWarning($"¼±ÅÃÁö ¿ÀºêÁ§Æ® '{selectionUIObject.name}'¿¡ TextMeshProUGUI ÄÄÆ÷³ÍÆ®°¡ 2°³ ¹Ì¸¸ÀÔ´Ï´Ù.", this);
+                    Debug.LogWarning($"ì„ íƒì§€ ì˜¤ë¸Œì íŠ¸ '{selectionUIObject.name}'ì— TextMeshProUGUI ì»´í¬ë„ŒíŠ¸ê°€ 2ê°œ ë¯¸ë§Œì…ë‹ˆë‹¤.", this);
                 }
             }
             else
             {
-                // ¸¸¾à ÀÌ UI ½½·Ô¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ°¡ ¾ø´Ù¸é, ºñÈ°¼ºÈ­ÇÏ¿© º¸ÀÌÁö ¾Ê°Ô ÇÕ´Ï´Ù.
+                // ë§Œì•½ ì´ UI ìŠ¬ë¡¯ì— í•´ë‹¹í•˜ëŠ” ë°ì´í„°ê°€ ì—†ë‹¤ë©´, ë¹„í™œì„±í™”í•˜ì—¬ ë³´ì´ì§€ ì•Šê²Œ í•©ë‹ˆë‹¤.
                 selectionUIObject.gameObject.SetActive(false);
             }
         }

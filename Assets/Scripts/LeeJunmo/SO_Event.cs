@@ -21,8 +21,9 @@ public class SO_Event : ScriptableObject
     }
 
     public Sprite EventSprite;
+    public string EventTitle;
     [TextArea(25,25)]
     public string EventText;
     public List<Selection> Selections;
-    
+  
 }
