@@ -38,7 +38,7 @@ public class AutoScrollBackground : MonoBehaviour
             // 속도가 0이면 움직이지 않으므로 계산할 필요가 없습니다.
             if (Mathf.Approximately(currentTrainSpeed, 0)) continue;
 
-            float movement = currentTrainSpeed * layer.parallaxFactor * Time.deltaTime;
+            float movement = (currentTrainSpeed / 30) * layer.parallaxFactor * Time.deltaTime;
             layer.layerTransform.position -= new Vector3(movement, 0, 0);
         }
 
