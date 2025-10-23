@@ -12,18 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc52c99cfa32c8b49a16d68e16abd314, type: 3}
   m_Name: New SO_Event 3
   m_EditorClassIdentifier: Assembly-CSharp::SO_Event
-  EventSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  EventText: You're just like an angel
+  EventTitle: "\uD0AC\uB7EC \uD038 '\uC81C3\uC758 \uD3ED\uD0C4' BITES THE DUST"
+  EventText: "\uC808\uBCBD\uC5D0 \uBD80\uB52A\uD600 \uC8FD\uB294 \uC81C\uBE44\uAC00
+    \uC788\uB2E4\uACE0 \uD558\uB354\uAD70\u2026 \uADF8 \uC81C\uBE44\uB294 \uB2E4\uB978
+    \uC81C\uBE44\uBCF4\uB2E4 \uB354\uC5C6\uC774 \uB2A5\uC219\uD558\uAC8C \uBA39\uC774\uB97C
+    \uD3EC\uD68D\uD558\uACE4 \uD558\uC9C0\uB9CC\u2026. \uACF5\uC911\uC81C\uBE44\uB97C
+    \uD2B8\uB294 \uAC01\uB3C4\uC640 \uADF8 \uC704\uD5D8 \uD55C\uACC4\uB97C \uBD80\uBAA8
+    \uC81C\uBE44\uC5D0\uAC8C\uC11C \uBC30\uC6B4 \uC801\uC774 \uC5C6\uAE30\uC5D0 \uADF8\uB9CC
+    \uBB34\uBAA8\uD55C \uAC01\uB3C4\uB85C \uB0A0\uACE0 \uB9D0\uC558\uC9C0. \uD558\uC9C0\uB9CC
+    \uADF8 \uBD80\uBAA8\uB294 \uAC00\uB974\uCCD0\uC8FC\uC9C0 \uC54A\uC740 \uAC83\uC774
+    \uC544\uB2C8\uB77C \uADF8 \uBD80\uBAA8\uC758 \uBD80\uBAA8\uC5D0\uAC8C\uC11C \uBC30\uC6B0\uC9C0
+    \uC54A\uC558\uAE30 \uB54C\uBB38\uC5D0 \uAC00\uB974\uCCD0\uC904 \uC218\uAC00 \uC5C6\uC5C8\uB358
+    \uAC70\uB2E4. \uADF8 \uC77C\uC871 \uC911\uC5D0\uB294 \uB2E8\uBA85\uD558\uB294
+    \uC790\uAC00 \uB9CE\uC9C0\uB9CC \uC65C \uD22D\uD558\uBA74 \uC0AC\uACE0\uB97C
+    \uB2F9\uD558\uB294 \uAC83\uC778\uC9C0 \uAE68\uB2EB\uC9C0\uC870\uCC28 \uBABB\uD574.\n\n\uC8E0\uD0C0\uB85C\uB294
+    \uB2E8\uBA85\uD588\uC9C0."
   Selections:
-  - selectionText: 12341342
-    selectionUnderText: 123
-    selectionEndText: ooiiuku
+  - selectionText: "\uB098\uC120\uACC4\uB2E8"
+    selectionUnderText: "\uC7A5\uC218\uD48D\uB385\uC774"
+    selectionEndText: "\uD3D0\uD5C8\uB3C4\uC2DC"
     addSpeed: 0
-  - selectionText: 12341342
-    selectionUnderText: 123
-    selectionEndText: qweasadsqw
+  - selectionText: "\uBB34\uD654\uACFC \uD0C0\uB974\uD2B8"
+    selectionUnderText: "\uC7A5\uC218\uD48D\uB385\uC774"
+    selectionEndText: "\uB3CC\uB85C\uB85C\uC0AC\uC758 \uAE38\n"
     addSpeed: 0
-  - selectionText: 12341342
-    selectionUnderText: 123
-    selectionEndText: ukilpgyidhf
+  - selectionText: "\uC7A5\uC218\uD48D\uB385\uC774"
+    selectionUnderText: "\uD2B9\uC774\uC810"
+    selectionEndText: "\uC870\uD1A0"
     addSpeed: 0

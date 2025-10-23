@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float maxHP;
     [Tooltip("대미지(km/h 단위)")]
     [SerializeField] protected float damage;
+    [Tooltip("주는 경험치량")]
+    [SerializeField] protected float exp;
 
     protected float currentHP;
     protected bool  isAlive = true;
@@ -21,7 +23,7 @@ public class Enemy : MonoBehaviour
 
     // Target Components
     protected Rigidbody2D targetRigid;
-
+    protected TrainLevelManager levelManager;
 
     protected virtual void Awake()
     {
@@ -31,6 +33,7 @@ public class Enemy : MonoBehaviour
 
         // Get Target Components
         targetRigid = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
+        levelManager = GameObject.FindWithTag("Player").GetComponent<TrainLevelManager>();
     }
 
     protected virtual void Start()
@@ -76,6 +79,7 @@ public class Enemy : MonoBehaviour
         sprite.color = Color.darkRed;
         //animator.SetTrigger("Die");
 
+        levelManager.GainExperience(exp);
         yield return new WaitForSeconds(deathToDeactive);
     }
 }

@@ -12,22 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc52c99cfa32c8b49a16d68e16abd314, type: 3}
   m_Name: New SO_Event 2
   m_EditorClassIdentifier: Assembly-CSharp::SO_Event
-  EventSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  EventText: "When you were \nYou're just like an angel"
+  EventTitle: "\"\uC131\uACF5\uC774\uB2E4! \uBC1C\uD604\uD588\uB2E4!\""
+  EventText: "\uC9C4\uC815\uD558\uC790, \uC18C\uC218\uB97C \uC138\uBA74\uC11C \uC9C4\uC815\uD558\uC790\u2026
+    \uC18C\uC218\uB294 1\uACFC \uC790\uC2E0\uC73C\uB85C\uBC16\uC5D0 \uB098\uB204\uC5B4
+    \uB5A8\uC5B4\uC9C0\uC9C0 \uC54A\uB294 \uACE0\uB3C5\uD55C \uC22B\uC790. \uB0B4\uAC8C
+    \uC6A9\uAE30\uB97C \uAC00\uC838\uB2E4 \uC900\uB2E4."
   Selections:
-  - selectionText: 12341342
-    selectionUnderText: 123
-    selectionEndText: ttototot
+  - selectionText: DIO!!!
+    selectionUnderText: "\uC5ED\uC2DC \uB108\uB9CC\uC740 \uC804\uB825\uC73C\uB85C
+      \uCC98\uB9AC\uD574\uB480\uC5B4\uC57C \uD588\uB2E4\u2026 \uAD50\uB3C4\uC18C
+      \uC548\uC5D0\uC11C\u2026 \uB9E8 \uCC98\uC74C\uBD80\uD130\u2026"
+    selectionEndText: "\uC778\uAC04\uC758 \uD589\uBCF5\uC744 \uC704\uD574\uC11C '\uADF9\uBCF5'\uD574\uC57C
+      \uD558\uB294 \uAC83\uC740 '\uC6B4\uBA85'\uC774\uB2E4\u2026. \uB098\uC640 DIO\uC5D0\uAC8C
+      \uADF8\uAC83\uC740 \uC8E0\uC2A4\uD0C0\uC758 \uD608\uD1B5\uC774\uC5C8\uB2E4!!!"
     addSpeed: 0
-  - selectionText: 12341342
-    selectionUnderText: 123
-    selectionEndText: ylylylyl
+  - selectionText: "\uB108\uB294 \uB0B4\uAC8C \uC11D\uAC00\uBAA8\uB2C8 \uC190\uBC14\uB2E5\uC5D0\uC11C
+      \uB178\uB294 \uC190\uC624\uACF5\uC5D0 \uBD88\uACFC\uD558\uB2E4."
+    selectionUnderText: "\uCD5C\uCD08\uB85C \uBC84\uC12F\uC744 \uBA39\uC740 \uC774\uB97C
+      \uB098\uB294 \uC874\uACBD\uD55C\uB2E4\u2026 "
+    selectionEndText: "\uB3C5\uC774 \uC788\uC744\uC9C0\uB3C4 \uBAA8\uB974\uB294\uB370
+      \uB9D0\uC774\uB2E4\u2026"
     addSpeed: 0
-  - selectionText: 12341342
-    selectionUnderText: 123
-    selectionEndText: zxcawe
+  - selectionText: "\uADF8\uC800 \uC5B4\uB290 \uC6B4 \uC88B\uC740 \uBC14\uBCF4\uAC00
+      \uC6B0\uC5F0\uD788 \uBA39\uACE0\uB3C4 \uBCC4\uC77C \uC5C6\uC5C8\uB358 \uAC83\uBFD0\uC774\uC5C8\uC744\uAE4C?"
+    selectionUnderText: "\uAD76\uC8FC\uB9BC\uC5D0 \uB0B4\uBAB0\uB9B0 \uB098\uBA38\uC9C0
+      \uBC1C\uACAC\uB41C \uD544\uC0AC\uC758 \uD0C0\uAC1C\uCC45\uC774\uC5C8\uC744\uAE4C?"
+    selectionEndText: "\u300C\uBA54\uC774\uB4DC \uC778 \uD5E4\uBE10\u300D!!!"
     addSpeed: 0
-  - selectionText: 12341342
-    selectionUnderText: 123
-    selectionEndText: awereew
+  - selectionText: "\u300C\uAC01\uC624\uD55C \uC790\u300D\uB294 \u300C\uD589\uBCF5\u300D\uD558\uB2E4!"
+    selectionUnderText: "\uC774\uB7F0 \uC4F0\uB808\uAE30 \uAC19\uC740 \uAC83\uB4E4\uC774!!"
+    selectionEndText: "\uC9C8\uBB38\uC5D0 \uC9C8\uBB38\uC73C\uB85C \uB300\uB2F5\uD558\uC9C0
+      \uB9C8! \uD559\uAD50\uC5D0\uC11C \uC758\uBB38\uBB38\uC5D0 \uC758\uBB38\uBB38\uC73C\uB85C
+      \uB300\uB2F5\uD558\uB77C\uACE0 \uBC30\uC6E0\uB098?"
     addSpeed: 0

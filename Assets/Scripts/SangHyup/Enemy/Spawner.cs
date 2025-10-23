@@ -1,4 +1,5 @@
 using UnityEngine;
+using System; // Action 이벤트를 위해 필요
 
 public class Spawner : MonoBehaviour
 {
@@ -7,6 +8,19 @@ public class Spawner : MonoBehaviour
 
     private float timer;
 
+    private bool isSpawning = false; // GameManager가 제어
+
+    private void Start()
+    {
+        // GameManager의 상태 변경 이벤트를 구독
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameStateChanged += HandleGameStateChange;
+            // 현재 상태로 초기화
+            HandleGameStateChange(GameManager.Instance.CurrentState);
+        }
+    }
+
     private void Awake()
     {
         spawnPoints = GetComponentsInChildren<Transform>();
@@ -14,6 +28,9 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
+        // 'Playing' 상태가 아니면 아무것도 하지 않음
+        if (!isSpawning) return;
+
         // ToDo: 각 Enemy별로 스폰 타이머 만들기
         timer += Time.deltaTime;
 
@@ -28,11 +45,19 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// GameManager의 상태 변경에 따라 스폰 시작/정지를 결정합니다.
+    /// </summary>
+    private void HandleGameStateChange(GameState newState)
+    {
+        isSpawning = (newState == GameState.Playing);
+    }
+
     private void Spawn()
     {
-        GameObject enemy = PoolManager.instance.GetEnemy(Random.Range(0, 0));
+        GameObject enemy = PoolManager.instance.GetEnemy(UnityEngine.Random.Range(0, 0));
 
-        enemy.transform.position = spawnPoints[Random.Range(1, spawnPoints.Length)].position;
+        enemy.transform.position = spawnPoints[UnityEngine.Random.Range(1, spawnPoints.Length)].position;
 
         enemy.GetComponent<Mob>().OnDied -= RespawnEnemy; // 중복 구독 방지
         enemy.GetComponent<Mob>().OnDied += RespawnEnemy;

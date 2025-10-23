@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc52c99cfa32c8b49a16d68e16abd314, type: 3}
+  m_Name: New SO_Event 5
+  m_EditorClassIdentifier: Assembly-CSharp::SO_Event
+  EventTitle: "\uB354 \uC6D4\uB4DC! \uC2DC\uAC04\uC774\uC5EC \uBA48\uCD94\uC5B4\uB77C!"
+  EventText: "\"\uD638\uC624... \uB9DE\uC11C\uACA0\uB2E4\uB294 \uAC70\uB0D0? \uB3C4\uB9DD\uCE58\uC9C0
+    \uC54A\uACE0 \uB098 DIO\uC5D0\uAC8C \uB2E4\uAC00\uC624\uACA0\uB2E4\uB294 \uAC70\uB0D0...
+    \uBAA8\uCC98\uB7FC \uB124 \uC870\uBD80 \uC8E0\uC149\uC774 \uB098\uC758 \u300C\uC138\uACC4\uB354
+    \uC6D4\uB4DC\u300D\uC758 \uC815\uCCB4\uB97C \uC2DC\uD5D8 \uC885\uB8CC \uBCA8\uC774
+    \uC6B8\uB9AC\uAE30 \uC9C1\uC804\uAE4C\uC9C0 \uBB38\uC81C\uB97C \uD480\uACE0 \uC788\uB294
+    \uC218\uD5D8\uC0DD \uAC19\uC740 \uD544\uC0AC\uC801\uC778 \uC2EC\uC815\uC73C\uB85C
+    \uAC00\uB974\uCCD0\uC92C\uB294\uB370\u2026\""
+  Selections:
+  - selectionText: "\uC8FD\uC5B4\uB77C, \uCE74\uCFC4\uC778!"
+    selectionUnderText: '"WRYYYYYYYYYY!"'
+    selectionEndText: "\"\uB85C\uB4DC\uB864\uB7EC\uB2E4!\""
+    addSpeed: 0
+  - selectionText: "\uC774\uBBF8 \uB2A6\uC5C8\uC5B4! \uD0C8\uCD9C \uBD88\uAC00\uB2A5\uC774\uB2E4!"
+    selectionUnderText: "\"\uBB34\uB2E4\uBB34\uB2E4\uBB34\uB2E4\uBB34\uB2E4!\""
+    selectionEndText: "\uCC0C\uBD80\uB7EC\uC838\uB77C!"
+    addSpeed: 0

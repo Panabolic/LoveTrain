@@ -1,13 +1,20 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Gun : MonoBehaviour
 {
-    public GameObject bulletPrefab; // ¹ß»çÇÒ ÅºÈ¯ ÇÁ¸®ÆÕ
-    public Transform firePoint;     // ÅºÈ¯ÀÌ »ı¼ºµÉ À§Ä¡ (ÃÑ±¸)
+    public GameObject bulletPrefab; // ë°œì‚¬í•  íƒ„í™˜ í”„ë¦¬íŒ¹
+    public Transform firePoint;     // íƒ„í™˜ì´ ìƒì„±ë  ìœ„ì¹˜ (ì´êµ¬)
 
-    // »õ·Î¿î ÀÔ·Â ½Ã½ºÅÛ »ç¿ë
+    // ìƒˆë¡œìš´ ì…ë ¥ ì‹œìŠ¤í…œ ì‚¬ìš©
     public InputAction shootAction;
+
+    [Header("ì—°ì‚¬ ì„¤ì •")]
+    [Tooltip("ì´ì•Œ ì‚¬ì´ì˜ ë°œì‚¬ ê°„ê²© (ì´ˆ). 0.2 = ì´ˆë‹¹ 5ë°œ")]
+    [SerializeField] private float fireRate = 0.2f;
+
+    // âœ¨ [ì¶”ê°€] ë‹¤ìŒì— ë°œì‚¬ ê°€ëŠ¥í•œ ì‹œê°„ì„ ì €ì¥í•  ë³€ìˆ˜
+    private float nextFireTime = 0f;
 
     private void OnEnable()
     {
@@ -21,24 +28,29 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ°(shootAction)ÀÌ ´­·È´ÂÁö È®ÀÎ
-        if (shootAction.triggered)
+        // âœ¨ [í•µì‹¬ ìˆ˜ì •]
+        // 1. .triggered (í´ë¦­ ì‹œ) -> .IsPressed() (ëˆ„ë¥´ê³  ìˆëŠ” ë™ì•ˆ)
+        // 2. Time.time >= nextFireTime (ì¿¨íƒ€ì„ì´ ì§€ë‚¬ëŠ”ì§€ í™•ì¸)
+        if (shootAction.IsPressed() && Time.time >= nextFireTime)
         {
+            // âœ¨ [ì¶”ê°€] ë‹¤ìŒ ë°œì‚¬ ì‹œê°„ì„ í˜„ì¬ ì‹œê°„ + ì¿¨íƒ€ì„ìœ¼ë¡œ ê°±ì‹ 
+            nextFireTime = Time.time + fireRate;
+
             Shoot();
         }
     }
 
     void Shoot()
     {
-        // ÅºÈ¯ ÇÁ¸®ÆÕ ÀÎ½ºÅÏ½ºÈ­ (»ı¼º)
+        // íƒ„í™˜ í”„ë¦¬íŒ¹ ì¸ìŠ¤í„´ìŠ¤í™” (ìƒì„±)
         GameObject bulletInstance = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
-        // ÅºÈ¯ ½ºÅ©¸³Æ® °¡Á®¿À±â
+        // íƒ„í™˜ ìŠ¤í¬ë¦½íŠ¸ ê°€ì ¸ì˜¤ê¸°
         Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
 
         if (bulletScript != null)
         {
-            // ÃÑÀÇ ¹æÇâÀ» ÅºÈ¯ ¹ß»ç ¹æÇâÀ¸·Î »ç¿ë
+            // ì´ì˜ ë°©í–¥ì„ íƒ„í™˜ ë°œì‚¬ ë°©í–¥ìœ¼ë¡œ ì‚¬ìš©
             bulletScript.Launch(transform.right);
         }
     }

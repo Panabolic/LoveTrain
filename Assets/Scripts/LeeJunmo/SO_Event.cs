@@ -20,7 +20,7 @@ public class SO_Event : ScriptableObject
         public int addSpeed;
     }
 
-    public Sprite EventSprite;
+/*    public Sprite EventSprite;*/
     public string EventTitle;
     [TextArea(25,25)]
     public string EventText;

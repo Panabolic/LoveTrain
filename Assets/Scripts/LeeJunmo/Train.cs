@@ -1,7 +1,6 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem; // ÀÌ ÁÙÀ» Ãß°¡ÇÏ¼¼¿ä!
 
 public enum TrainCar
 {
@@ -10,38 +9,42 @@ public enum TrainCar
 
 public class Train : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
+    [Tooltip("A/Dí‚¤ì™€ ìƒê´€ì—†ì´ ê³ ì •ëœ ê¸°ì°¨ì˜ ì†ë„ ê°’ì…ë‹ˆë‹¤.")]
+    [SerializeField] private float baseSpeedValue = 200f;
 
-    /*private List<Collider2D> carColliders = new List<Collider2D>();
-    public IReadOnlyList<Collider2D> CarColliders
-    {
-        get { return carColliders; }
-    }*/
+
+    public int Level = 1;
+
+    // CurrentSpeedê°€ Trainì˜ í”„ë¡œí¼í‹°ê°€ ë¨
+    public float CurrentSpeed { get; private set; }
+
+    [Header("ë””ë²„ê·¸ ì •ë³´")]
+    [SerializeField] private float _currentSpeedForInspector;
+
+    // âœ¨ [ì¶”ê°€] UIê°€ ìµœëŒ€ ì†ë„ ê°’ì„ ì½ì„ ìˆ˜ ìˆë„ë¡ public getterë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤.
+    public float BaseSpeedValue => baseSpeedValue;
 
     private void Awake()
     {
         //carColliders = GetComponentsInChildren<Collider2D>().ToList();
     }
 
+    // ì†ë„ ì´ˆê¸°í™”
+    private void Start()
+    {
+        CurrentSpeed = baseSpeedValue;
+        _currentSpeedForInspector = CurrentSpeed;
+    }
+
+    // ë””ë²„ê·¸ìš©
     void Update()
     {
-        // Keyboard.current´Â ÇöÀç ¿¬°áµÈ Å°º¸µå¸¦ ÀÇ¹ÌÇÕ´Ï´Ù.
-        // 'a' Å°°¡ ´­¸®°í ÀÖ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
-        if (Keyboard.current.aKey.isPressed)
-        {
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
-        }
-
-        // 'd' Å°°¡ ´­¸®°í ÀÖ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
-        if (Keyboard.current.dKey.isPressed)
-        {
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-        }
+        _currentSpeedForInspector = CurrentSpeed;
     }
 
     public virtual void TakeDamage(float damageAmount, TrainCar trainCar)
     {
-        switch(trainCar)
+        switch (trainCar)
         {
             case TrainCar.front:
 
@@ -55,7 +58,27 @@ public class Train : MonoBehaviour
 
                 break;
         }
+
+        if(CurrentSpeed > 0)
+        {
+            if(CurrentSpeed - damageAmount <= 0)
+            {
+                CurrentSpeed = 0;
+            }
+            else
+            {
+                CurrentSpeed -= damageAmount;
+            }
+        }
     }
 
-    //public List<Collider2D> GetCarColliders() { return carColliders; }
+    public void IncreaseSpeedTest()
+    {
+        CurrentSpeed += 20;
+    }
+
+    public void DecreaseSpeedTest()
+    {
+        CurrentSpeed -= 20;
+    }
 }

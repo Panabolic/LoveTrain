@@ -171,6 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Mob
   maxHP: 50
   damage: 5
+  exp: 40
   moveSpeed: 2
   minSpeedMultiplier: 0.5
   maxSpeedMultiplier: 2

@@ -18,7 +18,6 @@ public class Mob : Enemy
 
     public System.Action<Mob> OnDied;
 
-
     protected override void Awake()
     {
         base.Awake();
@@ -30,6 +29,13 @@ public class Mob : Enemy
     protected override void Start()
     {
         base.Start();
+
+        // TrainController 연결 확인
+        if (trainController == null)
+        {
+            Debug.LogError("Mob: TrainController를 찾을 수 없습니다!", this.gameObject);
+            this.enabled = false;
+        }
 
         // Die 애니메이션 추가 전까진 임시로
         deathToDeactive = 3.0f;
@@ -45,28 +51,31 @@ public class Mob : Enemy
 
     private void FixedUpdate()
     {
-        //if (!isAlive) return;
+        if (trainController == null) return; // TrainController가 없으면 실행 중지
 
-        // 기차의 절대 속도 대신, '속도 퍼센티지'를 기준으로 0~1 사이의 비율을 계산합니다.
+        //if (!isAlive) return; // 주석 처리된 기존 코드
+
+        // ✨ [핵심 수정]
+        // 기차의 'X위치 퍼센티지'를 기준으로 0~1 사이의 비율을 계산합니다.
         float speedRate = Mathf.InverseLerp(
-            trainController.MinSpeedPercentage,
-            trainController.MaxSpeedPercentage,
-            trainController.CurrentSpeedPercentage
+            trainController.MinXPosition,      // 기차의 최소 X위치
+            trainController.MaxXPosition,      // 기차의 최대 X위치
+            trainController.transform.position.x // 기차의 현재 X좌표
         );
 
         float currentMultiplier;
 
-        // 자신의 X좌표와 기차의 X좌표를 비교하여 앞/뒤를 판단 (이 로직은 그대로 유지)
+        // 자신의 X좌표와 기차의 X좌표를 비교 (이 로직은 그대로 유지)
         if (transform.position.x > targetRigid.position.x)
         {
             // [상황] 내가 기차보다 앞에 있을 때
-            // 기차가 빨라질수록(speedRate → 1.0), 나도 최대 배율(maxMultiplier)로 빨라집니다.
+            // 기차가 오른쪽으로 갈수록(speedRate → 1.0), 나도 최대 배율(maxMultiplier)로 빨라집니다.
             currentMultiplier = Mathf.Lerp(minSpeedMultiplier, maxSpeedMultiplier, speedRate);
         }
         else
         {
             // [상황] 내가 기차보다 뒤에 있을 때
-            // 기차가 빨라질수록(speedRate → 1.0), 나는 최소 배율(minMultiplier)로 느려집니다. (따라잡기 어려워짐)
+            // 기차가 오른쪽으로 갈수록(speedRate → 1.0), 나는 최소 배율(minMultiplier)로 느려집니다.
             currentMultiplier = Mathf.Lerp(maxSpeedMultiplier, minSpeedMultiplier, speedRate);
         }
 
@@ -74,7 +83,6 @@ public class Mob : Enemy
         if (!isAlive)
         {
             float _finalMoveSpeed = 20.0f * currentMultiplier;
-
             transform.position = Vector2.MoveTowards(transform.position,
                                                     new Vector2(transform.position.x - 1, transform.position.y),
                                                     _finalMoveSpeed * Time.fixedDeltaTime);
@@ -84,18 +92,30 @@ public class Mob : Enemy
         float finalMoveSpeed = moveSpeed * currentMultiplier;
 
         // 이동 로직 (기존과 동일)
-        if (finalMoveSpeed > 0)
+        if (finalMoveSpeed > 0 && isAlive) // ✨ 살아있을 때만 타겟을 향해 이동
         {
-            // 물리 기반 이동이 아니라면 transform.position을 직접 조작하는 것이 더 간단할 수 있습니다.
             transform.position = Vector2.MoveTowards(transform.position, targetRigid.position, finalMoveSpeed * Time.fixedDeltaTime);
         }
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Train")) // Collision은 TrainF,M,R가 가지고 있지만 Train이 잡힘
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
         {
-            collision.transform.GetComponent<Train>().TakeDamage(damage, TrainCar.front);
+            // collision.transform.GetComponent<Train>().TakeDamage(damage, TrainCar.front); // 기존 코드
+
+            //GetComponentInParent 사용 예시 (만약 Train 컴포넌트가 부모에 있다면)
+            Train train = collision.transform.GetComponentInParent<Train>();
+            if (train != null)
+            {
+                train.TakeDamage(damage, TrainCar.front); // Train 스크립트에 맞게 수정 필요
+                if (CameraShakeManager.Instance != null)
+                {
+                    CameraShakeManager.Instance.ShakeCamera(); // 기본 설정으로 흔들기
+                                                               // 또는 원하는 값으로 흔들기: CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
+                }
+            }
+
 
             StartCoroutine(Die());
         }
@@ -103,9 +123,9 @@ public class Mob : Enemy
 
     protected override IEnumerator Die()
     {
-        yield return base.Die();
+        yield return base.Die(); // base.Die()가 isAlive = false 처리
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.0f); // 1초 대기
 
         sprite.enabled = false;
         gameObject.SetActive(false);

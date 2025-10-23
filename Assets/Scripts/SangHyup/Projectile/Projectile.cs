@@ -5,7 +5,6 @@ public class Projectile : MonoBehaviour
     [SerializeField] protected float damage = 0.0f;
 
     protected Rigidbody2D rigid2D;
-
     protected virtual void Awake()
     {
         rigid2D = GetComponent<Rigidbody2D>();

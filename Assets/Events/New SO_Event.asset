@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc52c99cfa32c8b49a16d68e16abd314, type: 3}
   m_Name: New SO_Event
   m_EditorClassIdentifier: Assembly-CSharp::SO_Event
-  EventSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  EventText: 'When you were here before
-
-    Couldn''t look you in the eye
-
-'
+  EventTitle: "\uC2DC\uC5B4 \uD558\uD2B8 \uC5B4\uD0DD\uC5D0 \uC57D\uC810\uC740 \uC5C6\uB2E4\u2026"
+  EventText: "'\uD55C \uC218'\u2026 \uB2A6\uC5C8\uAD70\u2026(\u300C\u4E00\u624B\u300D\u9045\u30AB\u30C3\u30BF\xB7\xB7\xB7\u30CA\xB7\xB7\xB7)
+    \uCFE0\uC8E0 \uC8E0\uD0C0\uB85C\u2026\r\n\uAE30\uB2E4\uB9AC\uACE0 \uC788\uC5C8\uB2E4.
+    \uC774 \uC21C\uAC04\uC744\u2026\r\n\uC774\uBBF8\u2026 \uC644\uC131\uB3FC \uC788\uC5C8\uAD70.
+    \uC88B\uC544\u2026 \uBC1B\uC544\uAC00\uACA0\uB2E4\u2026 \uB124 \uC548\uC5D0\uC11C
+    \uB098\uC628 \uAC83\uC744!"
   Selections:
-  - selectionText: 12341342
-    selectionUnderText: 123
-    selectionEndText: yaho
+  - selectionText: "\uC5D4\uC824"
+    selectionUnderText: "\uC790\uC591\uD654"
+    selectionEndText: "\uC7A5\uC218\uD48D\uB385\uC774"
     addSpeed: 0
-  - selectionText: 12341342
-    selectionUnderText: 123
-    selectionEndText: yeah
+  - selectionText: "\uD2B9\uC774\uC810"
+    selectionUnderText: "\uBE44\uBC00\uC758 \uD669\uC81C"
+    selectionEndText: "\uAD00\uC2EC\uC744 \uBCF4\uC5EC\uC8FC\uB294 \uAC74\uAC00?"
     addSpeed: 0

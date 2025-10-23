@@ -1,258 +1,268 @@
 ﻿using UnityEngine;
 using TMPro;
-using DG.Tweening;
+using DG.Tweening; // DOTween 사용
 using UnityEngine.UI;
 using System.Collections.Generic;
-using NUnit.Framework;
-using System.Collections; // 코루틴 사용을 위해 추가
+using System.Collections;
 using UnityEngine.InputSystem;
+using System; // Action 콜백을 위해 필요
+
 public class EventManager : MonoBehaviour
 {
     public static EventManager Instance;
 
-    [SerializeField]
-    private GameObject eventUIPanel;
-    [SerializeField]
-    private GameObject eventImage;
-    [SerializeField]
-    private GameObject eventSelections;
-    [SerializeField]
-    private TextMeshProUGUI eventTextBox; // TextMeshProUGUI 컴포넌트를 직접 참조하도록 변경
+    [Header("UI 오브젝트")]
+    [SerializeField] private GameObject eventUIPanel;
+    [SerializeField] private RectTransform eventBoardRect;
+    [SerializeField] private GameObject eventImage;
+    [SerializeField] private GameObject eventSelections;
+
     [Header("텍스트 컴포넌트")]
-    [SerializeField]
-    private TextMeshProUGUI eventTitleBox; // ✨ [추가] 제목 텍스트
+    [SerializeField] private TextMeshProUGUI eventTitleBox;
+    [SerializeField] private TextMeshProUGUI eventTextBox;
+
+    [Header("애니메이션 설정")]
+    [SerializeField] private float panelMoveDuration = 0.5f;
+
+    [Header("패널 위치 (Anchored Position)")]
+    [SerializeField] private Vector2 onScreenPosition = new Vector2(0, 0);
+    [SerializeField] private Vector2 offScreenPeekPosition = new Vector2(800, 0);
+    [SerializeField] private Vector2 offScreenHiddenPosition = new Vector2(1000, 0);
+
+    [Header("데이터베이스")]
+    [SerializeField] private EventDatabase eventDatabase;
+
+    private SO_Event currentEvent;
 
     // --- 텍스트 출력을 위한 변수들 ---
-    private Tween currentTypingTween; // 현재 실행 중인 DOText 트윈을 제어하기 위한 변수
-    private bool isTyping = false; // 텍스트가 타이핑 중인지 확인하는 플래그
+    private Tween currentTypingTween;
+    private bool isTyping = false;
+    private string fullTextToSkipTo = "";
+    private bool isShowingResultText = false;
+
+    // --- 애니메이션 및 상태 관리를 위한 변수들 ---
+    private bool isPanelOnScreen = false;
+    private bool isTextFullyDisplayed = false;
+    private bool hasSelectionBeenMade = false;
+
 
     private void Awake()
     {
         Instance = this;
-
         if (Instance == null)
         {
             Instantiate(this);
         }
+
+        if (eventUIPanel == null || eventBoardRect == null)
+        {
+            Debug.LogError("EventManager에 eventUIPanel 또는 eventBoardRect가 연결되지 않았습니다!", this);
+            return;
+        }
+
+        eventBoardRect.anchoredPosition = offScreenHiddenPosition;
+        eventUIPanel.SetActive(false);
+
+        DOTween.To(() => 0f, x => { }, 1f, 1f)
+            .SetLoops(-1)
+            .SetUpdate(true)
+            .OnUpdate(UnscaledUpdate);
     }
-
-    [SerializeField]
-    private EventDatabase eventDatabase;
-
-    private SO_Event currentEvent;
 
     public void StartEvent(SO_Event e)
     {
+        isTextFullyDisplayed = false;
+        hasSelectionBeenMade = false;
+        isShowingResultText = false;
+        isTyping = false;
+        fullTextToSkipTo = "";
+
+        Physics2D.simulationMode = SimulationMode2D.Script;
+        Time.timeScale = 0f;
+
         currentEvent = e;
-        eventUIPanel.SetActive(true);
-        eventImage.GetComponent<Image>().sprite = e.EventSprite;
+
+        if (eventTitleBox != null) eventTitleBox.text = e.EventTitle;
+        if (eventTextBox != null) eventTextBox.text = ""; // 텍스트 초기화
+
         InitSelection();
 
-        // 기존에 실행 중인 코루틴이 있다면 중지하고 새로 시작
-        StopAllCoroutines();
-        StartCoroutine(TypeText(e.EventText));
-    }
+        eventBoardRect.anchoredPosition = offScreenHiddenPosition;
+        eventUIPanel.SetActive(true);
 
+        AnimatePanelOnScreen(() =>
+        {
+            StartCoroutine(TypeText(e.EventText));
+        });
+    }
 
     public void TEstEvent()
     {
         SO_Event e = eventDatabase.GetRandomEvent();
-        currentEvent = e;
-        eventUIPanel.SetActive(true);
-        eventImage.GetComponent<Image>().sprite = e.EventSprite;
-
-        // 기존에 실행 중인 코루틴이 있다면 중지하고 새로 시작
-        StopAllCoroutines();
-        StartCoroutine(TypeText(e.EventText));
+        if (e != null)
+        {
+            StartEvent(e);
+        }
     }
 
-
-    /// <summary>
-    /// DOTween을 사용해 텍스트를 출력하고, 출력이 끝나면 스크롤을 활성화하는 코루틴
-    /// </summary>
     private IEnumerator TypeText(string textToType)
     {
-        // --- 1. 코루틴 시작 시 스크롤 기능 비활성화 ---
-        if (eventScrollRect != null)
-        {
-            eventScrollRect.enabled = false; // 사용자 스크롤 입력을 막습니다.
-        }
-        if (verticalScrollbar != null)
-        {
-            verticalScrollbar.gameObject.SetActive(false); // 스크롤바를 숨깁니다.
-        }
-
         string fullText = "";
-        eventTextBox.text = fullText;
+        // eventTextBox.text = fullText; // StartEvent로 이동
 
         string[] lines = textToType.Split('\n');
-
+        string completeSkippedText = "";
+        foreach (string line in lines)
+        {
+            completeSkippedText += line.Trim() + "\n";
+        }
+        fullTextToSkipTo = completeSkippedText;
+        isTyping = true;
         foreach (string line in lines)
         {
             string trimmedLine = line.Trim();
             int charCount = trimmedLine.Length;
-            // 새 줄의 길이에 비례한 정확한 시간
             float duration = charCount * 0.05f;
-
-            isTyping = true;
-
-            // --- DOText 대신 DOTween.To()를 사용합니다 ---
-            // 0부터 새 줄의 글자 수(charCount)까지 숫자를 변화시키는 애니메이션을 만듭니다.
             currentTypingTween = DOTween.To(
-                () => 0, // 시작 값
-                (charIndex) => { // 애니메이션이 진행되는 동안 매 프레임 실행
-                                 // 이전 텍스트 + 현재 줄의 일부를 합쳐서 실시간으로 표시
-                    eventTextBox.text = fullText + trimmedLine.Substring(0, charIndex);
-                },
-                charCount, // 최종 값
-                duration   // 지속 시간
-            ).SetEase(Ease.Linear).OnComplete(() => {
-                isTyping = false;
-            });
-
+                () => 0,
+                (charIndex) => { eventTextBox.text = fullText + trimmedLine.Substring(0, charIndex); },
+                charCount, duration
+            ).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => { isTyping = false; });
             yield return new WaitUntil(() => !isTyping);
-
-            // 한 줄이 끝나면 전체 텍스트를 업데이트하고 줄바꿈을 추가
             fullText += trimmedLine + "\n";
-            eventTextBox.text = fullText; // 최종 텍스트 보정
-
-            yield return new WaitForSeconds(0.5f);
+            eventTextBox.text = fullText;
+            isTyping = true;
+            yield return new WaitForSecondsRealtime(0.5f);
         }
-
         Debug.Log("텍스트 출력 완료");
-        InitSelection();
-        // --- 2. 모든 텍스트 출력이 끝난 후 스크롤 기능 활성화 ---
-        yield return null; // Content Fitter가 최종 높이를 계산할 시간을 줍니다.
+        isTyping = false;
+        fullTextToSkipTo = "";
+        isTextFullyDisplayed = true;
+    }
 
-        if (eventScrollRect != null)
+    private void UnscaledUpdate()
+    {
+        // 1. 스킵 입력 감지 (마우스 클릭)
+        bool skipInput = (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame);
+
+        // 2. 패널 토글 입력 감지 (스페이스바)
+        bool toggleInput = (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame);
+
+        // --- 스킵 로직 ---
+        if (skipInput && isTyping)
         {
-            // 스크롤이 필요할 경우에만 스크롤 기능을 다시 활성화합니다.
-            if (eventTextBox.rectTransform.rect.height > eventScrollRect.viewport.rect.height)
+            bool wasResultText = isShowingResultText;
+            StopAllCoroutines();
+            if (currentTypingTween != null && currentTypingTween.IsActive())
             {
-                eventScrollRect.enabled = true;
-                CheckScrollbarVisibility(); // 스크롤바를 표시할지 결정
+                currentTypingTween.Kill();
             }
+            if (!string.IsNullOrEmpty(fullTextToSkipTo))
+            {
+                eventTextBox.text = fullTextToSkipTo;
+            }
+            isTyping = false;
+            fullTextToSkipTo = "";
+            isShowingResultText = false;
+
+            if (!wasResultText) isTextFullyDisplayed = true;
+
+            if (wasResultText)
+            {
+                StartCoroutine(WaitAndClosePanel(2.0f));
+            }
+            return;
+        }
+
+        // --- ✨ [수정] 패널 토글 로직 ---
+        if (toggleInput)
+        {
+            // 스페이스바가 눌리면, 토글 함수 호출
+            TogglePanelVisibility();
         }
     }
-
-    private void Update()
-    {
-        // 스킵 입력 감지
-        bool skipInputPressed = (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) ||
-                                (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame);
-
-        if (skipInputPressed && isTyping)
-        {
-            currentTypingTween.Complete();
-        }
-
-        // 타이핑 중 자동 스크롤 (사용자 입력과 무관하게 코드로 제어)
-        if (isTyping && eventScrollRect != null)
-        {
-            eventScrollRect.verticalNormalizedPosition = 0f;
-        }
-    }
-
-    private void CheckScrollbarVisibility()
-    {
-        if (eventScrollRect != null && verticalScrollbar != null)
-        {
-            // Content(텍스트박스)의 높이가 Viewport보다 클 때만 스크롤바를 활성화합니다.
-            bool requiresScroll = eventTextBox.rectTransform.rect.height > eventScrollRect.viewport.rect.height;
-            verticalScrollbar.gameObject.SetActive(requiresScroll);
-        }
-    }
-
 
     /// <summary>
-    /// 선택지 버튼을 클릭했을 때 호출될 함수
+    /// ✨ [새 함수] 버튼(OnClick) 또는 스페이스바에서 호출할 수 있는 공용 토글 함수
     /// </summary>
-    /// <param name="selectionIndex">몇 번째 선택지를 골랐는지 (0부터 시작)</param>
+    public void TogglePanelVisibility()
+    {
+        // 타이핑 중이거나, 텍스트가 다 안 나왔거나, 선택을 이미 했으면 토글 불가
+        if (isTyping || !isTextFullyDisplayed || hasSelectionBeenMade)
+        {
+            return;
+        }
+
+        // 토글 실행
+        if (isPanelOnScreen)
+        {
+            AnimatePanelToPeek(); // 화면에 있으면 -> 살짝 숨기기
+        }
+        else
+        {
+            AnimatePanelOnScreen(null); // 숨겨져 있으면 -> 다시 보이기
+        }
+    }
+
     public void SelectionChoice(int selectionIndex)
     {
-        // 현재 이벤트 데이터가 없으면 함수 종료
         if (currentEvent == null) return;
-
-        // 다른 선택지를 또 누르지 못하도록 선택지 UI를 비활성화
+        hasSelectionBeenMade = true;
         if (eventSelections != null)
         {
             eventSelections.SetActive(false);
         }
-
-        // 선택한 결과 텍스트를 가져옴
+        if (currentTypingTween != null && currentTypingTween.IsActive())
+        {
+            currentTypingTween.Kill();
+        }
+        StopAllCoroutines();
         string resultText = currentEvent.Selections[selectionIndex].selectionEndText;
-
-        // 결과 텍스트를 출력하는 새로운 코루틴을 시작
+        isShowingResultText = true;
         StartCoroutine(ShowResultText(resultText));
     }
 
-    /// <summary>
-    /// 결과 텍스트를 타이핑 효과로 출력하는 코루틴
-    /// </summary>
     private IEnumerator ShowResultText(string textToAnimate)
     {
-        // 기존 텍스트에 공백을 만들기 위해 두 번 줄바꿈
         string fullText = eventTextBox.text + "\n";
         eventTextBox.text = fullText;
-
-        // 스크롤이 필요할 수 있으니 맨 아래로 이동
-        yield return null;
-        if (eventScrollRect != null) eventScrollRect.verticalNormalizedPosition = 0f;
 
         string trimmedLine = textToAnimate.Trim();
         int charCount = trimmedLine.Length;
         float duration = charCount * 0.05f;
-
+        fullTextToSkipTo = fullText + trimmedLine;
         isTyping = true;
-
-        // 이전에 사용했던 DOTween.To() 방식으로 결과 텍스트를 타이핑
         currentTypingTween = DOTween.To(
             () => 0,
-            (charIndex) => {
-                eventTextBox.text = fullText + trimmedLine.Substring(0, charIndex);
-            },
-            charCount,
-            duration
-        ).SetEase(Ease.Linear).OnComplete(() => {
+            (charIndex) => { eventTextBox.text = fullText + trimmedLine.Substring(0, charIndex); },
+            charCount, duration
+        ).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => {
             isTyping = false;
+            fullTextToSkipTo = "";
         });
+        yield return currentTypingTween.WaitForCompletion();
+        isShowingResultText = false;
+        StartCoroutine(WaitAndClosePanel(2.0f));
+    }
 
-        // 타이핑이 끝날 때까지 대기
-        yield return new WaitUntil(() => !isTyping);
-
-        // 모든 출력이 끝났으니 최종적으로 스크롤 기능 활성화 여부 결정
-        if (eventScrollRect != null)
-        {
-            if (eventTextBox.rectTransform.rect.height > eventScrollRect.viewport.rect.height)
-            {
-                eventScrollRect.enabled = true;
-                CheckScrollbarVisibility();
-            }
-        }
+    private IEnumerator WaitAndClosePanel(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        AnimatePanelToHidden(true);
     }
 
     public void InitSelection()
     {
         eventSelections.SetActive(true);
-        // UI에 배치된 모든 선택지 슬롯(Selection1, Selection2 등)을 순회합니다.
         for (int i = 0; i < eventSelections.transform.childCount; i++)
         {
-            // 현재 순번의 UI 선택지 자식 오브젝트를 가져옵니다. (예: "Selection1")
             Transform selectionUIObject = eventSelections.transform.GetChild(i);
-
-            // SO_Event에 현재 UI 슬롯에 해당하는 데이터가 있는지 확인합니다.
             if (i < currentEvent.Selections.Count)
             {
-                // 이전에 비활성화되었을 수 있으니, UI 오브젝트를 활성화합니다.
                 selectionUIObject.gameObject.SetActive(true);
-
-                // 이 UI 오브젝트의 자식들에서 TextMeshPro 컴포넌트를 모두 찾습니다.
-                // 첫 번째 컴포넌트가 메인 텍스트, 두 번째가 보조 텍스트라고 가정합니다.
                 TextMeshProUGUI[] texts = selectionUIObject.GetComponentsInChildren<TextMeshProUGUI>();
-
                 if (texts.Length >= 2)
                 {
-                    // 스크립터블 오브젝트의 텍스트를 할당합니다.
                     texts[0].text = currentEvent.Selections[i].selectionText;
                     texts[1].text = currentEvent.Selections[i].selectionUnderText;
                 }
@@ -263,9 +273,52 @@ public class EventManager : MonoBehaviour
             }
             else
             {
-                // 만약 이 UI 슬롯에 해당하는 데이터가 없다면, 비활성화하여 보이지 않게 합니다.
                 selectionUIObject.gameObject.SetActive(false);
             }
         }
     }
+
+    #region --- 애니메이션 함수 ---
+
+    private void AnimatePanelOnScreen(Action onComplete)
+    {
+        isPanelOnScreen = true;
+        eventBoardRect.DOAnchorPos(onScreenPosition, panelMoveDuration)
+            .SetEase(Ease.OutBack)
+            .SetUpdate(true)
+            .OnComplete(() => {
+                onComplete?.Invoke();
+            });
+    }
+
+    private void AnimatePanelToPeek()
+    {
+        isPanelOnScreen = false;
+        eventBoardRect.DOAnchorPos(offScreenPeekPosition, panelMoveDuration)
+            .SetEase(Ease.InBack)
+            .SetUpdate(true);
+    }
+
+    private void AnimatePanelToHidden(bool eventEnded)
+    {
+        isPanelOnScreen = false;
+        eventBoardRect.DOAnchorPos(offScreenHiddenPosition, panelMoveDuration)
+            .SetEase(Ease.InBack)
+            .SetUpdate(true)
+            .OnComplete(() => {
+                eventUIPanel.SetActive(false);
+                if (eventEnded)
+                {
+                    Time.timeScale = 1f;
+                    Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
+
+                    if (GameManager.Instance != null)
+                    {
+                        GameManager.Instance.EndEvent();
+                    }
+                }
+            });
+    }
+
+    #endregion
 }

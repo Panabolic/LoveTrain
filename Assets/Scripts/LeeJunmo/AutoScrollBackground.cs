@@ -3,7 +3,7 @@
 public class AutoScrollBackground : MonoBehaviour
 {
     [Tooltip("속도 정보를 가져올 TrainController를 여기에 연결해주세요.")]
-    public TrainController trainController;
+    public Train train;
 
     [Tooltip("카메라를 기준으로 배경 위치를 재설정합니다.")]
     public Transform cameraTransform;
@@ -13,24 +13,44 @@ public class AutoScrollBackground : MonoBehaviour
 
     private float spriteWidth;
 
+    private bool isScrolling = false; // ✨ [추가] 게임 상태에 따라 조절될 플래그
+
     void Start()
     {
         if (cameraTransform == null) cameraTransform = Camera.main.transform;
 
-        if (trainController == null)
+        if (train == null)
         {
             Debug.LogError("TrainController가 연결되지 않았습니다! 인스펙터에서 연결해주세요.", this.gameObject);
             this.enabled = false;
             return;
         }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameStateChanged += HandleGameStateChange;
+            // 현재 상태로 초기화
+            HandleGameStateChange(GameManager.Instance.CurrentState);
+        }
+    }
+
+    /// <summary>
+    /// GameManager로부터 상태 변경 신호를 받아 스크롤 여부를 결정
+    /// </summary>
+    private void HandleGameStateChange(GameState newState)
+    {
+        isScrolling = (newState == GameState.Playing);
     }
 
     void Update()
     {
-        if (trainController == null) return;
+        if (train == null) return;
+
+        // ✨ [추가] 스크롤이 불가능한 상태(Start, Event, Die)면 즉시 종료
+        if (!isScrolling || train == null) return;
 
         // ✨ 이제 TrainController.CurrentSpeed가 정상적으로 작동하므로 이 코드는 유효합니다.
-        float currentTrainSpeed = trainController.CurrentSpeed;
+        float currentTrainSpeed = train.CurrentSpeed;
 
         // 각 레이어를 패럴랙스 요소에 맞게 이동시킵니다.
         foreach (ParallaxLayer layer in layers)
@@ -38,7 +58,7 @@ public class AutoScrollBackground : MonoBehaviour
             // 속도가 0이면 움직이지 않으므로 계산할 필요가 없습니다.
             if (Mathf.Approximately(currentTrainSpeed, 0)) continue;
 
-            float movement = (currentTrainSpeed / 30) * layer.parallaxFactor * Time.deltaTime;
+            float movement = (currentTrainSpeed / 10) * layer.parallaxFactor * Time.deltaTime;
             layer.layerTransform.position -= new Vector3(movement, 0, 0);
         }
 

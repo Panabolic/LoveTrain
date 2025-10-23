@@ -7,7 +7,7 @@ public class Bullet : Projectile
     protected override void Awake()
     {
         base.Awake();
-        speed = 10.0f;
+        speed = 40.0f;
         damage = 10.0f;
     }
 
