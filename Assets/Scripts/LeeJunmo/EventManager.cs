@@ -46,7 +46,9 @@ public class EventManager : MonoBehaviour
     private bool hasSelectionBeenMade = false; // 선택지를 선택했는지
     private bool justSelected = false; // 방금 선택지를 클릭했는지 (스킵 방지용)
 
-    // ✨ [추가] 선택지 버튼 컴포넌트 리스트 (활성화/비활성화용)
+    // ✨ [추가] 패널 애니메이션이 재생 중인지 확인하는 플래그
+    private bool isAnimatingPanel = false;
+
     private List<Button> selectionButtons = new List<Button>();
 
     private void Awake()
@@ -66,10 +68,9 @@ public class EventManager : MonoBehaviour
         eventBoardRect.anchoredPosition = offScreenHiddenPosition;
         eventUIPanel.SetActive(false);
 
-        // 선택지 버튼 컴포넌트 미리 찾아두기
         if (eventSelections != null)
         {
-            selectionButtons.AddRange(eventSelections.GetComponentsInChildren<Button>(true)); // 비활성화된 것도 포함
+            selectionButtons.AddRange(eventSelections.GetComponentsInChildren<Button>(true));
         }
 
         DOTween.To(() => 0f, x => { }, 1f, 1f)
@@ -80,6 +81,9 @@ public class EventManager : MonoBehaviour
 
     public void StartEvent(SO_Event e)
     {
+        // ✨ 애니메이션 중복 실행 방지 (이미 실행 중이면 무시)
+        if (isAnimatingPanel) return;
+
         isTextFullyDisplayed = false;
         hasSelectionBeenMade = false;
         isShowingResultText = false;
@@ -94,7 +98,7 @@ public class EventManager : MonoBehaviour
         if (eventTitleBox != null) eventTitleBox.text = e.EventTitle;
         if (eventTextBox != null) eventTextBox.text = ""; // 텍스트 초기화
 
-        InitSelection(); // ✨ 여기서 선택지 내용을 채우고 '비활성화'함
+        InitSelection();
 
         eventBoardRect.anchoredPosition = offScreenHiddenPosition;
         eventUIPanel.SetActive(true);
@@ -107,6 +111,9 @@ public class EventManager : MonoBehaviour
 
     public void TEstEvent()
     {
+        // ✨ 애니메이션 중복 실행 방지
+        if (isAnimatingPanel) return;
+
         SO_Event e = eventDatabase.GetRandomEvent();
         if (e != null)
         {
@@ -147,7 +154,6 @@ public class EventManager : MonoBehaviour
         fullTextToSkipTo = "";
         isTextFullyDisplayed = true;
 
-        // ✨ [추가] 텍스트 출력이 끝나면 선택지 활성화
         EnableSelections();
     }
 
@@ -176,15 +182,12 @@ public class EventManager : MonoBehaviour
             fullTextToSkipTo = "";
             isShowingResultText = false;
 
-            // 메인 텍스트 스킵 시 처리
             if (!wasResultText)
             {
                 isTextFullyDisplayed = true;
-                // ✨ [추가] 메인 텍스트 스킵 시에도 선택지 활성화
                 EnableSelections();
             }
 
-            // 결과 텍스트 스킵 시 처리
             if (wasResultText)
             {
                 StartCoroutine(WaitAndClosePanel(2.0f));
@@ -195,6 +198,9 @@ public class EventManager : MonoBehaviour
         // --- 패널 토글 로직 ---
         if (toggleInput && !isTyping && isTextFullyDisplayed && !hasSelectionBeenMade)
         {
+            // ✨ 애니메이션 중에는 토글 불가
+            if (isAnimatingPanel) return;
+
             if (isPanelOnScreen)
             {
                 AnimatePanelToPeek();
@@ -206,42 +212,35 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// ✨ [수정됨] 선택지 클릭 시, 본문 텍스트가 타이핑 중이었다면 즉시 완료시킴
-    /// </summary>
     public void SelectionChoice(int selectionIndex)
     {
-        if (currentEvent == null || hasSelectionBeenMade) return; // 이미 선택했으면 무시
+        // ✨ [핵심 수정] 애니메이션 중이거나, 이미 선택했으면 무시
+        if (isAnimatingPanel || currentEvent == null || hasSelectionBeenMade) return;
 
-        // 1. 방금 선택했음을 기록 (클릭이 스킵으로 오인되는 것 방지)
         justSelected = true;
         hasSelectionBeenMade = true;
 
-        // 2. 만약 아직 메인 텍스트가 타이핑 중이었다면(스킵 안 하고 바로 선택지 클릭 시) 즉시 완료
         if (isTyping && !isShowingResultText)
         {
-            StopAllCoroutines(); // TypeText 코루틴 중지
+            StopAllCoroutines();
             if (currentTypingTween != null && currentTypingTween.IsActive())
             {
-                currentTypingTween.Kill(); // DOTween 중지
+                currentTypingTween.Kill();
             }
-            // 최종 텍스트 표시 (fullTextToSkipTo는 TypeText 시작 시 이미 계산됨)
             if (!string.IsNullOrEmpty(fullTextToSkipTo))
             {
                 eventTextBox.text = fullTextToSkipTo;
             }
             isTyping = false;
             fullTextToSkipTo = "";
-            isTextFullyDisplayed = true; // 메인 텍스트 완료됨
+            isTextFullyDisplayed = true;
         }
 
-        // 3. 선택지 UI 숨기기
         if (eventSelections != null)
         {
             eventSelections.SetActive(false);
         }
 
-        // 4. 결과 텍스트 출력 시작
         string resultText = currentEvent.Selections[selectionIndex].selectionEndText;
         isShowingResultText = true;
         StartCoroutine(ShowResultText(resultText));
@@ -255,8 +254,8 @@ public class EventManager : MonoBehaviour
         string trimmedLine = textToAnimate.Trim();
         int charCount = trimmedLine.Length;
         float duration = charCount * 0.05f;
-        fullTextToSkipTo = fullText + trimmedLine; // 결과 텍스트 스킵용
-        isTyping = true; // 결과 텍스트 타이핑 시작
+        fullTextToSkipTo = fullText + trimmedLine;
+        isTyping = true;
         currentTypingTween = DOTween.To(
             () => 0,
             (charIndex) => { eventTextBox.text = fullText + trimmedLine.Substring(0, charIndex); },
@@ -266,7 +265,7 @@ public class EventManager : MonoBehaviour
             fullTextToSkipTo = "";
         });
         yield return currentTypingTween.WaitForCompletion();
-        isShowingResultText = false; // 결과 텍스트 타이핑 끝
+        isShowingResultText = false;
         StartCoroutine(WaitAndClosePanel(2.0f));
     }
 
@@ -276,16 +275,13 @@ public class EventManager : MonoBehaviour
         AnimatePanelToHidden(true);
     }
 
-    /// <summary>
-    /// ✨ [수정됨] 선택지 UI를 초기화하고 '비활성화' 상태로 만듦
-    /// </summary>
     public void InitSelection()
     {
-        eventSelections.SetActive(true); // 우선 부모는 활성화
+        eventSelections.SetActive(true);
         for (int i = 0; i < eventSelections.transform.childCount; i++)
         {
             Transform selectionUIObject = eventSelections.transform.GetChild(i);
-            Button button = selectionButtons.Find(b => b.transform == selectionUIObject); // 미리 찾아둔 버튼 가져오기
+            Button button = selectionButtons.Find(b => b.transform == selectionUIObject);
 
             if (i < currentEvent.Selections.Count)
             {
@@ -297,7 +293,6 @@ public class EventManager : MonoBehaviour
                     texts[1].text = currentEvent.Selections[i].selectionUnderText;
                 }
 
-                // ✨ 버튼을 '클릭 불가능' 상태로 만듦
                 if (button != null) button.interactable = false;
             }
             else
@@ -307,14 +302,10 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// ✨ [새 함수] 선택지 버튼들을 '클릭 가능' 상태로 만듦
-    /// </summary>
     private void EnableSelections()
     {
         foreach (Button button in selectionButtons)
         {
-            // 활성화된 버튼들만 클릭 가능하게 변경
             if (button.gameObject.activeInHierarchy)
             {
                 button.interactable = true;
@@ -328,10 +319,12 @@ public class EventManager : MonoBehaviour
     private void AnimatePanelOnScreen(Action onComplete)
     {
         isPanelOnScreen = true;
+        isAnimatingPanel = true; // ✨ 애니메이션 시작
         eventBoardRect.DOAnchorPos(onScreenPosition, panelMoveDuration)
             .SetEase(Ease.OutBack)
             .SetUpdate(true)
             .OnComplete(() => {
+                isAnimatingPanel = false; // ✨ 애니메이션 완료
                 onComplete?.Invoke();
             });
     }
@@ -339,18 +332,24 @@ public class EventManager : MonoBehaviour
     private void AnimatePanelToPeek()
     {
         isPanelOnScreen = false;
+        isAnimatingPanel = true; // ✨ 애니메이션 시작
         eventBoardRect.DOAnchorPos(offScreenPeekPosition, panelMoveDuration)
             .SetEase(Ease.InBack)
-            .SetUpdate(true);
+            .SetUpdate(true)
+            .OnComplete(() => {
+                isAnimatingPanel = false; // ✨ 애니메이션 완료
+            });
     }
 
     private void AnimatePanelToHidden(bool eventEnded)
     {
         isPanelOnScreen = false;
+        isAnimatingPanel = true; // ✨ 애니메이션 시작
         eventBoardRect.DOAnchorPos(offScreenHiddenPosition, panelMoveDuration)
             .SetEase(Ease.InBack)
             .SetUpdate(true)
             .OnComplete(() => {
+                isAnimatingPanel = false; // ✨ 애니메이션 완료
                 eventUIPanel.SetActive(false);
                 if (eventEnded)
                 {

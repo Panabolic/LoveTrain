@@ -75,7 +75,7 @@ public class Train : MonoBehaviour
         {
             CameraShakeManager.Instance.ShakeCamera();
         }
-
+/*
         switch (trainCar)
         {
             case TrainCar.front:
@@ -86,7 +86,7 @@ public class Train : MonoBehaviour
 
             case TrainCar.rear:
                 break;
-        }
+        }*/
 
         // 속도 감소 로직
         if (CurrentSpeed > deathSpeedThreshold) // ✨ 0 대신 임계값 사용
