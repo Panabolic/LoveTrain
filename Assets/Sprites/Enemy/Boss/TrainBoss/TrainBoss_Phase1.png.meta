@@ -1,0 +1,558 @@
+fileFormatVersion: 2
+guid: 1f0a287e147292d4a99980c996e0455d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7904409331385724153
+    second: boss1 1phase.sheet_0
+  - first:
+      213: 6638624575553925100
+    second: boss1 1phase.sheet_1
+  - first:
+      213: -36173248843121661
+    second: boss1 1phase.sheet_2
+  - first:
+      213: -5612476896615504626
+    second: boss1 1phase.sheet_3
+  - first:
+      213: 8414583353200359276
+    second: boss1 1phase.sheet_4
+  - first:
+      213: -1841974287513973397
+    second: boss1 1phase.sheet_5
+  - first:
+      213: -2702077201332366007
+    second: boss1 1phase.sheet_6
+  - first:
+      213: 8383415684636478739
+    second: boss1 1phase.sheet_7
+  - first:
+      213: 5460212880190297760
+    second: boss1 1phase.sheet_8
+  - first:
+      213: -1284847138243367311
+    second: boss1 1phase.sheet_9
+  - first:
+      213: -6054283325793993357
+    second: boss1 1phase.sheet_10
+  - first:
+      213: 6196946165872347498
+    second: boss1 1phase.sheet_11
+  - first:
+      213: -7092679755661129507
+    second: boss1 1phase.sheet_12
+  - first:
+      213: -5284041206923095126
+    second: boss1 1phase.sheet_13
+  - first:
+      213: -5054062286503714253
+    second: boss1 1phase.sheet_14
+  - first:
+      213: -4603904576285960895
+    second: boss1 1phase.sheet_15
+  - first:
+      213: -8254286328787760946
+    second: boss1 1phase.sheet_16
+  - first:
+      213: -2710110078036993162
+    second: boss1 1phase.sheet_17
+  - first:
+      213: -4833142118059855101
+    second: boss1 1phase.sheet_18
+  - first:
+      213: 8027392793606710015
+    second: boss1 1phase.sheet_19
+  - first:
+      213: 7364398984812581257
+    second: boss1 1phase.sheet_20
+  - first:
+      213: 8858967855622715919
+    second: boss1 1phase.sheet_21
+  - first:
+      213: 5014691283797846469
+    second: boss1 1phase.sheet_22
+  - first:
+      213: -7119382334586846074
+    second: boss1 1phase.sheet_23
+  - first:
+      213: -218989704236548540
+    second: boss1 1phase.sheet_24
+  - first:
+      213: -827251040778580111
+    second: boss1 1phase.sheet_25
+  - first:
+      213: 1761311163138489467
+    second: boss1 1phase.sheet_26
+  - first:
+      213: 1547106266784291802
+    second: boss1 1phase.sheet_27
+  - first:
+      213: -3616244243099997960
+    second: boss1 1phase.sheet_28
+  - first:
+      213: 1881038836105494695
+    second: boss1 1phase.sheet_29
+  - first:
+      213: 4205209685116968015
+    second: boss1 1phase.sheet_30
+  - first:
+      213: 8971097588128338577
+    second: boss1 1phase.sheet_31
+  - first:
+      213: -7801579002132897081
+    second: boss1 1phase.sheet_32
+  - first:
+      213: 4408242334240200052
+    second: boss1 1phase.sheet_33
+  - first:
+      213: -865921255697096349
+    second: boss1 1phase.sheet_34
+  - first:
+      213: 8246552284206992841
+    second: boss1 1phase.sheet_35
+  - first:
+      213: -3139565687332563967
+    second: boss1 1phase.sheet_36
+  - first:
+      213: 6438496564412603669
+    second: boss1 1phase.sheet_37
+  - first:
+      213: -2569434126475125079
+    second: boss1 1phase.sheet_38
+  - first:
+      213: 6404384472723950715
+    second: boss1 1phase.sheet_39
+  - first:
+      213: 1428395996411067500
+    second: boss1 1phase.sheet_40
+  - first:
+      213: -2766224083578137699
+    second: boss1 1phase.sheet_41
+  - first:
+      213: -8437328534886580322
+    second: boss1 1phase.sheet_42
+  - first:
+      213: 8807986581121847546
+    second: boss1 1phase.sheet_43
+  - first:
+      213: -1434051353247253291
+    second: boss1 1phase.sheet_44
+  - first:
+      213: -848552419825529794
+    second: boss1 1phase.sheet_45
+  - first:
+      213: -4189460986048065446
+    second: boss1 1phase.sheet_46
+  - first:
+      213: 5252432209949035714
+    second: boss1 1phase.sheet_47
+  - first:
+      213: 4303788748395430084
+    second: boss1 1phase.sheet_48
+  - first:
+      213: -5093813771677129682
+    second: boss1 1phase.sheet_49
+  - first:
+      213: -4131055413607097531
+    second: boss1 1phase.sheet_50
+  - first:
+      213: 7018595325014887045
+    second: boss1 1phase.sheet_51
+  - first:
+      213: 7226723942106210020
+    second: boss1 1phase.sheet_52
+  - first:
+      213: 6665085321428923444
+    second: boss1 1phase.sheet_53
+  - first:
+      213: 7645883786651533444
+    second: boss1 1phase.sheet_54
+  - first:
+      213: -5109309331173150918
+    second: boss1 1phase.sheet_55
+  - first:
+      213: 4887961421549913740
+    second: boss1 1phase.sheet_56
+  - first:
+      213: 5154944060367860513
+    second: boss1 1phase.sheet_57
+  - first:
+      213: 4591897483059050791
+    second: boss1 1phase.sheet_58
+  - first:
+      213: 4907007670483270214
+    second: boss1 1phase.sheet_59
+  - first:
+      213: -7664624627511354253
+    second: boss1 1phase.sheet_60
+  - first:
+      213: 1066130797766892658
+    second: boss1 1phase.sheet_61
+  - first:
+      213: 7526686715800977506
+    second: boss1 1phase.sheet_62
+  - first:
+      213: -5777297353783769527
+    second: boss1 1phase.sheet_63
+  - first:
+      213: -6592787459491921900
+    second: boss1 1phase.sheet_64
+  - first:
+      213: -3588189444478048056
+    second: boss1 1phase.sheet_65
+  - first:
+      213: 7653363361699111275
+    second: boss1 1phase.sheet_66
+  - first:
+      213: -905954038734540010
+    second: boss1 1phase.sheet_67
+  - first:
+      213: -5121742331586519542
+    second: boss1 1phase.sheet_68
+  - first:
+      213: 6532401472192774557
+    second: boss1 1phase.sheet_69
+  - first:
+      213: 550727726951071807
+    second: boss1 1phase.sheet_70
+  - first:
+      213: -2563385028656304460
+    second: boss1 1phase.sheet_71
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 28
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TrainBoss_Phase1_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 264
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6b73eca66377dd4fbd998a8342b8352
+      internalID: 916845002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TrainBoss_Phase1_1
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 0
+        width: 264
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1607af78610312e40817984e2c3ae25b
+      internalID: 910813553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TrainBoss_Phase1_2
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 0
+        width: 264
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 691fd07298ddd9c44a2a83e8b17461a7
+      internalID: 1644108632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TrainBoss_Phase1_3
+      rect:
+        serializedVersion: 2
+        x: 961
+        y: 0
+        width: 264
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2927ceb329ab44f4cad3ac0bdc847bf3
+      internalID: -1280286871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TrainBoss_Phase1_4
+      rect:
+        serializedVersion: 2
+        x: 1281
+        y: 0
+        width: 264
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b71c8cac7c48430479ed244e427e7b1e
+      internalID: -327269401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TrainBoss_Phase1_5
+      rect:
+        serializedVersion: 2
+        x: 1601
+        y: 0
+        width: 264
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0aea10d6fcea3d4a92862973d1a8355
+      internalID: 1278851253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TrainBoss_Phase1_6
+      rect:
+        serializedVersion: 2
+        x: 1921
+        y: 0
+        width: 264
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5abec66bf91885f439b4910b3a3914a4
+      internalID: 1809700690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TrainBoss_Phase1_7
+      rect:
+        serializedVersion: 2
+        x: 2241
+        y: 0
+        width: 264
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68cd7f44d1d20a0428fa004240bdeab4
+      internalID: 1336852917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 45a7bbab9e152b0459a44476a45add4a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":264.0,"y":36.0},"gridSpriteOffset":{"x":1.0,"y":28.0},"gridSpritePadding":{"x":56.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      TrainBoss_Phase1_0: 916845002
+      TrainBoss_Phase1_1: 910813553
+      TrainBoss_Phase1_2: 1644108632
+      TrainBoss_Phase1_3: -1280286871
+      TrainBoss_Phase1_4: -327269401
+      TrainBoss_Phase1_5: 1278851253
+      TrainBoss_Phase1_6: 1809700690
+      TrainBoss_Phase1_7: 1336852917
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

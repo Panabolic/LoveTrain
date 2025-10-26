@@ -7,10 +7,11 @@ using DG.Tweening; // ✨ 1. DOTween 네임스페이스를 추가합니다.
 /// </summary>
 public enum GameState
 {
-    Start,   // 기차 출발 전, StartObject 조준 상태
-    Playing, // 게임 플레이 중 (배경 스크롤, 몬스터 스폰)
-    Event,   // 이벤트 발생으로 일시 정지된 상태 (EventManager가 제어)
-    Die      // 플레이어 사망
+    Start,      // 기차 출발 전, StartObject 조준 상태
+    Playing,    // 게임 플레이 중 (배경 스크롤, 몬스터 스폰)
+    Event,      // 이벤트 발생으로 일시 정지된 상태 (EventManager가 제어)
+    Boss,       // 보스전
+    Die         // 플레이어 사망
 }
 
 public class GameManager : MonoBehaviour

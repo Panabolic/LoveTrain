@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum TrainCar
 {
@@ -9,6 +7,9 @@ public enum TrainCar
 
 public class Train : MonoBehaviour
 {
+    // Components
+    public Animator[] carsAnim;
+
     [Tooltip("A/D키와 상관없이 고정된 기차의 속도 값입니다.")]
     [SerializeField] private float baseSpeedValue = 200f;
 
@@ -26,6 +27,7 @@ public class Train : MonoBehaviour
 
     private void Awake()
     {
+        carsAnim = GetComponentsInChildren<Animator>();
         //carColliders = GetComponentsInChildren<Collider2D>().ToList();
     }
 
@@ -42,22 +44,19 @@ public class Train : MonoBehaviour
         _currentSpeedForInspector = CurrentSpeed;
     }
 
-    public virtual void TakeDamage(float damageAmount, TrainCar trainCar)
+    public virtual void TakeDamage(float damageAmount/*, TrainCar trainCar*/)
     {
-        switch (trainCar)
+        /*switch (trainCar)
         {
             case TrainCar.front:
-
                 break;
 
             case TrainCar.middle:
-
                 break;
 
             case TrainCar.rear:
-
                 break;
-        }
+        }*/
 
         if(CurrentSpeed > 0)
         {

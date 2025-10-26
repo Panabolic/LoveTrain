@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
         currentHP       = maxHP;
         isAlive         = true;
         sprite.enabled  = true;
-        sprite.color    = Color.red;
+        sprite.color    = Color.white;
 
         // Layer 변경
         gameObject.layer = LayerMask.NameToLayer("Enemy");
@@ -76,8 +76,8 @@ public class Enemy : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
 
         // 임시 색깔
-        sprite.color = Color.darkRed;
-        //animator.SetTrigger("Die");
+        sprite.color = Color.red;
+        animator.SetTrigger("die");
 
         levelManager.GainExperience(exp);
         yield return new WaitForSeconds(deathToDeactive);

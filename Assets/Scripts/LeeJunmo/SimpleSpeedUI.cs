@@ -29,6 +29,11 @@ public class SimpleSpeedUI : MonoBehaviour
 
             speedText.text = $"{displaySpeed}";
 
+            // displaySpeed에 따른 Train animation clip speed 조절
+            foreach (Animator carAnim in train.carsAnim)
+            {
+                carAnim.SetFloat("moveSpeed", Mathf.Clamp(displaySpeed, 0, 300) * 0.05f);
+            }
         }
         else
         {
