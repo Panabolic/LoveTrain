@@ -9,6 +9,8 @@ public class StartObject : MonoBehaviour
     [SerializeField] private LayerMask projectileLayer;
     [SerializeField] private GameObject otherUI;
     [SerializeField] private Sprite leverAfter;
+    [SerializeField] private GameObject MouseUI;
+    [SerializeField] private GameObject KeyUI;
 
     [Header("✨ 퇴장 애니메이션")]
     [Tooltip("스프라이트 변경 후 -x축(왼쪽)으로 이동할 속도")]
@@ -85,6 +87,8 @@ public class StartObject : MonoBehaviour
             sr.sprite = leverAfter;
         }
 
+        MouseUI.SetActive(false);
+        KeyUI.SetActive(true);
         // 2. 콜라이더를 끕니다 (다른 총알에 또 맞지 않도록)
         GetComponent<Collider2D>().enabled = false;
 
@@ -93,6 +97,7 @@ public class StartObject : MonoBehaviour
 
         // 4. 설정된 시간(4초) 동안 대기
         yield return new WaitForSeconds(destroyDelay);
+        KeyUI.SetActive(false);
 
         // 5. 오브젝트 파괴
         Destroy(gameObject);

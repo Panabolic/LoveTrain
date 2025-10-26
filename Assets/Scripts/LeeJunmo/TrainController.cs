@@ -16,7 +16,7 @@ public class TrainController : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance == null || GameManager.Instance.CurrentState == GameState.Die)
+        if (GameManager.Instance == null || GameManager.Instance.CurrentState == GameState.Die || GameManager.Instance.CurrentState == GameState.Start)
         {
             return;
         }

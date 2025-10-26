@@ -28,15 +28,15 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        // ✨ [핵심 수정]
-        // 1. .triggered (클릭 시) -> .IsPressed() (누르고 있는 동안)
-        // 2. Time.time >= nextFireTime (쿨타임이 지났는지 확인)
-        if (shootAction.IsPressed() && Time.time >= nextFireTime)
+        if (GameManager.Instance.CurrentState != GameState.Die)
         {
-            // ✨ [추가] 다음 발사 시간을 현재 시간 + 쿨타임으로 갱신
-            nextFireTime = Time.time + fireRate;
+            if (shootAction.IsPressed() && Time.time >= nextFireTime)
+            {
+                // ✨ [추가] 다음 발사 시간을 현재 시간 + 쿨타임으로 갱신
+                nextFireTime = Time.time + fireRate;
 
-            Shoot();
+                Shoot();
+            }
         }
     }
 
