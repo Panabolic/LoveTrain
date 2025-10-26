@@ -10524,8 +10524,8 @@ MonoBehaviour:
   Level: 1
   _currentSpeedForInspector: 0
   deathMoveDistance: -60
-  deathMoveSpeed: 80
-  destroyDelay: 3
+  deathMoveSpeed: 30
+  destroyDelay: 4
   tempDieUI: {fileID: 884425090}
 --- !u!50 &1426277363
 Rigidbody2D:

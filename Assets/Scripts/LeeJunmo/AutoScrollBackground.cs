@@ -39,7 +39,7 @@ public class AutoScrollBackground : MonoBehaviour
     /// </summary>
     private void HandleGameStateChange(GameState newState)
     {
-        isScrolling = (newState == GameState.Playing);
+        isScrolling = (newState == GameState.Playing || newState == GameState.Die);
     }
 
     void Update()
