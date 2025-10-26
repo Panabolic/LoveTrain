@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,9 @@ public enum TrainCar
 
 public class Train : MonoBehaviour
 {
+    // Components
+    public Animator[] carsAnim;
+
     [Tooltip("A/D키와 상관없이 고정된 기차의 속도 값입니다.")]
     [SerializeField] private float baseSpeedValue = 460;
 
@@ -44,6 +48,7 @@ public class Train : MonoBehaviour
 
     private void Awake()
     {
+        carsAnim = GetComponentsInChildren<Animator>();
         //carColliders = GetComponentsInChildren<Collider2D>().ToList();
     }
 
@@ -62,7 +67,7 @@ public class Train : MonoBehaviour
         _currentSpeedForInspector = CurrentSpeed;
     }
 
-    public virtual void TakeDamage(float damageAmount, TrainCar trainCar)
+    public virtual void TakeDamage(float damageAmount/*, TrainCar trainCar*/)
     {
         if (isDead) return;
 
@@ -74,15 +79,12 @@ public class Train : MonoBehaviour
         switch (trainCar)
         {
             case TrainCar.front:
-
                 break;
 
             case TrainCar.middle:
-
                 break;
 
             case TrainCar.rear:
-
                 break;
         }
 

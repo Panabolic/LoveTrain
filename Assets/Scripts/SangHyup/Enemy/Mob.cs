@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Mob : Enemy
@@ -13,16 +14,21 @@ public class Mob : Enemy
     [Tooltip("적용될 최고 속도 배율 (예: 2.0 = 200%)")]
     [SerializeField] protected float maxSpeedMultiplier = 2.0f;
 
+    private Vector2 moveDirection = Vector2.zero;
+
     // Target Components
     protected TrainController trainController;
 
-    public System.Action<Mob> OnDied;
+    public Action<Mob> OnDied;
 
     protected override void Awake()
     {
         base.Awake();
+
+        // Get components
         rigid2D = GetComponent<Rigidbody2D>();
-        // "Player" 태그를 가진 오브젝트에서 TrainController를 찾아옵니다.
+
+        // Get target components
         trainController = GameObject.FindWithTag("Player").GetComponent<TrainController>();
     }
 
@@ -53,9 +59,9 @@ public class Mob : Enemy
     {
         if (trainController == null) return; // TrainController가 없으면 실행 중지
 
-        //if (!isAlive) return; // 주석 처리된 기존 코드
+        // Move Direction Setting
+        SetMoveDirection(targetRigid.position);
 
-        // ✨ [핵심 수정]
         // 기차의 'X위치 퍼센티지'를 기준으로 0~1 사이의 비율을 계산합니다.
         float speedRate = Mathf.InverseLerp(
             trainController.MinXPosition,      // 기차의 최소 X위치
@@ -79,43 +85,70 @@ public class Mob : Enemy
             currentMultiplier = Mathf.Lerp(maxSpeedMultiplier, minSpeedMultiplier, speedRate);
         }
 
-        // 죽으면 왼쪽으로 확 날라가게
+        // 죽으면 왼쪽으로 확 날아가게
         if (!isAlive)
         {
-            float _finalMoveSpeed = 20.0f * currentMultiplier;
-            transform.position = Vector2.MoveTowards(transform.position,
-                                                    new Vector2(transform.position.x - 1, transform.position.y),
-                                                    _finalMoveSpeed * Time.fixedDeltaTime);
+            moveDirection           = Vector2.left;
+            float deathMoveSpeed    = 20.0f * currentMultiplier;
+
+            rigid2D.linearVelocity = new Vector2(deathMoveSpeed * moveDirection.x, rigid2D.linearVelocity.y);
+
+            return;
         }
+
+        // Set sprite to move direction
+        sprite.flipX = (moveDirection.x > 0f);
 
         // 최종 속력 = 적의 기본 속력 * 현재 계산된 배율
         float finalMoveSpeed = moveSpeed * currentMultiplier;
 
         // 이동 로직 (기존과 동일)
-        if (finalMoveSpeed > 0 && isAlive) // ✨ 살아있을 때만 타겟을 향해 이동
+        if (finalMoveSpeed > 0 && isAlive == true)
         {
-            transform.position = Vector2.MoveTowards(transform.position, targetRigid.position, finalMoveSpeed * Time.fixedDeltaTime);
+            rigid2D.linearVelocity = new Vector2(finalMoveSpeed * moveDirection.x, rigid2D.linearVelocity.y);
         }
+    }
+
+    /// <summary>
+    /// 1D move direction setting for GroundMob
+    /// </summary>
+    protected virtual void SetMoveDirection(Vector2 targetPos)
+    {
+        float x = targetPos.x - transform.position.x;
+
+        if (x > 0f)
+        {
+            moveDirection = Vector2.right;
+            sprite.flipX = (moveDirection.x > 0f);
+            return;
+        }
+        if (x < 0f)
+        {
+            moveDirection = Vector2.left;
+            sprite.flipX = (moveDirection.x > 0f);
+            return;
+        }
+
+        moveDirection = Vector2.zero;
+        sprite.flipX = (moveDirection.x > 0f);
+        return;
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
         {
-            // collision.transform.GetComponent<Train>().TakeDamage(damage, TrainCar.front); // 기존 코드
-
-            //GetComponentInParent 사용 예시 (만약 Train 컴포넌트가 부모에 있다면)
             Train train = collision.transform.GetComponentInParent<Train>();
+
             if (train != null)
             {
-                train.TakeDamage(damage, TrainCar.front); // Train 스크립트에 맞게 수정 필요
+                train.TakeDamage(damage); // Train 스크립트에 맞게 수정 필요
                 if (CameraShakeManager.Instance != null)
                 {
                     CameraShakeManager.Instance.ShakeCamera(); // 기본 설정으로 흔들기
                                                                // 또는 원하는 값으로 흔들기: CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
                 }
             }
-
 
             StartCoroutine(Die());
         }
