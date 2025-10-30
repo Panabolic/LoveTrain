@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,13 +8,17 @@ public class TrainBoss : Boss
     // Components
     protected Rigidbody2D rigid2D;
 
-    [Tooltip("±âÂ÷ º¸½ºÀÇ ÀÌµ¿¼Óµµ km/h")]
+    [Tooltip("ì´ë™ ì†ë„ (km/h)")]
     [SerializeField] private float moveSpeed = 20.0f;
-    [Tooltip("ÇÇ°İ ½Ã ³Ë¹é ¼Óµµ km/h")]
-    [SerializeField] private float knockbackSpeed = 5.0f;
-    [Tooltip("2 ÆäÀÌÁî ÁøÀÔÇÏ´Â ³²Àº Ã¼·Â Á¶°Ç")]
+    [Tooltip("Phase 1 í”¼ê²© ë„‰ë°± í¼ì„¼íŠ¸ (%)")]
+    [Range(0f, 1f)]
+    [SerializeField] private float p1KnockbackRatio = 0.9f;
+    [Tooltip("Phase 2 ì „í™˜ ê¸°ì¤€")]
     [Range(0f, 1f)]
     [SerializeField] private float phase2HpRatio = 0.4f;
+    [Tooltip("Phase 2 í”¼ê²© ë„‰ë°± í¼ì„¼íŠ¸ (%)")]
+    [Range(0f, 1f)]
+    [SerializeField] private float p2KnockbackRatio = 0.7f;
 
 
     private Vector2 moveDirection = Vector2.zero;
@@ -74,16 +79,21 @@ public class TrainBoss : Boss
     {
         base.TakeDamage(damageAmount);
 
-        /* »ç¸Á ¿¬Ãâ ÇÊ¿äÇÏ¸é ¿©±â¿¡ Ãß°¡ */
+        /* ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ß°ï¿½ */
 
-        // HP exceeds 2 phase condition
-        if (currentHP <= maxHP * phase2HpRatio)
-        {
-            
-        }
+        EnterPhase2();
 
         // Knockback to opposite direction
-        rigid2D.linearVelocity = new Vector2(knockbackSpeed * -moveDirection.x, rigid2D.linearVelocity.y);
+        rigid2D.linearVelocity = new Vector2(moveSpeed * p1KnockbackRatio * -moveDirection.x, rigid2D.linearVelocity.y);
+    }
+
+    private void EnterPhase2()
+    {
+        if (currentHP > maxHP * phase2HpRatio) return;
+
+        animator.SetTrigger("phase2");
+
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -94,15 +104,15 @@ public class TrainBoss : Boss
 
             if (train != null)
             {
-                train.TakeDamage(damage); // Train ½ºÅ©¸³Æ®¿¡ ¸Â°Ô ¼öÁ¤ ÇÊ¿ä
+                train.TakeDamage(damage); // Train ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
                 if (CameraShakeManager.Instance != null)
                 {
                     CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
-                                                               // ¶Ç´Â ¿øÇÏ´Â °ªÀ¸·Î Èçµé±â: CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
+                                                               // ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
                 }
             }
 
-            /* ÇÃ·¹ÀÌ¾î Á×ÀÌ±â */
+            /* ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½ */
         }
     }
 

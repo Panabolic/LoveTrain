@@ -1,5 +1,5 @@
 using UnityEngine;
-using System; // Action ÀÌº¥Æ®¸¦ À§ÇØ ÇÊ¿ä
+using System; // Action ï¿½Ìºï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
 
 public class Spawner : MonoBehaviour
 {
@@ -8,15 +8,15 @@ public class Spawner : MonoBehaviour
 
     private float timer;
 
-    private bool isSpawning = false; // GameManager°¡ Á¦¾î
+    private bool isSpawning = false; // GameManagerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private void Start()
     {
-        // GameManagerÀÇ »óÅÂ º¯°æ ÀÌº¥Æ®¸¦ ±¸µ¶
+        // GameManagerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnGameStateChanged += HandleGameStateChange;
-            // ÇöÀç »óÅÂ·Î ÃÊ±âÈ­
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ê±ï¿½È­
             HandleGameStateChange(GameManager.Instance.CurrentState);
         }
     }
@@ -28,14 +28,14 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        // 'Playing' »óÅÂ°¡ ¾Æ´Ï¸é ¾Æ¹«°Íµµ ÇÏÁö ¾ÊÀ½
+        // 'Playing' ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´Ï¸ï¿½ ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (!isSpawning) return;
 
-        // ToDo: °¢ Enemyº°·Î ½ºÆù Å¸ÀÌ¸Ó ¸¸µé±â
+        // ToDo: ï¿½ï¿½ Enemyï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
         timer += Time.deltaTime;
 
-        // ToDo: °¢ Enemyº°·Î if¹® ¸¸µé±â
-        // Pooled Enemy°¡ 5¸¶¸® ÀÌÇÏÀÏ ¶§ 1ÃÊ¸¶´Ù ½ºÆù
+        // ToDo: ï¿½ï¿½ Enemyï¿½ï¿½ï¿½ï¿½ ifï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+        // Pooled Enemyï¿½ï¿½ 5ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 1ï¿½Ê¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (timer > 1.0f)
         {
             Spawn();
@@ -45,7 +45,7 @@ public class Spawner : MonoBehaviour
     }
 
     /// <summary>
-    /// GameManagerÀÇ »óÅÂ º¯°æ¿¡ µû¶ó ½ºÆù ½ÃÀÛ/Á¤Áö¸¦ °áÁ¤ÇÕ´Ï´Ù.
+    /// GameManagerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½æ¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
     /// </summary>
     private void HandleGameStateChange(GameState newState)
     {
@@ -58,7 +58,7 @@ public class Spawner : MonoBehaviour
 
         enemy.transform.position = spawnPoints[UnityEngine.Random.Range(1, spawnPoints.Length)].position;
 
-        enemy.GetComponent<Mob>().OnDied -= RespawnEnemy; // Áßº¹ ±¸µ¶ ¹æÁö
+        enemy.GetComponent<Mob>().OnDied -= RespawnEnemy; // ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         enemy.GetComponent<Mob>().OnDied += RespawnEnemy;
     }
 

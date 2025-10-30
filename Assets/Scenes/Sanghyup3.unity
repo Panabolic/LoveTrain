@@ -168,8 +168,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   carsAnim: []
   baseSpeedValue: 200
+  deathSpeedThreshold: 160
   Level: 1
   _currentSpeedForInspector: 0
+  deathMoveDistance: -30
+  deathMoveSpeed: 10
+  destroyDelay: 2
+  tempDieUI: {fileID: 0}
 --- !u!50 &18615970
 Rigidbody2D:
   serializedVersion: 5
@@ -2373,6 +2378,8 @@ MonoBehaviour:
     m_Bits: 256
   otherUI: {fileID: 122659874}
   leverAfter: {fileID: -560888265471310478, guid: caa89508701dcf844a2c4ca1b0e9f4d1, type: 3}
+  MouseUI: {fileID: 0}
+  KeyUI: {fileID: 0}
   moveSpeed: 30
   destroyDelay: 4
 --- !u!61 &541883009
@@ -2413,7 +2420,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.87234044}
+    oldSize: {x: 2.9375, y: 2.5625}
     newSize: {x: 0.47, y: 0.41}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3602,7 +3609,7 @@ MonoBehaviour:
   maxHP: 800
   damage: 500
   exp: 0
-  moveSpeed: 20
+  moveSpeed: 15
   knockbackSpeed: 5
   phase2HpRatio: 0.4
 --- !u!61 &876333404
@@ -3843,6 +3850,9 @@ MonoBehaviour:
   enemies:
   - {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
   - {fileID: 4821721425770472742, guid: 5310438f295510d438ac35837755d237, type: 3}
+  - {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
+  - {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
+  - {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
 --- !u!1 &1016817427
 GameObject:
   m_ObjectHideFlags: 0

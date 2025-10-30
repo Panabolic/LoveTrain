@@ -54,7 +54,7 @@ public class PoolManager : MonoBehaviour
 
         if (selected == null)
         {
-            //PoolManager ÇÏÀ§¿¡ ¸÷ »ý¼º ÈÄ selected¿¡ ÇÒ´ç, Ç®¿¡ Ãß°¡
+            //PoolManager ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ selectedï¿½ï¿½ ï¿½Ò´ï¿½, Ç®ï¿½ï¿½ ï¿½ß°ï¿½
             selected = Instantiate(enemies[index], transform);
             pools[index].Add(selected);
         }
