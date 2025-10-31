@@ -3,8 +3,12 @@ using System.Collections.Generic;
 
 public enum EnemyName
 {
-    Monster,
-    FlyMonster
+    Monster, FlyMonster
+}
+
+public enum BossName
+{
+    TrainBoss
 }
 
 public class PoolManager : MonoBehaviour
@@ -13,6 +17,7 @@ public class PoolManager : MonoBehaviour
 
     [SerializeField] private GameObject[]       enemies;    // Enemy prefab array
                      private List<GameObject>[] pools;      // Array of pooled enemy lists
+    [SerializeField] private GameObject[]       bosses;
 
 
     private void Awake()
@@ -54,12 +59,16 @@ public class PoolManager : MonoBehaviour
 
         if (selected == null)
         {
-            //PoolManager ������ �� ���� �� selected�� �Ҵ�, Ǯ�� �߰�
             selected = Instantiate(enemies[index], transform);
             pools[index].Add(selected);
         }
 
         return selected;
+    }
+
+    public GameObject GetBoss(BossName boss)
+    {
+        return bosses[(int)boss];
     }
 
     public int GetPooledEnemyCount(EnemyName enemyName) { return pools[(int)enemyName].Count; }

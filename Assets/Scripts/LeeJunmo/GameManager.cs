@@ -105,6 +105,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void AppearBoss()
+    {
+        if (CurrentState == GameState.Playing)
+        {
+            ChangeState(GameState.Boss);
+        }
+    }
+    public void BossDied()
+    {
+        if (CurrentState == GameState.Boss)
+        {
+            ChangeState(GameState.Playing);
+        }
+    }
+
     /// <summary>
     /// 플레이어(기차)가 파괴되었을 때 호출합니다.
     /// </summary>

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class TrainBoss : Boss
 {
@@ -15,11 +14,16 @@ public class TrainBoss : Boss
     [SerializeField] private float p1KnockbackRatio = 0.9f;
     [Tooltip("Phase 2 전환 기준")]
     [Range(0f, 1f)]
-    [SerializeField] private float phase2HpRatio = 0.4f;
+    [SerializeField] private float p2HpRatio = 0.4f;
     [Tooltip("Phase 2 피격 넉백 퍼센트 (%)")]
     [Range(0f, 1f)]
     [SerializeField] private float p2KnockbackRatio = 0.7f;
+    [Tooltip("넉백 지속시간 (second)")]
+    [Range(0f, 3f)]
+    [SerializeField] private float knockbackDuration    = 0.2f;
+                     private float knockbackTimer       = 0f;
 
+    private bool isPhase2 = false;
 
     private Vector2 moveDirection = Vector2.zero;
 
@@ -43,11 +47,27 @@ public class TrainBoss : Boss
 
     private void FixedUpdate()
     {
+        if (!isAlive)
+        {
+            moveDirection = Vector2.left;
+            float deathMoveSpeed = 30.0f;
+
+            rigid2D.linearVelocity = new Vector2(deathMoveSpeed * moveDirection.x, rigid2D.linearVelocity.y);
+
+            return;
+        }
+
         // Move Direction Setting
         SetMoveDirection(targetRigid.position);
 
+        if (knockbackTimer <= 0f && isAlive)
+        {
+            rigid2D.linearVelocity = new Vector2(moveSpeed * moveDirection.x, rigid2D.linearVelocity.y);
 
-        rigid2D.linearVelocity = new Vector2(moveSpeed * moveDirection.x, rigid2D.linearVelocity.y);
+            return;
+        }
+
+        knockbackTimer -= Time.fixedDeltaTime;
     }
 
     /// <summary>
@@ -81,19 +101,32 @@ public class TrainBoss : Boss
 
         /* ��� ���� �ʿ��ϸ� ���⿡ �߰� */
 
-        EnterPhase2();
+        CheckPhase();
 
         // Knockback to opposite direction
-        rigid2D.linearVelocity = new Vector2(moveSpeed * p1KnockbackRatio * -moveDirection.x, rigid2D.linearVelocity.y);
+        Knockback();
     }
 
-    private void EnterPhase2()
+    private void CheckPhase()
     {
-        if (currentHP > maxHP * phase2HpRatio) return;
+        if (currentHP > maxHP * p2HpRatio && isPhase2 == false) return;
+
+        isPhase2 = true;
 
         animator.SetTrigger("phase2");
 
+        Debug.Log("TrainBoss: Entered Phase 2!");
+    }
 
+    private void Knockback()
+    {
+        float   knockbackRatio  = isPhase2 ? p2KnockbackRatio : p1KnockbackRatio;
+        float   knockbackSpeed  = moveSpeed * knockbackRatio;
+        Vector2 power           = new Vector2(-moveDirection.x * knockbackSpeed, rigid2D.linearVelocity.y);
+
+        knockbackTimer = knockbackDuration;
+
+        rigid2D.AddForce(power, ForceMode2D.Impulse);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -108,7 +141,6 @@ public class TrainBoss : Boss
                 if (CameraShakeManager.Instance != null)
                 {
                     CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
-                                                               // �Ǵ� ���ϴ� ������ ����: CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
                 }
             }
 
@@ -118,6 +150,10 @@ public class TrainBoss : Boss
 
     protected override IEnumerator Die()
     {
-        return base.Die();
+        yield return base.Die();
+
+        yield return new WaitForSeconds(3.0f);
+
+        Destroy(gameObject);
     }
 }

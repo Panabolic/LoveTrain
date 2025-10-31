@@ -1,10 +1,13 @@
 using UnityEngine;
 using System; // Action �̺�Ʈ�� ���� �ʿ�
 
+
 public class Spawner : MonoBehaviour
 {
-    [Header("Enemy Spawn Points")]
-    [SerializeField] private Transform[] spawnPoints;
+    [Header("Spawn Points")]
+    [SerializeField] private Transform[] mobSpawnPoints;
+    [SerializeField] private Transform[] bossSpawnPoints;
+
 
     private float timer;
 
@@ -21,11 +24,6 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        spawnPoints = GetComponentsInChildren<Transform>();
-    }
-
     private void Update()
     {
         // 'Playing' ���°� �ƴϸ� �ƹ��͵� ���� ����
@@ -38,7 +36,7 @@ public class Spawner : MonoBehaviour
         // Pooled Enemy�� 5���� ������ �� 1�ʸ��� ����
         if (timer > 1.0f)
         {
-            Spawn();
+            SpawnMob();
 
             timer = 0.0f;
         }
@@ -52,18 +50,54 @@ public class Spawner : MonoBehaviour
         isSpawning = (newState == GameState.Playing);
     }
 
-    private void Spawn()
+    private void SpawnMob()
     {
         GameObject enemy = PoolManager.instance.GetEnemy(UnityEngine.Random.Range(0, 2));
 
-        enemy.transform.position = spawnPoints[UnityEngine.Random.Range(1, spawnPoints.Length)].position;
+        enemy.transform.position = mobSpawnPoints[UnityEngine.Random.Range(1, mobSpawnPoints.Length)].position;
 
-        enemy.GetComponent<Mob>().OnDied -= RespawnEnemy; // �ߺ� ���� ����
-        enemy.GetComponent<Mob>().OnDied += RespawnEnemy;
+        enemy.GetComponent<Mob>().OnDied -= RespawnMob; // �ߺ� ���� ����
+        enemy.GetComponent<Mob>().OnDied += RespawnMob;
     }
 
-    private void RespawnEnemy(Mob mob)
+    private void RespawnMob(Mob mob)
     {
+
+    }
+
+    /// <summary>
+    /// For test button
+    /// </summary>
+    public void SpawnBoss()
+    {
+        if (GameManager.Instance.CurrentState != GameState.Playing) return;
+
+        GameManager.Instance.AppearBoss();
+
+        Debug.Log(PoolManager.instance.GetBoss(BossName.TrainBoss));
+        Debug.Log(bossSpawnPoints[(int)BossName.TrainBoss]);
+
+        GameObject selected = Instantiate(PoolManager.instance.GetBoss(BossName.TrainBoss), bossSpawnPoints[(int)BossName.TrainBoss]);
+    }
+
+    /// <summary>
+    /// 이게 정실
+    /// </summary>
+    /// <param name="boss"></param>
+    public void SpawnBoss(BossName boss)
+    {
+        if (GameManager.Instance.CurrentState != GameState.Playing) return;
+
+        switch (boss)
+        {
+            case BossName.TrainBoss:
+
+                GameManager.Instance.AppearBoss();
+
+                GameObject selected = Instantiate(PoolManager.instance.GetBoss(boss), bossSpawnPoints[(int)boss]);
+
+                break;
+        }
 
     }
 }
