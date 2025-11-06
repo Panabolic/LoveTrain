@@ -35,16 +35,6 @@ public class TrainBoss : Boss
         rigid2D = GetComponent<Rigidbody2D>();
     }
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-    }
-
     private void FixedUpdate()
     {
         if (!isAlive)

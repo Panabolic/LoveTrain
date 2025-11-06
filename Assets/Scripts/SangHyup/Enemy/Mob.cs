@@ -14,7 +14,7 @@ public class Mob : Enemy
     [Tooltip("적용될 최고 속도 배율 (예: 2.0 = 200%)")]
     [SerializeField] protected float maxSpeedMultiplier = 2.0f;
 
-    private Vector2 moveDirection = Vector2.zero;
+    protected Vector2 moveDirection = Vector2.zero;
 
     // Target Components
     protected TrainController trainController;
@@ -96,9 +96,6 @@ public class Mob : Enemy
             return;
         }
 
-        // Set sprite to move direction
-        sprite.flipX = (moveDirection.x > 0f);
-
         // 최종 속력 = 적의 기본 속력 * 현재 계산된 배율
         float finalMoveSpeed = moveSpeed * currentMultiplier;
 
@@ -130,7 +127,10 @@ public class Mob : Enemy
         }
 
         moveDirection = Vector2.zero;
+
+        // Set sprite to move direction
         sprite.flipX = (moveDirection.x > 0f);
+
         return;
     }
 
