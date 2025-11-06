@@ -16,8 +16,8 @@ public class Train : MonoBehaviour
     // Components
     public Animator[] carsAnim;
 
-    [Tooltip("A/D키와 상관없이 고정된 기차의 속도 값입니다.")]
-    [SerializeField] private float baseSpeedValue = 460;
+    [Tooltip("기차의 속도 최대치 값입니다.")]
+    [SerializeField] private float maxSpeedValue = 460;
 
     // ✨ [추가] 사망 처리되는 속도 임계값
     [Tooltip("CurrentSpeed가 이 값 이하가 되면 사망 처리됩니다.")]
@@ -32,7 +32,7 @@ public class Train : MonoBehaviour
     [SerializeField] private float _currentSpeedForInspector;
 
     // ✨ [추가] UI가 최대 속도 값을 읽을 수 있도록 public getter를 추가합니다.
-    public float BaseSpeedValue => baseSpeedValue;
+    public float MaxSpeedValue => maxSpeedValue;
 
     [Tooltip("사망 시 기차가 왼쪽으로 이동할 거리")]
     [SerializeField] private float deathMoveDistance = -30f;
@@ -55,7 +55,7 @@ public class Train : MonoBehaviour
     // 속도 초기화
     private void Start()
     {
-        CurrentSpeed = baseSpeedValue;
+        CurrentSpeed = maxSpeedValue;
         _currentSpeedForInspector = CurrentSpeed;
         isDead = false;
     }
@@ -104,18 +104,13 @@ public class Train : MonoBehaviour
             Die();
         }
     }
+
     private void Die()
     {
         if (isDead) return;
         isDead = true;
 
         Debug.Log("기차 사망!");
-
-        // 1. GameManager에 사망 알림
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.PlayerDied(); // GameManager가 Time.timeScale=0 처리 등을 할 수 있음
-        }
 
         // ✨ [핵심 수정] 속도를 기반으로 이동 시간(duration) 계산
         float distance = Mathf.Abs(deathMoveDistance); // 이동할 거리 (절대값)
@@ -193,5 +188,10 @@ public class Train : MonoBehaviour
     private void tempDieUICall()
     {
         tempDieUI.SetActive(true);
+    }
+
+    public float GetDeathSpeed()
+    {
+        return deathSpeedThreshold;
     }
 }

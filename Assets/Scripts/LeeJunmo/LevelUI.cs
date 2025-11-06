@@ -10,7 +10,6 @@ public class LevelUI : MonoBehaviour
 
     [Header("UI 요소")]
     [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField] private TextMeshProUGUI xpText;
     [SerializeField] private Slider xpBarSlider;
 
     void Start()
@@ -47,9 +46,6 @@ public class LevelUI : MonoBehaviour
     {
         // 레벨 텍스트 업데이트 (예: "LV 2")
         levelText.text = $"LV {levelManager.CurrentLevel}";
-
-        // 경험치 텍스트 업데이트 (예: "30 / 150")
-        xpText.text = $"{levelManager.CurrentLevelDisplayXp} / {levelManager.RequiredLevelDisplayXp}";
 
         // 경험치 바(Image Fill) 업데이트
         xpBarSlider.value = levelManager.CurrentLevelProgress;

@@ -62,12 +62,12 @@ public class Spawner : MonoBehaviour
 
         if (mobIndex == 0)
         {
-            enemy.transform.position = mobSpawnPoints[UnityEngine.Random.Range(1, mobSpawnPoints.Length)].position;
+            enemy.transform.position = mobSpawnPoints[UnityEngine.Random.Range(0, mobSpawnPoints.Length)].position;
         }
 
         else if (mobIndex == 1)
         {
-            enemy.transform.position = FlyMobSpawnPoints[UnityEngine.Random.Range(1, FlyMobSpawnPoints.Length)].position;
+            enemy.transform.position = FlyMobSpawnPoints[UnityEngine.Random.Range(0, FlyMobSpawnPoints.Length)].position;
         }
 
         enemy.GetComponent<Mob>().OnDied -= RespawnMob; // �ߺ� ���� ����

@@ -19,6 +19,7 @@ public class PoolManager : MonoBehaviour
                      private List<GameObject>[] pools;      // Array of pooled enemy lists
     [SerializeField] private GameObject[]       bosses;
 
+    public List<Enemy> activeEnemies = new List<Enemy>();
 
     private void Awake()
     {
@@ -30,6 +31,22 @@ public class PoolManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void RegisterEnemy(Enemy enemy)
+    {
+        if (!activeEnemies.Contains(enemy))
+        {
+            activeEnemies.Add(enemy);
+        }
+    }
+
+    public void UnregisterEnemy(Enemy enemy)
+    {
+        if (activeEnemies.Contains(enemy))
+        {
+            activeEnemies.Remove(enemy);
+        }
     }
 
     private void Start()

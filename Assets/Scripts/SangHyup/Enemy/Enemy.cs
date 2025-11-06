@@ -50,13 +50,27 @@ public class Enemy : MonoBehaviour
     protected virtual void OnEnable()
     {
         // init Default value
-        currentHP       = maxHP;
-        isAlive         = true;
-        sprite.enabled  = true;
-        sprite.color    = Color.white;
+        currentHP = maxHP;
+        isAlive = true;
+        sprite.enabled = true;
+        sprite.color = Color.white;
 
         // Layer 변경
         gameObject.layer = LayerMask.NameToLayer("Enemy");
+
+        if (PoolManager.instance != null)
+        {
+            PoolManager.instance.RegisterEnemy(this);
+        }
+    }
+
+    protected virtual void OnDisable()
+    {
+        // PoolManager 출석부에서 제거
+        if (PoolManager.instance != null)
+        {
+            PoolManager.instance.UnregisterEnemy(this);
+        }
     }
 
     public virtual void TakeDamage(float damageAmount)
@@ -81,5 +95,10 @@ public class Enemy : MonoBehaviour
 
         levelManager.GainExperience(exp);
         yield return new WaitForSeconds(deathToDeactive);
+    }
+
+    public bool GetIsAlive()
+    {
+        return isAlive;
     }
 }

@@ -80,9 +80,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingLayerID: -1388612601
+  m_SortingLayer: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: -6576106640174999459, guid: 59f7e1df2be95a04694e26f48c2e6899, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   moveSpeed: 2
   minSpeedMultiplier: 0.5
   maxSpeedMultiplier: 2
-  diveDistance: 10
+  diveDistance: 20
 --- !u!95 &4081152586623250049
 Animator:
   serializedVersion: 7
