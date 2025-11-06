@@ -2915,8 +2915,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Spawner
   mobSpawnPoints:
   - {fileID: 919450327}
-  - {fileID: 41645137}
   - {fileID: 1932831295}
+  FlyMobSpawnPoints:
+  - {fileID: 41645137}
   - {fileID: 1579806429}
   bossSpawnPoints:
   - {fileID: 110929840}
@@ -2934,8 +2935,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 919450327}
-  - {fileID: 41645137}
   - {fileID: 1932831295}
+  - {fileID: 41645137}
   - {fileID: 1579806429}
   - {fileID: 110929840}
   m_Father: {fileID: 0}
@@ -3816,9 +3817,6 @@ MonoBehaviour:
   enemies:
   - {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
   - {fileID: 4821721425770472742, guid: 5310438f295510d438ac35837755d237, type: 3}
-  - {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
-  - {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
-  - {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
   bosses:
   - {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
 --- !u!1 &1016817427

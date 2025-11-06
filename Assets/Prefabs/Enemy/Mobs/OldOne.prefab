@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7952231668978450729}
   - component: {fileID: 2368361504287518499}
   - component: {fileID: 8940403247188048896}
-  - component: {fileID: -706577889030096837}
+  - component: {fileID: 6818465723368671168}
   - component: {fileID: 4081152586623250049}
   m_Layer: 6
   m_Name: OldOne
@@ -109,7 +109,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -158,7 +158,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.8125, y: 1}
   m_Direction: 0
---- !u!114 &-706577889030096837
+--- !u!114 &6818465723368671168
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,15 +167,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4821721425770472742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ec27a36568152e4698effbf489181f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 05d44acb619053149adf1869b80b20ed, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Mob
+  m_EditorClassIdentifier: Assembly-CSharp::FlyMob
   maxHP: 50
   damage: 30
   exp: 40
   moveSpeed: 2
   minSpeedMultiplier: 0.5
   maxSpeedMultiplier: 2
+  diveDistance: 10
 --- !u!95 &4081152586623250049
 Animator:
   serializedVersion: 7

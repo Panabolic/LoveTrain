@@ -6,27 +6,26 @@ public class Spawner : MonoBehaviour
 {
     [Header("Spawn Points")]
     [SerializeField] private Transform[] mobSpawnPoints;
+    [SerializeField] private Transform[] FlyMobSpawnPoints;
     [SerializeField] private Transform[] bossSpawnPoints;
 
+    private int mobIndex;
 
     private float timer;
 
-    private bool isSpawning = false; // GameManager�� ����
+    private bool isSpawning = false; // For GameManager
 
     private void Start()
     {
-        // GameManager�� ���� ���� �̺�Ʈ�� ����
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnGameStateChanged += HandleGameStateChange;
-            // ���� ���·� �ʱ�ȭ
             HandleGameStateChange(GameManager.Instance.CurrentState);
         }
     }
 
     private void Update()
     {
-        // 'Playing' ���°� �ƴϸ� �ƹ��͵� ���� ����
         if (!isSpawning) return;
 
         // ToDo: �� Enemy���� ���� Ÿ�̸� �����
@@ -52,9 +51,24 @@ public class Spawner : MonoBehaviour
 
     private void SpawnMob()
     {
-        GameObject enemy = PoolManager.instance.GetEnemy(UnityEngine.Random.Range(0, 2));
+        mobIndex = UnityEngine.Random.Range(0, 2);
 
-        enemy.transform.position = mobSpawnPoints[UnityEngine.Random.Range(1, mobSpawnPoints.Length)].position;
+        GameObject enemy = PoolManager.instance.GetEnemy(mobIndex);
+        if (enemy == null)
+        {
+            Debug.Log("Enemy가 생성되지 않았습니다.");
+            return;
+        }
+
+        if (mobIndex == 0)
+        {
+            enemy.transform.position = mobSpawnPoints[UnityEngine.Random.Range(1, mobSpawnPoints.Length)].position;
+        }
+
+        else if (mobIndex == 1)
+        {
+            enemy.transform.position = FlyMobSpawnPoints[UnityEngine.Random.Range(1, FlyMobSpawnPoints.Length)].position;
+        }
 
         enemy.GetComponent<Mob>().OnDied -= RespawnMob; // �ߺ� ���� ����
         enemy.GetComponent<Mob>().OnDied += RespawnMob;
@@ -81,7 +95,7 @@ public class Spawner : MonoBehaviour
     }
 
     /// <summary>
-    /// 이게 정실
+    /// This is Real
     /// </summary>
     /// <param name="boss"></param>
     public void SpawnBoss(BossName boss)
