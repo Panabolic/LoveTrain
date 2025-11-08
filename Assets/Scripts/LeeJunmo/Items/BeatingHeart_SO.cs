@@ -1,72 +1,72 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BeatingHeart", menuName = "Items/BeatingHeart")]
 public class BeatingHeart_SO : Item_SO
 {
-    [Header("¹Úµ¿ÇÏ´Â ½ÉÀå Àü¿ë µ¥ÀÌÅÍ")]
+    [Header("ë°•ë™í•˜ëŠ” ì‹¬ì¥ ì „ìš© ë°ì´í„°")]
     public int[] damageByLevel = { 200, 200, 500 };
     public float[] cooldownByLevel = { 10f, 7f, 7f };
 
-    [Header("½Ã°¢ È¿°ú")]
+    [Header("ì‹œê° íš¨ê³¼")]
     public GameObject EffectPrefab;
 
     /// <summary>
-    /// [Ãß°¡] '¹Úµ¿ÇÏ´Â ½ÉÀå'µµ ºñÁÖ¾óÀÌ ÀÖÀ¸¹Ç·Î OnEquip ÀçÁ¤ÀÇ
+    /// [ì¶”ê°€] 'ë°•ë™í•˜ëŠ” ì‹¬ì¥'ë„ ë¹„ì£¼ì–¼ì´ ìˆìœ¼ë¯€ë¡œ OnEquip ì¬ì •ì˜
     /// </summary>
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        // 1. ºÎ¸ğÀÇ °øÅë ÇÔ¼ö¸¦ È£ÃâÇØ '½Ã°¢Àû' ÇÁ¸®ÆÕ¸¸ »ı¼º
+        // 1. ë¶€ëª¨ì˜ ê³µí†µ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•´ 'ì‹œê°ì ' í”„ë¦¬íŒ¹ë§Œ ìƒì„±
         GameObject visualGO = InstantiateVisual(user);
 
-        // 2. ItemInstance°¡ ÂüÁ¶ÇÒ ¼ö ÀÖµµ·Ï ¹İÈ¯
+        // 2. ItemInstanceê°€ ì°¸ì¡°í•  ìˆ˜ ìˆë„ë¡ ë°˜í™˜
         return visualGO;
     }
 
     /// <summary>
-    /// ÀÌ ¾ÆÀÌÅÛÀÇ ÇöÀç ·¹º§¿¡ ¸Â´Â ÄğÅ¸ÀÓÀ» Inventory¿¡°Ô ¾Ë·ÁÁİ´Ï´Ù.
+    /// ì´ ì•„ì´í…œì˜ í˜„ì¬ ë ˆë²¨ì— ë§ëŠ” ì¿¨íƒ€ì„ì„ Inventoryì—ê²Œ ì•Œë ¤ì¤ë‹ˆë‹¤.
     /// </summary>
     public override float GetCooldownForLevel(int level)
     {
-        // ¹è¿­ ¹üÀ§¸¦ ¹ş¾î³ªÁö ¾Êµµ·Ï Clamp (¾ÈÀüÀåÄ¡)
+        // ë°°ì—´ ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ì§€ ì•Šë„ë¡ Clamp (ì•ˆì „ì¥ì¹˜)
         int index = Mathf.Clamp(level - 1, 0, cooldownByLevel.Length - 1);
         return cooldownByLevel[index];
     }
 
     /// <summary>
-    /// ÄğÅ¸ÀÓÀÌ ¿Ï·áµÉ ¶§¸¶´Ù Inventory¿¡ ÀÇÇØ È£ÃâµË´Ï´Ù.
+    /// ì¿¨íƒ€ì„ì´ ì™„ë£Œë  ë•Œë§ˆë‹¤ Inventoryì— ì˜í•´ í˜¸ì¶œë©ë‹ˆë‹¤.
     /// </summary>
     public override void OnCooldownComplete(GameObject user, ItemInstance instance)
     {
-        // 1. µ¥¹ÌÁö °è»ê (±âÁ¸°ú µ¿ÀÏ)
+        // 1. ë°ë¯¸ì§€ ê³„ì‚° (ê¸°ì¡´ê³¼ ë™ì¼)
         int level = instance.currentUpgrade;
         int index = Mathf.Clamp(level - 1, 0, damageByLevel.Length - 1);
         int currentDamage = damageByLevel[index];
 
-        // --- 2. "È­¸é ³»" Àû °ø°İ (PoolManager ÂüÁ¶·Î ¼öÁ¤) ---
+        // --- 2. "í™”ë©´ ë‚´" ì  ê³µê²© (PoolManager ì°¸ì¡°ë¡œ ìˆ˜ì •) ---
         Camera mainCamera = Camera.main;
         if (mainCamera == null) return;
 
-        // **¼º´ÉUP**: ¾À ÀüÃ¼°¡ ¾Æ´Ñ, 'È°¼ºÈ­µÈ Àû ¸®½ºÆ®'¸¸ °¡Á®¿É´Ï´Ù!
+        // **ì„±ëŠ¥UP**: ì”¬ ì „ì²´ê°€ ì•„ë‹Œ, 'í™œì„±í™”ëœ ì  ë¦¬ìŠ¤íŠ¸'ë§Œ ê°€ì ¸ì˜µë‹ˆë‹¤!
         if (PoolManager.instance == null) return;
         List<Enemy> activeEnemies = PoolManager.instance.activeEnemies;
-        // --- ¼öÁ¤ ³¡ ---
+        // --- ìˆ˜ì • ë ---
 
         int hitCount = 0;
 
-        // °¡Àå ºü¸£°í Á¤È®ÇÑ ¸®½ºÆ®¸¦ ¼øÈ¸ÇÕ´Ï´Ù.
+        // ê°€ì¥ ë¹ ë¥´ê³  ì •í™•í•œ ë¦¬ìŠ¤íŠ¸ë¥¼ ìˆœíšŒí•©ë‹ˆë‹¤.
         for (int i = activeEnemies.Count - 1; i >= 0; i--)
         {
             Enemy enemy = activeEnemies[i];
 
-            // (enemy.isAlive Ã¼Å©´Â ÀÌ¹Ì Enemy.csÀÇ OnDisable¿¡¼­ Ã³¸®µÇÁö¸¸
-            //  ÀÌÁßÀ¸·Î Ã¼Å©ÇØ¼­ ³ª»Ü °Ç ¾ø½À´Ï´Ù)
+            // (enemy.isAlive ì²´í¬ëŠ” ì´ë¯¸ Enemy.csì˜ OnDisableì—ì„œ ì²˜ë¦¬ë˜ì§€ë§Œ
+            //  ì´ì¤‘ìœ¼ë¡œ ì²´í¬í•´ì„œ ë‚˜ì  ê±´ ì—†ìŠµë‹ˆë‹¤)
             if (enemy == null || !enemy.GetIsAlive())
             {
                 continue;
             }
 
-            // "È­¸é ¾È¿¡ ÀÖ´Â°¡?" Ã¼Å©
+            // "í™”ë©´ ì•ˆì— ìˆëŠ”ê°€?" ì²´í¬
             Vector3 viewportPos = mainCamera.WorldToViewportPoint(enemy.transform.position);
 
             bool isVisibleOnScreen = viewportPos.z > 0 &&
@@ -80,9 +80,9 @@ public class BeatingHeart_SO : Item_SO
             }
         }
 
-        Debug.Log($"[{itemName}] (Lv.{level}) ¹ßµ¿! {hitCount}¸íÀÇ º¸ÀÌ´Â Àû °ø°İ!");
+        Debug.Log($"[{itemName}] (Lv.{level}) ë°œë™! {hitCount}ëª…ì˜ ë³´ì´ëŠ” ì  ê³µê²©!");
 
-        // 3. ÀÌÆåÆ® ¼ÒÈ¯ (±âÁ¸°ú µ¿ÀÏ)
+        // 3. ì´í™íŠ¸ ì†Œí™˜ (ê¸°ì¡´ê³¼ ë™ì¼)
         if (EffectPrefab != null)
         {
             Instantiate(EffectPrefab, user.transform.position, Quaternion.identity);

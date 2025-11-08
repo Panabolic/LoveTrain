@@ -1,17 +1,17 @@
-using UnityEngine;
-using UnityEngine.SceneManagement; // ¾À °ü¸®¸¦ À§ÇØ ÇÊ¼ö!
+ï»¿using UnityEngine;
+using UnityEngine.SceneManagement; // ì”¬ ê´€ë¦¬ë¥¼ ìœ„í•´ í•„ìˆ˜!
 
 public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance { get; private set; }
 
-    [Header("¾À ¼³Á¤")]
-    [Tooltip("·ÎµåÇÒ ½ÃÀÛ ¾ÀÀÇ ÀÌ¸§À» Á¤È®È÷ ÀÔ·ÂÇÏ¼¼¿ä.")]
-    [SerializeField] private string startSceneName = "StartScene"; // ¿©±â¿¡ ½ÇÁ¦ ½ÃÀÛ ¾À ÀÌ¸§À» ³ÖÀ¸¼¼¿ä.
+    [Header("ì”¬ ì„¤ì •")]
+    [Tooltip("ë¡œë“œí•  ì‹œì‘ ì”¬ì˜ ì´ë¦„ì„ ì •í™•íˆ ì…ë ¥í•˜ì„¸ìš”.")]
+    [SerializeField] private string startSceneName = "StartScene"; // ì—¬ê¸°ì— ì‹¤ì œ ì‹œì‘ ì”¬ ì´ë¦„ì„ ë„£ìœ¼ì„¸ìš”.
 
     private void Awake()
     {
-        // °£´ÜÇÑ ½Ì±ÛÅæ ¼³Á¤
+        // ê°„ë‹¨í•œ ì‹±ê¸€í†¤ ì„¤ì •
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -19,24 +19,24 @@ public class SceneLoader : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ´Ù¸¥ ¾ÀÀ¸·Î ³Ñ¾î°¡µµ ÆÄ±«µÇÁö ¾ÊÀ½
+            DontDestroyOnLoad(gameObject); // ë‹¤ë¥¸ ì”¬ìœ¼ë¡œ ë„˜ì–´ê°€ë„ íŒŒê´´ë˜ì§€ ì•ŠìŒ
         }
     }
 
     /// <summary>
-    /// ÁöÁ¤µÈ ½ÃÀÛ ¾ÀÀ» ·ÎµåÇÕ´Ï´Ù.
+    /// ì§€ì •ëœ ì‹œì‘ ì”¬ì„ ë¡œë“œí•©ë‹ˆë‹¤.
     /// </summary>
     public void LoadStartScene()
     {
-        // °ÔÀÓ ½Ã°£À» Á¤»óÀ¸·Î µÇµ¹¸®°í ¾À ·Îµå (Áß¿ä!)
+        // ê²Œì„ ì‹œê°„ì„ ì •ìƒìœ¼ë¡œ ë˜ëŒë¦¬ê³  ì”¬ ë¡œë“œ (ì¤‘ìš”!)
         Time.timeScale = 1f;
-        Physics2D.simulationMode = SimulationMode2D.FixedUpdate; // ¹°¸®µµ Á¤»óÈ­
+        Physics2D.simulationMode = SimulationMode2D.FixedUpdate; // ë¬¼ë¦¬ë„ ì •ìƒí™”
 
         SceneManager.LoadScene(startSceneName);
     }
 
     /// <summary>
-    /// (º¸³Ê½º) ÀÌ¸§À¸·Î Æ¯Á¤ ¾ÀÀ» ·ÎµåÇÏ´Â ÇÔ¼ö
+    /// (ë³´ë„ˆìŠ¤) ì´ë¦„ìœ¼ë¡œ íŠ¹ì • ì”¬ì„ ë¡œë“œí•˜ëŠ” í•¨ìˆ˜
     /// </summary>
     public void LoadSceneByName(string sceneName)
     {

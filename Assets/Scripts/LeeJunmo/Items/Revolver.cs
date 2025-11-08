@@ -1,27 +1,27 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class Revolver : MonoBehaviour, IInstantiatedItem
 {
-    //¾ÆÀÌÅÛ SOµ¥ÀÌÅÍ ÀúÀå º¯¼ö
+    //ì•„ì´í…œ SOë°ì´í„° ì €ì¥ ë³€ìˆ˜
     private Revolver_SO itemData;
 
     private SpriteRenderer spriteRenderer;
-    private Animator animator; // [Ãß°¡]
+    private Animator animator; // [ì¶”ê°€]
 
-    //ÇöÀç ½ºÅÈ
+    //í˜„ì¬ ìŠ¤íƒ¯
     private int currentDamage;
     private int currentBulletNum;
     private float currentCooldown;
 
     private void Awake()
     {
-        // ÄÄÆ÷³ÍÆ®¸¦ ¹Ì¸® Ã£¾ÆµÓ´Ï´Ù.
+        // ì»´í¬ë„ŒíŠ¸ë¥¼ ë¯¸ë¦¬ ì°¾ì•„ë‘¡ë‹ˆë‹¤.
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>(); // [Ãß°¡]
+        animator = GetComponent<Animator>(); // [ì¶”ê°€]
     }
 
     /// <summary>
-    /// [Ãß°¡] OnEquip¿¡¼­ SO°¡ È£ÃâÇÒ ÃÊ±âÈ­ ÇÔ¼ö
+    /// [ì¶”ê°€] OnEquipì—ì„œ SOê°€ í˜¸ì¶œí•  ì´ˆê¸°í™” í•¨ìˆ˜
     /// </summary>
     public void Initialize(Revolver_SO so)
     {
@@ -39,7 +39,7 @@ public class Revolver : MonoBehaviour, IInstantiatedItem
 
         int levelIndex = instance.currentUpgrade - 1;
 
-        // SO µ¥ÀÌÅÍ·Î ÀÌ MonoBehaviourÀÇ ½ºÅÈÀ» °»½Å
+        // SO ë°ì´í„°ë¡œ ì´ MonoBehaviourì˜ ìŠ¤íƒ¯ì„ ê°±ì‹ 
         this.currentDamage = itemData.damageByLevel[levelIndex];
         this.currentBulletNum = itemData.bulletNumByLevel[levelIndex];
         this.currentCooldown = itemData.cooldownByLevel[levelIndex];
@@ -51,14 +51,14 @@ public class Revolver : MonoBehaviour, IInstantiatedItem
 
             if (newController != null)
             {
-                // ¾Ö´Ï¸ŞÀÌÅÍ ÄÁÆ®·Ñ·¯¸¦ ±³Ã¼ÇÕ´Ï´Ù.
+                // ì• ë‹ˆë©”ì´í„° ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ êµì²´í•©ë‹ˆë‹¤.
                 this.animator.runtimeAnimatorController = newController;
-                // (ÀÌ ÄÁÆ®·Ñ·¯ÀÇ Entry State°¡ ¿Ã¹Ù¸¥ ½ºÇÁ¶óÀÌÆ®¸¦ ¼³Á¤ÇØ¾ß ÇÔ)
-                return; // ÄÁÆ®·Ñ·¯¸¦ ±³Ã¼ÇßÀ¸¸é ½ºÇÁ¶óÀÌÆ® ±³Ã¼´Â °Ç³Ê¶Ü
+                // (ì´ ì»¨íŠ¸ë¡¤ëŸ¬ì˜ Entry Stateê°€ ì˜¬ë°”ë¥¸ ìŠ¤í”„ë¼ì´íŠ¸ë¥¼ ì„¤ì •í•´ì•¼ í•¨)
+                return; // ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ êµì²´í–ˆìœ¼ë©´ ìŠ¤í”„ë¼ì´íŠ¸ êµì²´ëŠ” ê±´ë„ˆëœ€
             }
         }
 
-        // ¿ì¼±¼øÀ§ 2: (ÄÁÆ®·Ñ·¯°¡ ¾ø°Å³ª ÁöÁ¤ ¾ÈµÆÀ» ¶§) 'Á¤Àû ½ºÇÁ¶óÀÌÆ®'°¡ ÁöÁ¤µÇ¾î ÀÖ´Â°¡?
+        // ìš°ì„ ìˆœìœ„ 2: (ì»¨íŠ¸ë¡¤ëŸ¬ê°€ ì—†ê±°ë‚˜ ì§€ì • ì•ˆëì„ ë•Œ) 'ì •ì  ìŠ¤í”„ë¼ì´íŠ¸'ê°€ ì§€ì •ë˜ì–´ ìˆëŠ”ê°€?
         if (spriteRenderer != null && itemData.spritesByLevel != null &&
             levelIndex >= 0 && levelIndex < itemData.spritesByLevel.Length)
         {

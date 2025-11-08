@@ -1,44 +1,44 @@
-// Inventory.cs (ÀÌÀüÀÇ EquipmentManager.cs)
+ï»¿// Inventory.cs (ì´ì „ì˜ EquipmentManager.cs)
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    // ¼ÒÁö(ÀåÂø)ÇÑ ¾ÆÀÌÅÛ ÀÎ½ºÅÏ½º ¸ñ·Ï
+    // ì†Œì§€(ì¥ì°©)í•œ ì•„ì´í…œ ì¸ìŠ¤í„´ìŠ¤ ëª©ë¡
     public List<ItemInstance> items;
 
-    // (Update()¿¡¼­ itemsÀÇ Tick()À» µ¹·ÁÁÖ´Â ·ÎÁ÷...)
+    // (Update()ì—ì„œ itemsì˜ Tick()ì„ ëŒë ¤ì£¼ëŠ” ë¡œì§...)
     void Update()
     {
         foreach (ItemInstance instance in items)
         {
-            // 'user'´Â ÀÌ Inventory ÄÄÆ÷³ÍÆ®°¡ ºÙ¾îÀÖ´Â 
-            // ÇÃ·¹ÀÌ¾î GameObject¸¦ ÀÇ¹ÌÇÕ´Ï´Ù.
+            // 'user'ëŠ” ì´ Inventory ì»´í¬ë„ŒíŠ¸ê°€ ë¶™ì–´ìˆëŠ” 
+            // í”Œë ˆì´ì–´ GameObjectë¥¼ ì˜ë¯¸í•©ë‹ˆë‹¤.
             instance.Tick(Time.deltaTime, this.gameObject);
         }
     }
 
     /// <summary>
-    /// »õ ¾ÆÀÌÅÛÀ» È¹µæ(¶Ç´Â ¾÷±×·¹ÀÌµå)ÇÕ´Ï´Ù.
+    /// ìƒˆ ì•„ì´í…œì„ íšë“(ë˜ëŠ” ì—…ê·¸ë ˆì´ë“œ)í•©ë‹ˆë‹¤.
     /// </summary>
     public void AcquireItem(Item_SO newItemSO)
     {
-        // 1. ItemSO ÂüÁ¶·Î ºñ±³
+        // 1. ItemSO ì°¸ì¡°ë¡œ ë¹„êµ
         foreach (ItemInstance instance in items)
         {
             if (instance.itemData == newItemSO)
             {
-                // 2. ¾÷±×·¹ÀÌµå
+                // 2. ì—…ê·¸ë ˆì´ë“œ
                 instance.UpgradeLevel();
-                Debug.Log($"{newItemSO.itemName} ¾÷±×·¹ÀÌµå! (ÇöÀç ·¹º§: {instance.currentUpgrade})");
+                Debug.Log($"{newItemSO.itemName} ì—…ê·¸ë ˆì´ë“œ! (í˜„ì¬ ë ˆë²¨: {instance.currentUpgrade})");
                 return;
             }
         }
 
-        // 3. ½Å±Ô ¾ÆÀÌÅÛ Ãß°¡
+        // 3. ì‹ ê·œ ì•„ì´í…œ ì¶”ê°€
         ItemInstance newInstance = new ItemInstance(newItemSO);
         items.Add(newInstance);
     }
 
-    // (BroadcastOnTakeDamage, BroadcastOnKillEnemy µî...)
+    // (BroadcastOnTakeDamage, BroadcastOnKillEnemy ë“±...)
 }

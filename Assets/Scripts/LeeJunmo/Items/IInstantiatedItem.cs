@@ -1,14 +1,14 @@
-// IInstantiatedItemLogic.cs
+ï»¿// IInstantiatedItemLogic.cs
 
 /// <summary>
-/// ¾À¿¡ '½ÇÃ¼È­(Instantiate)'µÇ´Â ¾ÆÀÌÅÛÀÇ MonoBehaviour°¡
-/// ItemInstance·ÎºÎÅÍ ¾÷±×·¹ÀÌµå/»óÅÂ °»½Å ½ÅÈ£¸¦ ¹Ş±â À§ÇØ ±¸ÇöÇÏ´Â ÀÎÅÍÆäÀÌ½ºÀÔ´Ï´Ù.
+/// ì”¬ì— 'ì‹¤ì²´í™”(Instantiate)'ë˜ëŠ” ì•„ì´í…œì˜ MonoBehaviourê°€
+/// ItemInstanceë¡œë¶€í„° ì—…ê·¸ë ˆì´ë“œ/ìƒíƒœ ê°±ì‹  ì‹ í˜¸ë¥¼ ë°›ê¸° ìœ„í•´ êµ¬í˜„í•˜ëŠ” ì¸í„°í˜ì´ìŠ¤ì…ë‹ˆë‹¤.
 /// </summary>
 public interface IInstantiatedItem
 {
     /// <summary>
-    /// ItemInstance¿¡ ÀÇÇØ È£ÃâµÇ¸ç,
-    /// ÇöÀç ·¹º§°ú SO µ¥ÀÌÅÍ¸¦ ¹ÙÅÁÀ¸·Î ½ºÅÈÀ» °»½ÅÇÕ´Ï´Ù.
+    /// ItemInstanceì— ì˜í•´ í˜¸ì¶œë˜ë©°,
+    /// í˜„ì¬ ë ˆë²¨ê³¼ SO ë°ì´í„°ë¥¼ ë°”íƒ•ìœ¼ë¡œ ìŠ¤íƒ¯ì„ ê°±ì‹ í•©ë‹ˆë‹¤.
     /// </summary>
     void UpgradeInstItem(ItemInstance instance);
 }

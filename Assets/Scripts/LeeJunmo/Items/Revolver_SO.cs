@@ -1,32 +1,32 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class Revolver_SO : Item_SO
 {
-    [Header("¸®º¼¹ö Àü¿ë µ¥ÀÌÅÍ")]
+    [Header("ë¦¬ë³¼ë²„ ì „ìš© ë°ì´í„°")]
     public int[] damageByLevel = { 200, 200, 500 };
     public int[] bulletNumByLevel = { 1, 2, 3 };
     public float[] cooldownByLevel = { 10f, 7f, 7f };
 
-    [Header("ÅºÈ¯")]
+    [Header("íƒ„í™˜")]
     public GameObject BulletPrefab;
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        // 1. ºÎ¸ğÀÇ °øÅë ÇÔ¼ö¸¦ È£ÃâÇØ '·ÎÁ÷+½Ã°¢' ÇÁ¸®ÆÕ »ı¼º
+        // 1. ë¶€ëª¨ì˜ ê³µí†µ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•´ 'ë¡œì§+ì‹œê°' í”„ë¦¬íŒ¹ ìƒì„±
         GameObject revolverGO = InstantiateVisual(user);
         if (revolverGO == null) return null;
 
-        // --- ¿©±â¼­ºÎÅÍ 'Revolver'¸¸ÀÇ Ãß°¡ ·ÎÁ÷ ---
+        // --- ì—¬ê¸°ì„œë¶€í„° 'Revolver'ë§Œì˜ ì¶”ê°€ ë¡œì§ ---
         Revolver logic = revolverGO.GetComponent<Revolver>();
         if (logic == null)
         {
-            Debug.LogError($"{instantiatedPrefab.name}¿¡ Revolver.cs°¡ ¾ø½À´Ï´Ù!");
+            Debug.LogError($"{instantiatedPrefab.name}ì— Revolver.csê°€ ì—†ìŠµë‹ˆë‹¤!");
             return revolverGO;
         }
 
         logic.Initialize(this);
         logic.UpgradeInstItem(instance);
-        // --- Ãß°¡ ·ÎÁ÷ ³¡ ---
+        // --- ì¶”ê°€ ë¡œì§ ë ---
 
         return revolverGO;
     }

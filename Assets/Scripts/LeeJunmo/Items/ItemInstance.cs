@@ -1,4 +1,4 @@
-// ItemInstance.cs
+ï»¿// ItemInstance.cs
 using UnityEngine;
 
 [System.Serializable]
@@ -7,10 +7,10 @@ public class ItemInstance
     public Item_SO itemData;
     public int stackCount;
     public float currentCooldown;
-    private GameObject instantiatedObject = null; // ½ÇÃ¼È­µÈ ¿ÀºêÁ§Æ® ÂüÁ¶
+    private GameObject instantiatedObject = null; // ì‹¤ì²´í™”ëœ ì˜¤ë¸Œì íŠ¸ ì°¸ì¡°
 
-    // --- ¾÷±×·¹ÀÌµå¸¦ À§ÇÑ »õ º¯¼ö ---
-    public int currentUpgrade = 1; // È¹µæ ½Ã ±âº» 1·¹º§
+    // --- ì—…ê·¸ë ˆì´ë“œë¥¼ ìœ„í•œ ìƒˆ ë³€ìˆ˜ ---
+    public int currentUpgrade = 1; // íšë“ ì‹œ ê¸°ë³¸ 1ë ˆë²¨
 
     public ItemInstance(Item_SO data)
     {
@@ -18,13 +18,13 @@ public class ItemInstance
         stackCount = 1;
         currentUpgrade = 1;
 
-        // »ı¼º ½Ã, 1·¹º§¿¡ ¸Â´Â ÄğÅ¸ÀÓÀ¸·Î ÃÊ±âÈ­
+        // ìƒì„± ì‹œ, 1ë ˆë²¨ì— ë§ëŠ” ì¿¨íƒ€ì„ìœ¼ë¡œ ì´ˆê¸°í™”
         currentCooldown = itemData.GetCooldownForLevel(currentUpgrade);
     }
 
     public void HandleEquip(GameObject user)
     {
-        // SOÀÇ OnEquipÀ» È£ÃâÇÏ°í, ±× °á°ú¸¦ ÀúÀå
+        // SOì˜ OnEquipì„ í˜¸ì¶œí•˜ê³ , ê·¸ ê²°ê³¼ë¥¼ ì €ì¥
         instantiatedObject = itemData.OnEquip(user, this);
     }
 
@@ -32,60 +32,60 @@ public class ItemInstance
     {
         float maxCooldown = itemData.GetCooldownForLevel(currentUpgrade);
 
-        if (maxCooldown > 0f) // ÄğÅ¸ÀÓÀÌ ÀÖ´Â ¾ÆÀÌÅÛ¸¸
+        if (maxCooldown > 0f) // ì¿¨íƒ€ì„ì´ ìˆëŠ” ì•„ì´í…œë§Œ
         {
             currentCooldown -= deltaTime;
             if (currentCooldown <= 0f)
             {
-                // ÈÅ È£Ãâ ½Ã 'this'(ItemInstance ÀÚ½Å)¸¦ ³Ñ°ÜÁİ´Ï´Ù.
+                // í›… í˜¸ì¶œ ì‹œ 'this'(ItemInstance ìì‹ )ë¥¼ ë„˜ê²¨ì¤ë‹ˆë‹¤.
                 itemData.OnCooldownComplete(user, this);
 
-                // ÄğÅ¸ÀÓÀ» ÇöÀç ·¹º§¿¡ ¸Â°Ô ´Ù½Ã ÃÊ±âÈ­
+                // ì¿¨íƒ€ì„ì„ í˜„ì¬ ë ˆë²¨ì— ë§ê²Œ ë‹¤ì‹œ ì´ˆê¸°í™”
                 currentCooldown = maxCooldown;
             }
         }
     }
 
     /// <summary>
-    /// ¾ÆÀÌÅÛÀ» ¾÷±×·¹ÀÌµåÇÒ ¶§ ¿ÜºÎ¿¡¼­ È£ÃâÇÒ ÇÔ¼ö
+    /// ì•„ì´í…œì„ ì—…ê·¸ë ˆì´ë“œí•  ë•Œ ì™¸ë¶€ì—ì„œ í˜¸ì¶œí•  í•¨ìˆ˜
     /// </summary>
     public void UpgradeLevel()
     {
-        // SOÀÇ ¾÷±×·¹ÀÌµå ·ÎÁ÷À» È£ÃâÇÏ¿© Ã¥ÀÓÀ» À§ÀÓ
+        // SOì˜ ì—…ê·¸ë ˆì´ë“œ ë¡œì§ì„ í˜¸ì¶œí•˜ì—¬ ì±…ì„ì„ ìœ„ì„
         itemData.UpgradeLevel(this);
     }
 
 
     public void instantiatedItemUpgrade()
     {
-        // 1. °»½ÅÇÒ ÇÁ¸®ÆÕ(instantiatedObject)ÀÌ ¾øÀ¸¸é Á¾·á
+        // 1. ê°±ì‹ í•  í”„ë¦¬íŒ¹(instantiatedObject)ì´ ì—†ìœ¼ë©´ ì¢…ë£Œ
         if (instantiatedObject == null) return;
 
-        // 2. ½ÇÃ¼È­ ·ÎÁ÷ ¾ÆÀÌÅÛÀÎÁö È®ÀÎ (¿¹: Revolver.cs)
+        // 2. ì‹¤ì²´í™” ë¡œì§ ì•„ì´í…œì¸ì§€ í™•ì¸ (ì˜ˆ: Revolver.cs)
         IInstantiatedItem logic = instantiatedObject.GetComponent<IInstantiatedItem>();
 
         if (logic != null)
         {
-            // 3-A.  ½ÇÃ¼È­ ·ÎÁ÷ ¾ÆÀÌÅÛÀÌ¸é, ·ÎÁ÷ ½ºÅ©¸³Æ®¿¡°Ô °»½ÅÀ» À§ÀÓ
+            // 3-A.  ì‹¤ì²´í™” ë¡œì§ ì•„ì´í…œì´ë©´, ë¡œì§ ìŠ¤í¬ë¦½íŠ¸ì—ê²Œ ê°±ì‹ ì„ ìœ„ì„
             logic.UpgradeInstItem(this);
         }
         else
         {
-            // 3-B. "´Ü¼øÇÑ" ¾ÆÀÌÅÛÀÌ¸é(ÆĞ½Ãºê ºñÁÖ¾ó), ItemInstance°¡ Á÷Á¢ °»½Å
+            // 3-B. "ë‹¨ìˆœí•œ" ì•„ì´í…œì´ë©´(íŒ¨ì‹œë¸Œ ë¹„ì£¼ì–¼), ItemInstanceê°€ ì§ì ‘ ê°±ì‹ 
             ApplyVisualUpgrade();
         }
     }
 
 
     /// <summary>
-    /// [Ãß°¡] "´Ü¼øÇÑ" ºñÁÖ¾ó ÇÁ¸®ÆÕÀÇ ½ºÇÁ¶óÀÌÆ®/¾Ö´Ï¸ŞÀÌ¼ÇÀ» °»½ÅÇÏ´Â ÇïÆÛ ÇÔ¼ö
+    /// [ì¶”ê°€] "ë‹¨ìˆœí•œ" ë¹„ì£¼ì–¼ í”„ë¦¬íŒ¹ì˜ ìŠ¤í”„ë¼ì´íŠ¸/ì• ë‹ˆë©”ì´ì…˜ì„ ê°±ì‹ í•˜ëŠ” í—¬í¼ í•¨ìˆ˜
     /// </summary>
     private void ApplyVisualUpgrade()
     {
         int levelIndex = this.currentUpgrade - 1;
         if (levelIndex < 0 || itemData == null) return;
 
-        // ¿ì¼±¼øÀ§ 1: ¾Ö´Ï¸ŞÀÌÅÍ ÄÁÆ®·Ñ·¯ ±³Ã¼
+        // ìš°ì„ ìˆœìœ„ 1: ì• ë‹ˆë©”ì´í„° ì»¨íŠ¸ë¡¤ëŸ¬ êµì²´
         Animator animator = instantiatedObject.GetComponent<Animator>();
         if (animator != null && itemData.controllersByLevel != null && levelIndex < itemData.controllersByLevel.Length)
         {
@@ -93,11 +93,11 @@ public class ItemInstance
             if (newController != null)
             {
                 animator.runtimeAnimatorController = newController;
-                return; // ÄÁÆ®·Ñ·¯ ±³Ã¼ ¼º°ø
+                return; // ì»¨íŠ¸ë¡¤ëŸ¬ êµì²´ ì„±ê³µ
             }
         }
 
-        // ¿ì¼±¼øÀ§ 2: (¾Ö´Ï¸ŞÀÌÅÍ°¡ ¾ø°Å³ª ½ÇÆĞ ½Ã) Á¤Àû ½ºÇÁ¶óÀÌÆ® ±³Ã¼
+        // ìš°ì„ ìˆœìœ„ 2: (ì• ë‹ˆë©”ì´í„°ê°€ ì—†ê±°ë‚˜ ì‹¤íŒ¨ ì‹œ) ì •ì  ìŠ¤í”„ë¼ì´íŠ¸ êµì²´
         SpriteRenderer spriteRenderer = instantiatedObject.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null && itemData.spritesByLevel != null && levelIndex < itemData.spritesByLevel.Length)
         {

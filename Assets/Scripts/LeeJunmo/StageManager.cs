@@ -1,25 +1,25 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections.Generic;
 
 public class StageManager : MonoBehaviour
 {
     public static StageManager Instance { get; private set; }
 
-    [Header("ÂüÁ¶")]
+    [Header("ì°¸ì¡°")]
     [SerializeField] private StageDatabase backgroundDatabase;
-    [SerializeField] private Train train; // AutoScrollBackground¿¡ ¿¬°áÇÒ Train ÂüÁ¶
-    [SerializeField] private Transform backgroundParent; // ¹è°æ ÇÁ¸®ÆÕÀÌ »ı¼ºµÉ ºÎ¸ğ
+    [SerializeField] private Train train; // AutoScrollBackgroundì— ì—°ê²°í•  Train ì°¸ì¡°
+    [SerializeField] private Transform backgroundParent; // ë°°ê²½ í”„ë¦¬íŒ¹ì´ ìƒì„±ë  ë¶€ëª¨
 
-    [Header("½ÃÀÛ ¼³Á¤")]
-    [SerializeField] private int startingBackgroundIndex = 0; // ½ÃÀÛ ½Ã ·ÎµåÇÒ ¹è°æ ÀÎµ¦½º
+    [Header("ì‹œì‘ ì„¤ì •")]
+    [SerializeField] private int startingBackgroundIndex = 0; // ì‹œì‘ ì‹œ ë¡œë“œí•  ë°°ê²½ ì¸ë±ìŠ¤
 
-    // --- ³»ºÎ º¯¼ö ---
-    private GameObject currentBackgroundInstance; // ÇöÀç ·ÎµåµÈ ¹è°æ ÇÁ¸®ÆÕ ÀÎ½ºÅÏ½º
+    // --- ë‚´ë¶€ ë³€ìˆ˜ ---
+    private GameObject currentBackgroundInstance; // í˜„ì¬ ë¡œë“œëœ ë°°ê²½ í”„ë¦¬íŒ¹ ì¸ìŠ¤í„´ìŠ¤
     private int currentBackgroundIndex;
 
     private void Awake()
     {
-        // °£´ÜÇÑ ½Ì±ÛÅæ
+        // ê°„ë‹¨í•œ ì‹±ê¸€í†¤
         if (Instance != null && Instance != this) { Destroy(gameObject); } else { Instance = this; }
     }
 
@@ -27,71 +27,71 @@ public class StageManager : MonoBehaviour
     {
         if (backgroundDatabase == null || backgroundDatabase.stagePrefabs.Count == 0)
         {
-            Debug.LogError("StageBackgroundDatabase°¡ ¾ø°Å³ª ºñ¾îÀÖ½À´Ï´Ù!", this);
+            Debug.LogError("StageBackgroundDatabaseê°€ ì—†ê±°ë‚˜ ë¹„ì–´ìˆìŠµë‹ˆë‹¤!", this);
             this.enabled = false;
             return;
         }
 
-        // °ÔÀÓ ½ÃÀÛ ½Ã Ã¹ ¹è°æ ·Îµå
+        // ê²Œì„ ì‹œì‘ ì‹œ ì²« ë°°ê²½ ë¡œë“œ
         currentBackgroundIndex = startingBackgroundIndex;
         LoadBackgroundByIndex(currentBackgroundIndex);
 
-        // (¼±ÅÃ) GameManager ±¸µ¶ÇÏ¿© Playing »óÅÂÀÏ ¶§¸¸ ½ºÅ©·Ñ È°¼ºÈ­ µî...
+        // (ì„ íƒ) GameManager êµ¬ë…í•˜ì—¬ Playing ìƒíƒœì¼ ë•Œë§Œ ìŠ¤í¬ë¡¤ í™œì„±í™” ë“±...
         // if (GameManager.Instance != null) { ... }
     }
 
     /// <summary>
-    /// ÀÎµ¦½º¸¦ »ç¿ëÇÏ¿© Æ¯Á¤ ¹è°æ ÇÁ¸®ÆÕÀ» ·ÎµåÇÕ´Ï´Ù.
+    /// ì¸ë±ìŠ¤ë¥¼ ì‚¬ìš©í•˜ì—¬ íŠ¹ì • ë°°ê²½ í”„ë¦¬íŒ¹ì„ ë¡œë“œí•©ë‹ˆë‹¤.
     /// </summary>
     public void LoadBackgroundByIndex(int index)
     {
         if (index < 0 || index >= backgroundDatabase.stagePrefabs.Count)
         {
-            Debug.LogError($"Àß¸øµÈ ¹è°æ ÀÎµ¦½ºÀÔ´Ï´Ù: {index}");
+            Debug.LogError($"ì˜ëª»ëœ ë°°ê²½ ì¸ë±ìŠ¤ì…ë‹ˆë‹¤: {index}");
             return;
         }
 
         LoadBackground(backgroundDatabase.stagePrefabs[index]);
-        currentBackgroundIndex = index; // ÇöÀç ÀÎµ¦½º ±â·Ï
+        currentBackgroundIndex = index; // í˜„ì¬ ì¸ë±ìŠ¤ ê¸°ë¡
     }
 
     /// <summary>
-    /// ÇÁ¸®ÆÕ ÀÚÃ¼¸¦ ¹Ş¾Æ ¹è°æÀ» ·ÎµåÇÏ´Â ÇÙ½É ÇÔ¼ö
+    /// í”„ë¦¬íŒ¹ ìì²´ë¥¼ ë°›ì•„ ë°°ê²½ì„ ë¡œë“œí•˜ëŠ” í•µì‹¬ í•¨ìˆ˜
     /// </summary>
     private void LoadBackground(GameObject bgPrefab)
     {
-        // 1. ±âÁ¸ ¹è°æ ÀÎ½ºÅÏ½º°¡ ÀÖÀ¸¸é ÆÄ±«
+        // 1. ê¸°ì¡´ ë°°ê²½ ì¸ìŠ¤í„´ìŠ¤ê°€ ìˆìœ¼ë©´ íŒŒê´´
         if (currentBackgroundInstance != null)
         {
             Destroy(currentBackgroundInstance);
         }
 
-        // 2. »õ ¹è°æ ÇÁ¸®ÆÕ ÀÎ½ºÅÏ½ºÈ­
+        // 2. ìƒˆ ë°°ê²½ í”„ë¦¬íŒ¹ ì¸ìŠ¤í„´ìŠ¤í™”
         if (bgPrefab != null)
         {
             currentBackgroundInstance = Instantiate(bgPrefab, backgroundParent);
 
-            // 3. ÇÁ¸®ÆÕ ³» AutoScrollBackground ½ºÅ©¸³Æ®¿¡ Train ÂüÁ¶ ¿¬°á
+            // 3. í”„ë¦¬íŒ¹ ë‚´ AutoScrollBackground ìŠ¤í¬ë¦½íŠ¸ì— Train ì°¸ì¡° ì—°ê²°
             AutoScrollBackground bgScroll = currentBackgroundInstance.GetComponent<AutoScrollBackground>();
             if (bgScroll != null && train != null)
             {
                 bgScroll.train = this.train;
-                // (¼±ÅÃ) ÃÊ±â ½ºÅ©·Ñ »óÅÂ ¼³Á¤ (GameManager ¿¬µ¿ ½Ã)
+                // (ì„ íƒ) ì´ˆê¸° ìŠ¤í¬ë¡¤ ìƒíƒœ ì„¤ì • (GameManager ì—°ë™ ì‹œ)
                 // bgScroll.enabled = (GameManager.Instance?.CurrentState == GameState.Playing);
             }
             else if (bgScroll == null)
             {
-                Debug.LogError($"¹è°æ ÇÁ¸®ÆÕ '{bgPrefab.name}'¿¡ AutoScrollBackground.cs°¡ ¾ø½À´Ï´Ù!", bgPrefab);
+                Debug.LogError($"ë°°ê²½ í”„ë¦¬íŒ¹ '{bgPrefab.name}'ì— AutoScrollBackground.csê°€ ì—†ìŠµë‹ˆë‹¤!", bgPrefab);
             }
         }
         else
         {
-            Debug.LogError("·ÎµåÇÒ ¹è°æ ÇÁ¸®ÆÕÀÌ nullÀÔ´Ï´Ù!");
+            Debug.LogError("ë¡œë“œí•  ë°°ê²½ í”„ë¦¬íŒ¹ì´ nullì…ë‹ˆë‹¤!");
         }
     }
 
     /// <summary>
-    /// ´ÙÀ½ ¼ø¼­ÀÇ ¹è°æÀ» ·ÎµåÇÕ´Ï´Ù. (¸¶Áö¸·ÀÌ¸é Ã³À½À¸·Î)
+    /// ë‹¤ìŒ ìˆœì„œì˜ ë°°ê²½ì„ ë¡œë“œí•©ë‹ˆë‹¤. (ë§ˆì§€ë§‰ì´ë©´ ì²˜ìŒìœ¼ë¡œ)
     /// </summary>
     public void LoadNextBackground()
     {
@@ -100,13 +100,13 @@ public class StageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ·£´ı ¹è°æÀ» ·ÎµåÇÕ´Ï´Ù. (ÇöÀç ¹è°æ Á¦¿Ü)
+    /// ëœë¤ ë°°ê²½ì„ ë¡œë“œí•©ë‹ˆë‹¤. (í˜„ì¬ ë°°ê²½ ì œì™¸)
     /// </summary>
     public void LoadRandomBackground()
     {
         if (backgroundDatabase.stagePrefabs.Count <= 1)
         {
-            LoadBackgroundByIndex(0); // ¹è°æÀÌ ÇÏ³ª»ÓÀÓ
+            LoadBackgroundByIndex(0); // ë°°ê²½ì´ í•˜ë‚˜ë¿ì„
             return;
         }
 
@@ -114,7 +114,7 @@ public class StageManager : MonoBehaviour
         do
         {
             randomIndex = Random.Range(0, backgroundDatabase.stagePrefabs.Count);
-        } while (randomIndex == currentBackgroundIndex); // ÇöÀç¿Í ´Ù¸¥ ÀÎµ¦½º°¡ ³ª¿Ã ¶§±îÁö ¹İº¹
+        } while (randomIndex == currentBackgroundIndex); // í˜„ì¬ì™€ ë‹¤ë¥¸ ì¸ë±ìŠ¤ê°€ ë‚˜ì˜¬ ë•Œê¹Œì§€ ë°˜ë³µ
 
         LoadBackgroundByIndex(randomIndex);
     }
