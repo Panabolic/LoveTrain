@@ -38,9 +38,6 @@ public class Inventory : MonoBehaviour
         // 3. 신규 아이템 추가
         ItemInstance newInstance = new ItemInstance(newItemSO);
         items.Add(newInstance);
-
-        // (필요하다면 OnEquip 훅 호출)
-        // newInstance.itemData.OnEquip(this.gameObject, newInstance);
     }
 
     // (BroadcastOnTakeDamage, BroadcastOnKillEnemy 등...)

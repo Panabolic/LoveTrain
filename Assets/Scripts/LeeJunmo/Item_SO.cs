@@ -23,34 +23,48 @@ public class Item_SO : ScriptableObject
     // 자식 클래스들이 이 중에서 필요한 것만 골라 재정의(override)합니다.
 
     /// <summary>
-    /// 2. 이 아이템을 장착(획득)했을 때 한 번 호출됩니다. (예: 스탯 영구 증가)
+    /// 1. 이 아이템을 장착(획득)했을 때 한 번 호출됩니다. (예: 스탯 영구 증가)
     /// </summary>
-    public virtual void OnEquip(GameObject user) { }
+    public virtual GameObject OnEquip(GameObject user,ItemInstance instance) { return null; }
 
-    /// 4. 소유자가 피해를 '받았을' 때 호출됩니다. (예: 가시 갑옷)
+    /// </summary>
+    /// 2. 소유자가 피해를 '받았을' 때 호출됩니다. (예: 가시 갑옷)
     /// </summary>
     public virtual void OnTakeDamage(GameObject user, GameObject attacker) { }
 
     /// <summary>
-    /// 5. 소유자가 피해를 '입혔을' 때 호출됩니다. (예: 흡혈 무기)
+    /// 3. 소유자가 피해를 '입혔을' 때 호출됩니다. (예: 흡혈 무기)
     /// </summary>
     public virtual void OnDealDamage(GameObject user, GameObject target) { }
 
     /// <summary>
-    /// 6. 소유자가 적을 처치했을 때 호출됩니다. (예: 영혼 흡수)
+    /// 4. 소유자가 적을 처치했을 때 호출됩니다. (예: 영혼 흡수)
     /// </summary>
     public virtual void OnKillEnemy(GameObject user, GameObject killedEnemy) { }
 
     /// <summary>
-    /// 8. 설정된 쿨타임이 완료될 때마다 호출됩니다.
+    /// 5. 설정된 쿨타임이 완료될 때마다 호출됩니다.
     /// </summary>
     public virtual void OnCooldownComplete(GameObject user,ItemInstance instance) { }
 
     /// <summary>
-    /// ItemInstance가 자신의 현재 레벨에 맞는 쿨타임을 가져갈 수 있게 함
+    /// 6.ItemInstance가 자신의 현재 레벨에 맞는 쿨타임을 가져갈 수 있게 함
     /// </summary>
     public virtual float GetCooldownForLevel(int level)
     {
         return 0f; // 쿨타임 없는 아이템을 위한 기본값
     }
+
+    /// <summary>
+    /// 7.ItemInstance의 RequestUpgrade()에 의해 호출됩니다.
+    /// </summary>
+    public virtual void UpgradeLevel(ItemInstance instance)
+    {
+        // "일반적인" 업그레이드 로직 (레벨 1 증가)
+        instance.currentUpgrade++;
+
+        // 실체화된 아이템이 있다면 동기화하도록 알림
+        instance.instantiatedItemUpgrade();
+    }
+
 }

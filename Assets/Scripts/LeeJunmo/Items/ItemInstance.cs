@@ -7,6 +7,7 @@ public class ItemInstance
     public Item_SO itemData;
     public int stackCount;
     public float currentCooldown;
+    private GameObject instantiatedObject = null; // 실체화된 오브젝트 참조
 
     // --- 업그레이드를 위한 새 변수 ---
     public int currentUpgrade = 1; // 획득 시 기본 1레벨
@@ -19,6 +20,12 @@ public class ItemInstance
 
         // 생성 시, 1레벨에 맞는 쿨타임으로 초기화
         currentCooldown = itemData.GetCooldownForLevel(currentUpgrade);
+    }
+
+    public void HandleEquip(GameObject user)
+    {
+        // SO의 OnEquip을 호출하고, 그 결과를 저장
+        instantiatedObject = itemData.OnEquip(user, this);
     }
 
     public void Tick(float deltaTime, GameObject user)
@@ -44,15 +51,20 @@ public class ItemInstance
     /// </summary>
     public void UpgradeLevel()
     {
-        currentUpgrade++;
-        // (최대 레벨 제한 로직이 필요할 수 있음)
+        // SO의 업그레이드 로직을 호출하여 책임을 위임
+        itemData.UpgradeLevel(this);
+    }
 
-        // 쿨타임이 즉시 반영되도록 갱신 (기획에 따라 다름)
-        // 예: 7초로 줄어들었다면, 남은 쿨타임도 7초를 넘지 않게 보정
-        float newMaxCooldown = itemData.GetCooldownForLevel(currentUpgrade);
-        if (currentCooldown > newMaxCooldown)
+    public void instantiatedItemUpgrade()
+    {
+        if (instantiatedObject != null)
         {
-            currentCooldown = newMaxCooldown;
+            // 4. 실체화된 아이템의 인터페이스 함수를 찾아 호출
+            IInstantiatedItem Institem = instantiatedObject.GetComponent<IInstantiatedItem>();
+
+            // (다음 단계에서 정의할 함수)
+            Institem?.UpgradeInstItem(this);
         }
     }
+
 }
