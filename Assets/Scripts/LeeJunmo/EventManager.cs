@@ -9,7 +9,7 @@ using System; // Action 콜백을 위해 필요
 
 public class EventManager : MonoBehaviour
 {
-    public static EventManager Instance;
+    public static EventManager Instance; 
 
     [Header("UI 오브젝트")]
     [SerializeField] private GameObject eventUIPanel;

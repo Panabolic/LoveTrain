@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement; // 씬 관리를 위해 필수!
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoader : MonoBehaviour  
 {
     public static SceneLoader Instance { get; private set; }
 
-    [Header("씬 설정")]
+    [Header("씬 이름")]
     [Tooltip("로드할 시작 씬의 이름을 정확히 입력하세요.")]
     [SerializeField] private string startSceneName = "StartScene"; // 여기에 실제 시작 씬 이름을 넣으세요.
 
