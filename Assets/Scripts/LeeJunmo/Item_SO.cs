@@ -8,6 +8,12 @@ public class Item_SO : ScriptableObject
     public string itemName;
     [Header("태그")]
     public ItemTag tags;
+    [Header("부착 오브젝트 설정")]
+    [Tooltip("장착 시 씬에 생성될 프리팹 (시각 전용 또는 로직 포함)")]
+    public GameObject instantiatedPrefab;
+    [Header("부착 위치 설정")]
+    [Tooltip("아이템이 부착될 소켓 이름 (예: WeaponSocket). 비워두면 루트에 부착됨.")]
+    public string attachmentSocketName; // <-- [추가]
     [Header("아이콘")]
     public Sprite iconSprite;
     [Header("열차 비쥬얼")]
@@ -23,9 +29,63 @@ public class Item_SO : ScriptableObject
     // 자식 클래스들이 이 중에서 필요한 것만 골라 재정의(override)합니다.
 
     /// <summary>
-    /// 1. 이 아이템을 장착(획득)했을 때 한 번 호출됩니다. (예: 스탯 영구 증가)
+    /// 1. 이 함수는 이제 자식들이 '반드시' 구현(override)해야 할 수 있습니다.
+    /// (혹은 기본 로직을 여기에 넣어도 됩니다. 아래 헬퍼 방식 참조)
     /// </summary>
-    public virtual GameObject OnEquip(GameObject user,ItemInstance instance) { return null; }
+    public virtual GameObject OnEquip(GameObject user, ItemInstance instance)
+    {
+        // '박동하는 심장' 같은 아이템은 이 헬퍼 함수를 호출합니다.
+        return InstantiateVisual(user);
+    }
+
+    /// <summary>
+    /// [수정] 자식들이 공통으로 사용할 '프리팹 실체화' 헬퍼 함수
+    /// </summary>
+    protected GameObject InstantiateVisual(GameObject user)
+    {
+        // 1. 프리팹이 없으면 아무것도 안 함 (비주얼이 없는 아이템)
+        if (instantiatedPrefab == null)
+        {
+            return null;
+        }
+
+        // 2. 부착될 소켓 찾기 (기본값 = user 루트)
+        Transform parentTransform = user.transform;
+        if (!string.IsNullOrEmpty(attachmentSocketName))
+        {
+            Transform socket = FindChildSocket(user.transform, attachmentSocketName);
+            if (socket != null)
+            {
+                parentTransform = socket;
+            }
+            else
+            {
+                Debug.LogWarning($"[ItemSO] {user.name}에서 '{attachmentSocketName}' 소켓을 못찾음.");
+            }
+        }
+
+        // 3. 소켓에 프리팹 생성 및 위치 초기화
+        GameObject itemGO = Instantiate(instantiatedPrefab, parentTransform);
+        itemGO.transform.localPosition = Vector3.zero;
+        itemGO.transform.localRotation = Quaternion.identity;
+
+        return itemGO;
+    }
+
+    // 4. 재귀적으로 소켓을 찾는 헬퍼 함수 (추가)
+    private Transform FindChildSocket(Transform parent, string socketName)
+    {
+        Transform socket = parent.Find(socketName);
+        if (socket != null) return socket;
+
+        foreach (Transform child in parent)
+        {
+            socket = FindChildSocket(child, socketName);
+            if (socket != null) return socket;
+        }
+        return null;
+    }
+
 
     /// </summary>
     /// 2. 소유자가 피해를 '받았을' 때 호출됩니다. (예: 가시 갑옷)

@@ -12,6 +12,18 @@ public class BeatingHeart_SO : Item_SO
     public GameObject EffectPrefab;
 
     /// <summary>
+    /// [추가] '박동하는 심장'도 비주얼이 있으므로 OnEquip 재정의
+    /// </summary>
+    public override GameObject OnEquip(GameObject user, ItemInstance instance)
+    {
+        // 1. 부모의 공통 함수를 호출해 '시각적' 프리팹만 생성
+        GameObject visualGO = InstantiateVisual(user);
+
+        // 2. ItemInstance가 참조할 수 있도록 반환
+        return visualGO;
+    }
+
+    /// <summary>
     /// 이 아이템의 현재 레벨에 맞는 쿨타임을 Inventory에게 알려줍니다.
     /// </summary>
     public override float GetCooldownForLevel(int level)

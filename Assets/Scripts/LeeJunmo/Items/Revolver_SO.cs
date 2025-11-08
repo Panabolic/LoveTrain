@@ -7,33 +7,28 @@ public class Revolver_SO : Item_SO
     public int[] bulletNumByLevel = { 1, 2, 3 };
     public float[] cooldownByLevel = { 10f, 7f, 7f };
 
-    [Header("리볼버 본체")]
-    public GameObject revolverPrefab;
-
     [Header("탄환")]
     public GameObject BulletPrefab;
 
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        if (revolverPrefab == null) return null;
+        // 1. 부모의 공통 함수를 호출해 '로직+시각' 프리팹 생성
+        GameObject revolverGO = InstantiateVisual(user);
+        if (revolverGO == null) return null;
 
-        GameObject tempRevolver = Instantiate(revolverPrefab, user.transform);
-
-        // 1. 실체화된 로직을 가져옵니다.
-        Revolver logic = tempRevolver.GetComponent<Revolver>();
+        // --- 여기서부터 'Revolver'만의 추가 로직 ---
+        Revolver logic = revolverGO.GetComponent<Revolver>();
         if (logic == null)
         {
-            Debug.LogError($"{revolverPrefab.name}에 revolverPrefab.cs가 없습니다!");
-            return tempRevolver;
+            Debug.LogError($"{instantiatedPrefab.name}에 Revolver.cs가 없습니다!");
+            return revolverGO;
         }
 
-        // 2. [핵심] 로직에게 "네 원본 데이터(SO)는 'this'야"라고 알려줍니다.
         logic.Initialize(this);
-
-        // 3. 1레벨 스탯을 적용하도록 업그레이드 함수를 즉시 호출합니다.
         logic.UpgradeInstItem(instance);
+        // --- 추가 로직 끝 ---
 
-        return tempRevolver;
+        return revolverGO;
     }
 }
