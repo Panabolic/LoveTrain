@@ -55,15 +55,57 @@ public class ItemInstance
         itemData.UpgradeLevel(this);
     }
 
+
     public void instantiatedItemUpgrade()
     {
-        if (instantiatedObject != null)
-        {
-            // 4. 실체화된 아이템의 인터페이스 함수를 찾아 호출
-            IInstantiatedItem Institem = instantiatedObject.GetComponent<IInstantiatedItem>();
+        // 1. 갱신할 프리팹(instantiatedObject)이 없으면 종료
+        if (instantiatedObject == null) return;
 
-            // (다음 단계에서 정의할 함수)
-            Institem?.UpgradeInstItem(this);
+        // 2. 실체화 로직 아이템인지 확인 (예: Revolver.cs)
+        IInstantiatedItem logic = instantiatedObject.GetComponent<IInstantiatedItem>();
+
+        if (logic != null)
+        {
+            // 3-A.  실체화 로직 아이템이면, 로직 스크립트에게 갱신을 위임
+            logic.UpgradeInstItem(this);
+        }
+        else
+        {
+            // 3-B. "단순한" 아이템이면(패시브 비주얼), ItemInstance가 직접 갱신
+            ApplyVisualUpgrade();
+        }
+    }
+
+
+    /// <summary>
+    /// [추가] "단순한" 비주얼 프리팹의 스프라이트/애니메이션을 갱신하는 헬퍼 함수
+    /// </summary>
+    private void ApplyVisualUpgrade()
+    {
+        int levelIndex = this.currentUpgrade - 1;
+        if (levelIndex < 0 || itemData == null) return;
+
+        // 우선순위 1: 애니메이터 컨트롤러 교체
+        Animator animator = instantiatedObject.GetComponent<Animator>();
+        if (animator != null && itemData.controllersByLevel != null && levelIndex < itemData.controllersByLevel.Length)
+        {
+            RuntimeAnimatorController newController = itemData.controllersByLevel[levelIndex];
+            if (newController != null)
+            {
+                animator.runtimeAnimatorController = newController;
+                return; // 컨트롤러 교체 성공
+            }
+        }
+
+        // 우선순위 2: (애니메이터가 없거나 실패 시) 정적 스프라이트 교체
+        SpriteRenderer spriteRenderer = instantiatedObject.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null && itemData.spritesByLevel != null && levelIndex < itemData.spritesByLevel.Length)
+        {
+            Sprite newSprite = itemData.spritesByLevel[levelIndex];
+            if (newSprite != null)
+            {
+                spriteRenderer.sprite = newSprite;
+            }
         }
     }
 

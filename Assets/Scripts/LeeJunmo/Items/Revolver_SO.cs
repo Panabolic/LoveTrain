@@ -10,7 +10,6 @@ public class Revolver_SO : Item_SO
     [Header("탄환")]
     public GameObject BulletPrefab;
 
-
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
         // 1. 부모의 공통 함수를 호출해 '로직+시각' 프리팹 생성

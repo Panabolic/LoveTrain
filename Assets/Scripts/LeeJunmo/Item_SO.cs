@@ -16,8 +16,11 @@ public class Item_SO : ScriptableObject
     public string attachmentSocketName; // <-- [추가]
     [Header("아이콘")]
     public Sprite iconSprite;
-    [Header("열차 비쥬얼")]
-    public Sprite trainSprite;
+    [Header("비주얼 업그레이드 (공통)")]
+    [Tooltip("레벨별로 교체될 '정적' 스프라이트 (Animator가 없을 경우)")]
+    public Sprite[] spritesByLevel;
+    [Tooltip("레벨별로 교체될 '애니메이터 컨트롤러' (Animator가 있을 경우)")]
+    public RuntimeAnimatorController[] controllersByLevel;
     [Header("업그레이드 최대 횟수")]
     public int MaxUpgrade;
     [Header("아이템 설명")]
