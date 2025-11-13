@@ -83,6 +83,7 @@ public class TrainLevelManager : MonoBehaviour
         ExperienceToNextLevel = ExperienceForCurrentLevel + nextLevelRequiredGap; // (e.g., 100 + 150 = 250)
 
         OnLevelUp?.Invoke(); // 레벨업 이벤트 발생
-        EventManager.Instance.TEstEvent();
+        /*        EventManager.Instance.TEstEvent();*/
+        LevelUpUIManager.Instance.ShowLevelUpChoices();
     }
 }

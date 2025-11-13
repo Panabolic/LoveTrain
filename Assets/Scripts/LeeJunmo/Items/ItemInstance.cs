@@ -5,7 +5,6 @@ using UnityEngine;
 public class ItemInstance
 {
     public Item_SO itemData;
-    public int stackCount;
     public float currentCooldown;
     private GameObject instantiatedObject = null; // 실체화된 오브젝트 참조
 
@@ -15,7 +14,6 @@ public class ItemInstance
     public ItemInstance(Item_SO data)
     {
         itemData = data;
-        stackCount = 1;
         currentUpgrade = 1;
 
         // 생성 시, 1레벨에 맞는 쿨타임으로 초기화

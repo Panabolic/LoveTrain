@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc03360a19904964cbb5137c8fe9a7c7, type: 3}
+  m_Name: Revolver
+  m_EditorClassIdentifier: Assembly-CSharp::Revolver_SO
+  itemName: "\uB9AC\uBCFC\uBC84"
+  tags: {fileID: 0}
+  instantiatedPrefab: {fileID: 0}
+  attachmentSocketName: 
+  iconSprite: {fileID: -1726110457, guid: 857d3e31031f11d4d96f15e0d1a00bfb, type: 3}
+  spritesByLevel: []
+  controllersByLevel: []
+  MaxUpgrade: 2
+  itemScript: "\uC8FC\uAE30\uC801\uC73C\uB85C \uC804\uBC29\uC5D0 \uD0C4\uD658 \uBC1C\uC0AC
+    (\uBBF8\uC644\uC131)"
+  cooldownTime: 0
+  damageByLevel: c8000000c8000000f4010000
+  bulletNumByLevel: 010000000200000003000000
+  cooldownByLevel:
+  - 10
+  - 7
+  - 7
+  BulletPrefab: {fileID: 0}
