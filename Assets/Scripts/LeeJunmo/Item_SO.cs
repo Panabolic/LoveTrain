@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -6,8 +6,6 @@ public class Item_SO : ScriptableObject
 {
     [Header("아이템 이름")]
     public string itemName;
-    [Header("태그")]
-    public ItemTag tags;
     [Header("부착 오브젝트 설정")]
     [Tooltip("장착 시 씬에 생성될 프리팹 (시각 전용 또는 로직 포함)")]
     public GameObject instantiatedPrefab;
