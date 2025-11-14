@@ -180,13 +180,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrainBoss
   maxHP: 800
-  damage: 500
-  exp: 0
+  damage: 1000
+  exp: 200
   moveSpeed: 15
   p1KnockbackRatio: 0.9
   p2HpRatio: 0.4
   p2KnockbackRatio: 0.7
-  knockbackDuration: 0.2
+  stunDuration: 0.5
 --- !u!95 &5644954347624938170
 Animator:
   serializedVersion: 7

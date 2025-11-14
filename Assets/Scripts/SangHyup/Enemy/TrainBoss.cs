@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Net;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class TrainBoss : Boss
 {
@@ -22,7 +20,7 @@ public class TrainBoss : Boss
     [SerializeField] private float p2KnockbackRatio = 0.7f;
     [Tooltip("넉백 지속시간 (second)")]
     [Range(0f, 1.0f)]
-    [SerializeField] private float stunDuration = 0.2f;
+    [SerializeField] private float stunDuration = 0.4f;
                      private bool  isStunned    = false;
 
     private bool isPhase2 = false;
@@ -116,7 +114,6 @@ public class TrainBoss : Boss
         Vector2 force           = new Vector2(-moveDirection.x * knockbackSpeed, 0);
 
         StartCoroutine(Stun());
-
         rigid2D.AddForce(force, ForceMode2D.Impulse);
     }
 
