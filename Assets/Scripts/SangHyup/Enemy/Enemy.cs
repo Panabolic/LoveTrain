@@ -68,7 +68,6 @@ public class Enemy : MonoBehaviour
     {
         if (!isAlive) return;
 
-        Debug.Log("Mob: 으악!");
         currentHP -= damageAmount;
 
         if (currentHP <= 0) StartCoroutine(Die());

@@ -13,11 +13,8 @@ public class Mob : Enemy
 
     protected Vector2 moveDirection = Vector2.zero;
 
-    private bool isStunned = false;
+    protected bool isStunned = false;
     private float stunDuration = 0.5f;
-
-    // Target Components
-    //protected TrainController trainController;
 
     public Action<Mob> OnDied;
 
@@ -44,10 +41,7 @@ public class Mob : Enemy
 
     private void FixedUpdate()
     {
-        // Move Direction Setting
-        SetMoveDirection(targetRigid.position);
-
-        // 죽으면 왼쪽으로 확 날아가게
+        // Right after death
         if (!isAlive && !isStunned)
         {
             moveDirection           = Vector2.left;
@@ -58,9 +52,11 @@ public class Mob : Enemy
             return;
         }
 
-        // 이동 로직 (기존과 동일)
+        // Movement Logic
         if (isAlive && !isStunned)
         {
+            SetMoveDirection(targetRigid.position);
+
             rigid2D.linearVelocity = new Vector2(moveDirection.x * moveSpeed, rigid2D.linearVelocity.y);
         }
     }
@@ -117,7 +113,6 @@ public class Mob : Enemy
     {
         Vector2 force = direction.normalized * power;
 
-        Debug.Log("Mob: 철푸덕ㅜㅠ");
         StartCoroutine(Stun());
         rigid2D.AddForce(force, ForceMode2D.Impulse);
     }

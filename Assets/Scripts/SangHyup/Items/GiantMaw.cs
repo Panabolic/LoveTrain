@@ -33,12 +33,9 @@ public class GiantMaw : MonoBehaviour, IInstantiatedItem
         if (!isAvailable)
         {
             currentCoolTime -= Time.deltaTime;
-
+            
             if (currentCoolTime <= 0f)
-            {
-                Debug.Log("아가리 활성화");
                 isAvailable = true;
-            }
         }
     }
 
@@ -63,8 +60,6 @@ public class GiantMaw : MonoBehaviour, IInstantiatedItem
             // Management
             currentCoolTime = cooldown;
             isAvailable     = false;
-
-            Debug.Log("거대한 아가리 발동!");
         }
     }
 
@@ -83,8 +78,8 @@ public class GiantMaw : MonoBehaviour, IInstantiatedItem
         int levelIndex = instance.currentUpgrade - 1;
 
         // SO 데이터로 이 MonoBehaviour의 스탯을 갱신
-        this.damage = itemData.mawDamageByLevel[levelIndex];
-        this.cooldown = itemData.cooldownByLevel[levelIndex];
+        this.damage     = itemData.mawDamageByLevel[levelIndex];
+        this.cooldown   = itemData.cooldownByLevel[levelIndex];
 
         /*애니메이션 교체 구현 필요*/
 

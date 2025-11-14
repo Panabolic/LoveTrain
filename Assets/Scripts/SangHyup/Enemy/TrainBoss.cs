@@ -50,7 +50,7 @@ public class TrainBoss : Boss
             return;
         }
 
-        // Move Setting
+        // Movement Logic
         SetMoveDirection(targetRigid.position);
 
         if (isAlive && !isStunned)

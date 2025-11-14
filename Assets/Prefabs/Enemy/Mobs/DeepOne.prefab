@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec27a36568152e4698effbf489181f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mob
-  maxHP: 120
+  maxHP: 50
   damage: 30
   exp: 40
   moveSpeed: 2
