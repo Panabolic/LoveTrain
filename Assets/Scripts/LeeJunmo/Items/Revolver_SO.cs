@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[CreateAssetMenu(fileName = "Revolver", menuName = "Items/Revolver")]
 public class Revolver_SO : Item_SO
 {
     [Header("리볼버 전용 데이터")]

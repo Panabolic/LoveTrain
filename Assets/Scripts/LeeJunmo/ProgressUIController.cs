@@ -1,78 +1,99 @@
-using System.ComponentModel;
+ï»¿using System.ComponentModel;
 using UnityEngine;
-using UnityEngine.UI; // Slider¸¦ »ç¿ëÇÏ±â À§ÇØ ÇÊ¼ö!
+using TMPro; // TextMeshProë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ í•„ìˆ˜!
 
 public class ProgressUIController : MonoBehaviour
 {
-    [Header("½Ã°£ ¼³Á¤")]
-    [Tooltip("¸ñÇ¥ ½Ã°£(ÃÊ ´ÜÀ§). (±âº»°ª: 3ºĞ = 180ÃÊ)")]
+    [Header("ì‹œê°„ ì„¤ì •")]
+    [Tooltip("ëª©í‘œ ì‹œê°„(ì´ˆ ë‹¨ìœ„). (ê¸°ë³¸ê°’: 3ë¶„ = 180ì´ˆ)")]
     [SerializeField] private float totalTimeInSeconds = 180f;
 
-    [Header("UI ¿¬°á")]
-    [Tooltip("ÁøÇàµµ¸¦ Ç¥½ÃÇÒ ½½¶óÀÌ´õ(Slider) ÄÄÆ÷³ÍÆ®")]
-    [SerializeField] private Slider progressSlider;
+    [Header("UI ì—°ê²°")]
+    // [ìˆ˜ì •] Slider ëŒ€ì‹  TextMeshProUGUIë¥¼ ì—°ê²°
+    [Tooltip("ì‹œê°„ì„ í‘œì‹œí•  TextMeshProUGUI ì»´í¬ë„ŒíŠ¸")]
+    [SerializeField] private TextMeshProUGUI timeText;
 
-    // ÇöÀç±îÁö Èå¸¥ ½Ã°£À» ÀúÀåÇÒ º¯¼ö
+    // í˜„ì¬ê¹Œì§€ íë¥¸ ì‹œê°„ì„ ì €ì¥í•  ë³€ìˆ˜
     private float currentTime = 0f;
 
-    // Å¸ÀÌ¸Ó°¡ ÁøÇà ÁßÀÎÁö È®ÀÎÇÏ´Â º¯¼ö
+    // íƒ€ì´ë¨¸ê°€ ì§„í–‰ ì¤‘ì¸ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
     private bool isTimerRunning = false;
 
     void Start()
     {
-        // ½ÃÀÛ ½Ã ½½¶óÀÌ´õ °ª 0À¸·Î ÃÊ±âÈ­
-        if (progressSlider != null)
-        {
-            progressSlider.value = 0;
-        }
         currentTime = 0f;
-        isTimerRunning = false; 
-        
+        isTimerRunning = false;
+
+        // ì‹œì‘ ì‹œ í…ìŠ¤íŠ¸ë¥¼ "03:00" (ì´ˆê¸° ì‹œê°„)ìœ¼ë¡œ ì´ˆê¸°í™”
+        UpdateTimeText(totalTimeInSeconds);
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnGameStateChanged += HandleGameStateChange;
-            // ÇöÀç »óÅÂ·Î ÃÊ±âÈ­
+            // í˜„ì¬ ìƒíƒœë¡œ ì´ˆê¸°í™”
             HandleGameStateChange(GameManager.Instance.CurrentState);
         }
     }
 
     void Update()
     {
-        // Å¸ÀÌ¸Ó°¡ ¸ØÃè°Å³ª ½½¶óÀÌ´õ°¡ ¿¬°áµÇÁö ¾Ê¾ÒÀ¸¸é ½ÇÇàÇÏÁö ¾ÊÀ½
-        if (!isTimerRunning || progressSlider == null)
+        // íƒ€ì´ë¨¸ê°€ ë©ˆì·„ê±°ë‚˜ í…ìŠ¤íŠ¸ê°€ ì—°ê²°ë˜ì§€ ì•Šì•˜ìœ¼ë©´ ì‹¤í–‰í•˜ì§€ ì•ŠìŒ
+        if (!isTimerRunning || timeText == null)
         {
             return;
         }
 
-        // 1. ¸Å ÇÁ·¹ÀÓ¸¶´Ù ½Ã°£(Time.deltaTime)À» ´õÇØÁİ´Ï´Ù.
+        // 1. ë§¤ í”„ë ˆì„ë§ˆë‹¤ ì‹œê°„(Time.deltaTime)ì„ ë”í•´ì¤ë‹ˆë‹¤.
         currentTime += Time.deltaTime;
 
-        // 2. ÇöÀç ÁøÇàµµ °è»ê (ÇöÀç ½Ã°£ / ÃÑ ½Ã°£)
-        //    Mathf.Clamp01À» »ç¿ëÇØ °ªÀÌ 0.0 ~ 1.0 ¹üÀ§¸¦ ¹ş¾î³ªÁö ¾Ê°Ô ÇÕ´Ï´Ù.
-        float progress = Mathf.Clamp01(currentTime / totalTimeInSeconds);
+        // 2. 'ë‚¨ì€ ì‹œê°„'ì„ ê³„ì‚°í•©ë‹ˆë‹¤.
+        float remainingTime = totalTimeInSeconds - currentTime;
 
-        // 3. °è»êµÈ ÁøÇàµµ¸¦ ½½¶óÀÌ´õÀÇ value °ª¿¡ Àû¿ëÇÕ´Ï´Ù.
-        progressSlider.value = progress;
-
-        // 4. ÁøÇàµµ°¡ 1.0 (100%)¿¡ µµ´ŞÇÏ¸é Å¸ÀÌ¸Ó¸¦ ¸ØÃä´Ï´Ù.
-        if (progress >= 1.0f)
+        // 3. ë‚¨ì€ ì‹œê°„ì´ 0ë³´ë‹¤ ì‘ì•„ì§€ë©´ 0ìœ¼ë¡œ ê³ ì •í•©ë‹ˆë‹¤.
+        if (remainingTime <= 0f)
         {
-            isTimerRunning = false;
+            remainingTime = 0f;
+            isTimerRunning = false; // íƒ€ì´ë¨¸ ë©ˆì¶¤
             OnTimeFinished();
         }
+
+        // 4. ê³„ì‚°ëœ ë‚¨ì€ ì‹œê°„ì„ í…ìŠ¤íŠ¸(00:00 í˜•ì‹)ë¡œ ë³€í™˜í•˜ì—¬ ì ìš©í•©ë‹ˆë‹¤.
+        UpdateTimeText(remainingTime);
     }
 
     /// <summary>
-    /// ½Ã°£ÀÌ ¸ğµÎ °æ°úÇßÀ» ¶§ È£ÃâµÇ´Â ÇÔ¼ö
+    /// ì´ˆ ë‹¨ìœ„ ì‹œê°„ì„ 00:00 í˜•ì‹ì˜ í…ìŠ¤íŠ¸ë¡œ ë³€í™˜í•˜ì—¬ UIì— í‘œì‹œí•©ë‹ˆë‹¤.
+    /// </summary>
+    private void UpdateTimeText(float timeInSeconds)
+    {
+        if (timeText == null) return;
+
+        // ì‹œê°„ì„ ë¶„ê³¼ ì´ˆë¡œ ë³€í™˜
+        float minutes = Mathf.FloorToInt(timeInSeconds / 60);
+        float seconds = Mathf.FloorToInt(timeInSeconds % 60);
+
+        // string.Formatì„ ì‚¬ìš©í•´ "00:00" í˜•ì‹ìœ¼ë¡œ ë§Œë“­ë‹ˆë‹¤.
+        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    /// <summary>
+    /// ì‹œê°„ì´ ëª¨ë‘ ê²½ê³¼í–ˆì„ ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
     /// </summary>
     private void OnTimeFinished()
     {
-        Debug.Log("½Ã°£ Á¾·á!");
-        // (¼±ÅÃ) ¿©±â¿¡ ½ºÅ×ÀÌÁö ½ÇÆĞ ¶Ç´Â ´ÙÀ½ ÆäÀÌÁî·Î ³Ñ¾î°¡´Â ·ÎÁ÷À» Ãß°¡ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+        Debug.Log("ì‹œê°„ ì¢…ë£Œ!");
+        // (ì„ íƒ) ì—¬ê¸°ì— ìŠ¤í…Œì´ì§€ ì‹¤íŒ¨ ë˜ëŠ” ë‹¤ìŒ í˜ì´ì¦ˆë¡œ ë„˜ì–´ê°€ëŠ” ë¡œì§ì„ ì¶”ê°€í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
     }
 
     private void HandleGameStateChange(GameState newState)
     {
         isTimerRunning = (newState == GameState.Playing);
+
+        // (ì„ íƒì ) ê²Œì„ì´ ì‹œì‘ë  ë•Œë§ˆë‹¤ íƒ€ì´ë¨¸ë¥¼ ë¦¬ì…‹í•  ìˆ˜ë„ ìˆìŠµë‹ˆë‹¤.
+        // if (isTimerRunning)
+        // {
+        //     currentTime = 0f;
+        //     UpdateTimeText(totalTimeInSeconds);
+        // }
     }
 }
