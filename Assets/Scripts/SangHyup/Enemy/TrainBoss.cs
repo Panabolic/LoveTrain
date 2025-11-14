@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 
@@ -112,11 +112,11 @@ public class TrainBoss : Boss
     {
         float   knockbackRatio  = isPhase2 ? p2KnockbackRatio : p1KnockbackRatio;
         float   knockbackSpeed  = moveSpeed * knockbackRatio;
-        Vector2 power           = new Vector2(-moveDirection.x * knockbackSpeed, rigid2D.linearVelocity.y);
+        Vector2 force           = new Vector2(-moveDirection.x * knockbackSpeed, 0);
 
         knockbackTimer = knockbackDuration;
 
-        rigid2D.AddForce(power, ForceMode2D.Impulse);
+        rigid2D.AddForce(force, ForceMode2D.Impulse);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

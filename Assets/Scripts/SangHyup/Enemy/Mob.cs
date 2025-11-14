@@ -154,6 +154,13 @@ public class Mob : Enemy
         }
     }
 
+    public void Knockback(Vector2 direction, float power)
+    {
+        Vector2 force = direction * power;
+
+        rigid2D.AddForce(force, ForceMode2D.Impulse);
+    }
+
     protected override IEnumerator Die()
     {
         yield return base.Die(); // base.Die()가 isAlive = false 처리

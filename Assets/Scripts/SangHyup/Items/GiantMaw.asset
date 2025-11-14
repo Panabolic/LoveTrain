@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9baf84523d8625b43ad965e2f35edac8, type: 3}
+  m_Name: GiantMaw
+  m_EditorClassIdentifier: Assembly-CSharp::GiantMaw_SO
+  itemName: "\uAC70\uB300\uD55C \uC544\uAC00\uB9AC"
+  tags: {fileID: 0}
+  instantiatedPrefab: {fileID: 1374941097129474042, guid: c684961cce4a41647b55124dbdc37f0a, type: 3}
+  attachmentSocketName: 
+  iconSprite: {fileID: 0}
+  spritesByLevel: []
+  controllersByLevel: []
+  MaxUpgrade: 3
+  itemScript: 
+  cooldownTime: 2
+  mawDamageByLevel: 640000007800000096000000
+  cooldownByLevel:
+  - 2
+  - 1.5
+  - 1
+  knockbackDirection: {x: 1, y: 0.3}
+  knockbackPower: 3
