@@ -7,20 +7,19 @@ public class GiantMaw : MonoBehaviour, IInstantiatedItem
 
     // Components
     private Animator animator;
-    //private Collider2D collision;
 
+    // 값 초기화는 나중에 없애야 함
     private int     damage              = 100;
     private float   cooldown            = 2.0f;
     private float   currentCoolTime;
     private Vector2 knockbackDirection  = new Vector2(1.0f, 0.3f);
-    private float   knockbackPower      = 10.0f;
+    private float   knockbackPower      = 15.0f;
 
-    private bool isAvailable = true;
+    private bool    isAvailable = true;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        //collision = GetComponent<Collider2D>();
     }
 
     private void Start()
@@ -47,7 +46,7 @@ public class GiantMaw : MonoBehaviour, IInstantiatedItem
     {
         if (!isAvailable) return;
 
-        if (collision.CompareTag("Mob"))
+        if (collision.CompareTag("Mob") && collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             Mob mob = collision.GetComponent<Mob>();
             if (mob == null)
@@ -57,8 +56,9 @@ public class GiantMaw : MonoBehaviour, IInstantiatedItem
 
             // Attack
             animator.SetTrigger("eat");
-            mob.Knockback(knockbackDirection, knockbackPower);
+
             mob.TakeDamage(damage);
+            mob.Knockback(knockbackDirection, knockbackPower);
 
             // Management
             currentCoolTime = cooldown;
@@ -86,7 +86,7 @@ public class GiantMaw : MonoBehaviour, IInstantiatedItem
         this.damage = itemData.mawDamageByLevel[levelIndex];
         this.cooldown = itemData.cooldownByLevel[levelIndex];
 
-        /*애니메이션 교체*/
+        /*애니메이션 교체 구현 필요*/
 
     }
 }

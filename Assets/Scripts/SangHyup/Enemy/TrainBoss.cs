@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Net;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class TrainBoss : Boss
 {
@@ -19,9 +21,9 @@ public class TrainBoss : Boss
     [Range(0f, 1f)]
     [SerializeField] private float p2KnockbackRatio = 0.7f;
     [Tooltip("넉백 지속시간 (second)")]
-    [Range(0f, 3f)]
-    [SerializeField] private float knockbackDuration    = 0.2f;
-                     private float knockbackTimer       = 0f;
+    [Range(0f, 1.0f)]
+    [SerializeField] private float stunDuration = 0.2f;
+                     private bool  isStunned    = false;
 
     private bool isPhase2 = false;
 
@@ -37,27 +39,26 @@ public class TrainBoss : Boss
 
     private void FixedUpdate()
     {
+        // Right after death
         if (!isAlive)
         {
             moveDirection = Vector2.left;
             float deathMoveSpeed = 30.0f;
 
-            rigid2D.linearVelocity = new Vector2(deathMoveSpeed * moveDirection.x, rigid2D.linearVelocity.y);
+            rigid2D.linearVelocity = new Vector2(moveDirection.x * deathMoveSpeed, rigid2D.linearVelocity.y);
 
             return;
         }
 
-        // Move Direction Setting
+        // Move Setting
         SetMoveDirection(targetRigid.position);
 
-        if (knockbackTimer <= 0f && isAlive)
+        if (isAlive && !isStunned)
         {
-            rigid2D.linearVelocity = new Vector2(moveSpeed * moveDirection.x, rigid2D.linearVelocity.y);
+            rigid2D.linearVelocity = new Vector2(moveDirection.x * moveSpeed, rigid2D.linearVelocity.y);
 
             return;
         }
-
-        knockbackTimer -= Time.fixedDeltaTime;
     }
 
     /// <summary>
@@ -114,9 +115,18 @@ public class TrainBoss : Boss
         float   knockbackSpeed  = moveSpeed * knockbackRatio;
         Vector2 force           = new Vector2(-moveDirection.x * knockbackSpeed, 0);
 
-        knockbackTimer = knockbackDuration;
+        StartCoroutine(Stun());
 
         rigid2D.AddForce(force, ForceMode2D.Impulse);
+    }
+
+    private IEnumerator Stun()
+    {
+        isStunned = true;
+
+        yield return new WaitForSeconds(stunDuration);
+
+        isStunned = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

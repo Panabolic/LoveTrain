@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 5045536309202716207}
   - component: {fileID: 1554844574668132443}
   - component: {fileID: -5795723447414755287}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GiantMaw
-  m_TagString: Untagged
+  m_TagString: GiantMaw
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,7 +159,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.65}
+  m_Size: {x: 0.8, y: 0.65}
   m_EdgeRadius: 0
 --- !u!114 &-5795723447414755287
 MonoBehaviour:

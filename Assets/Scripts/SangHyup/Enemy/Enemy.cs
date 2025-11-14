@@ -32,8 +32,8 @@ public class Enemy : MonoBehaviour
         animator    = GetComponent<Animator>();
 
         // Get Target Components
-        targetRigid = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
-        levelManager = GameObject.FindWithTag("Player").GetComponent<TrainLevelManager>();
+        targetRigid     = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
+        levelManager    = GameObject.FindWithTag("Player").GetComponent<TrainLevelManager>();
     }
 
     protected virtual void Start()
@@ -64,15 +64,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    protected virtual void OnDisable()
-    {
-        // PoolManager 출석부에서 제거
-        if (PoolManager.instance != null)
-        {
-            PoolManager.instance.UnregisterEnemy(this);
-        }
-    }
-
     public virtual void TakeDamage(float damageAmount)
     {
         if (!isAlive) return;
@@ -97,8 +88,14 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(deathToDeactive);
     }
 
-    public bool GetIsAlive()
+    public bool GetIsAlive() { return isAlive; }
+
+    protected virtual void OnDisable()
     {
-        return isAlive;
+        // PoolManager 출석부에서 제거
+        if (PoolManager.instance != null)
+        {
+            PoolManager.instance.UnregisterEnemy(this);
+        }
     }
 }

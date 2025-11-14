@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: GiantMaw
   m_EditorClassIdentifier: Assembly-CSharp::GiantMaw_SO
   itemName: "\uAC70\uB300\uD55C \uC544\uAC00\uB9AC"
-  tags: {fileID: 0}
   instantiatedPrefab: {fileID: 1374941097129474042, guid: c684961cce4a41647b55124dbdc37f0a, type: 3}
   attachmentSocketName: 
   iconSprite: {fileID: 0}
   spritesByLevel: []
   controllersByLevel: []
   MaxUpgrade: 3
-  itemScript: 
+  itemScript: "\uAE30\uCC28\uC758 \uC55E\uC5D0 \uAC70\uB300\uD55C \uC544\uAC00\uB9AC\uAC00
+    \uB2EC\uB9BD\uB2C8\uB2E4. \uC544\uAC00\uB9AC\uC5D0 \uCDA9\uB3CC\uD55C \uBAAC\uC2A4\uD130\uB294
+    \uB300\uBBF8\uC9C0\uB97C \uBC1B\uC73C\uBA70 \uB4A4\uB85C \uBC00\uB824\uB0A9\uB2C8\uB2E4."
   cooldownTime: 2
   mawDamageByLevel: 640000007800000096000000
   cooldownByLevel:
@@ -28,4 +29,4 @@ MonoBehaviour:
   - 1.5
   - 1
   knockbackDirection: {x: 1, y: 0.3}
-  knockbackPower: 3
+  knockbackPower: 15
