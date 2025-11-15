@@ -1,58 +1,66 @@
-﻿// Inventory.cs (이전의 EquipmentManager.cs)
-using System;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
+using System; // Action (이벤트)을 사용하기 위해 필요
 
 public class Inventory : MonoBehaviour
 {
-    // 소지(장착)한 아이템 인스턴스 목록
-    public List<ItemInstance> items;
+    [Header("데이터")]
+    [Tooltip("현재 소지(장착)한 아이템 인스턴스 목록")]
+    public List<ItemInstance> items = new List<ItemInstance>();
 
-    /// <summary>
-    /// UI가 구독(연동)할 수 있는 "인벤토리 변경 알림" 이벤트
-    /// </summary>
+    [Tooltip("아이템 획득/업그레이드 시 UI가 갱신되도록 알리는 이벤트")]
     public event Action OnInventoryChanged;
 
-    // (Update()에서 items의 Tick()을 돌려주는 로직...)
+    /// <summary>
+    // 매 프레임 모든 아이템의 '패시브' 쿨타임을 갱신합니다.
+    /// </summary>
     void Update()
     {
+        // 'this.gameObject'는 플레이어 자신을 의미합니다.
         foreach (ItemInstance instance in items)
         {
-            // 'user'는 이 Inventory 컴포넌트가 붙어있는 
-            // 플레이어 GameObject를 의미합니다.
             instance.Tick(Time.deltaTime, this.gameObject);
         }
     }
 
     /// <summary>
     /// 새 아이템을 획득(또는 업그레이드)합니다.
+    /// UI 갱신 이벤트를 호출합니다.
     /// </summary>
     public void AcquireItem(Item_SO newItemSO)
     {
-        // 1. ItemSO 참조로 비교
+        // 1. 이미 가진 아이템인지 SO 참조로 비교
         foreach (ItemInstance instance in items)
         {
             if (instance.itemData == newItemSO)
             {
-                // 2. 업그레이드
+                // 2. 이미 있으면 업그레이드 요청
+                // (최대 레벨 체크는 ItemInstance 또는 Item_SO의 로직이 담당)
                 instance.UpgradeLevel();
-                Debug.Log($"{newItemSO.itemName} 업그레이드! (현재 레벨: {instance.currentUpgrade})");
 
+                // 3. UI 갱신 알림
                 OnInventoryChanged?.Invoke();
-
                 return;
             }
         }
 
-        // 3. 신규 아이템 추가
+        // 4. 없으면 신규 아이템으로 추가
         ItemInstance newInstance = new ItemInstance(newItemSO);
         items.Add(newInstance);
+
+        // 5. 아이템 장착(실체화) 로직 실행
+        newInstance.HandleEquip(this.gameObject);
+
+        // 6. UI 갱신 알림
         OnInventoryChanged?.Invoke();
     }
 
+    // --- 헬퍼 함수 (UI 및 이벤트 시스템용) ---
+
     /// <summary>
-    /// [추가] UI가 아이템을 찾기 위한 헬퍼 함수
+    /// 인벤토리에서 특정 아이템(SO)에 해당하는 인스턴스를 찾습니다.
     /// </summary>
+    /// <returns>찾은 ItemInstance, 없으면 null</returns>
     public ItemInstance FindItem(Item_SO itemToFind)
     {
         foreach (ItemInstance instance in items)
@@ -65,5 +73,32 @@ public class Inventory : MonoBehaviour
         return null; // 못 찾았음
     }
 
-    // (BroadcastOnTakeDamage, BroadcastOnKillEnemy 등...)
+    /// <summary>
+    /// 현재 소지한 아이템 중 '최대 레벨'이 아닌 아이템 목록을 반환합니다.
+    /// (이벤트 시스템의 '랜덤 업그레이드' 효과가 사용)
+    /// </summary>
+    public List<ItemInstance> GetUpgradableItems()
+    {
+        List<ItemInstance> upgradableList = new List<ItemInstance>();
+        foreach (ItemInstance instance in items)
+        {
+            if (instance.currentUpgrade < instance.itemData.MaxUpgrade)
+            {
+                upgradableList.Add(instance);
+            }
+        }
+        return upgradableList;
+    }
+
+    /// <summary>
+    /// 특정 아이템 SO가 현재 인벤토리에서 최대 레벨인지 확인합니다.
+    /// (레벨 업 UI, 이벤트 시스템에서 사용)
+    /// </summary>
+    public bool IsItemMaxed(Item_SO itemToFind)
+    {
+        ItemInstance instance = FindItem(itemToFind);
+        if (instance == null) return false; // 아직 없으므로 Max가 아님
+
+        return instance.currentUpgrade >= instance.itemData.MaxUpgrade;
+    }
 }

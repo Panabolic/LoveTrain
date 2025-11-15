@@ -1,83 +1,93 @@
 ﻿// LevelUpChoice_UI.cs
-using TMPro; // TextMeshPro
 using UnityEngine;
 using UnityEngine.UI; // Button, Image
+using TMPro; // TextMeshPro
 
 public class LevelUpChoiceUI : MonoBehaviour
 {
-    [Header("UI 구성요소")]
-    [SerializeField] private Image itemIcon;  // 아이템 이미지
-    [SerializeField] private TextMeshProUGUI itemNameText; // 아이템 이름
-    [SerializeField] private TextMeshProUGUI itemDescriptionText; // 아이템 설명
-    [SerializeField] private Image levelIcon; // 로마자 레벨 스프라이트
+    [Header("UI (Common)")]
+    [SerializeField] private Image itemIcon;
+    [SerializeField] private TextMeshProUGUI itemNameText;
+    [SerializeField] private TextMeshProUGUI itemDescriptionText;
 
-    [Header("데이터 참조")]
-    [SerializeField] private LevelSpriteAtlas levelAtlas; // 레벨(int) -> 로마자(Sprite) 변환기
+    [Header("UI (New Item)")]
+    [Tooltip("새 아이템일 때 켤 그룹 (이 안에 'NEW' 스프라이트가 있어야 함)")]
+    [SerializeField] private GameObject newLevelUI;
+    // 'newLevelSprite' 필드는 제거됨
 
-    private Item_SO currentItemSO; // 이 버튼이 보여주는 아이템
-    private LevelUpUIManager uiManager; // 부모 매니저
+    [Header("UI (Upgrade Item)")]
+    [Tooltip("업그레이드일 때 켤 그룹")]
+    [SerializeField] private GameObject upgradeLevelGroup;
+    [Tooltip("upgradeLevelGroup 안의 '현재 레벨' 스프라이트")]
+    [SerializeField] private Image currentLevelSprite;
+    [Tooltip("upgradeLevelGroup 안의 '화살표' 이미지")]
+    [SerializeField] private Image arrowIcon; // '화살표 스프라이트'가 적용될 곳
+    [Tooltip("upgradeLevelGroup 안의 '다음 레벨' 스프라이트")]
+    [SerializeField] private Image nextLevelSprite;
+
+    [Header("Data Reference")]
+    [SerializeField] private LevelSpriteAtlas levelAtlas; // 로마자/MAX 스프라이트 DB
+
+    private Item_SO currentItemSO;
+    private LevelUpUIManager uiManager;
 
     void Start()
     {
-        // 버튼 클릭 시 OnSelectButton() 함수가 호출되도록 연결
         GetComponent<Button>().onClick.AddListener(OnSelectButton);
     }
 
-    /// <summary>
-    /// [2단계]의 매니저가 호출하는 함수. UI를 갱신합니다.
-    /// </summary>
     public void DisplayChoice(Item_SO itemSO, Inventory playerInventory, LevelUpUIManager manager)
     {
+        if (itemSO == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+        gameObject.SetActive(true);
+
         this.currentItemSO = itemSO;
         this.uiManager = manager;
 
-        // 1. [핵심] 이 아이템의 '표시될 레벨' 계산
-        int displayLevel;
-        bool isMaxed = false; 
-        ItemInstance existingInstance = playerInventory.FindItem(itemSO); // (4단계에서 추가할 함수)
-
-        if (existingInstance != null)
-        {
-            // 이미 갖고 있으면 -> (현재 레벨 + 1)을 표시
-            displayLevel = existingInstance.currentUpgrade + 1;
-            if (displayLevel >= itemSO.MaxUpgrade)
-            {
-                isMaxed = true;
-                displayLevel = itemSO.MaxUpgrade; // (표시 레벨 고정)
-            }
-        }
-        else
-        {
-            // 새 아이템이면 -> 1레벨(I)을 표시
-            displayLevel = 1;
-        }
-
-        // 2. UI 갱신
+        // 1. 공통 정보 갱신 (아이콘, 이름, 설명)
         itemIcon.sprite = itemSO.iconSprite;
         itemNameText.text = itemSO.itemName;
         itemDescriptionText.text = itemSO.itemScript;
 
-        // 3. 레벨 스프라이트 갱신
-        Sprite levelSprite;
-        if (isMaxed)
+        // 2. 이 아이템을 이미 가졌는지 확인
+        ItemInstance existingInstance = playerInventory.FindItem(itemSO);
+
+        if (existingInstance == null)
         {
-            levelSprite = levelAtlas.maxLevelSprite;
+            // --- 3A. 새 아이템일 경우 ---
+            newLevelUI.SetActive(true);      // "NEW" 그룹 켜기
+            upgradeLevelGroup.SetActive(false); // "업그레이드" 그룹 끄기
         }
         else
         {
-            levelSprite = levelAtlas.GetSpriteForLevel(displayLevel);
-        }
+            // --- 3B. 업그레이드일 경우 ---
+            newLevelUI.SetActive(false);     // "NEW" 그룹 끄기
+            upgradeLevelGroup.SetActive(true);  // "업그레이드" 그룹 켜기
 
-        levelIcon.sprite = levelSprite;
-        levelIcon.enabled = true;
+            int currentLevel = existingInstance.currentUpgrade;
+            int nextLevel = currentLevel + 1;
+
+            // '현재 레벨' 스프라이트 설정 (예: I, II...)
+            currentLevelSprite.sprite = levelAtlas.GetSpriteForLevel(currentLevel);
+
+            // '다음 레벨' 스프라이트 설정 (예: II, III, MAX...)
+            if (nextLevel >= itemSO.MaxUpgrade)
+            {
+                nextLevelSprite.sprite = levelAtlas.maxLevelSprite;
+            }
+            else
+            {
+                nextLevelSprite.sprite = levelAtlas.GetSpriteForLevel(nextLevel);
+            }
+        }
     }
 
-    /// <summary>
-    /// 이 UI 버튼을 클릭했을 때 호출됩니다.
-    /// </summary>
     private void OnSelectButton()
     {
-        // [2단계]의 매니저에게 "나 선택됐어!"라고 아이템 정보를 넘겨줌
         uiManager.OnChoiceSelected(currentItemSO);
     }
 }

@@ -12,6 +12,8 @@ public class StartObject : MonoBehaviour
     [SerializeField] private GameObject MouseUI;
     [SerializeField] private GameObject KeyUI;
 
+    [SerializeField] private SO_Event startEvent;
+
     [Header("✨ 퇴장 애니메이션")]
     [Tooltip("스프라이트 변경 후 -x축(왼쪽)으로 이동할 속도")]
     [SerializeField] private float moveSpeed = 20f;
@@ -64,6 +66,7 @@ public class StartObject : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.StartGame();
+            EventManager.Instance.StartEvent(startEvent);
             otherUI.SetActive(true);
             otherUI.GetComponent<UIAlphaFader>().FadeIn();
         }

@@ -1,10 +1,11 @@
-
+﻿
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using System;
 
 public enum TrainCar
 {
@@ -46,6 +47,11 @@ public class Train : MonoBehaviour
     [SerializeField]
     private GameObject tempDieUI;
 
+    /// <summary>
+    /// 기차가 피격당했을 때 SpeedMeterUI에 알리기 위한 이벤트
+    /// </summary>
+    public event Action OnTrainDamaged;
+
     private void Awake()
     {
         carsAnim = GetComponentsInChildren<Animator>();
@@ -70,6 +76,8 @@ public class Train : MonoBehaviour
     public virtual void TakeDamage(float damageAmount/*, TrainCar trainCar*/)
     {
         if (isDead) return;
+
+        OnTrainDamaged?.Invoke();
 
         if (CameraShakeManager.Instance != null)
         {
@@ -153,6 +161,28 @@ public class Train : MonoBehaviour
     {
         if (isDead) return;
         CurrentSpeed += 20;
+    }
+
+    /// <summary>
+    /// 이벤트 시스템에서 기차의 현재 속도를 직접 조절합니다.
+    /// </summary>
+    public void ModifySpeed(float amount)
+    {
+        if (isDead) return; // (Train.cs에 isDead 변수가 있다고 가정)
+
+        CurrentSpeed += amount;
+
+        // 속도가 0(사망 임계값) 이하로 떨어졌는지 확인
+        if (CurrentSpeed <= deathSpeedThreshold)
+        {
+            CurrentSpeed = deathSpeedThreshold;
+            Die(); // (Train.cs의 Die 함수 호출)
+        }
+        // (선택) 최대 속도를 넘지 않게 제한
+        else if (CurrentSpeed > CurrentSpeed)
+        {
+            CurrentSpeed = CurrentSpeed;
+        }
     }
 
     public void DecreaseSpeedTest()

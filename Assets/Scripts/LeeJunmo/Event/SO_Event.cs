@@ -1,11 +1,8 @@
-using System.Collections.Generic;
-using TMPro;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 [CreateAssetMenu(menuName = "Scriptable Object/Events", order = int.MaxValue)]
-public class SO_Event : ScriptableObject 
+public class SO_Event : ScriptableObject
 {
     [System.Serializable]
     public struct Selection
@@ -13,17 +10,14 @@ public class SO_Event : ScriptableObject
         [TextArea(2, 2)]
         public string selectionText;
         [TextArea(2, 2)]
-        public string selectionUnderText; 
-        [TextArea(2, 2)]
-        public string selectionEndText;
-        //������
-        public int addSpeed;
+        public string selectionUnderText;
+
+        [Tooltip("이 선택지를 골랐을 때 발동할 실제 이벤트 로직 (GameEventSO)")]
+        public GameEventSO eventToTrigger; // [핵심 연결고리]
     }
 
-/*    public Sprite EventSprite;*/
     public string EventTitle;
-    [TextArea(25,25)]
+    [TextArea(25, 25)]
     public string EventText;
     public List<Selection> Selections;
-  
 }

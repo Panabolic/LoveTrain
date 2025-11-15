@@ -24,12 +24,12 @@ MonoBehaviour:
       \uD68D\uB4DD"
     selectionEndText: "\uC774\uAD50\uB3C4 \uD0DC\uADF8\uC758 \uC544\uC774\uD15C\uC744
       \uD68D\uB4DD\uD588\uB2E4."
-    addSpeed: 0
+    eventToTrigger: {fileID: 11400000, guid: 41ff1bb57d9662e4fa36560402979a7e, type: 2}
   - selectionText: "\uCC9C\uC0AC\uB97C \uBBFF\uAE30"
     selectionUnderText: "\uC131\uACBD \uD0DC\uADF8\uC758 \uC544\uC774\uD15C \uD68D\uB4DD"
     selectionEndText: "\uC131\uACBD \uD0DC\uADF8\uC758 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD588\uB2E4."
-    addSpeed: 0
+    eventToTrigger: {fileID: 11400000, guid: 41ff1bb57d9662e4fa36560402979a7e, type: 2}
   - selectionText: "\uB204\uAD6C\uB3C4 \uBBFF\uC9C0 \uC54A\uAE30"
     selectionUnderText: "\uACFC\uD559 \uD0DC\uADF8\uC758 \uC544\uC774\uD15C \uD68D\uB4DD"
     selectionEndText: "\uACFC\uD559 \uD0DC\uADF8\uC758 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD588\uB2E4."
-    addSpeed: 0
+    eventToTrigger: {fileID: 11400000, guid: 41ff1bb57d9662e4fa36560402979a7e, type: 2}
