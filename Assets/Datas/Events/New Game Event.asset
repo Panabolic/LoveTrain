@@ -16,8 +16,28 @@ MonoBehaviour:
   rollGroups:
   - description: 
     outcomes:
-    - weight: 100
-      effect: {fileID: 11400000, guid: 37ad65caedadaf14d8e165227b55c1a4, type: 2}
+    - weight: 60
+      effectLogic: {fileID: 11400000, guid: 37ad65caedadaf14d8e165227b55c1a4, type: 2}
+      parameters:
+        intValue: 1
+        intValue2: 0
+        floatValue: 0
+        floatValue2: 0
+        soReference: {fileID: 11400000, guid: 022ee112c533fdb4c8a2b357f4f14916, type: 2}
+        prefabReference: {fileID: 0}
+      outputSettings:
+        includeDefaultText: 1
+        specialText: 
+        order: 0
+    - weight: 40
+      effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
+      parameters:
+        intValue: 0
+        intValue2: 0
+        floatValue: 20
+        floatValue2: 0
+        soReference: {fileID: 0}
+        prefabReference: {fileID: 0}
       outputSettings:
         includeDefaultText: 1
         specialText: 

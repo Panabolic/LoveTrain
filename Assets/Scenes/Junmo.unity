@@ -5233,6 +5233,7 @@ MonoBehaviour:
   leverAfter: {fileID: -560888265471310478, guid: caa89508701dcf844a2c4ca1b0e9f4d1, type: 3}
   MouseUI: {fileID: 181188488}
   KeyUI: {fileID: 1002504241}
+  startEvent: {fileID: 11400000, guid: 28ed9e2e6fbe4b049aa11b945ebf88f6, type: 2}
   moveSpeed: 30
   destroyDelay: 4
 --- !u!61 &541883009
@@ -18029,6 +18030,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2049853603}
   - component: {fileID: 2049853604}
+  - component: {fileID: 2049853605}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -18061,6 +18063,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8aef6070efe9ad4db9a83b7a81c5bb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!114 &2049853605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049853602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94837abf2074a44f8abdd1e3e9a4179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
 --- !u!1 &2051550453

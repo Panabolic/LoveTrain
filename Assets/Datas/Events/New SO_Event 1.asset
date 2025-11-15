@@ -20,9 +20,7 @@ MonoBehaviour:
   Selections:
   - selectionText: "\uCC45\uC744 \uC5F4\uC5B4\uBCF8\uB2E4."
     selectionUnderText: "\uC0B4\uC810\uD0DC\uADF8\uC758 \uC544\uC774\uD15C \uD68D\uB4DD"
-    selectionEndText: "\uC0B4\uC810\uD0DC\uADF8\uC758 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD588\uB2E4."
-    addSpeed: 0
+    eventToTrigger: {fileID: 11400000, guid: 41ff1bb57d9662e4fa36560402979a7e, type: 2}
   - selectionText: "\uCC45\uC744 \uBC84\uB9B0\uB2E4."
     selectionUnderText: "\uC2E0\uC559\uD0DC\uADF8\uC758 \uC544\uC774\uD15C \uD68D\uB4DD"
-    selectionEndText: "\uC2E0\uC559\uD0DC\uADF8\uC758 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD588\uB2E4."
-    addSpeed: 0
+    eventToTrigger: {fileID: 11400000, guid: 41ff1bb57d9662e4fa36560402979a7e, type: 2}
