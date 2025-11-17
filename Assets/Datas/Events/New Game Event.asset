@@ -17,7 +17,7 @@ MonoBehaviour:
   - description: 
     outcomes:
     - weight: 60
-      effectLogic: {fileID: 11400000, guid: 37ad65caedadaf14d8e165227b55c1a4, type: 2}
+      effectLogic: {fileID: 11400000, guid: 377f9e1bf16fe764aab37ffeedd5065c, type: 2}
       parameters:
         intValue: 1
         intValue2: 0
@@ -28,9 +28,9 @@ MonoBehaviour:
       outputSettings:
         includeDefaultText: 1
         specialText: 
-        order: 0
+        order: 1
     - weight: 40
-      effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
+      effectLogic: {fileID: 11400000, guid: dc38b42b9fc31534388537c1ac5ff5e8, type: 2}
       parameters:
         intValue: 0
         intValue2: 0
@@ -42,3 +42,5 @@ MonoBehaviour:
         includeDefaultText: 1
         specialText: 
         order: 0
+  - description: 
+    outcomes: []
