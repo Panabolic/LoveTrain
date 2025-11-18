@@ -88,4 +88,16 @@ public class BeatingHeart_SO : Item_SO
             Instantiate(EffectPrefab, user.transform.position, Quaternion.identity);
         }
     }
+
+    protected override Dictionary<string, string> GetStatReplacements(int level)
+    {
+        int index = Mathf.Clamp(level - 1, 0, damageByLevel.Length - 1);
+
+        return new Dictionary<string, string>
+        {
+            { "Damage", damageByLevel[index].ToString() },
+            { "CoolTime", cooldownByLevel[index].ToString() }
+        };
+    }
+
 }

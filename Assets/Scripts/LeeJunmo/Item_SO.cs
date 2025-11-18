@@ -22,7 +22,11 @@ public class Item_SO : ScriptableObject
     [Header("업그레이드 최대 횟수")]
     public int MaxUpgrade;
     [Header("아이템 설명")]
+    [TextArea(3, 10)]
     public string itemScript;
+    [Header("아이템 설명")]
+    [TextArea(3, 10)]
+    public string itemSimpleScript;
     [Header("쿨타임 설정")]
     public float cooldownTime = 0f; // 이 아이템의 쿨타임 (0이면 쿨타임 없음)
 
@@ -128,4 +132,27 @@ public class Item_SO : ScriptableObject
         instance.instantiatedItemUpgrade();
     }
 
+    /// <summary>
+    /// 자식 아이템이 자신의 스탯을 딕셔너리로 반환 (Override용)
+    /// </summary>
+    protected virtual Dictionary<string, string> GetStatReplacements(int level)
+    {
+        return new Dictionary<string, string>();
+    }
+
+    /// <summary>
+    /// UI가 호출: 템플릿의 {Tag}를 실제 값으로 변환하여 반환
+    /// </summary>
+    public string GetFormattedDescription(int level)
+    {
+        string desc = itemScript;
+        if (string.IsNullOrEmpty(desc)) return "";
+
+        var replacements = GetStatReplacements(level);
+        foreach (var pair in replacements)
+        {
+            desc = desc.Replace("{" + pair.Key + "}", pair.Value);
+        }
+        return desc;
+    }
 }

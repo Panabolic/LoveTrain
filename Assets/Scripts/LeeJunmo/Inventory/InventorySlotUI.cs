@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI; // Image를 사용하기 위해 필요
-using TMPro;
 
 // (파일 이름과 클래스 이름이 'InventorySlotUI'로 동일해야 합니다)
-public class InventorySlotUI : MonoBehaviour
+public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("UI 구성요소")]
     // [SerializeField]를 제거하고 private으로 변경
@@ -13,6 +14,8 @@ public class InventorySlotUI : MonoBehaviour
     [Header("데이터 참조")]
     // [1단계]에서 만든 LevelSpriteAtlas 에셋을 여기에 연결
     [SerializeField] private LevelSpriteAtlas levelAtlas;
+
+    private ItemInstance currentInstance;
 
     /// <summary>
     /// 스크립트가 활성화될 때 자동으로 컴포넌트를 찾습니다.
@@ -61,6 +64,8 @@ public class InventorySlotUI : MonoBehaviour
             return;
         }
 
+        this.currentInstance = instance;
+
         // 2. '아이템 아이콘' 갱신
         itemIcon.sprite = instance.itemData.iconSprite;
         itemIcon.enabled = true;
@@ -88,5 +93,27 @@ public class InventorySlotUI : MonoBehaviour
         {
             levelIcon.enabled = false;
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (currentInstance == null) return;
+
+        Item_SO so = currentInstance.itemData;
+        int level = currentInstance.currentUpgrade;
+
+        // ... (제목, 레벨 스프라이트, 설명 가져오는 로직은 그대로) ...
+        string title = so.itemName;
+        Sprite levelSprite = (level >= so.MaxUpgrade) ? levelAtlas.maxLevelSprite : levelAtlas.GetSpriteForLevel(level);
+        string content = so.GetFormattedDescription(level);
+
+        // [변경] Show 함수에 'transform.position' (슬롯의 위치) 추가 전달
+        TooltipSystem.Instance.Show(title, levelSprite, content, transform.position);
+    }
+
+    // 마우스 뗐을 때
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        TooltipSystem.Instance.Hide();
     }
 }

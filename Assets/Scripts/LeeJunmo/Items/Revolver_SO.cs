@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Revolver", menuName = "Items/Revolver")]
 public class Revolver_SO : Item_SO
@@ -31,4 +32,17 @@ public class Revolver_SO : Item_SO
 
         return revolverGO;
     }
+
+    protected override Dictionary<string, string> GetStatReplacements(int level)
+    {
+        int index = Mathf.Clamp(level - 1, 0, damageByLevel.Length - 1);
+
+        return new Dictionary<string, string>
+        {
+            { "Damage", damageByLevel[index].ToString() },
+            { "BulletNum", bulletNumByLevel[index].ToString() },
+            { "CoolTime", cooldownByLevel[index].ToString() }
+        };
+    }
+
 }
