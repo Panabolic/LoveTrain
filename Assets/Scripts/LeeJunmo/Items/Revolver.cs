@@ -8,6 +8,9 @@ public class Revolver : MonoBehaviour, IInstantiatedItem
     private SpriteRenderer spriteRenderer;
     private Animator animator; // [추가]
 
+    [SerializeField]
+    private GameObject muzzle;
+
     //현재 스탯
     private int currentDamage;
     private int currentBulletNum;

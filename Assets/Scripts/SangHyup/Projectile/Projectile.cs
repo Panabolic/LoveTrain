@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
@@ -11,6 +11,11 @@ public class Projectile : MonoBehaviour
     }
 
     public virtual void Launch(Vector2 direction) { }
+
+    public void Init(float damage, float speed)
+    {
+        this.damage = damage;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
