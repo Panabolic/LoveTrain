@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Revolver
   m_EditorClassIdentifier: Assembly-CSharp::Revolver_SO
   itemName: "\uB9AC\uBCFC\uBC84"
-  instantiatedPrefab: {fileID: 0}
-  attachmentSocketName: 
+  instantiatedPrefab: {fileID: 44012710606727125, guid: 2ea7fb7ee56a17c49a4bcee38e7de9ed, type: 3}
+  attachmentSocketName: TrainF
   iconSprite: {fileID: -1726110457, guid: 857d3e31031f11d4d96f15e0d1a00bfb, type: 3}
   spritesByLevel: []
   controllersByLevel: []
@@ -30,4 +30,4 @@ MonoBehaviour:
   - 10
   - 7
   - 7
-  BulletPrefab: {fileID: 0}
+  BulletPrefab: {fileID: 5750954625788087078, guid: c72522d0eca1fec4f830520f0c9347e6, type: 3}
