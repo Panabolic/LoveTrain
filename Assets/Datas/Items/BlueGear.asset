@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c604ab3501e06c046bcf147f5f753838, type: 3}
+  m_Name: BlueGear
+  m_EditorClassIdentifier: Assembly-CSharp::BlueGear_SO
+  itemName: "\uD478\uB978 \uD1B1\uB2C8"
+  instantiatedPrefab: {fileID: 0}
+  attachmentSocketName: TrainM
+  iconSprite: {fileID: 0}
+  spritesByLevel: []
+  controllersByLevel: []
+  MaxUpgrade: 3
+  itemScript: "\uACF5\uACA9\uC18D\uB3C4 {AttackSpeed}% \uB9CC\uD07C \uC99D\uAC00."
+  itemSimpleScript: "\uCD1D\uAE30 \uACF5\uACA9 \uC18D\uB3C4 \uC99D\uAC00"
+  cooldownTime: 0
+  AttackSpeedByLevel:
+  - 10
+  - 20
+  - 30
