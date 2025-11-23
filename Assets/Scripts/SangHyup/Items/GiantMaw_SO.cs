@@ -10,15 +10,10 @@ public class GiantMaw_SO : Item_SO
     [SerializeField] public Vector2 knockbackDirection  = new Vector2(1.0f, 0.3f);
     [SerializeField] public float   knockbackPower      = 10.0f;
 
-    private readonly Vector3 attachmentLocalPos = new Vector3(6.5f, -0.15f, 0f);
-
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
         GameObject giantMawGO = InstantiateVisual(user);
         if (giantMawGO == null) return null;
-
-        // 위치 오프셋 적용
-        giantMawGO.transform.localPosition = attachmentLocalPos;
 
         GiantMaw giantMaw = giantMawGO.GetComponent<GiantMaw>();
         giantMaw.Initialize(this);

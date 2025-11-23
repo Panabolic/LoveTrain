@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GiantMaw1_StandBy
+  m_Name: RevolverBullet
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,23 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 3889537558120289304, guid: 98503eb811c8f3e409b659b3530aef62, type: 3}
+      value: {fileID: 4232742941501774814, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
+    - time: 0.041666668
+      value: {fileID: 1931587214, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
+    - time: 0.083333336
+      value: {fileID: -442734335, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
+    - time: 0.125
+      value: {fileID: 477090216, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
+    - time: 0.16666667
+      value: {fileID: 1787639059, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
+    - time: 0.20833333
+      value: {fileID: -993185751, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 12
+  m_SampleRate: 24
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -44,13 +54,18 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 3889537558120289304, guid: 98503eb811c8f3e409b659b3530aef62, type: 3}
+    - {fileID: 4232742941501774814, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
+    - {fileID: 1931587214, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
+    - {fileID: -442734335, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
+    - {fileID: 477090216, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
+    - {fileID: 1787639059, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
+    - {fileID: -993185751, guid: b9a79c9ffe381a646b22f2bedc676018, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.083333336
+    m_StopTime: 0.25
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -69,4 +84,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.041666668
+    functionName: CanHit
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

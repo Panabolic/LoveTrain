@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c604ab3501e06c046bcf147f5f753838, type: 3}
   m_Name: BlueGear
   m_EditorClassIdentifier: Assembly-CSharp::BlueGear_SO
-  itemName: "\uD478\uB978 \uD1B1\uB2C8"
-  instantiatedPrefab: {fileID: 0}
+  itemName: "\uD478\uB978 \uD1B1\uB2C8\uBC14\uD034"
+  instantiatedPrefab: {fileID: 7034176412913377441, guid: a5901007bd3976544bdc443bcd08f029, type: 3}
   attachmentSocketName: TrainM
   iconSprite: {fileID: 0}
   spritesByLevel: []

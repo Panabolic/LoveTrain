@@ -9,6 +9,10 @@ public class Revolver_SO : Item_SO
     public int[] bulletNumByLevel = { 1, 2, 3 };
     public float[] cooldownByLevel = { 10f, 7f, 7f };
 
+    [Header("발사 설정")]
+    [Tooltip("연사 시 총알 사이의 간격 (초)")]
+    public float timeBetweenShots = 0.2f; // [추가] 0.2초마다 한 발씩
+
     [Header("탄환")]
     public GameObject BulletPrefab;
 

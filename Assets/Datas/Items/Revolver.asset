@@ -18,7 +18,7 @@ MonoBehaviour:
   iconSprite: {fileID: -1726110457, guid: 857d3e31031f11d4d96f15e0d1a00bfb, type: 3}
   spritesByLevel: []
   controllersByLevel: []
-  MaxUpgrade: 2
+  MaxUpgrade: 3
   itemScript: "{CoolTime}\uCD08 \uB9C8\uB2E4 {Damage}\uC758 \uCD1D\uC54C {BulletNum}\uBC1C
     \uBC1C\uC0AC."
   itemSimpleScript: "\uC8FC\uAE30\uC801\uC73C\uB85C \uC804\uBC29\uC5D0 \uCD1D\uC54C
@@ -30,4 +30,5 @@ MonoBehaviour:
   - 10
   - 7
   - 7
-  BulletPrefab: {fileID: 5750954625788087078, guid: c72522d0eca1fec4f830520f0c9347e6, type: 3}
+  timeBetweenShots: 0.2
+  BulletPrefab: {fileID: 7403974513621862308, guid: d326fca6bca71204aa8225690e217fe6, type: 3}
