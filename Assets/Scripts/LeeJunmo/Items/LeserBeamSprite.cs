@@ -8,7 +8,7 @@ public class LaserBeamSprite : MonoBehaviour
 
     private float damage;
     private float damageTimer;
-    private List<Mob> enemiesInRange = new List<Mob>();
+    private List<Enemy> enemiesInRange = new List<Enemy>();
 
     public void Init(float dmg)
     {
@@ -35,7 +35,7 @@ public class LaserBeamSprite : MonoBehaviour
     {
         for (int i = enemiesInRange.Count - 1; i >= 0; i--)
         {
-            Mob enemy = enemiesInRange[i];
+            Enemy enemy = enemiesInRange[i];
 
             if (enemy != null && enemy.gameObject.activeSelf)
             {
@@ -50,7 +50,7 @@ public class LaserBeamSprite : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Mob enemy = collision.GetComponent<Mob>();
+        Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null && !enemiesInRange.Contains(enemy))
         {
             enemiesInRange.Add(enemy);
@@ -59,7 +59,7 @@ public class LaserBeamSprite : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Mob enemy = collision.GetComponent<Mob>();
+        Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null && enemiesInRange.Contains(enemy))
         {
             enemiesInRange.Remove(enemy);

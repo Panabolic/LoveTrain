@@ -53,7 +53,7 @@ public class Projectile : MonoBehaviour
     {
         if (!isCanHit) return;
 
-        Mob enemy = collision.GetComponent<Mob>();
+        Enemy enemy = collision.GetComponent<Enemy>();
 
         if (enemy != null)
         {
@@ -65,7 +65,7 @@ public class Projectile : MonoBehaviour
     /// <summary>
     /// 적에게 적중했을 때 호출되는 함수 (자식에서 오버라이드하여 특수 효과 구현 가능)
     /// </summary>
-    protected virtual void OnHitEnemy(Mob enemy)
+    protected virtual void OnHitEnemy(Enemy enemy)
     {
         enemy.TakeDamage(damage);
     }
