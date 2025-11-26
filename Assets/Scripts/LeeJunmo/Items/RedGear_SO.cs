@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RedGear", menuName = "Items/RedGear")]
 public class RedGear_SO : Item_SO
 {
-    [Header("리볼버 전용 데이터")]
+    [Header("붉은 톱니바퀴 데이터")]
     public float[] DamageByLevel = { 10f, 20f, 30f };
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)

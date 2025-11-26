@@ -1,57 +1,64 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
+// 데이터 전달용 구조체
+[System.Serializable]
+public struct GunStats
+{
+    public float damage;
+    public float speed;
+    public float fireRate;
+    public GameObject projectilePrefab; // 일반 총알 프리팹
+    public GameObject laserPrefab;      // 레이저 프리팹
+}
+
 public class Gun : MonoBehaviour
 {
-    public GameObject bulletPrefab; // 발사할 탄환 프리팹
-    public Transform firePoint;     // 탄환이 생성될 위치 (총구)
+    [Header("입력")]
+    public InputActionReference fireAction;
 
-    // 새로운 입력 시스템 사용
-    public InputAction shootAction;
+    [Header("현재 스탯")]
+    public GunStats CurrentStats;
 
-    [Header("연사 설정")]
-    [Tooltip("총알 사이의 발사 간격 (초). 0.2 = 초당 5발")]
-    [SerializeField] private float fireRate = 0.2f;
-
-    // ✨ [추가] 다음에 발사 가능한 시간을 저장할 변수
-    private float nextFireTime = 0f;
+    // 현재 장착된 전략
+    private IWeaponStrategy currentStrategy;
+    public Transform firePoint;
 
     private void OnEnable()
     {
-        shootAction.Enable();
+        if (fireAction != null) fireAction.action.Enable();
     }
-
     private void OnDisable()
     {
-        shootAction.Disable();
+        if (fireAction != null) fireAction.action.Disable();
+    }
+
+    void Start()
+    {
+        // 시작 시 기본 무기(투사체) 장착
+        SetWeapon(new ProjectileStrategy());
+    }
+
+    // [핵심] 무기 교체 함수 (아이템 획득 시 호출)
+    public void SetWeapon(IWeaponStrategy newStrategy)
+    {
+        if (currentStrategy != null) currentStrategy.Unequip();
+
+        currentStrategy = newStrategy;
+        currentStrategy.Initialize(this, CurrentStats);
     }
 
     void Update()
     {
-        if (GameManager.Instance.CurrentState != GameState.Die)
+        if (Time.timeScale == 0) return;
+
+        // 입력 상태 확인
+        bool isTriggerHeld = fireAction != null && fireAction.action.IsPressed();
+
+        // 전략에게 위임
+        if (currentStrategy != null)
         {
-            if (shootAction.IsPressed() && Time.time >= nextFireTime)
-            {
-                // ✨ [추가] 다음 발사 시간을 현재 시간 + 쿨타임으로 갱신
-                nextFireTime = Time.time + fireRate;
-
-                Shoot();
-            }
-        }
-    }
-
-    void Shoot()
-    {
-        // 탄환 프리팹 인스턴스화 (생성)
-        GameObject bulletInstance = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
-        // 탄환 스크립트 가져오기
-        Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
-
-        if (bulletScript != null)
-        {
-            // 총의 방향을 탄환 발사 방향으로 사용
-            bulletScript.Launch(transform.right);
+            currentStrategy.Process(isTriggerHeld);
         }
     }
 }

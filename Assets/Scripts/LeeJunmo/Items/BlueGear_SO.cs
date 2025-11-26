@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BlueGear", menuName = "Items/BlueGear")]
 public class BlueGear_SO : Item_SO
 {
-    [Header("리볼버 전용 데이터")]
+    [Header("푸른 톱니바퀴 데이터")]
     public float[] AttackSpeedByLevel = { 10f, 20f, 30f };
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)

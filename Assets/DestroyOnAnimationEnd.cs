@@ -13,7 +13,7 @@ public class DestroyOnAnimationEnd : StateMachineBehaviour
         if (stateInfo.normalizedTime >= 1.0f)
         {
             // 이 애니메이터가 붙어있는 게임 오브젝트를 파괴합니다.
-            Destroy(animator.gameObject);
+            animator.gameObject.GetComponent<RevolverBullet>().Despawn();
         }
     }
 }

@@ -2968,7 +2968,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.875, y: 1.75}
+  m_Size: {x: 3.9, y: 1.7}
   m_EdgeRadius: 0
 --- !u!212 &241955865
 SpriteRenderer:
@@ -6513,6 +6513,7 @@ Transform:
   - {fileID: 149331235}
   - {fileID: 374791187}
   - {fileID: 2021840151}
+  - {fileID: 1954895460}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &664045097
@@ -11426,7 +11427,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4, y: 1.875}
+  m_Size: {x: 3.9, y: 1.7}
   m_EdgeRadius: 0
 --- !u!212 &1204611285
 SpriteRenderer:
@@ -15595,26 +15596,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b640c54f46d344683894c2bdd96bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  bulletPrefab: {fileID: 1068206360182666013, guid: faca61811968a1f4793f239fb8955d60, type: 3}
+  fireAction: {fileID: 3001919216989983466, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  CurrentStats:
+    damage: 30
+    speed: 30
+    fireRate: 0.2
+    projectilePrefab: {fileID: 1068206360182666013, guid: faca61811968a1f4793f239fb8955d60, type: 3}
+    laserPrefab: {fileID: 0}
   firePoint: {fileID: 1885257666}
-  shootAction:
-    m_Name: Shoot
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: d5dd057f-795c-44c0-af79-5fdd5e9aafd6
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: b509814b-e060-4e68-b5a9-31d49de6ac8b
-      m_Path: <Mouse>/leftButton
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Shoot
-      m_Flags: 0
-    m_Flags: 0
-  fireRate: 0.2
 --- !u!114 &1659096875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17452,6 +17441,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 635583519}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1954895459
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1954895460}
+  - component: {fileID: 1954895461}
+  m_Layer: 0
+  m_Name: BulletPoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1954895460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954895459}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 662955486}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1954895461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954895459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56b3e9a9e27093d438c537fb2b0d0b63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletPoolManager
 --- !u!1 &1974450209
 GameObject:
   m_ObjectHideFlags: 0
@@ -18942,7 +18975,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4, y: 2}
+  m_Size: {x: 3.9, y: 1.7}
   m_EdgeRadius: 0
 --- !u!212 &2066615331
 SpriteRenderer:
