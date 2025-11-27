@@ -28,15 +28,15 @@ public class ProjectileStrategy : IWeaponStrategy
         // BulletPoolManager 사용
         GameObject bullet = BulletPoolManager.Instance.Spawn(
             gun.CurrentStats.projectilePrefab,
-            gun.firePoint.position,
-            gun.firePoint.rotation
+            gun.FirePoint.position,
+            gun.FirePoint.rotation
         );
 
         // Projectile (또는 Bullet) 컴포넌트 초기화
         Projectile bulletScript = bullet.GetComponent<Projectile>();
         if (bulletScript != null)
         {
-            bulletScript.Init(gun.CurrentStats.damage, gun.CurrentStats.speed, gun.firePoint.right, gun.CurrentStats.projectilePrefab, true);
+            bulletScript.Init(gun.CurrentStats.damage, gun.CurrentStats.speed, gun.FirePoint.right, gun.CurrentStats.projectilePrefab, true);
         }
     }
 

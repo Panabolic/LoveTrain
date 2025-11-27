@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "GiantMaw", menuName = "Items/GiantMaw")]
 public class GiantMaw_SO : Item_SO
@@ -33,4 +34,16 @@ public class GiantMaw_SO : Item_SO
         int index = Mathf.Clamp(level - 1, 0, cooldownByLevel.Length - 1);
         return cooldownByLevel[index];
     }
+
+    protected override Dictionary<string, string> GetStatReplacements(int level)
+    {
+        int index = Mathf.Clamp(level - 1, 0, mawDamageByLevel.Length - 1);
+
+        return new Dictionary<string, string>
+        {
+            { "Damage", mawDamageByLevel[index].ToString() },
+            { "CoolTime", cooldownByLevel[index].ToString() }
+        };
+    }
+
 }

@@ -20,7 +20,8 @@ MonoBehaviour:
   controllersByLevel: []
   MaxUpgrade: 3
   itemScript: "\uC544\uAC00\uB9AC\uC5D0 \uBAAC\uC2A4\uD130 \uCDA9\uB3CC \uC2DC {Damage}\uB370\uBBF8\uC9C0\uB97C
-    \uC8FC\uACE0 \uB109\uBC31 \uBD80\uC5EC {CoolTime}\uB9C8\uB2E4 \uBC1C\uB3D9 \uAC00\uB2A5."
+    \uC8FC\uACE0 \uB109\uBC31 \uBD80\uC5EC {CoolTime}\uCD08 \uB9C8\uB2E4 \uBC1C\uB3D9
+    \uAC00\uB2A5."
   itemSimpleScript: "\uB05D\uC5C6\uB294 \uD5C8\uAE30"
   cooldownTime: 2
   mawDamageByLevel: 640000007800000096000000

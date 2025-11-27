@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-// 데이터 전달용 구조체
 [System.Serializable]
 public struct GunStats
 {
     public float damage;
     public float speed;
-    public float fireRate;
+    public float fireRate; // 발사 간격 (초 단위)
     public GameObject projectilePrefab;
     public GameObject laserPrefab;
 }
@@ -17,24 +16,46 @@ public class Gun : MonoBehaviour
     [Header("입력")]
     public InputActionReference fireAction;
 
+    [Header("기본 참조 (Inspector 할당)")]
+    [Tooltip("기본 포신(Gun)의 스프라이트 렌더러")]
+    public SpriteRenderer defaultGunRenderer;
+
+    [Tooltip("기본 거치대(TrainHead)의 스프라이트 렌더러")]
+    public SpriteRenderer holderRenderer;
+
+    [Tooltip("기본 총구 위치")]
+    public Transform defaultFirePoint;
+
     [Header("현재 스탯")]
-    public GunStats CurrentStats;
+    public GunStats CurrentStats; // 실제 게임에서 적용되는 최종 스탯
 
-    // ✨ [추가] 게임 시작 시점의 기본 스탯 (백업용)
-    private GunStats _baseStats;
+    // --- 내부 변수 (언더바 제거) ---
+    private GunStats baseStats; // 아이템 배율이 적용되지 않은 '무기 순수 스탯'
+    private float damageMultiplier = 0f; // 데미지 배율 (0.1 = 10% 증가)
+    private float fireRateMultiplier = 0f; // 공속 배율
 
-    // ✨ [추가] 스탯 배율 (0 = 0%, 0.1 = 10% 증가)
-    private float _damageMultiplier = 0f;
-    private float _fireRateMultiplier = 0f;
+    private Sprite defaultHolderSprite; // 맨 처음 거치대 이미지 백업
+    private GameObject currentVisualObj; // 현재 장착된 커스텀 외형 프리팹
 
-    // 현재 장착된 전략
     private IWeaponStrategy currentStrategy;
-    public Transform firePoint;
+
+    // 외부에서 현재 총구 위치를 가져갈 수 있는 프로퍼티
+    public Transform FirePoint { get; private set; }
 
     private void Awake()
     {
-        // 게임 시작 시 초기 설정된 값을 기본값으로 저장합니다.
-        _baseStats = CurrentStats;
+        // 1. 초기 참조 및 백업
+        if (defaultGunRenderer == null) defaultGunRenderer = GetComponent<SpriteRenderer>();
+        if (holderRenderer == null && transform.parent != null)
+            holderRenderer = transform.parent.GetComponent<SpriteRenderer>();
+
+        if (holderRenderer != null) defaultHolderSprite = holderRenderer.sprite;
+
+        // 초기 총구 설정
+        FirePoint = defaultFirePoint;
+
+        // 2. 게임 시작 시 설정된 스탯을 '기본 스탯'으로 저장
+        baseStats = CurrentStats;
     }
 
     private void OnEnable()
@@ -46,61 +67,140 @@ public class Gun : MonoBehaviour
         if (fireAction != null) fireAction.action.Disable();
     }
 
-    void Start()
+    private void Start()
     {
         SetWeapon(new ProjectileStrategy());
     }
 
-    public void SetWeapon(IWeaponStrategy newStrategy)
+    // -------------------------------------------------------
+    // 1. 외형 및 총구 교체 로직 (EquipVisual)
+    // -------------------------------------------------------
+    public GameObject EquipVisual(GameObject visualPrefab, Sprite newHolderSprite = null)
     {
-        if (currentStrategy != null) currentStrategy.Unequip();
+        // 1. 기존 외형 제거
+        UnequipVisual();
 
-        currentStrategy = newStrategy;
-        // 무기 교체 시에도 현재 계산된 스탯을 적용합니다.
-        currentStrategy.Initialize(this, CurrentStats);
-    }
+        if (visualPrefab == null) return null;
 
-    // ✨ [추가] 외부(아이템)에서 공격력 배율을 더하는 함수
-    public void AddDamageMultiplier(float amount)
-    {
-        _damageMultiplier += amount;
-        UpdateStats();
-    }
+        // 2. 기본 포신 이미지 끄기
+        if (defaultGunRenderer != null) defaultGunRenderer.enabled = false;
 
-    // ✨ [추가] 외부(아이템)에서 공격속도 배율을 더하는 함수
-    public void AddFireRateMultiplier(float amount)
-    {
-        _fireRateMultiplier += amount;
-        UpdateStats();
-    }
+        // 3. 새 외형 프리팹 생성 (Gun의 자식으로)
+        currentVisualObj = Instantiate(visualPrefab, transform);
+        currentVisualObj.transform.localPosition = Vector3.zero;
+        currentVisualObj.transform.localRotation = Quaternion.identity;
 
-    // ✨ [추가] 최종 스탯 재계산 함수
-    // ✨ [수정됨] 최종 스탯 재계산 함수
-    private void UpdateStats()
-    {
-        // 공격력: 높을수록 좋음 -> 곱하기 (*)
-        CurrentStats.damage = _baseStats.damage * (1f + _damageMultiplier);
-
-        // 공격 속도(발사 간격): 낮을수록(짧을수록) 좋음 -> 나누기 (/)
-        // 예: 공격속도 +100% (배율 1.0) -> 원래 간격 / (1 + 1) = 절반으로 줄어듬 (2배 빨라짐)
-        if (1f + _fireRateMultiplier > 0) // 0으로 나누기 방지
+        // 4. 총구 위치 및 거치대 이미지 갱신
+        WeaponVisual visualData = currentVisualObj.GetComponent<WeaponVisual>();
+        if (visualData != null)
         {
-            CurrentStats.fireRate = _baseStats.fireRate / (1f + _fireRateMultiplier);
+            if (visualData.muzzlePoint != null)
+            {
+                FirePoint = visualData.muzzlePoint;
+            }
+
+            Sprite spriteToUse = visualData.customHolderSprite != null ? visualData.customHolderSprite : newHolderSprite;
+            if (spriteToUse != null && holderRenderer != null)
+            {
+                holderRenderer.sprite = spriteToUse;
+            }
         }
 
-        // 현재 무기에 변경된 스탯 즉시 적용
+        // ✨ 생성된 오브젝트 반환 (아이템 관리용)
+        return currentVisualObj;
+    }
+
+    public void UnequipVisual()
+    {
+        if (currentVisualObj != null) Destroy(currentVisualObj);
+
+        // 기본 이미지 및 거치대 복구
+        if (defaultGunRenderer != null) defaultGunRenderer.enabled = true;
+        if (holderRenderer != null && defaultHolderSprite != null)
+            holderRenderer.sprite = defaultHolderSprite;
+
+        // 총구 위치 복구
+        FirePoint = defaultFirePoint;
+    }
+
+    // -------------------------------------------------------
+    // 2. 무기 변경 및 스탯 관리 로직
+    // -------------------------------------------------------
+
+    /// <summary>
+    /// 새로운 무기(레이저 등)를 장착할 때 호출. 
+    /// 무기의 '기본 스탯'을 변경하고, 기존 배율을 다시 적용함.
+    /// </summary>
+    public void ChangeBaseStats(GunStats newStats)
+    {
+        baseStats = newStats; // 베이스 스탯 교체
+        UpdateStats(); // 배율 재적용하여 CurrentStats 갱신
+    }
+
+    public void AddDamageMultiplier(float amount)
+    {
+        damageMultiplier += amount;
+        UpdateStats();
+    }
+
+    public void AddFireRateMultiplier(float amount)
+    {
+        fireRateMultiplier += amount;
+        UpdateStats();
+    }
+
+    private void UpdateStats()
+    {
+        // 공격력: (기본) * (1 + 배율)
+        CurrentStats.damage = baseStats.damage * (1f + damageMultiplier);
+
+        // 공속: (기본) / (1 + 배율)
+        if (1f + fireRateMultiplier > 0)
+        {
+            CurrentStats.fireRate = baseStats.fireRate / (1f + fireRateMultiplier);
+        }
+        else
+        {
+            CurrentStats.fireRate = baseStats.fireRate;
+        }
+
+        CurrentStats.speed = baseStats.speed;
+        CurrentStats.projectilePrefab = baseStats.projectilePrefab;
+        CurrentStats.laserPrefab = baseStats.laserPrefab;
+
         if (currentStrategy != null)
         {
             currentStrategy.Initialize(this, CurrentStats);
         }
 
-        Debug.Log($"[Gun] 스탯 갱신됨: 공격력 {CurrentStats.damage}, 발사간격 {CurrentStats.fireRate}");
+        Debug.Log($"[Gun] 스탯 갱신: Dmg {CurrentStats.damage}, Rate {CurrentStats.fireRate}");
+    }
+
+    // -------------------------------------------------------
+    // 3. 전략 패턴 및 업데이트
+    // -------------------------------------------------------
+    public void SetWeapon(IWeaponStrategy newStrategy)
+    {
+        if (currentStrategy != null) currentStrategy.Unequip();
+        currentStrategy = newStrategy;
+
+        currentStrategy.Initialize(this, CurrentStats);
     }
 
     void Update()
     {
-        if (Time.timeScale == 0) return;
+        // ✨ [수정] 일시정지(이벤트) 상태 처리
+        if (Time.timeScale == 0)
+        {
+            // 게임이 멈췄다면 무조건 '발사 중지' 상태로 처리
+            if (currentStrategy != null)
+            {
+                currentStrategy.Process(false);
+            }
+            return;
+        }
 
+        // 정상 플레이 상태
         bool isTriggerHeld = fireAction != null && fireAction.action.IsPressed();
 
         if (currentStrategy != null)

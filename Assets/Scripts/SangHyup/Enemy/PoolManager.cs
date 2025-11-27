@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public enum EnemyName
@@ -46,6 +46,18 @@ public class PoolManager : MonoBehaviour
         if (activeEnemies.Contains(enemy))
         {
             activeEnemies.Remove(enemy);
+        }
+    }
+
+    public void DespawnAllEnemies()
+    {
+        // 리스트를 순회하며 비활성화 (역순 순회 권장: 리스트 변경 가능성 대비)
+        for (int i = activeEnemies.Count - 1; i >= 0; i--)
+        {
+            if (activeEnemies[i] != null)
+            {
+                activeEnemies[i].DespawnWithoutExp();
+            }
         }
     }
 
