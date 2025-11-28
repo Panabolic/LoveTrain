@@ -24,8 +24,20 @@ MonoBehaviour:
   itemSimpleScript: "\uB808\uC774\uC800\uAC74 \uAC16\uACE0\uC2F6\uB098, \uAC16\uACE0\uC2F6\uC9C0"
   cooldownTime: 0
   damageByLevel:
-  - 5
   - 10
-  - 15
+  - 10
+  - 10
+  durationByLevel:
+  - 1
+  - 3
+  - 5
+  tickRateByLevel:
+  - 0.1
+  - 0.1
+  - 0.1
+  cooldownByLevel:
+  - 0.6
+  - 0.6
+  - 0.6
   LaserProjectilePrefab: {fileID: 7987405070560878738, guid: 422af25199ea22d4288a54eae3026cc0, type: 3}
   HolderSprite: {fileID: 21300000, guid: 129ba3bff569c5a4f959539b5ffc57e4, type: 3}
