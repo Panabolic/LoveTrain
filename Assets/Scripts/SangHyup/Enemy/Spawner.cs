@@ -1,9 +1,17 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System; // Action �̺�Ʈ�� ���� �ʿ�
 
 
 public class Spawner : MonoBehaviour
 {
+    [Header("Spawn Interval")]
+    [SerializeField] private float mobSpawnInterval         = 1.0f;
+    [SerializeField] private float eliteMobSpawnInterval    = 20.0f;
+    [SerializeField] private float bossSpawnInterval        = 180.0f;
+
+    [Header("Show up Time")]
+    [SerializeField] private float firstEliteSpawnTime = 60.0f;
+
     [Header("Spawn Points")]
     [SerializeField] private Transform[] mobSpawnPoints;
     [SerializeField] private Transform[] FlyMobSpawnPoints;
@@ -11,49 +19,71 @@ public class Spawner : MonoBehaviour
 
     private int mobIndex;
 
-    private float timer;
+    private float gameTimer;
 
-    private bool isSpawning = false; // For GameManager
+    private float mobTimer;
+    private float eliteMobTimer;
+    private float bossTimer;
+
+    //private bool isSpawning = false; // For GameManager
 
     private void Start()
     {
-        if (GameManager.Instance != null)
+        mobTimer        = 0f;
+        eliteMobTimer   = 0f;
+        bossTimer       = 0f;
+
+        /*if (GameManager.Instance != null)
         {
             GameManager.Instance.OnGameStateChanged += HandleGameStateChange;
             HandleGameStateChange(GameManager.Instance.CurrentState);
-        }
+        }*/
     }
 
     private void Update()
     {
-        if (!isSpawning) return;
+        //if (!isSpawning) return;
+        if (GameManager.Instance.CurrentState != GameState.Playing) return;
 
-        // ToDo: �� Enemy���� ���� Ÿ�̸� �����
-        timer += Time.deltaTime;
+        gameTimer       += Time.deltaTime;
+        mobTimer        += Time.deltaTime;
+        if (gameTimer >= firstEliteSpawnTime)
+            eliteMobTimer += Time.deltaTime;
+        bossTimer       += Time.deltaTime;
 
-        // ToDo: �� Enemy���� if�� �����
-        // Pooled Enemy�� 5���� ������ �� 1�ʸ��� ����
-        if (timer > 1.0f)
+        if (mobTimer >= mobSpawnInterval)
         {
             SpawnMob();
 
-            timer = 0.0f;
+            mobTimer = 0f;
+        }
+        if (eliteMobTimer >= eliteMobSpawnInterval)
+        {
+            SpawnEliteMob();
+
+            eliteMobTimer = 0f;
+        }
+        if (bossTimer >= bossSpawnInterval)
+        {
+            SpawnBoss(BossName.TrainBoss);
+
+            bossTimer = 0f;
         }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// GameManager�� ���� ���濡 ���� ���� ����/������ �����մϴ�.
     /// </summary>
     private void HandleGameStateChange(GameState newState)
     {
         isSpawning = (newState == GameState.Playing);
-    }
+    }*/
 
     private void SpawnMob()
     {
         mobIndex = UnityEngine.Random.Range(0, 2);
 
-        GameObject enemy = PoolManager.instance.GetEnemy(mobIndex);
+        GameObject enemy = PoolManager.instance.GetMob(mobIndex);
         if (enemy == null)
         {
             Debug.Log("Enemy가 생성되지 않았습니다.");
@@ -64,7 +94,6 @@ public class Spawner : MonoBehaviour
         {
             enemy.transform.position = mobSpawnPoints[UnityEngine.Random.Range(0, mobSpawnPoints.Length)].position;
         }
-
         else if (mobIndex == 1)
         {
             enemy.transform.position = FlyMobSpawnPoints[UnityEngine.Random.Range(0, FlyMobSpawnPoints.Length)].position;
@@ -74,9 +103,29 @@ public class Spawner : MonoBehaviour
         enemy.GetComponent<Mob>().OnDied += RespawnMob;
     }
 
-    private void RespawnMob(Mob mob)
+    private void SpawnEliteMob()
     {
+        Debug.Log("Elite Mob Spawned");
+        mobIndex = UnityEngine.Random.Range(0, 2);
 
+        GameObject enemy = PoolManager.instance.GetEliteMob(mobIndex);
+        if (enemy == null)
+        {
+            Debug.Log("Enemy가 생성되지 않았습니다.");
+            return;
+        }
+
+        if (mobIndex == 0)
+        {
+            enemy.transform.position = mobSpawnPoints[UnityEngine.Random.Range(0, mobSpawnPoints.Length)].position;
+        }
+        else if (mobIndex == 1)
+        {
+            enemy.transform.position = FlyMobSpawnPoints[UnityEngine.Random.Range(0, FlyMobSpawnPoints.Length)].position;
+        }
+
+        enemy.GetComponent<Mob>().OnDied -= RespawnMob; // �ߺ� ���� ����
+        enemy.GetComponent<Mob>().OnDied += RespawnMob;
     }
 
     /// <summary>
@@ -112,6 +161,11 @@ public class Spawner : MonoBehaviour
 
                 break;
         }
+
+    }
+
+    private void RespawnMob(Mob mob)
+    {
 
     }
 }

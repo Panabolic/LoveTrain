@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Enemy Specification")]
     [Tooltip("기본 체력")]
-    [SerializeField] protected float maxHP;
+    [SerializeField] protected float hp;
     [Tooltip("대미지(km/h 단위)")]
     [SerializeField] protected float damage;
     [Tooltip("주는 경험치량")]
@@ -18,7 +18,8 @@ public class Enemy : MonoBehaviour
 
     protected float currentHP;
     protected bool  isAlive = true;
-    
+    private Color originalColor;        //TODO
+
     protected float deathToDeactive; // 사망에서 비활성화까지 걸리는 시간
 
     // Target Components
@@ -50,7 +51,7 @@ public class Enemy : MonoBehaviour
     protected virtual void OnEnable()
     {
         // init Default value
-        currentHP = maxHP;
+        currentHP = hp;
         isAlive = true;
         sprite.enabled = true;
         sprite.color = Color.white;

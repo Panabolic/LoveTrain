@@ -2439,9 +2439,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   train: {fileID: 1426277362}
   needleRectTransform: {fileID: 783148852}
+  lineRectTransform: {fileID: 0}
+  panelRectTransform: {fileID: 0}
+  lineImage: {fileID: 0}
+  panelImage: {fileID: 0}
   minAngle: 135
   maxAngle: 0
   needleSmoothSpeed: 5
+  effectDuration: 0.5
+  shakeStrength: 15
+  shakeVibrato: 20
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashCount: 3
 --- !u!1 &374791186
 GameObject:
   m_ObjectHideFlags: 0
@@ -3236,6 +3245,7 @@ MonoBehaviour:
   leverAfter: {fileID: -560888265471310478, guid: caa89508701dcf844a2c4ca1b0e9f4d1, type: 3}
   MouseUI: {fileID: 342691643}
   KeyUI: {fileID: 1002504241}
+  startEvent: {fileID: 0}
   moveSpeed: 30
   destroyDelay: 4
 --- !u!61 &541883009
@@ -3781,6 +3791,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14f6babde82f2d49b994c02da61a36a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spawner
+  mobSpawnInterval: 1
+  eliteMobSpawnInterval: 10
+  bossSpawnInterval: 10
   mobSpawnPoints:
   - {fileID: 919450327}
   - {fileID: 1932831295}
@@ -5056,9 +5069,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e44f35940eaef4098ce2ceeaed1f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoolManager
-  enemies:
+  mobs:
   - {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
   - {fileID: 4821721425770472742, guid: 5310438f295510d438ac35837755d237, type: 3}
+  eliteMob:
+  - {fileID: 4821721425770472742, guid: f9a2b6704fd3f564f832675bbf397d5d, type: 3}
+  - {fileID: 4821721425770472742, guid: 714856b33a23f984cb55de349811f6e7, type: 3}
   bosses:
   - {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
   activeEnemies: []
@@ -8310,6 +8326,7 @@ MonoBehaviour:
   offScreenPeekPosition: {x: 685, y: 0}
   offScreenHiddenPosition: {x: 750, y: 0}
   eventDatabase: {fileID: 11400000, guid: 7c1353e97714a1c4da1c85a194f8a35d, type: 2}
+  playerObject: {fileID: 1426277360}
 --- !u!4 &1641563919
 Transform:
   m_ObjectHideFlags: 0
