@@ -3556,7 +3556,7 @@ Transform:
   m_GameObject: {fileID: 262173729}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.03, z: 0}
+  m_LocalPosition: {x: 0, y: -0.137, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3575,7 +3575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190c43c608896ce409e7a67746c5d5b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunRotator
-  gunPivot: {fileID: 1659096872}
+  gunPivot: {fileID: 0}
   angleOffset: 0
 --- !u!1 &275320222
 GameObject:
@@ -6284,6 +6284,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14f6babde82f2d49b994c02da61a36a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spawner
+  mobSpawnInterval: 1
+  eliteMobSpawnInterval: 20
+  bossSpawnInterval: 180
+  firstEliteSpawnTime: 60
   mobSpawnPoints:
   - {fileID: 919450327}
   - {fileID: 1932831295}
@@ -9695,9 +9699,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e44f35940eaef4098ce2ceeaed1f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoolManager
-  enemies:
-  - {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
-  - {fileID: 4821721425770472742, guid: 5310438f295510d438ac35837755d237, type: 3}
+  mobs: []
+  eliteMobs: []
   bosses:
   - {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
   activeEnemies: []
@@ -13499,7 +13502,7 @@ MonoBehaviour:
   deathSpeedThreshold: 160
   Level: 1
   _currentSpeedForInspector: 0
-  deathKnockbackPositionX: -14
+  deathKnockbackPositionX: 0
   deathKnockbackDuration: 0.5
   deathMoveDistance: 27.5
   deathMoveSpeed: 1
@@ -15789,7 +15792,7 @@ Transform:
   m_GameObject: {fileID: 1659096871}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.09, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15835,15 +15838,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b640c54f46d344683894c2bdd96bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  fireAction: {fileID: 3001919216989983466, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  defaultGunRenderer: {fileID: 1659096876}
-  holderRenderer: {fileID: 325910544}
-  defaultFirePoint: {fileID: 1885257666}
+  fireAction: {fileID: 0}
+  defaultGunRenderer: {fileID: 0}
+  holderRenderer: {fileID: 0}
+  defaultFirePoint: {fileID: 0}
   CurrentStats:
-    damage: 30
-    speed: 30
-    fireRate: 0.2
-    projectilePrefab: {fileID: 1068206360182666013, guid: faca61811968a1f4793f239fb8955d60, type: 3}
+    damage: 0
+    speed: 0
+    fireRate: 0
+    projectilePrefab: {fileID: 0}
     laserPrefab: {fileID: 0}
 --- !u!212 &1659096876
 SpriteRenderer:
