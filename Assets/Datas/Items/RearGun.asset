@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: "\uC0B4\uC810\uCD1D"
   instantiatedPrefab: {fileID: 6808372918253276991, guid: c5ea79ba711158a47a3a02b3d94e7b53, type: 3}
   attachmentSocketName: GunPivot
-  iconSprite: {fileID: 0}
+  iconSprite: {fileID: 21300000, guid: dc44ebd758938ea46b8860def797f512, type: 3}
   spritesByLevel: []
   controllersByLevel: []
   MaxUpgrade: 3
@@ -25,12 +25,12 @@ MonoBehaviour:
   cooldownTime: 0
   damageByLevel:
   - 50
-  - 50
-  - 50
+  - 100
+  - 100
   cooldownByLevel:
   - 0.6
-  - 0.6
-  - 0.6
+  - 0.4
+  - 0.4
   bulletCountByLevel: 010000000100000003000000
   bulletSpeed: 30
   fanSpreadAngle: 15
