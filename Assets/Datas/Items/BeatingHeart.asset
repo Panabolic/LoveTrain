@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BeatingHeart
   m_EditorClassIdentifier: Assembly-CSharp::BeatingHeart_SO
   itemName: "\uBC15\uB3D9\uD558\uB294 \uC2EC\uC7A5"
-  instantiatedPrefab: {fileID: 0}
-  attachmentSocketName: 
-  iconSprite: {fileID: 21300000, guid: 479b6089381cced4298f649df6815de9, type: 3}
+  instantiatedPrefab: {fileID: 6396234687511217714, guid: 1ee2d5a0671d48b4c987f894fb0d58a6, type: 3}
+  attachmentSocketName: TrainF
+  iconSprite: {fileID: 21300000, guid: 9037a89b5692d764abb929519d1de682, type: 3}
   spritesByLevel: []
   controllersByLevel: []
   MaxUpgrade: 3

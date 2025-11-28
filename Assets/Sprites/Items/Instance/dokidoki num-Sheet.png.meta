@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: d3b443782a6b72c4b886edc17c0dca7d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7350716134033134088
+    second: dokidoki num-Sheet_0
+  - first:
+      213: 3475958810871211371
+    second: dokidoki num-Sheet_1
+  - first:
+      213: -4904946119607627906
+    second: dokidoki num-Sheet_2
+  - first:
+      213: 8646163591178289907
+    second: dokidoki num-Sheet_3
+  - first:
+      213: -6786907887693360869
+    second: dokidoki num-Sheet_4
+  - first:
+      213: -5302300255004209832
+    second: dokidoki num-Sheet_5
+  - first:
+      213: 6491413274092364174
+    second: dokidoki num-Sheet_6
+  - first:
+      213: -5837169751100353842
+    second: dokidoki num-Sheet_7
+  - first:
+      213: 4928946752412603740
+    second: dokidoki num-Sheet_8
+  - first:
+      213: 5909640323999330291
+    second: dokidoki num-Sheet_9
+  - first:
+      213: 706059724302865274
+    second: dokidoki num-Sheet_10
+  - first:
+      213: -1185078640762115007
+    second: dokidoki num-Sheet_11
+  - first:
+      213: 1399399250912082736
+    second: dokidoki num-Sheet_12
+  - first:
+      213: -2548605864482794492
+    second: dokidoki num-Sheet_13
+  - first:
+      213: -3108205556566107132
+    second: dokidoki num-Sheet_14
+  - first:
+      213: 401053604379451802
+    second: dokidoki num-Sheet_15
+  - first:
+      213: -3140221848992914897
+    second: dokidoki num-Sheet_16
+  - first:
+      213: 1339092768793469566
+    second: dokidoki num-Sheet_17
+  - first:
+      213: 6927334415186416740
+    second: dokidoki num-Sheet_18
+  - first:
+      213: 8614790257619145504
+    second: dokidoki num-Sheet_19
+  - first:
+      213: -5425869875904477044
+    second: dokidoki num-Sheet_20
+  - first:
+      213: 7343952211003297808
+    second: dokidoki num-Sheet_21
+  - first:
+      213: -486672100553419645
+    second: dokidoki num-Sheet_22
+  - first:
+      213: -5918269690466205609
+    second: dokidoki num-Sheet_23
+  - first:
+      213: -8533750837439082442
+    second: dokidoki num-Sheet_24
+  - first:
+      213: -5155881416691348134
+    second: dokidoki num-Sheet_25
+  - first:
+      213: 6468855075336967314
+    second: dokidoki num-Sheet_26
+  - first:
+      213: -8006582173557515597
+    second: dokidoki num-Sheet_27
+  - first:
+      213: 7382080522081721788
+    second: dokidoki num-Sheet_28
+  - first:
+      213: 3156363723391257167
+    second: dokidoki num-Sheet_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 27
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80217cdc06df20660800000000000000
+      internalID: 7350716134033134088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b652edf3f161d3030800000000000000
+      internalID: 3475958810871211371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7f4b52ed712eebb0800000000000000
+      internalID: -4904946119607627906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f209121af75df770800000000000000
+      internalID: 8646163591178289907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b119db61c3f00d1a0800000000000000
+      internalID: -6786907887693360869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85dc208c2027a66b0800000000000000
+      internalID: -5302300255004209832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 27
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e81e784daf1261a50800000000000000
+      internalID: 6491413274092364174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec2120cb9053efea0800000000000000
+      internalID: -5837169751100353842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c555e56e4f2276440800000000000000
+      internalID: 4928946752412603740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ffed466092430250800000000000000
+      internalID: 5909640323999330291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a735841149d6cc900800000000000000
+      internalID: 706059724302865274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14ca87a4141cd8fe0800000000000000
+      internalID: -1185078640762115007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03bff81543aab6310800000000000000
+      internalID: 1399399250912082736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 932
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4049607287881acd0800000000000000
+      internalID: -2548605864482794492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 939
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40c5bf7a38f6dd4d0800000000000000
+      internalID: -3108205556566107132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a916de8d024d09500800000000000000
+      internalID: 401053604379451802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 1067
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f226bdeadd0bb64d0800000000000000
+      internalID: -3140221848992914897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 1189
+        y: 27
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e72aa3547c9659210800000000000000
+      internalID: 1339092768793469566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 27
+        width: 141
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4645681b2f5d22060800000000000000
+      internalID: 6927334415186416740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 1573
+        y: 27
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02392ef9812ed8770800000000000000
+      internalID: 8614790257619145504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 1701
+        y: 27
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c888839681073b4b0800000000000000
+      internalID: -5425869875904477044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 1829
+        y: 27
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 010db4040a5fae560800000000000000
+      internalID: 7343952211003297808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 1957
+        y: 27
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3849b649d4efe39f0800000000000000
+      internalID: -486672100553419645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 2085
+        y: 27
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7500dc6a2151edda0800000000000000
+      internalID: -5918269690466205609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 2213
+        y: 27
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63050ccb3d6029980800000000000000
+      internalID: -8533750837439082442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 2341
+        y: 27
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5d03162b21a278b0800000000000000
+      internalID: -5155881416691348134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 2468
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29451f4ea6df5c950800000000000000
+      internalID: 6468855075336967314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 2475
+        y: 27
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ba11201fe7e2e090800000000000000
+      internalID: -8006582173557515597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 2597
+        y: 27
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbdd2067f1b627660800000000000000
+      internalID: 7382080522081721788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dokidoki num-Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 2725
+        y: 27
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4a4aa25518adcb20800000000000000
+      internalID: 3156363723391257167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      dokidoki num-Sheet_0: 7350716134033134088
+      dokidoki num-Sheet_1: 3475958810871211371
+      dokidoki num-Sheet_10: 706059724302865274
+      dokidoki num-Sheet_11: -1185078640762115007
+      dokidoki num-Sheet_12: 1399399250912082736
+      dokidoki num-Sheet_13: -2548605864482794492
+      dokidoki num-Sheet_14: -3108205556566107132
+      dokidoki num-Sheet_15: 401053604379451802
+      dokidoki num-Sheet_16: -3140221848992914897
+      dokidoki num-Sheet_17: 1339092768793469566
+      dokidoki num-Sheet_18: 6927334415186416740
+      dokidoki num-Sheet_19: 8614790257619145504
+      dokidoki num-Sheet_2: -4904946119607627906
+      dokidoki num-Sheet_20: -5425869875904477044
+      dokidoki num-Sheet_21: 7343952211003297808
+      dokidoki num-Sheet_22: -486672100553419645
+      dokidoki num-Sheet_23: -5918269690466205609
+      dokidoki num-Sheet_24: -8533750837439082442
+      dokidoki num-Sheet_25: -5155881416691348134
+      dokidoki num-Sheet_26: 6468855075336967314
+      dokidoki num-Sheet_27: -8006582173557515597
+      dokidoki num-Sheet_28: 7382080522081721788
+      dokidoki num-Sheet_29: 3156363723391257167
+      dokidoki num-Sheet_3: 8646163591178289907
+      dokidoki num-Sheet_4: -6786907887693360869
+      dokidoki num-Sheet_5: -5302300255004209832
+      dokidoki num-Sheet_6: 6491413274092364174
+      dokidoki num-Sheet_7: -5837169751100353842
+      dokidoki num-Sheet_8: 4928946752412603740
+      dokidoki num-Sheet_9: 5909640323999330291
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

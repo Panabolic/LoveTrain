@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: "\uAC70\uB300\uD55C \uC544\uAC00\uB9AC"
   instantiatedPrefab: {fileID: 1374941097129474042, guid: c684961cce4a41647b55124dbdc37f0a, type: 3}
   attachmentSocketName: TrainF
-  iconSprite: {fileID: 0}
+  iconSprite: {fileID: 5645009649435769919, guid: c4a85082dd3828445bd88278bd6e821b, type: 3}
   spritesByLevel: []
   controllersByLevel: []
   MaxUpgrade: 3

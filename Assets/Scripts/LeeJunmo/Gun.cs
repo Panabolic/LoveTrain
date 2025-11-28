@@ -41,6 +41,8 @@ public class Gun : MonoBehaviour
 
     // 외부에서 현재 총구 위치를 가져갈 수 있는 프로퍼티
     public Transform FirePoint { get; private set; }
+    public float DamageMultiplier => damageMultiplier;
+    public float FireRateMultiplier => fireRateMultiplier;
 
     private void Awake()
     {
