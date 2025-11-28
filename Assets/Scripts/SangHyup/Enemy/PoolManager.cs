@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -67,8 +67,6 @@ public class PoolManager : MonoBehaviour
             activeEnemies.Remove(enemy);
         }
     }
-
-    //public GameObject GetMob(int index)
     
     public void DespawnAllEnemies()
     {
@@ -82,17 +80,7 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        pools = new List<GameObject>[enemies.Length];
-        
-        for (int i = 0; i < pools.Length; i++)
-        {
-            pools[i] = new List<GameObject>();
-        }
-    }
-
-    public GameObject GetEnemy(int index)
+    public GameObject GetMob(int index)
     {
         GameObject selected = null;
 
