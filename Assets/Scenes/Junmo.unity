@@ -15838,15 +15838,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b640c54f46d344683894c2bdd96bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  fireAction: {fileID: 0}
-  defaultGunRenderer: {fileID: 0}
-  holderRenderer: {fileID: 0}
-  defaultFirePoint: {fileID: 0}
+  fireAction: {fileID: 3001919216989983466, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  defaultGunRenderer: {fileID: 1659096876}
+  holderRenderer: {fileID: 325910544}
+  defaultFirePoint: {fileID: 1885257666}
   CurrentStats:
-    damage: 0
-    speed: 0
-    fireRate: 0
-    projectilePrefab: {fileID: 0}
+    damage: 30
+    speed: 30
+    fireRate: 0.2
+    projectilePrefab: {fileID: 1068206360182666013, guid: faca61811968a1f4793f239fb8955d60, type: 3}
     laserPrefab: {fileID: 0}
 --- !u!212 &1659096876
 SpriteRenderer:
