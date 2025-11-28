@@ -25,6 +25,8 @@ public class PoolManager : MonoBehaviour
 
     public List<Enemy> activeEnemies = new List<Enemy>();
 
+    public int eventDebuffPercent = 0;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -121,7 +123,7 @@ public class PoolManager : MonoBehaviour
 
         if (selected == null)
         {
-            selected = Instantiate(mobs[index], transform);
+            selected = Instantiate(eliteMobs[index], transform);
             eliteMobPools[index].Add(selected);
         }
 

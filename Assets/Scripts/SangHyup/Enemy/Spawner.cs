@@ -19,8 +19,6 @@ public class Spawner : MonoBehaviour
 
     private int mobIndex;
 
-    private float gameTimer;
-
     private float mobTimer;
     private float eliteMobTimer;
     private float bossTimer;
@@ -30,7 +28,7 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         mobTimer        = 0f;
-        eliteMobTimer   = 0f;
+        eliteMobTimer   = 19.99f;
         bossTimer       = 0f;
 
         /*if (GameManager.Instance != null)
@@ -45,9 +43,8 @@ public class Spawner : MonoBehaviour
         //if (!isSpawning) return;
         if (GameManager.Instance.CurrentState != GameState.Playing) return;
 
-        gameTimer       += Time.deltaTime;
         mobTimer        += Time.deltaTime;
-        if (gameTimer >= firstEliteSpawnTime)
+        if (GameManager.Instance.gameTime >= firstEliteSpawnTime)
             eliteMobTimer += Time.deltaTime;
         bossTimer       += Time.deltaTime;
 

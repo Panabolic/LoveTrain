@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public event Action<GameState> OnGameStateChanged;
 
+    public float gameTime = 0f;
+
     private void Awake()
     {
         // 간단한 싱글톤 패턴
@@ -54,6 +56,15 @@ public class GameManager : MonoBehaviour
     {
         // 게임은 항상 'Start' 상태에서 시작
         ChangeState(GameState.Start);
+        gameTime = 0f;
+    }
+
+    private void Update()
+    {
+        if (CurrentState == GameState.Playing || CurrentState == GameState.Boss)
+        {
+            gameTime += Time.deltaTime;
+        }
     }
 
     /// <summary>

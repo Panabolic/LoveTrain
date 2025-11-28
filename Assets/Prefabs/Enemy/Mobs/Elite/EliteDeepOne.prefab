@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7952231668978450729}
   - component: {fileID: 2368361504287518499}
   - component: {fileID: 8940403247188048896}
-  - component: {fileID: -706577889030096837}
+  - component: {fileID: 1935550478197556449}
   - component: {fileID: 5323420115873639035}
   - component: {fileID: -8110103440476578621}
   - component: {fileID: 3340598506253535947}
@@ -160,7 +160,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.7619048, y: 1}
   m_Direction: 0
---- !u!114 &-706577889030096837
+--- !u!114 &1935550478197556449
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,13 +169,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4821721425770472742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ec27a36568152e4698effbf489181f9, type: 3}
+  m_Script: {fileID: 11500000, guid: e9ae5c3c138b0c048b1ed225f8cc6e35, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Mob
-  hp: 130
+  m_EditorClassIdentifier: Assembly-CSharp::EliteMob
+  hp: 80
   damage: 50
   exp: 80
   moveSpeed: 2
+  hpIncreasePercent: 10
 --- !u!95 &5323420115873639035
 Animator:
   serializedVersion: 7
@@ -1276,7 +1277,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
       cycleCount: 1
-      repeatInterval: 0.01
+      repeatInterval: 0.03
       probability: 1
   SizeModule:
     enabled: 0

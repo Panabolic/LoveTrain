@@ -176,6 +176,7 @@ MonoBehaviour:
   damage: 30
   exp: 40
   moveSpeed: 2
+  hpIncreasePercent: 10
 --- !u!95 &5323420115873639035
 Animator:
   serializedVersion: 7
@@ -1196,7 +1197,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
       cycleCount: 1
-      repeatInterval: 0.01
+      repeatInterval: 0.03
       probability: 1
   SizeModule:
     enabled: 0

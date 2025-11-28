@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7952231668978450729}
   - component: {fileID: 2368361504287518499}
   - component: {fileID: 8940403247188048896}
-  - component: {fileID: 6818465723368671168}
+  - component: {fileID: 8264245177892887752}
   - component: {fileID: 4081152586623250049}
   - component: {fileID: 4651238832371080668}
   - component: {fileID: 4346693947480850345}
@@ -160,7 +160,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.8125, y: 1}
   m_Direction: 0
---- !u!114 &6818465723368671168
+--- !u!114 &8264245177892887752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,13 +169,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4821721425770472742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d44acb619053149adf1869b80b20ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b27dc6fb6d8b694ea9f64aace761a21, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FlyMob
-  hp: 150
+  m_EditorClassIdentifier: Assembly-CSharp::EliteFlyMob
+  hp: 100
   damage: 50
   exp: 80
   moveSpeed: 2
+  hpIncreasePercent: 10
   diveDistance: 20
 --- !u!95 &4081152586623250049
 Animator:
@@ -1277,7 +1278,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
       cycleCount: 1
-      repeatInterval: 0.01
+      repeatInterval: 0.03
       probability: 1
   SizeModule:
     enabled: 0
