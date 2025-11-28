@@ -13,15 +13,11 @@ public class ProgressUIController : MonoBehaviour
     [Tooltip("시간을 표시할 TextMeshProUGUI 컴포넌트")]
     [SerializeField] private TextMeshProUGUI timeText;
 
-    // 현재까지 흐른 시간을 저장할 변수
-    private float currentTime = 0f;
-
     // 타이머가 진행 중인지 확인하는 변수
     private bool isTimerRunning = false;
 
     void Start()
     {
-        currentTime = 0f;
         isTimerRunning = false;
 
         // 시작 시 텍스트를 "03:00" (초기 시간)으로 초기화
@@ -43,13 +39,10 @@ public class ProgressUIController : MonoBehaviour
             return;
         }
 
-        // 1. 매 프레임마다 시간(Time.deltaTime)을 더해줍니다.
-        currentTime += Time.deltaTime;
+        // '남은 시간'을 계산합니다.
+        float remainingTime = totalTimeInSeconds - GameManager.Instance.gameTime;
 
-        // 2. '남은 시간'을 계산합니다.
-        float remainingTime = totalTimeInSeconds - currentTime;
-
-        // 3. 남은 시간이 0보다 작아지면 0으로 고정합니다.
+        // 남은 시간이 0보다 작아지면 0으로 고정합니다.
         if (remainingTime <= 0f)
         {
             remainingTime = 0f;
@@ -57,7 +50,7 @@ public class ProgressUIController : MonoBehaviour
             OnTimeFinished();
         }
 
-        // 4. 계산된 남은 시간을 텍스트(00:00 형식)로 변환하여 적용합니다.
+        // 계산된 남은 시간을 텍스트(00:00 형식)로 변환하여 적용합니다.
         UpdateTimeText(remainingTime);
     }
 

@@ -5,10 +5,12 @@ using UnityEngine;
 public class Mob : Enemy
 {
     // Components
-    protected Rigidbody2D rigid2D;
+    protected Rigidbody2D       rigid2D;
+    protected ParticleSystem    hitEffect;
 
-    [Tooltip("기본 속도")]
+    [Tooltip("Mob Specification")]
     [SerializeField] protected float moveSpeed = 4.0f;
+    [SerializeField] protected int hpIncreasePercent = 10;
 
     protected Vector2 moveDirection = Vector2.zero;
 
@@ -23,6 +25,7 @@ public class Mob : Enemy
 
         // Get components
         rigid2D = GetComponent<Rigidbody2D>();
+        hitEffect = GetComponent<ParticleSystem>();
     }
 
     protected override void Start()
@@ -36,6 +39,9 @@ public class Mob : Enemy
     protected override void OnEnable()
     {
         base.OnEnable();
+
+        calibratedHP = hp * (1 + ( (GameManager.Instance.gameTime / 60.0f) * (1.0f + hpIncreasePercent) / 100) ) * (1.0f + PoolManager.instance.eventDebuffPercent / 100);
+        currentHP = calibratedHP;
     }
 
     private void FixedUpdate()
@@ -106,6 +112,13 @@ public class Mob : Enemy
 
             StartCoroutine(Die());
         }
+    }
+
+    public override void TakeDamage(float damageAmount)
+    {
+        base.TakeDamage(damageAmount);
+
+        hitEffect.Play();
     }
 
     public void Knockback(Vector2 direction, float power)

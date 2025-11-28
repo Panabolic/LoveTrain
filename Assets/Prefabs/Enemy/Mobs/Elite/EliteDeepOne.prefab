@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 7952231668978450729}
   - component: {fileID: 2368361504287518499}
   - component: {fileID: 8940403247188048896}
-  - component: {fileID: 6818465723368671168}
-  - component: {fileID: 4081152586623250049}
-  - component: {fileID: -7234808882947436624}
-  - component: {fileID: -8354657419493083395}
+  - component: {fileID: 1935550478197556449}
+  - component: {fileID: 5323420115873639035}
+  - component: {fileID: -8110103440476578621}
+  - component: {fileID: 3340598506253535947}
   m_Layer: 6
-  m_Name: OldOne
+  m_Name: EliteDeepOne
   m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -85,8 +85,8 @@ SpriteRenderer:
   m_SortingLayerID: -1388612601
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6576106640174999459, guid: 59f7e1df2be95a04694e26f48c2e6899, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 7402985644866758335, guid: 2b1872c8a7f373f47bc31ca5c4e43755, type: 3}
+  m_Color: {r: 0.7948204, g: 0.48867923, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -111,7 +111,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -158,9 +158,9 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.8125, y: 1}
+  m_Size: {x: 0.7619048, y: 1}
   m_Direction: 0
---- !u!114 &6818465723368671168
+--- !u!114 &1935550478197556449
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,15 +169,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4821721425770472742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d44acb619053149adf1869b80b20ed, type: 3}
+  m_Script: {fileID: 11500000, guid: e9ae5c3c138b0c048b1ed225f8cc6e35, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FlyMob
-  hp: 100
-  damage: 30
-  exp: 40
+  m_EditorClassIdentifier: Assembly-CSharp::EliteMob
+  hp: 80
+  damage: 50
+  exp: 80
   moveSpeed: 2
-  diveDistance: 20
---- !u!95 &4081152586623250049
+  hpIncreasePercent: 10
+--- !u!95 &5323420115873639035
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -187,7 +187,7 @@ Animator:
   m_GameObject: {fileID: 4821721425770472742}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 68d0f3ca987a04642b464b1df84cba59, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0f289db51f042c0489f29039c0ae2e07, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -199,7 +199,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!199 &-7234808882947436624
+--- !u!199 &-8110103440476578621
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -279,7 +279,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!198 &-8354657419493083395
+--- !u!198 &3340598506253535947
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

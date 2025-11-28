@@ -44,9 +44,21 @@ public class Effect_AcquireRandomItem : GameEffectSO
             inventory.AcquireItem(item);
 
             if (isNew)
-                results.Add($"<{item.itemName}> (NEW)");
+            {
+                results.Add($"<{item.itemName}> [NEW!]");
+            }
             else
-                results.Add($"<{item.itemName}> (UPGRADE)");
+            {
+                if (inventory.FindItem(item).currentUpgrade == inventory.FindItem(item).itemData.MaxUpgrade)
+                {
+                    results.Add($"<{item.itemName}> [레벨 {inventory.FindItem(item).currentUpgrade - 1} -> MAX]");
+                }
+                else
+                {
+                    results.Add($"<{item.itemName}> [레벨 {inventory.FindItem(item).currentUpgrade - 1} -> {inventory.FindItem(item).currentUpgrade}]");
+                }
+            }
+                
         }
 
         return $"랜덤 아이템 획득:\n- " + string.Join("\n- ", results);

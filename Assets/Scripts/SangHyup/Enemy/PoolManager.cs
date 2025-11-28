@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum EnemyName
 {
-    Monster, FlyMonster
+    DeepOne, OldOne
 }
 
 public enum BossName
@@ -15,11 +17,15 @@ public class PoolManager : MonoBehaviour
 {
     public static PoolManager instance;
 
-    [SerializeField] private GameObject[]       enemies;    // Enemy prefab array
-                     private List<GameObject>[] pools;      // Array of pooled enemy lists
+    [SerializeField] private GameObject[]       mobs;           // Mob prefab array
+                     private List<GameObject>[] mobPools;       // Array of pooled mob lists
+    [SerializeField] private GameObject[]       eliteMobs;       // Elite Mob prefab array
+                     private List<GameObject>[] eliteMobPools;  // Array of pooled elite mob lists
     [SerializeField] private GameObject[]       bosses;
 
     public List<Enemy> activeEnemies = new List<Enemy>();
+
+    public int eventDebuffPercent = 0;
 
     private void Awake()
     {
@@ -31,6 +37,21 @@ public class PoolManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        mobPools = new List<GameObject>[mobs.Length];
+        for (int i = 0; i < mobPools.Length; i++)
+        {
+            mobPools[i] = new List<GameObject>();
+        }
+
+        eliteMobPools = new List<GameObject>[eliteMobs.Length];
+        for (int i = 0; i < eliteMobPools.Length; i++)
+        {
+            eliteMobPools[i] = new List<GameObject>();
+        }
     }
 
     public void RegisterEnemy(Enemy enemy)
@@ -48,7 +69,7 @@ public class PoolManager : MonoBehaviour
             activeEnemies.Remove(enemy);
         }
     }
-
+    
     public void DespawnAllEnemies()
     {
         // 리스트를 순회하며 비활성화 (역순 순회 권장: 리스트 변경 가능성 대비)
@@ -61,21 +82,11 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        pools = new List<GameObject>[enemies.Length];
-        
-        for (int i = 0; i < pools.Length; i++)
-        {
-            pools[i] = new List<GameObject>();
-        }
-    }
-
-    public GameObject GetEnemy(int index)
+    public GameObject GetMob(int index)
     {
         GameObject selected = null;
 
-        foreach (GameObject enemy in pools[index])
+        foreach (GameObject enemy in mobPools[index])
         {
             if (!enemy.activeSelf)
             {
@@ -88,8 +99,32 @@ public class PoolManager : MonoBehaviour
 
         if (selected == null)
         {
-            selected = Instantiate(enemies[index], transform);
-            pools[index].Add(selected);
+            selected = Instantiate(mobs[index], transform);
+            mobPools[index].Add(selected);
+        }
+
+        return selected;
+    }
+
+    public GameObject GetEliteMob(int index)
+    {
+        GameObject selected = null;
+
+        foreach (GameObject enemy in eliteMobPools[index])
+        {
+            if (!enemy.activeSelf)
+            {
+                selected = enemy;
+                selected.SetActive(true);
+
+                break;
+            }
+        }
+
+        if (selected == null)
+        {
+            selected = Instantiate(eliteMobs[index], transform);
+            eliteMobPools[index].Add(selected);
         }
 
         return selected;
@@ -100,5 +135,5 @@ public class PoolManager : MonoBehaviour
         return bosses[(int)boss];
     }
 
-    public int GetPooledEnemyCount(EnemyName enemyName) { return pools[(int)enemyName].Count; }
+    public int GetPooledEnemyCount(EnemyName enemyName) { return mobPools[(int)enemyName].Count; }
 }

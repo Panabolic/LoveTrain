@@ -5,19 +5,20 @@ using UnityEngine;
 public class LaserGun_SO : Item_SO
 {
     [Header("레이저 건 스탯")]
-    public float[] damageByLevel = { 5f, 10f, 15f };
-    public GameObject LaserProjectilePrefab;
+    public float[] damageByLevel = { 20f, 20f, 20f };       // 틱당 데미지
 
-    // (Item_SO의 instantiatedPrefab 필드를 무기 외형 프리팹으로 사용합니다)
-    // (별도 필드 WeaponVisualPrefab을 만들어도 되지만, 기존 필드를 활용하면 깔끔합니다)
+    [Header("레이저 세부 설정")]
+    public float[] durationByLevel = { 1f, 3f, 5f };       // 최대 발사 지속 시간
+    public float[] tickRateByLevel = { 0.07f, 0.07f, 0.07f };// 데미지 입히는 주기 (낮을수록 빠름)
+    public float[] cooldownByLevel = { 0.6f, 0.6f, 0.6f };     // 과열 후 쿨타임
+
+    public GameObject LaserProjectilePrefab;
 
     [Tooltip("교체할 거치대 이미지 (선택)")]
     public Sprite HolderSprite;
 
-    // ✨ [핵심] 부모의 기본 생성 로직을 덮어씌웁니다.
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        // 1. 플레이어(기차)에서 Gun 컴포넌트 찾기
         Gun gun = user.GetComponentInChildren<Gun>();
         if (gun == null)
         {
@@ -25,17 +26,13 @@ public class LaserGun_SO : Item_SO
             return null;
         }
 
-        // 2. 부모의 InstantiateVisual() 대신, Gun에게 생성을 위임!
-        // (instantiatedPrefab에는 'WeaponVisual'과 'LaserGun' 스크립트가 붙은 프리팹이 들어있어야 함)
         GameObject createdWeaponObj = gun.EquipVisual(this.instantiatedPrefab, this.HolderSprite);
 
-        // 3. 생성된 무기에서 로직 스크립트(LaserGun) 초기화
         if (createdWeaponObj != null)
         {
             LaserGun logic = createdWeaponObj.GetComponent<LaserGun>();
             if (logic == null)
             {
-                // 혹시 프리팹에 없으면 추가
                 logic = createdWeaponObj.AddComponent<LaserGun>();
             }
 
@@ -43,7 +40,6 @@ public class LaserGun_SO : Item_SO
             logic.UpgradeInstItem(instance);
         }
 
-        // 4. 생성된 오브젝트를 리턴 (인벤토리 관리용)
         return createdWeaponObj;
     }
 
@@ -52,7 +48,9 @@ public class LaserGun_SO : Item_SO
         int index = Mathf.Clamp(level - 1, 0, damageByLevel.Length - 1);
         return new Dictionary<string, string>
         {
-            { "Damage", damageByLevel[index].ToString() }
+            { "Damage", damageByLevel[index].ToString() },
+            { "Duration", durationByLevel[index].ToString() },
+            { "Cooldown", cooldownByLevel[index].ToString() }
         };
     }
 }

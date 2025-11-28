@@ -98,7 +98,7 @@ public class TrainBoss : Boss
 
     private void CheckPhase()
     {
-        if (currentHP > maxHP * p2HpRatio && isPhase2 == false) return;
+        if (currentHP > hp * p2HpRatio && isPhase2 == false) return;
 
         isPhase2 = true;
 

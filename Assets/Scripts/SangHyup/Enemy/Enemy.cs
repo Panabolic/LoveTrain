@@ -10,15 +10,18 @@ public class Enemy : MonoBehaviour
 
     [Header("Enemy Specification")]
     [Tooltip("기본 체력")]
-    [SerializeField] protected float maxHP;
+    [SerializeField] protected float hp;
     [Tooltip("대미지(km/h 단위)")]
     [SerializeField] protected float damage;
     [Tooltip("주는 경험치량")]
     [SerializeField] protected float exp;
 
+    protected float calibratedHP;
     protected float currentHP;
     protected bool  isAlive = true;
-    
+
+    private Color originalColor;        //TODO
+
     protected float deathToDeactive; // 사망에서 비활성화까지 걸리는 시간
 
     // Target Components
@@ -27,13 +30,34 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Awake()
     {
+        // Get Components
         sprite      = GetComponent<SpriteRenderer>();
         collision   = GetComponent<Collider2D>();
         animator    = GetComponent<Animator>();
 
+        // variable init
+        originalColor = sprite.color;
+
         // Get Target Components
         targetRigid     = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
         levelManager    = GameObject.FindWithTag("Player").GetComponent<TrainLevelManager>();
+    }
+
+    protected virtual void OnEnable()
+    {
+        // init Default value
+        currentHP = hp;
+        isAlive = true;
+        sprite.enabled = true;
+        sprite.color = originalColor;
+
+        // Layer 변경
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
+
+        if (PoolManager.instance != null)
+        {
+            PoolManager.instance.RegisterEnemy(this);
+        }
     }
 
     protected virtual void Start()
@@ -44,23 +68,6 @@ public class Enemy : MonoBehaviour
         foreach (AnimationClip clip in animationClips)
         {
             if (clip.name == "Die") deathToDeactive = clip.length;
-        }
-    }
-
-    protected virtual void OnEnable()
-    {
-        // init Default value
-        currentHP = maxHP;
-        isAlive = true;
-        sprite.enabled = true;
-        sprite.color = Color.white;
-
-        // Layer 변경
-        gameObject.layer = LayerMask.NameToLayer("Enemy");
-
-        if (PoolManager.instance != null)
-        {
-            PoolManager.instance.RegisterEnemy(this);
         }
     }
 
