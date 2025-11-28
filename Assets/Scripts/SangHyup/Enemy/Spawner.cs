@@ -99,6 +99,14 @@ public class Spawner : MonoBehaviour
             enemy.transform.position = FlyMobSpawnPoints[UnityEngine.Random.Range(0, FlyMobSpawnPoints.Length)].position;
         }
 
+        Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero; // 속도 0으로 초기화
+            rb.angularVelocity = 0f;    // 회전 속도 0으로 초기화
+            // 필요하다면 순간적으로 중력을 끄거나, Kinematic으로 바꿨다가 Mob.cs에서 되돌리는 방법도 있음
+        }
+
         enemy.GetComponent<Mob>().OnDied -= RespawnMob; // �ߺ� ���� ����
         enemy.GetComponent<Mob>().OnDied += RespawnMob;
     }

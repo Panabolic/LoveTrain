@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eaa5853b81f7ae44b0a238732a130f5, type: 3}
+  m_Name: LaserGun
+  m_EditorClassIdentifier: Assembly-CSharp::LaserGun_SO
+  itemName: "\uB808\uC774\uC800 \uAC74"
+  instantiatedPrefab: {fileID: 7912622153395854844, guid: 67a79294b5c50064b906a9dabedb0869, type: 3}
+  attachmentSocketName: 
+  iconSprite: {fileID: 0}
+  spritesByLevel: []
+  controllersByLevel: []
+  MaxUpgrade: 3
+  itemScript: "\uCD1D\uAE30\uB97C {Damage}\uC758 \uB808\uC774\uC800\uB97C \uBC1C\uC0AC\uD558\uB294
+    \uCD1D\uAE30\uB85C \uBCC0\uACBD"
+  itemSimpleScript: "\uB808\uC774\uC800\uAC74 \uAC16\uACE0\uC2F6\uB098, \uAC16\uACE0\uC2F6\uC9C0"
+  cooldownTime: 0
+  damageByLevel:
+  - 5
+  - 10
+  - 15
+  LaserProjectilePrefab: {fileID: 7987405070560878738, guid: 422af25199ea22d4288a54eae3026cc0, type: 3}
+  HolderSprite: {fileID: 21300000, guid: 129ba3bff569c5a4f959539b5ffc57e4, type: 3}

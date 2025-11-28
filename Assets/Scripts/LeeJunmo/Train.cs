@@ -1,9 +1,5 @@
-﻿
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using System;
 
@@ -16,64 +12,81 @@ public class Train : MonoBehaviour
 {
     // Components
     public Animator[] carsAnim;
+    private TrainController trainController; // 조작 제어용 참조
 
     [Tooltip("기차의 속도 최대치 값입니다.")]
     [SerializeField] private float maxSpeedValue = 460;
 
-    // ✨ [추가] 사망 처리되는 속도 임계값
-    [Tooltip("CurrentSpeed가 이 값 이하가 되면 사망 처리됩니다.")]
+    // ✨ [사망 임계값] 이 값 이하가 되면 '위험 상태(Dying)' 진입
+    [Tooltip("CurrentSpeed가 이 값 이하가 되면 조작 불능/사망 연출이 시작됩니다.")]
     [SerializeField] private float deathSpeedThreshold = 160f;
 
     public int Level = 1;
 
-    // CurrentSpeed가 Train의 프로퍼티가 됨
+    // CurrentSpeed 프로퍼티
     public float CurrentSpeed { get; private set; }
 
     [Header("디버그 정보")]
     [SerializeField] private float _currentSpeedForInspector;
 
-    // ✨ [추가] UI가 최대 속도 값을 읽을 수 있도록 public getter를 추가합니다.
     public float MaxSpeedValue => maxSpeedValue;
 
-    [Tooltip("사망 시 기차가 왼쪽으로 이동할 거리")]
-    [SerializeField] private float deathMoveDistance = -30f;
-    [Tooltip("사망 시 기차가 이동하는 속도")]   
-    [SerializeField] private float deathMoveSpeed = 10f;
-    [Tooltip("이동 시작 후 몇 초 뒤에 기차 오브젝트를 파괴할지")]
-    [SerializeField] private float destroyDelay = 2.0f;
+    [Header("사망 연출 설정")]
+    [Tooltip("위험 상태 진입 시 1차로 튕겨나갈 위치 X")]
+    [SerializeField] private float deathKnockbackPositionX = 0f;
 
-    private bool isDead = false;
+    [Tooltip("1차 튕겨나감(Knockback)에 걸리는 시간")]
+    [SerializeField] private float deathKnockbackDuration = 0.5f;
+
+    [Tooltip("이후 서서히 멈출 때 뒤로 이동할 총 거리 (음수)")]
+    [SerializeField] private float deathMoveDistance = -15f;
+
+    [Tooltip("뒤로 밀려나는 속도 (이 속도로 이동하며, 이동이 끝날 때 속도도 0이 됨)")]
+    [SerializeField] private float deathMoveSpeed = 5f;
+
+    [Tooltip("완전 정지(속도 0) 후 파괴되기까지 대기 시간")]
+    [SerializeField] private float destroyDelay = 1.0f;
+
+    // --- 상태 변수 ---
+    private bool isDead = false; // 완전히 사망했는지 (게임 오버)
+    private bool isDying = false; // 현재 위험 상태(사망 연출 중)인지
+    private bool inKnockback = false; // 넉백 애니메이션 중인지
 
     [SerializeField]
     private GameObject tempDieUI;
 
-    /// <summary>
-    /// 기차가 피격당했을 때 SpeedMeterUI에 알리기 위한 이벤트
-    /// </summary>
     public event Action OnTrainDamaged;
 
     private void Awake()
     {
         carsAnim = GetComponentsInChildren<Animator>();
-        //carColliders = GetComponentsInChildren<Collider2D>().ToList();
+        trainController = GetComponent<TrainController>();
     }
 
-    // 속도 초기화
     private void Start()
     {
         CurrentSpeed = maxSpeedValue;
         _currentSpeedForInspector = CurrentSpeed;
         isDead = false;
+        isDying = false;
+
+        // 시작 시 조작 가능 상태 보장
+        if (trainController != null) trainController.enabled = true;
     }
 
-    // 디버그용
     void Update()
     {
         if (isDead) return;
         _currentSpeedForInspector = CurrentSpeed;
+
+        // ✨ 핵심: 위험 상태(Dying)일 때의 로직 처리
+        if (isDying && !inKnockback)
+        {
+            HandleDyingState();
+        }
     }
 
-    public virtual void TakeDamage(float damageAmount/*, TrainCar trainCar*/)
+    public virtual void TakeDamage(float damageAmount)
     {
         if (isDead) return;
 
@@ -83,141 +96,175 @@ public class Train : MonoBehaviour
         {
             CameraShakeManager.Instance.ShakeCamera();
         }
-/*
-        switch (trainCar)
+
+        // 데미지 적용
+        ModifySpeed(-damageAmount);
+    }
+
+    /// <summary>
+    /// 속도를 변경하는 통합 함수 (데미지, 회복 모두 사용)
+    /// </summary>
+    public void ModifySpeed(float amount)
+    {
+        if (isDead) return;
+
+        CurrentSpeed += amount;
+
+        // 최대 속도 제한
+        if (CurrentSpeed > maxSpeedValue) CurrentSpeed = maxSpeedValue;
+
+        // 상태 체크 로직
+        CheckState();
+    }
+
+    /// <summary>
+    /// 현재 속도에 따라 '정상' vs '위험(Dying)' vs '사망(Dead)' 상태를 결정
+    /// </summary>
+    private void CheckState()
+    {
+        // 1. 회복 로직: 위험 상태였다가 속도가 임계값을 넘으면 복구
+        if (isDying && CurrentSpeed > deathSpeedThreshold)
         {
-            case TrainCar.front:
-                break;
-
-            case TrainCar.middle:
-                break;
-
-            case TrainCar.rear:
-                break;
-        }*/
-
-        // 속도 감소 로직
-        if (CurrentSpeed > deathSpeedThreshold) // ✨ 0 대신 임계값 사용
-        {
-            CurrentSpeed -= damageAmount;
-            if (CurrentSpeed <= deathSpeedThreshold) // ✨ 0 대신 임계값 사용
-            {
-                CurrentSpeed = deathSpeedThreshold; // ✨ 정확히 임계값으로 설정 (선택적)
-                Die(); // ✨ 사망 처리 함수 호출
-            }
+            RecoverControl();
         }
-        // ✨ 만약 시작부터 임계값 이하라면 바로 사망 처리 (선택적)
-        else if (CurrentSpeed <= deathSpeedThreshold)
+        // 2. 위험 상태 진입: 속도가 임계값 이하이고, 아직 죽지는 않음
+        else if (!isDying && CurrentSpeed <= deathSpeedThreshold && CurrentSpeed > 0)
         {
+            StartDyingSequence();
+        }
+        // 3. 즉사: 데미지가 커서 한 방에 0 이하가 된 경우
+        else if (CurrentSpeed <= 0)
+        {
+            CurrentSpeed = 0;
             Die();
         }
     }
+
+    // ========================================================================
+    // 💀 사망 연출 프로세스 (Dying Sequence)
+    // ========================================================================
+
+    private void StartDyingSequence()
+    {
+        isDying = true;
+        Debug.Log("위험 상태 진입! 조작 불능, 속도 감소 시작.");
+
+        // 1. 기차 이동 조작 끄기
+        if (trainController != null) trainController.enabled = false;
+
+        // ✨ [추가] 맵에 있는 몬스터들 전부 소환 해제 (경험치 X)
+        if (PoolManager.instance != null)
+        {
+            PoolManager.instance.DespawnAllEnemies();
+        }
+
+        // 2. 1차 넉백 연출 (DOTween)
+        inKnockback = true;
+        transform.DOMoveX(deathKnockbackPositionX, deathKnockbackDuration)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() => inKnockback = false);
+    }
+    /// <summary>
+    /// 매 프레임 호출되어 뒤로 이동시키며 속도를 깎음
+    /// </summary>
+    private void HandleDyingState()
+    {
+        // 1. 멈추는 데 필요한 시간 계산 (거리 / 속력)
+        // (남은 거리가 아니라 전체 설정값 기준 비율로 깎습니다)
+        float moveDelta = deathMoveSpeed * Time.deltaTime;
+
+        // 2. 뒤로 이동
+        transform.position += new Vector3(-moveDelta, 0, 0); // 왼쪽(음수)으로 이동
+
+        // 3. 속도 감소 (위치 이동과 동기화)
+        // 공식: 감속량 = (임계값 / (총 이동거리 / 이동속도)) * delta
+        // 즉, 총 이동거리를 다 가는 동안 속도도 정확히 0이 되게 함.
+        float totalTime = Mathf.Abs(deathMoveDistance) / deathMoveSpeed;
+        float speedDropRate = deathSpeedThreshold / totalTime;
+
+        CurrentSpeed -= speedDropRate * Time.deltaTime;
+
+        // 4. 완전 사망 체크
+        if (CurrentSpeed <= 0)
+        {
+            CurrentSpeed = 0;
+            Die(); // 게임 오버 처리
+        }
+    }
+
+    // ========================================================================
+    // ❤️ 회복 프로세스 (Recovery)
+    // ========================================================================
+
+    private void RecoverControl()
+    {
+        isDying = false;
+        inKnockback = false;
+
+        // 진행 중이던 넉백 트윈이 있다면 취소
+        transform.DOKill();
+
+        // 조작 다시 활성화!
+        if (trainController != null) trainController.enabled = true;
+
+        Debug.Log("속도 회복! 기차 통제권 복구됨.");
+    }
+        
+    // ========================================================================
+    // ☠️ 최종 사망 (Game Over)
+    // ========================================================================
 
     private void Die()
     {
         if (isDead) return;
         isDead = true;
+        isDying = false; // 연출 루프 종료
 
-        Debug.Log("기차 사망!");
+        Debug.Log("기차 완전 정지. 사망 처리.");
 
-        // ✨ [핵심 수정] 속도를 기반으로 이동 시간(duration) 계산
-        float distance = Mathf.Abs(deathMoveDistance); // 이동할 거리 (절대값)
-        float duration = 0f; // 이동 시간 초기화
-        if (deathMoveSpeed > 0) // 속도가 0보다 클 때만 계산 (0으로 나누기 방지)
-        {
-            duration = distance / deathMoveSpeed; // 시간 = 거리 / 속력
-        }
-        else
-        {
-            Debug.LogWarning("deathMoveSpeed가 0 또는 음수입니다. 이동 시간이 0이 됩니다.", this);
-        }
+        // 혹시 모를 잔여 트윈 제거
+        transform.DOKill();
 
-        // ✨ 계산된 duration 사용
-        transform.DOMoveX(transform.position.x + deathMoveDistance, duration) // deathMoveDuration -> duration
-            .SetEase(Ease.Linear) // 등속 이동
-            .SetUpdate(true);
-
-        // 3. 지정된 시간 후 오브젝트 파괴 코루틴 시작
-        StartCoroutine(DestroyAfterDelay(destroyDelay));
-
-        // (선택) 기차의 다른 컴포넌트 비활성화 (예: Collider2D)
-        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
-        foreach (var col in colliders) { col.enabled = false; }
-        // TrainController 비활성화 등...
-        TrainController controller = GetComponent<TrainController>();
-        if (controller != null) controller.enabled = false;
+        // 파괴 코루틴 시작
+        StartCoroutine(DestroyProcess());
     }
 
-    private IEnumerator DestroyAfterDelay(float delay)
+    private IEnumerator DestroyProcess()
     {
         tempDieUICall();
-        // Time.timeScale에 영향을 받지 않도록 WaitForSecondsRealtime 사용
-        yield return new WaitForSecondsRealtime(delay);
+        // Time.timeScale 영향 안 받게 Realtime 사용
+        yield return new WaitForSecondsRealtime(destroyDelay);
+
         Destroy(gameObject);
         SceneLoader.Instance.LoadStartScene();
     }
 
+    // ========================================================================
+    // 🧪 테스트용 버튼 연결
+    // ========================================================================
+
     public void IncreaseSpeedTest()
     {
         if (isDead) return;
-        CurrentSpeed += 20;
-    }
-
-    /// <summary>
-    /// 이벤트 시스템에서 기차의 현재 속도를 직접 조절합니다.
-    /// </summary>
-    public void ModifySpeed(float amount)
-    {
-        if (isDead) return; // (Train.cs에 isDead 변수가 있다고 가정)
-
-        CurrentSpeed += amount;
-
-        // 속도가 0(사망 임계값) 이하로 떨어졌는지 확인
-        if (CurrentSpeed <= deathSpeedThreshold)
-        {
-            CurrentSpeed = deathSpeedThreshold;
-            Die(); // (Train.cs의 Die 함수 호출)
-        }
-        // (선택) 최대 속도를 넘지 않게 제한
-        else if (CurrentSpeed > CurrentSpeed)
-        {
-            CurrentSpeed = CurrentSpeed;
-        }
+        ModifySpeed(20); // 회복 테스트용
     }
 
     public void DecreaseSpeedTest()
     {
         if (isDead) return;
-        CurrentSpeed -= 20;
-
-        Debug.Log($"테스트 감소! 현재 속도: {CurrentSpeed}, 사망 임계값: {deathSpeedThreshold}");
-
-        if (CurrentSpeed <= deathSpeedThreshold)
-        {
-            CurrentSpeed = deathSpeedThreshold;
-            Debug.Log("테스트 감소로 사망 조건 만족! Die() 함수 호출 시도.");
-            Die();
-        }
+        ModifySpeed(-20); // 데미지 테스트용
     }
 
     public void DieTest()
     {
         if (isDead) return;
-        CurrentSpeed -= 500;
-
-        Debug.Log($"테스트 감소! 현재 속도: {CurrentSpeed}, 사망 임계값: {deathSpeedThreshold}");
-
-        if (CurrentSpeed <= deathSpeedThreshold)
-        {
-            CurrentSpeed = deathSpeedThreshold;
-            Debug.Log("테스트 감소로 사망 조건 만족! Die() 함수 호출 시도.");
-            Die();
-        }
+        ModifySpeed(-500); // 즉사 테스트
     }
 
     private void tempDieUICall()
     {
-        tempDieUI.SetActive(true);
+        if (tempDieUI != null)
+            tempDieUI.SetActive(true);
     }
 
     public float GetDeathSpeed()

@@ -1,23 +1,48 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Bullet : Projectile
+public class Bullet : MonoBehaviour
 {
-    protected float speed = 0.0f;
+    private float speed;
+    private float damage;
+    private Vector3 direction;
+    private GameObject originalPrefab;
 
-    protected override void Awake()
+    public void Init(float _damage, float _speed, Vector3 _dir, GameObject _prefab)
     {
-        base.Awake();
-        speed = 40.0f;
-        damage = 10.0f;
+        this.damage = _damage;
+        this.speed = _speed;
+        this.direction = _dir;
+        this.originalPrefab = _prefab;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        CancelInvoke(nameof(Despawn));
+        Invoke(nameof(Despawn), 5.0f);
     }
 
-    public override void Launch(Vector2 direction)
+    void Update()
     {
-        rigid2D.linearVelocity = direction.normalized * speed;
+        // 앞으로 이동
+        transform.Translate(Vector3.right * speed * Time.deltaTime);
     }
 
-    protected override void OnHitTarget()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Deactivate();
+        Mob enemy = collision.GetComponent<Mob>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+            Despawn();
+        }
+    }
+
+    private void Despawn()
+    {
+        CancelInvoke(nameof(Despawn));
+        if (BulletPoolManager.Instance != null && originalPrefab != null)
+            BulletPoolManager.Instance.ReturnToPool(gameObject, originalPrefab);
+        else
+            Destroy(gameObject);
     }
 }

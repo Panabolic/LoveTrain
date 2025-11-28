@@ -89,6 +89,18 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(deathToDeactive);
     }
 
+    public virtual void DespawnWithoutExp()
+    {
+        // 이미 죽었거나 비활성화된 경우 패스
+        if (!gameObject.activeInHierarchy) return;
+
+        isAlive = false;
+        StopAllCoroutines(); // 진행 중인 Die 코루틴 등 중단
+
+        // 바로 비활성화 (필요하다면 연출 추가 가능)
+        gameObject.SetActive(false);
+    }
+
     public bool GetIsAlive() { return isAlive; }
 
     protected virtual void OnDisable()

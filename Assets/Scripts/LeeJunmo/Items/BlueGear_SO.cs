@@ -4,17 +4,55 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BlueGear", menuName = "Items/BlueGear")]
 public class BlueGear_SO : Item_SO
 {
-    [Header("리볼버 전용 데이터")]
+    [Header("푸른 톱니바퀴 데이터")]
+    [Tooltip("레벨별 공격속도 증가량 (%)")]
     public float[] AttackSpeedByLevel = { 10f, 20f, 30f };
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        // 1. 부모의 공통 함수를 호출해 '로직+시각' 프리팹 생성
         GameObject BlueGearGO = InstantiateVisual(user);
-        if (BlueGearGO == null) return null;
-        
 
+        // 장착 시 1레벨 효과 적용
+        ApplyStats(user, AttackSpeedByLevel[0] / 100f);
+
+        if (BlueGearGO == null) return null;
         return BlueGearGO;
+    }
+
+    public override void UpgradeLevel(ItemInstance instance)
+    {
+        base.UpgradeLevel(instance);
+
+        int currentLevelIdx = instance.currentUpgrade - 1;
+        int prevLevelIdx = currentLevelIdx - 1;
+
+        if (currentLevelIdx < AttackSpeedByLevel.Length && prevLevelIdx >= 0)
+        {
+            float difference = AttackSpeedByLevel[currentLevelIdx] - AttackSpeedByLevel[prevLevelIdx];
+
+            // ✨ [수정] FindFirstObjectByType 사용
+            Gun gun = FindFirstObjectByType<Gun>();
+            if (gun != null)
+            {
+                gun.AddFireRateMultiplier(difference / 100f);
+            }
+        }
+    }
+
+    private void ApplyStats(GameObject user, float amount)
+    {
+        Gun gun = user.GetComponent<Gun>();
+        // ✨ [수정] FindFirstObjectByType 사용
+        if (gun == null) gun = FindFirstObjectByType<Gun>();
+
+        if (gun != null)
+        {
+            gun.AddFireRateMultiplier(amount);
+        }
+        else
+        {
+            Debug.LogWarning("[BlueGear] Gun 컴포넌트를 찾을 수 없습니다.");
+        }
     }
 
     protected override Dictionary<string, string> GetStatReplacements(int level)

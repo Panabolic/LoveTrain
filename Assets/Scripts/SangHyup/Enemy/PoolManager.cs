@@ -1,4 +1,5 @@
-﻿using System;
+
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -67,7 +68,31 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    public GameObject GetMob(int index)
+    //public GameObject GetMob(int index)
+    
+    public void DespawnAllEnemies()
+    {
+        // 리스트를 순회하며 비활성화 (역순 순회 권장: 리스트 변경 가능성 대비)
+        for (int i = activeEnemies.Count - 1; i >= 0; i--)
+        {
+            if (activeEnemies[i] != null)
+            {
+                activeEnemies[i].DespawnWithoutExp();
+            }
+        }
+    }
+
+    private void Start()
+    {
+        pools = new List<GameObject>[enemies.Length];
+        
+        for (int i = 0; i < pools.Length; i++)
+        {
+            pools[i] = new List<GameObject>();
+        }
+    }
+
+    public GameObject GetEnemy(int index)
     {
         GameObject selected = null;
 
