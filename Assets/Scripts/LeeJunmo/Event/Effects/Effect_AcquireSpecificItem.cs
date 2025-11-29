@@ -38,7 +38,8 @@ public class Effect_AcquireSpecificItem : GameEffectSO
             else
             {
                 if (instance.currentUpgrade >= instance.itemData.MaxUpgrade) break;
-                instance.UpgradeLevel();
+                // [수정]
+                inventory.UpgradeItemInstance(instance);
             }
         }
 

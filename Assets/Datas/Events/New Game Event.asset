@@ -17,15 +17,15 @@ MonoBehaviour:
   - description: 
     outcomes:
     - weight: 100
-      effectLogic: {fileID: 11400000, guid: 065521c2a5f3f674d887812e41b680a0, type: 2}
+      effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
       parameters:
-        intValue: 1
+        intValue: 0
         intValue2: 0
-        floatValue: 0
+        floatValue: 200
         floatValue2: 0
         soReference: {fileID: 0}
         prefabReference: {fileID: 0}
       outputSettings:
         includeDefaultText: 1
-        specialText: 
+        specialText: '   '
         order: 1

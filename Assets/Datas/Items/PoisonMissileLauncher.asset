@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071d8b514483fac448334d3210ef3a40, type: 3}
+  m_Name: PoisonMissileLauncher
+  m_EditorClassIdentifier: Assembly-CSharp::PoisonMissileLauncher_SO
+  itemName: "\uB3C5\uBBF8\uC0AC\uC77C"
+  instantiatedPrefab: {fileID: 6099300551372563210, guid: d0e8091da7ba54548a4788a0a08e306d, type: 3}
+  attachmentSocketName: TrainR
+  iconSprite: {fileID: 21300000, guid: a933002f08066614cb61a8d24d211a17, type: 3}
+  spritesByLevel: []
+  controllersByLevel: []
+  MaxUpgrade: 3
+  itemScript: "{CoolTime}\uB9C8\uB2E4 {Damage}\uB370\uBBF8\uC9C0\uC758 \uB3C5\uAC00\uC2A4\uB97C
+    \uC0DD\uC131\uD558\uB294 \uBBF8\uC0AC\uC77C \uBC1C\uC0AC."
+  itemSimpleScript: "MOPP 4\uB2E8\uACC4 \uBC1C\uB839."
+  cooldownTime: 0
+  gasDamageByLevel:
+  - 10
+  - 10
+  - 10
+  gasTickRateByLevel:
+  - 0.2
+  - 0.2
+  - 0.2
+  cooldownByLevel:
+  - 10
+  - 6
+  - 3
+  missileSpeed: 12
+  verticalDistance: 6
+  gasMoveSpeed: 3
+  MissilePrefab: {fileID: 7276846939354661861, guid: f544ccf4d5c80f6478827d8f2111eaac, type: 3}
+  GasPrefab: {fileID: 8901307093622197889, guid: a0bf8563326594145a62c014fd782b7d, type: 3}

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
-using DG.Tweening; // DOTween 사용
+using DG.Tweening;
 
 public class SpeedMeterUI : MonoBehaviour
 {
@@ -12,86 +12,55 @@ public class SpeedMeterUI : MonoBehaviour
     [SerializeField] private RectTransform needleRectTransform;
 
     [Header("효과 참조")]
-    [Tooltip("테두리 (흔들림 대상 1)")]
     [SerializeField] private RectTransform lineRectTransform;
-    [Tooltip("계기판 패널 (흔들림 대상 2)")]
     [SerializeField] private RectTransform panelRectTransform;
 
     [Header("점멸 참조")]
-    [Tooltip("Line 오브젝트의 Image 컴포넌트")]
     [SerializeField] private Image lineImage;
-    [Tooltip("Panal 오브젝트의 Image 컴포넌트")]
     [SerializeField] private Image panelImage;
 
-    [Header("회전 설정")]
-    [Tooltip("속도가 최소(사망)일 때의 바늘 각도")]
-    [SerializeField] private float minAngle = 0f;
-    [Tooltip("속도가 최대일 때의 바늘 각도")]
-    [SerializeField] private float maxAngle = -180f;
+    [Header("회전 설정 (구간별 각도)")]
+    [Tooltip("속도가 0일 때 (완전 사망) 바늘 각도 (예: 180)")]
+    [SerializeField] private float angleAtZeroSpeed = 180f;
+
+    [Tooltip("속도가 사망 임계값(160)일 때 바늘 각도 (예: 135)")]
+    [SerializeField] private float angleAtThreshold = 135f;
+
+    [Tooltip("속도가 최대일 때 바늘 각도 (예: 0 or -45)")]
+    [SerializeField] private float angleAtMaxSpeed = 0f;
 
     [Header("아날로그 설정")]
-    [Tooltip("바늘이 목표 각도를 따라가는 속도")]
     [SerializeField] private float needleSmoothSpeed = 5f;
 
     [Header("피격 효과 설정")]
-    [Tooltip("총 효과 지속 시간")]
     [SerializeField] private float effectDuration = 0.5f;
-    [Tooltip("좌우/상하 흔들림의 강도")]
     [SerializeField] private float shakeStrength = 15f;
-    [Tooltip("흔들림 횟수 (진동)")]
     [SerializeField] private int shakeVibrato = 20;
-    [Tooltip("점멸할 때 변할 색상")]
     [SerializeField] private Color flashColor = Color.red;
-    [Tooltip("총 점멸 횟수 (왕복)")]
     [SerializeField] private int flashCount = 3;
 
-    // 바늘의 현재 각도
     private float currentAngleZ;
-    // 효과가 중복 재생되는 것을 방지하는 플래그
     private bool isEffectPlaying = false;
-
-    // 원래 색상을 저장하기 위한 변수
     private Color originalLineColor;
     private Color originalPanelColor;
 
     void Start()
     {
-        currentAngleZ = minAngle;
+        // 시작 시 최대 속도 각도로 초기화 (혹은 현재 속도에 맞춰짐)
+        currentAngleZ = angleAtMaxSpeed;
+
         if (needleRectTransform != null)
-        {
             needleRectTransform.rotation = Quaternion.Euler(0, 0, currentAngleZ);
-        }
 
-        if (train != null)
-        {
-            train.OnTrainDamaged += PlayDamageEffect;
-        }
+        if (train != null) train.OnTrainDamaged += PlayDamageEffect;
 
-        if (lineImage != null)
-        {
-            originalLineColor = lineImage.color;
-        }
-        else
-        {
-            Debug.LogWarning("SpeedMeterUI: Line Image가 연결되지 않았습니다.");
-        }
-
-        if (panelImage != null)
-        {
-            originalPanelColor = panelImage.color;
-        }
-        else
-        {
-            Debug.LogWarning("SpeedMeterUI: Panel Image가 연결되지 않았습니다.");
-        }
+        if (lineImage != null) originalLineColor = lineImage.color;
+        if (panelImage != null) originalPanelColor = panelImage.color;
     }
 
     void OnDestroy()
     {
-        if (train != null)
-        {
-            train.OnTrainDamaged -= PlayDamageEffect;
-        }
+        if (train != null) train.OnTrainDamaged -= PlayDamageEffect;
         DOTween.Kill(this);
     }
 
@@ -99,28 +68,39 @@ public class SpeedMeterUI : MonoBehaviour
     {
         if (train == null || needleRectTransform == null) return;
 
-        // 속도 비율 계산
+        // 1. 현재 속도 및 기준값 가져오기
         float currentSpeed = train.CurrentSpeed;
-        float minSpeed = train.GetDeathSpeed();
-        float maxSpeed = train.MaxSpeedValue;
-        float speedRange = maxSpeed - minSpeed;
-        float speedOffset = currentSpeed - minSpeed;
-        float speedRatio = 0f;
-        if (speedRange > 0) speedRatio = Mathf.Clamp01(speedOffset / speedRange);
+        float thresholdSpeed = train.GetDeathSpeed(); // 160
+        float maxSpeed = train.MaxSpeedValue;         // 460
 
-        // 바늘 회전
-        float targetAngleZ = Mathf.Lerp(minAngle, maxAngle, speedRatio);
-        currentAngleZ = Mathf.LerpAngle(
-            currentAngleZ,
-            targetAngleZ,
-            Time.deltaTime * needleSmoothSpeed
-        );
+        float targetAngleZ = 0f;
+
+        // 2. 구간별 각도 계산 (핵심 수정)
+        if (currentSpeed >= thresholdSpeed)
+        {
+            // [정상 구간] 임계값(160) ~ 최대(460)
+            // Ratio: 0(임계값) ~ 1(최대)
+            float range = maxSpeed - thresholdSpeed;
+            float ratio = (range > 0) ? (currentSpeed - thresholdSpeed) / range : 0f;
+
+            // 135도 -> 0도(설정값)로 이동
+            targetAngleZ = Mathf.Lerp(angleAtThreshold, angleAtMaxSpeed, Mathf.Clamp01(ratio));
+        }
+        else
+        {
+            // [위험 구간] 0 ~ 임계값(160)
+            // Ratio: 0(정지) ~ 1(임계값)
+            float ratio = (thresholdSpeed > 0) ? currentSpeed / thresholdSpeed : 0f;
+
+            // 180도 -> 135도로 이동
+            targetAngleZ = Mathf.Lerp(angleAtZeroSpeed, angleAtThreshold, Mathf.Clamp01(ratio));
+        }
+
+        // 3. 부드러운 회전 적용
+        currentAngleZ = Mathf.LerpAngle(currentAngleZ, targetAngleZ, Time.deltaTime * needleSmoothSpeed);
         needleRectTransform.rotation = Quaternion.Euler(0, 0, currentAngleZ);
     }
 
-    /// <summary>
-    /// 피격 효과를 재생하는 함수 (Train 이벤트가 호출)
-    /// </summary>
     private void PlayDamageEffect()
     {
         if (isEffectPlaying) return;
@@ -129,62 +109,34 @@ public class SpeedMeterUI : MonoBehaviour
 
         float flashLoopDuration = effectDuration / (flashCount * 2);
 
-        // 1. Line 점멸
         if (lineImage != null)
         {
             lineImage.DOColor(flashColor, flashLoopDuration)
-                .SetTarget(this)
-                .SetLoops(flashCount * 2, LoopType.Yoyo)
-                .SetEase(Ease.Linear)
-                .OnComplete(() => {
-                    lineImage.color = originalLineColor;
-                });
+                .SetTarget(this).SetLoops(flashCount * 2, LoopType.Yoyo)
+                .SetEase(Ease.Linear).OnComplete(() => lineImage.color = originalLineColor);
         }
 
-        // 2. Panal 점멸
         if (panelImage != null)
         {
             panelImage.DOColor(flashColor, flashLoopDuration)
-                .SetTarget(this)
-                .SetLoops(flashCount * 2, LoopType.Yoyo)
-                .SetEase(Ease.Linear)
-                .OnComplete(() => {
-                    panelImage.color = originalPanelColor;
-                });
+                .SetTarget(this).SetLoops(flashCount * 2, LoopType.Yoyo)
+                .SetEase(Ease.Linear).OnComplete(() => panelImage.color = originalPanelColor);
         }
 
-        // --- [핵심 수정] ---
-
-        // 3. Line 흔들기 (X, Y축 모두 랜덤)
-        Tween lineShake = null; // [수정] 트윈을 저장할 변수
+        Tween lineShake = null;
         if (lineRectTransform != null)
         {
-            // [수정] 트윈을 변수에 저장
-            lineShake = lineRectTransform.DOShakeAnchorPos(
-                effectDuration,
-                new Vector3(shakeStrength, shakeStrength, 0),
-                shakeVibrato, 90, false, true
-            ).SetTarget(this);
+            lineShake = lineRectTransform.DOShakeAnchorPos(effectDuration, new Vector3(shakeStrength, shakeStrength, 0), shakeVibrato, 90, false, true).SetTarget(this);
         }
 
-        // 4. Panal 흔들기 (X, Y축 모두 랜덤 - Line과 독립적으로)
         if (panelRectTransform != null)
         {
-            panelRectTransform.DOShakeAnchorPos(
-                effectDuration,
-                new Vector3(shakeStrength, shakeStrength, 0),
-                shakeVibrato, 90, false, true
-            ).SetTarget(this).OnComplete(() => {
-                isEffectPlaying = false; // Panal이 끝나면 플래그 해제
-            });
+            panelRectTransform.DOShakeAnchorPos(effectDuration, new Vector3(shakeStrength, shakeStrength, 0), shakeVibrato, 90, false, true)
+                .SetTarget(this).OnComplete(() => isEffectPlaying = false);
         }
         else
         {
-            // [수정] Panal이 없다면, 'lineShake' 트윈에 OnComplete를 연결
-            lineShake?.OnComplete(() => {
-                isEffectPlaying = false; // Line이 끝나면 플래그 해제
-            });
+            lineShake?.OnComplete(() => isEffectPlaying = false);
         }
-        // --- [수정 끝] ---
     }
 }

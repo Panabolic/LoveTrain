@@ -34,7 +34,8 @@ public class Effect_UpgradeRandomItemNTimes : GameEffectSO
             for (int i = 0; i < upgradeAmount; i++)
             {
                 if (instance.currentUpgrade >= instance.itemData.MaxUpgrade) break;
-                instance.UpgradeLevel();
+                // [수정]
+                inventory.UpgradeItemInstance(instance);
             }
 
             string levelText = (instance.currentUpgrade >= instance.itemData.MaxUpgrade) ? "MAX" : $"Lv.{instance.currentUpgrade}";

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Scriptable Object/Events", order = int.MaxValue)]
+[CreateAssetMenu(menuName = "Event System/Events", order = int.MaxValue)]
 public class SO_Event : ScriptableObject
 {
     [System.Serializable]

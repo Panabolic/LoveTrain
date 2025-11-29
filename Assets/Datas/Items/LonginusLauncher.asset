@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5743e8dc29c93324eb8a622ecdf03a8e, type: 3}
+  m_Name: LonginusLauncher
+  m_EditorClassIdentifier: Assembly-CSharp::LonginusLauncher_SO
+  itemName: "\uB871\uAE30\uB204\uC2A4\uC758 \uCC3D"
+  instantiatedPrefab: {fileID: 7351221115637119521, guid: 2f7d484e6bb18d747b8cb5767a4ed399, type: 3}
+  attachmentSocketName: TrainR
+  iconSprite: {fileID: -319647040704276135, guid: eb3c20b57b5cccb46b7ba8b7d221098a, type: 3}
+  spritesByLevel: []
+  controllersByLevel: []
+  MaxUpgrade: 3
+  itemScript: "{Damage}\uB370\uBBF8\uC9C0\uC758 \uAC70\uB300\uD55C \uCC3D\uC744 {CoolTime}\uCD08
+    \uB9C8\uB2E4 \uBC1C\uC0AC."
+  itemSimpleScript: "\uB0A8\uC758 \uD53C\uB97C \uC3DF\uAC8C \uD558\uB294 \uC790 \uC790\uAE30
+    \uD53C\uB3C4 \uC3DF\uAC8C \uD558\uB9AC\uB77C"
+  cooldownTime: 0
+  damageByLevel:
+  - 50
+  - 80
+  - 120
+  cooldownByLevel:
+  - 1
+  - 1
+  - 1
+  spearSpeed: 170
+  spearLifeTime: 1.5
+  SpearPrefab: {fileID: 5972341071342039288, guid: 443cca060ec4ffa47b9b691a1de63632, type: 3}
+  PathDataPrefab: {fileID: 209610055777354967, guid: ae52abc09efd03044ab648a0e8561d6b, type: 3}

@@ -37,7 +37,7 @@ public class EventTriggerObject : MonoBehaviour
     private void Update()
     {
         // 게임이 멈춰있지 않을 때만 이동
-        if (Time.timeScale > 0)
+        if (Time.timeScale > 0 || GameManager.Instance.CurrentState != GameState.Die)
         {
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
         }

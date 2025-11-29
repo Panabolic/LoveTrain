@@ -59,7 +59,7 @@ public class Effect_AcquireRandomItem : GameEffectSO
                 }
             }
                 
-        }
+        } 
 
         return $"랜덤 아이템 획득:\n- " + string.Join("\n- ", results);
     }

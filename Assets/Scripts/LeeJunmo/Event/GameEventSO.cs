@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq; // .Sum()을 사용하기 위해
 
-[CreateAssetMenu(fileName = "New Game Event", menuName = "Event System/Game Event")]
+[CreateAssetMenu(fileName = "New Event Select", menuName = "Event System/Event Select")]
 public class GameEventSO : ScriptableObject
 {
     [Header("Read me")]

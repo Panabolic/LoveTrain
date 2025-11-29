@@ -27,7 +27,8 @@ public class Effect_UpgradeRandomItemToMax : GameEffectSO
             // [실행] 최대 레벨이 될 때까지 반복
             while (instance.currentUpgrade < instance.itemData.MaxUpgrade)
             {
-                instance.UpgradeLevel();
+                // [수정]
+                inventory.UpgradeItemInstance(instance);
             }
 
             results.Add($"<{instance.itemData.itemName}> (Lv.{oldLevel} → MAX)");

@@ -24,6 +24,21 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
+    /// 적 처치 이벤트를 처리하고, 모든 장착 아이템의 OnKillEnemy 훅을 호출합니다.
+    /// 이 함수는 Enemy.cs의 Die()에서 호출됩니다.
+    /// </summary>
+    public void ProcessKillEvent(GameObject killedEnemy)
+    {
+        // 'this.gameObject'는 플레이어(Train) 자신입니다.
+        foreach (ItemInstance instance in items)
+        {
+            // Item_SO에 정의된 OnKillEnemy 훅 호출
+            instance.itemData.OnKillEnemy(this.gameObject, killedEnemy);
+        }
+    }
+
+
+    /// <summary>
     /// 새 아이템을 획득(또는 업그레이드)합니다.
     /// UI 갱신 이벤트를 호출합니다.
     /// </summary>
@@ -54,6 +69,26 @@ public class Inventory : MonoBehaviour
         // 6. UI 갱신 알림
         OnInventoryChanged?.Invoke();
     }
+
+    /// <summary>
+    /// [추가] 특정 아이템 인스턴스를 1레벨 업그레이드하고 UI를 갱신합니다.
+    /// (이벤트 시스템의 Upgrade 효과들이 이 함수를 사용)
+    /// </summary>
+    public void UpgradeItemInstance(ItemInstance instance)
+    {
+        if (instance == null) return;
+
+        // 1. 실제 업그레이드 로직 실행
+        // (최대 레벨 체크는 호출하는 쪽에서 하거나 여기서 추가로 해도 됨)
+        if (instance.currentUpgrade < instance.itemData.MaxUpgrade)
+        {
+            instance.UpgradeLevel(); // 내부 로직(스탯 갱신 등) 실행
+
+            // 2. [핵심] UI 갱신 알림
+            OnInventoryChanged?.Invoke();
+        }
+    }
+
 
     // --- 헬퍼 함수 (UI 및 이벤트 시스템용) ---
 

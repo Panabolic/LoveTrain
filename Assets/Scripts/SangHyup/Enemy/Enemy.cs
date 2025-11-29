@@ -92,6 +92,14 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("die");
 
         levelManager.GainExperience(exp);
+
+        // ✨ [핵심 수정] 플레이어의 Inventory를 찾아 Kill Event를 보고
+        Inventory inventory = levelManager?.GetComponent<Inventory>();
+        if (inventory != null)
+        {
+            inventory.ProcessKillEvent(this.gameObject);
+        }
+
         yield return new WaitForSeconds(deathToDeactive);
     }
 

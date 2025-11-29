@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1fa27d834807c24db99a5a8316fa5c2, type: 3}
+  m_Name: HealingItem
+  m_EditorClassIdentifier: Assembly-CSharp::HealingItem_SO
+  itemName: "\uC2EC\uC804\uB3C4\uACC4"
+  instantiatedPrefab: {fileID: 3427004941830098591, guid: a883f5acab4238c47ae22f81c6cf69cc, type: 3}
+  attachmentSocketName: TrainR
+  iconSprite: {fileID: 21300000, guid: 3c9861a4c3b325b4da91adf53149df37, type: 3}
+  spritesByLevel: []
+  controllersByLevel: []
+  MaxUpgrade: 3
+  itemScript: "{SpeedBonus}\uB9CC\uD07C \uCCB4\uB825 \uC99D\uAC00, {KillReq}\uB9CC\uD07C
+    \uC801 \uCC98\uCE58\uC2DC \uCD5C\uB300 \uCCB4\uB825\uC758 {HealAmt}\uB9CC\uD07C
+    \uD68C\uBCF5."
+  itemSimpleScript: "\uCCB4\uB825\uC774 \uACE7 \uAD6D\uB825\uC774\uB2E4."
+  cooldownTime: 0
+  maxSpeedBonusByLevel:
+  - 0
+  - 200
+  - 400
+  killCountCondition: 140000001400000014000000
+  healPercentByLevel:
+  - 0.05
+  - 0.05
+  - 0.05
+  countSprites:
+  - {fileID: 7350716134033134088, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: 3475958810871211371, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: -4904946119607627906, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: 8646163591178289907, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: -6786907887693360869, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: -5302300255004209832, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: 6491413274092364174, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: -5837169751100353842, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: 4928946752412603740, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: 5909640323999330291, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: 706059724302865274, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: -1185078640762115007, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: 1399399250912082736, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: -2548605864482794492, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: -3108205556566107132, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: 401053604379451802, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: -3140221848992914897, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: 1339092768793469566, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: 6927334415186416740, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}
+  - {fileID: 8614790257619145504, guid: d3b443782a6b72c4b886edc17c0dca7d, type: 3}

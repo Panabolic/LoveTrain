@@ -11,6 +11,8 @@ public class BeatingHeart_SO : Item_SO
     [Header("시각 효과")]
     public GameObject EffectPrefab;
 
+    private Transform visualTrasform;
+
     /// <summary>
     /// [추가] '박동하는 심장'도 비주얼이 있으므로 OnEquip 재정의
     /// </summary>
@@ -18,6 +20,8 @@ public class BeatingHeart_SO : Item_SO
     {
         // 1. 부모의 공통 함수를 호출해 '시각적' 프리팹만 생성
         GameObject visualGO = InstantiateVisual(user);
+
+        visualTrasform = visualGO.GetComponent<Transform>();
 
         // 2. ItemInstance가 참조할 수 있도록 반환
         return visualGO;
@@ -85,7 +89,8 @@ public class BeatingHeart_SO : Item_SO
         // 3. 이펙트 소환 (기존과 동일)
         if (EffectPrefab != null)
         {
-            Instantiate(EffectPrefab, user.transform.position, Quaternion.identity);
+            Vector2 OffsetedVisualTransform = new Vector2(visualTrasform.transform.position.x - 1.6f, visualTrasform.transform.position.y);
+            Instantiate(EffectPrefab, OffsetedVisualTransform, Quaternion.identity);
         }
     }
 

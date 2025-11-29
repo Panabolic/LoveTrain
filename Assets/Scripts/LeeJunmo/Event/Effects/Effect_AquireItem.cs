@@ -43,12 +43,12 @@ public class Effect_AcquireItem : GameEffectSO
                 inventory.AcquireItem(itemToGive); // [실행 1] (이때 1레벨이 됨)
                 instance = inventory.FindItem(itemToGive); // 인스턴스 참조 갱신
             }
-            else // 5b. [업그레이드] (기존 아이템 또는 신규 아이템의 2번째 획득부터)
+            else // [업그레이드]
             {
-                // 최대 레벨이면 중단
                 if (instance.currentUpgrade >= instance.itemData.MaxUpgrade) break;
 
-                instance.UpgradeLevel(); // [실행 2...N]
+                // [수정] 인벤토리를 통해 업그레이드 (UI 갱신됨)
+                inventory.UpgradeItemInstance(instance);
             }
         }
         // --- [수정 끝] ---
