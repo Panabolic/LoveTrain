@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49304aa30ac900941999e44d7d6f0b67, type: 3}
+  m_Name: CrownOfThorns
+  m_EditorClassIdentifier: Assembly-CSharp::CrownOfThorns_SO
+  itemName: "\uAC00\uC2DC \uBA74\uB958\uAD00"
+  instantiatedPrefab: {fileID: 4976618282924565818, guid: f73f0c89b690b984c82a8677797ecd21, type: 3}
+  attachmentSocketName: TrainF
+  iconSprite: {fileID: 21300000, guid: a046d008cbe35b243b3424b6c0e0d848, type: 3}
+  spritesByLevel: []
+  controllersByLevel: []
+  MaxUpgrade: 6
+  itemScript: "{Damage}\uB370\uBBF8\uC9C0\uC758 \uBC88\uAC1C\uB97C {CoolTime}\uCD08
+    \uB9C8\uB2E4 {Count}\uBC88 \uB0B4\uB9AC\uCE5C\uB2E4."
+  itemSimpleScript: "\uB0B4\uAC00 \uAC00\uB294 \uAE38\uC5D4 \uD3ED\uD48D\uC774 \uC778\uB2E4."
+  cooldownTime: 0
+  damageByLevel:
+  - 300
+  - 300
+  - 300
+  countByLevel: 020000000300000003000000040000000400000005000000
+  cooldownByLevel:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  spawnRangeX: 24
+  spawnDelayMin: 0.05
+  spawnDelayMax: 0.4
+  LightningPrefab: {fileID: 8628098649156478106, guid: 6f5d7e5d84fb77349acf17f1917564b0, type: 3}

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8de25d3ee2d664348b82ea5f88c5c342, type: 3}
+  m_Name: BloodyBible
+  m_EditorClassIdentifier: Assembly-CSharp::BloodyBible_SO
+  itemName: "\uD53C \uBB4D\uC740 \uC131\uACBD"
+  instantiatedPrefab: {fileID: 8784218837775428088, guid: 6e843e8257f28544eb0fbd2106be2b97, type: 3}
+  attachmentSocketName: TrainF
+  iconSprite: {fileID: -1403542765748039057, guid: 34458ade272b39b4e81c77101fea1ea7, type: 3}
+  spritesByLevel: []
+  controllersByLevel: []
+  MaxUpgrade: 6
+  itemScript: "{CoolTime}\uB9C8\uB2E4 \uACF5\uACA9\uC18D\uB3C4\uB97C 100% \uC99D\uAC00\uC2DC\uD0A4\uB294
+    \uC7A5\uD310\uC744 \uC0DD\uC131"
+  itemSimpleScript: "\uAC70\uC9D3\uB41C \uAD50\uB9AC"
+  cooldownTime: 0
+  cooldownByLevel:
+  - 40
+  - 37
+  - 34
+  - 31
+  - 28
+  - 25
+  spawnRangeX: 15
+  ZonePrefab: {fileID: 197958623005720994, guid: 2163572e4be8b8943ac392759936fd76, type: 3}

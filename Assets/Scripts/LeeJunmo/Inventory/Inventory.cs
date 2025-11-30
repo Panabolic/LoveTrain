@@ -37,6 +37,17 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 투사체/레이저가 적을 타격했을 때 호출 (MagicBullet 등이 사용)
+    /// </summary>
+    public void ProcessHitEvent(GameObject target, GameObject source)
+    {
+        foreach (ItemInstance instance in items)
+        {
+            // ✨ [수정] instance를 인자로 함께 전달
+            instance.itemData.OnDealDamage(this.gameObject, target, source, instance);
+        }
+    }
 
     /// <summary>
     /// 새 아이템을 획득(또는 업그레이드)합니다.

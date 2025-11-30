@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: "\uB808\uC774\uC800 \uAC74"
   instantiatedPrefab: {fileID: 7912622153395854844, guid: 67a79294b5c50064b906a9dabedb0869, type: 3}
   attachmentSocketName: 
-  iconSprite: {fileID: 0}
+  iconSprite: {fileID: -1575477752133039954, guid: 768d5566dccb58142ae66d941b63cd80, type: 3}
   spritesByLevel: []
   controllersByLevel: []
   MaxUpgrade: 3

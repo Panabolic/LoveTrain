@@ -40,8 +40,7 @@ public class RearGun : MonoBehaviour, IInstantiatedItem
         int levelIndex = Mathf.Clamp(instance.currentUpgrade - 1, 0, itemData.damageByLevel.Length - 1);
 
         currentDamage = itemData.damageByLevel[levelIndex];
-        // 쿨타임 데이터는 이제 애니메이션 속도 조절용 기준값으로 사용하거나 무시해도 됨
-        // currentFireInterval = itemData.cooldownByLevel[levelIndex]; 
+        // 쿨타임 데이터는 애니메이션 속도나 밸런싱에 필요 없다면 무시해도 됨
 
         currentBulletCount = itemData.bulletCountByLevel[levelIndex];
         spreadAngle = itemData.fanSpreadAngle;
@@ -55,66 +54,45 @@ public class RearGun : MonoBehaviour, IInstantiatedItem
     {
         if (Time.timeScale == 0 || playerGun == null) return;
 
-        // 1. 공격 속도 반영 (애니메이션 배속 조절)
-        // 기본 1배속 + 플레이어 공속 배율
+        // 1. 애니메이션 속도 동기화 (공속 버프 적용)
         if (animator != null)
         {
             animator.speed = 1f + playerGun.FireRateMultiplier;
         }
 
-        // 2. 입력 감지
+        // 2. 입력 감지 (안전하게)
         bool isTriggerHeld = false;
         if (playerGun.fireAction != null && playerGun.fireAction.action != null)
         {
             isTriggerHeld = playerGun.fireAction.action.IsPressed();
         }
 
-        // 3. 상태 전환 (트리거 방식)
-        if (isTriggerHeld)
+        // 3. 상태 동기화 (SetBool 사용 - 버그 방지)
+        // 입력 상태가 바뀌었을 때만 애니메이터 업데이트
+        if (isShooting != isTriggerHeld)
         {
-            // 누르고 있는데 아직 쏘는 상태가 아니라면 -> 발사 시작!
-            if (!isShooting)
-            {
-                StartShooting();
-            }
-        }
-        else
-        {
-            // 뗐는데 아직 쏘는 상태라면 -> 발사 중지!
-            if (isShooting)
-            {
-                StopShooting();
-            }
+            isShooting = isTriggerHeld;
+            UpdateAnimationState();
         }
     }
 
-    private void StartShooting()
+    private void UpdateAnimationState()
     {
-        isShooting = true;
         if (animator != null)
         {
-            animator.SetTrigger("Fire"); // 루프 시작
-        }
-    }
-
-    private void StopShooting()
-    {
-        isShooting = false;
-        if (animator != null)
-        {
-            animator.SetTrigger("StopFire"); // 루프 탈출
+            // Trigger 대신 Bool을 사용하여 상태를 강제로 맞춤
+            // (누르고 있으면 true -> 계속 발사, 떼면 false -> 루프 종료)
+            animator.SetBool("IsFiring", isShooting);
         }
     }
 
     // --- 애니메이션 이벤트 (루프 돌 때마다 호출됨) ---
     public void SpawnBulletFromAnim()
     {
-        // 안전장치: 뗐는데도 이벤트가 늦게 들어오는 경우 방지
-/*        if (!isShooting && playerGun != null && playerGun.fireAction != null)
-        {
-            if (!playerGun.fireAction.action.IsPressed()) return;
-        }
-*/
+        // [안전장치 제거됨] 
+        // 마우스를 뗐더라도 마지막 모션의 탄환은 나가게 하기 위해
+        // isShooting 체크를 하지 않습니다.
+
         if (firePoint == null || bulletPrefab == null) return;
 
         float finalDamage = currentDamage;

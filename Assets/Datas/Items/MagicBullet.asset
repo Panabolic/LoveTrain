@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ffd5d158f15cb446a049d64ab142f04, type: 3}
+  m_Name: MagicBullet
+  m_EditorClassIdentifier: Assembly-CSharp::MagicBullet_SO
+  itemName: "\uB9C8\uD0C4"
+  instantiatedPrefab: {fileID: 8007480651049891285, guid: 290ab05ac2616d2498e50d8f84fafa0c, type: 3}
+  attachmentSocketName: GunPivot
+  iconSprite: {fileID: 21300000, guid: a1c3e94d36f6d08479973d4d830b1ce8, type: 3}
+  spritesByLevel: []
+  controllersByLevel: []
+  MaxUpgrade: 3
+  itemScript: "\uD0C4\uD658\uC774 \uC801\uC5D0 \uC801\uC911 \uC2DC {Bounce}\uBC88
+    \uD295\uAE34\uB2E4."
+  itemSimpleScript: "\"\uC88B\uB2E4. [\uACC4\uC57D](\uC744)\uB97C \uBC1B\uC544\uB4E4\uC774\uC9C0.\""
+  cooldownTime: 0
+  bounceCounts: 010000000200000003000000

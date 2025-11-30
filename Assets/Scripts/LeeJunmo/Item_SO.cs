@@ -98,9 +98,10 @@ public class Item_SO : ScriptableObject
     public virtual void OnTakeDamage(GameObject user, GameObject attacker) { }
 
     /// <summary>
-    /// 3. 소유자가 피해를 '입혔을' 때 호출됩니다. (예: 흡혈 무기)
+    /// 3. 소유자가 피해를 '입혔을' 때 호출됩니다.
+    /// ✨ [수정] ItemInstance 파라미터 추가! (이제 레벨 정보를 알 수 있음)
     /// </summary>
-    public virtual void OnDealDamage(GameObject user, GameObject target) { }
+    public virtual void OnDealDamage(GameObject user, GameObject target, GameObject source, ItemInstance instance) { }
 
     /// <summary>
     /// 4. 소유자가 적을 처치했을 때 호출됩니다. (예: 영혼 흡수)

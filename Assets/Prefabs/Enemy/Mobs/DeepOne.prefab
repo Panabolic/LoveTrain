@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mob
   hp: 80
-  damage: 30
+  damage: 200
   exp: 40
   moveSpeed: 2
   hpIncreasePercent: 10

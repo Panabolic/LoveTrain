@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class LaserBeamSprite : MonoBehaviour
+public class LaserBeamSprite : MonoBehaviour, IRicochetSource
 {
     private float damageInterval = 0.1f; // 틱 주기 (Gun에서 받아옴)
 
@@ -10,8 +10,29 @@ public class LaserBeamSprite : MonoBehaviour
     private bool isHitting = false;
     private bool isStopping = false;
 
+    [Header("도탄 설정")]
+    [SerializeField] private GameObject ricochetPrefab; // 레이저가 도탄되면 나갈 총알
+    private int currentBounceDepth = 0;
+
+    // 레이저 도탄 쿨타임 (타겟별로 관리하면 좋지만, 간단히 전역 쿨타임)
+    private float ricochetCooldown = 0.2f;
+    private float lastRicochetTime = 0f;
+    [SerializeField]
+    private float ricochetBulletSpeed = 60f;
+
     private Animator animator;
     private List<Enemy> enemiesInRange = new List<Enemy>();
+
+    public GameObject GetRicochetPrefab() => ricochetPrefab;
+    public int GetBounceDepth() => currentBounceDepth;
+    public void SetBounceDepth(int depth) => currentBounceDepth = depth;
+
+    // ✨ [추가] 인터페이스 구현
+    public float GetDamage() => damage; // 현재 데미지 반환
+
+    // 만약 Inspector에 설정된 기본값을 쓰고 싶다면 별도 변수가 필요하겠지만,
+    // 보통은 현재 날아가는 속도를 유지하는 것이 자연스럽습니다.
+    public float GetSpeed() => ricochetBulletSpeed;
 
     private void Awake()
     {
@@ -79,6 +100,17 @@ public class LaserBeamSprite : MonoBehaviour
             if (enemy != null && enemy.gameObject.activeSelf)
             {
                 enemy.TakeDamage(damage);
+                // ✨ [핵심] 타격 보고 (쿨타임 체크)
+                if (Time.time >= lastRicochetTime + ricochetCooldown)
+                {
+                    // Player Inventory 찾기 (위 Projectile과 동일)
+                    GameObject player = GameObject.FindGameObjectWithTag("Player");
+                    if (player != null)
+                    {
+                        player.GetComponent<Inventory>()?.ProcessHitEvent(enemy.gameObject, this.gameObject);
+                        lastRicochetTime = Time.time;
+                    }
+                }
             }
             else
             {

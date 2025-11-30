@@ -24,8 +24,8 @@ MonoBehaviour:
   itemSimpleScript: "\uC8FC\uAE30\uC801\uC73C\uB85C \uC804\uBC29\uC5D0 \uCD1D\uC54C
     \uBC1C\uC0AC."
   cooldownTime: 0
-  damageByLevel: c8000000c8000000f4010000
-  bulletNumByLevel: 010000000200000003000000
+  damageByLevel: 6400000064000000c8000000
+  bulletNumByLevel: 010000000100000003000000
   cooldownByLevel:
   - 10
   - 7

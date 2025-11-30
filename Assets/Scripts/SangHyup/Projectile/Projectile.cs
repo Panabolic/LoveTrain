@@ -1,21 +1,38 @@
 ﻿using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, IRicochetSource
 {
     protected float speed;
     protected float damage;
     protected Vector3 direction;
-
-    // 풀링 반납용 원본 프리팹 참조
     protected GameObject originalPrefab;
-
-    // 공격 판정 활성화 여부
     protected bool isCanHit = true;
 
-    /// <summary>
-    /// 투사체 초기화 함수 (자식에서 오버라이드 가능)
-    /// </summary>
-    public virtual void Init(float _damage, float _speed, Vector3 _dir, GameObject _prefab, bool startActive = true)
+    [Header("도탄 설정")]
+    [Tooltip("이 투사체가 도탄될 때 생성될 프리팹")]
+    [SerializeField] private GameObject ricochetPrefab;
+
+    private int currentBounceDepth = 0;
+    private Collider2D myCollider; // 내 콜라이더 캐싱
+
+    public GameObject GetRicochetPrefab() => ricochetPrefab;
+    public int GetBounceDepth() => currentBounceDepth;
+    public void SetBounceDepth(int depth) => currentBounceDepth = depth;
+    // ✨ [추가] 인터페이스 구현
+    public float GetDamage() => damage; // 현재 데미지 반환
+
+    // 만약 Inspector에 설정된 기본값을 쓰고 싶다면 별도 변수가 필요하겠지만,
+    // 보통은 현재 날아가는 속도를 유지하는 것이 자연스럽습니다.
+    public float GetSpeed() => speed;
+
+
+    private void Awake()
+    {
+        myCollider = GetComponent<Collider2D>();
+    }
+
+    // ✨ [수정] GameObject ignore 대신 Collider2D ignoreCollider를 받음
+    public virtual void Init(float _damage, float _speed, Vector3 _dir, GameObject _prefab, bool startActive = true, int bounceDepth = 0, Collider2D ignoreCollider = null)
     {
         this.damage = _damage;
         this.speed = _speed;
@@ -23,14 +40,21 @@ public class Projectile : MonoBehaviour
         this.originalPrefab = _prefab;
         this.isCanHit = startActive;
 
-        // 방향에 맞춰 회전 (기본 로직)
         if (_dir != Vector3.zero)
         {
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
-        // 5초 뒤 자동 반납 (안전장치)
+        this.currentBounceDepth = bounceDepth;
+        if (ricochetPrefab == null) ricochetPrefab = _prefab;
+
+        // ✨ [핵심] 물리 엔진 차원에서 충돌 무시 설정 (위치 겹쳐도 충돌 안 함)
+        if (ignoreCollider != null && myCollider != null)
+        {
+            Physics2D.IgnoreCollision(myCollider, ignoreCollider, true);
+        }
+
         CancelInvoke(nameof(Despawn));
         Invoke(nameof(Despawn), 5.0f);
     }
@@ -53,18 +77,27 @@ public class Projectile : MonoBehaviour
     {
         if (!isCanHit) return;
 
+        // IgnoreCollision을 썼으므로 여기서 별도의 ignore 체크 불필요
+
         Enemy enemy = collision.GetComponent<Enemy>();
 
         if (enemy != null)
         {
-            OnHitEnemy(enemy); // 적중 시 로직 분리
+            OnHitEnemy(enemy);
+
+            if (GameManager.Instance != null)
+            {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                if (player != null)
+                {
+                    player.GetComponent<Inventory>()?.ProcessHitEvent(collision.gameObject, this.gameObject);
+                }
+            }
+
             Despawn();
         }
     }
 
-    /// <summary>
-    /// 적에게 적중했을 때 호출되는 함수 (자식에서 오버라이드하여 특수 효과 구현 가능)
-    /// </summary>
     protected virtual void OnHitEnemy(Enemy enemy)
     {
         enemy.TakeDamage(damage);
@@ -73,7 +106,6 @@ public class Projectile : MonoBehaviour
     public void Despawn()
     {
         CancelInvoke(nameof(Despawn));
-
         if (BulletPoolManager.Instance != null && originalPrefab != null)
         {
             BulletPoolManager.Instance.ReturnToPool(gameObject, originalPrefab);

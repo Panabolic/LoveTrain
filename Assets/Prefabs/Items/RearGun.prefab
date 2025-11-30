@@ -159,3 +159,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RearGun
   firePoint: {fileID: 8004753043073507730}
+  animator: {fileID: 7264501651837412258}

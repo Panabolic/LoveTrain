@@ -18,7 +18,7 @@ MonoBehaviour:
   iconSprite: {fileID: 21300000, guid: b8752b6a88800bd4c86645b455addaa9, type: 3}
   spritesByLevel: []
   controllersByLevel: []
-  MaxUpgrade: 3
+  MaxUpgrade: 5
   itemScript: "\uCD1D\uAE30 \uACF5\uACA9\uB825 {Damage}%\uB9CC\uD07C \uC99D\uAC00."
   itemSimpleScript: "\uCD1D\uAE30 \uACF5\uACA9\uB825 \uC99D\uAC00."
   cooldownTime: 0
@@ -26,3 +26,5 @@ MonoBehaviour:
   - 10
   - 20
   - 30
+  - 40
+  - 50

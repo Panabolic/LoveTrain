@@ -1,0 +1,355 @@
+fileFormatVersion: 2
+guid: 354b20656fad2ed4a9b2cd5f4c289426
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5185627205037000292
+    second: THUNDER 2-Sheet_0
+  - first:
+      213: -7501993883389567836
+    second: THUNDER 2-Sheet_1
+  - first:
+      213: 2960564231377655433
+    second: THUNDER 2-Sheet_2
+  - first:
+      213: 1812584048121691362
+    second: THUNDER 2-Sheet_3
+  - first:
+      213: -1674653723806802681
+    second: THUNDER 2-Sheet_4
+  - first:
+      213: -4059047718144190659
+    second: THUNDER 2-Sheet_5
+  - first:
+      213: 4768165850096879164
+    second: THUNDER 2-Sheet_6
+  - first:
+      213: -1163397151331679032
+    second: THUNDER 2-Sheet_7
+  - first:
+      213: 3382608771348260452
+    second: THUNDER 2-Sheet_8
+  - first:
+      213: 6770979173939868268
+    second: THUNDER 2-Sheet_9
+  - first:
+      213: -3922919474092273476
+    second: THUNDER 2-Sheet_10
+  - first:
+      213: -3144828929090735034
+    second: THUNDER 2-Sheet_11
+  - first:
+      213: -7186471650363723442
+    second: THUNDER 2-Sheet_12
+  - first:
+      213: -8985623583235760335
+    second: THUNDER 2-Sheet_13
+  - first:
+      213: 6658930906639739085
+    second: THUNDER 2-Sheet_14
+  - first:
+      213: -1805939386026479688
+    second: THUNDER 2-Sheet_15
+  - first:
+      213: 7366272326326955983
+    second: THUNDER 2-Sheet_16
+  - first:
+      213: -8227776053033084661
+    second: THUNDER 2-Sheet_17
+  - first:
+      213: 3911808741660438057
+    second: THUNDER 2-Sheet_18
+  - first:
+      213: 4735829086701513777
+    second: THUNDER 2-Sheet_19
+  - first:
+      213: -3632562377268523513
+    second: THUNDER 2-Sheet_20
+  - first:
+      213: 2682972090447963727
+    second: THUNDER 2-Sheet_21
+  - first:
+      213: -2755015001180226771
+    second: THUNDER 2-Sheet_22
+  - first:
+      213: -3891426446772889478
+    second: THUNDER 2-Sheet_23
+  - first:
+      213: -3873838115555418998
+    second: THUNDER 2-Sheet_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: THUNDER 2-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c99fa2a1883f808b0800000000000000
+      internalID: -5185627205037000292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THUNDER 2-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ac59617f4093e790800000000000000
+      internalID: -7501993883389567836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THUNDER 2-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9861ef19b79061920800000000000000
+      internalID: 2960564231377655433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THUNDER 2-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ec35d99697972910800000000000000
+      internalID: 1812584048121691362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THUNDER 2-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 128
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70dd5b69f4f62c8e0800000000000000
+      internalID: -1674653723806802681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THUNDER 2-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 128
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d37d7a92b9d5ba7c0800000000000000
+      internalID: -4059047718144190659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THUNDER 2-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 128
+        height: 512
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c364c2de39deb2240800000000000000
+      internalID: 4768165850096879164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 3c3e89db2a4a2d444b0f90163c328959
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":7.0,"y":1.0},"gridSpriteSize":{"x":128.0,"y":512.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      THUNDER 2-Sheet_0: -5185627205037000292
+      THUNDER 2-Sheet_1: -7501993883389567836
+      THUNDER 2-Sheet_2: 2960564231377655433
+      THUNDER 2-Sheet_3: 1812584048121691362
+      THUNDER 2-Sheet_4: -1674653723806802681
+      THUNDER 2-Sheet_5: -4059047718144190659
+      THUNDER 2-Sheet_6: 4768165850096879164
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -7862,7 +7862,7 @@ GameObject:
   - component: {fileID: 839351751}
   - component: {fileID: 839351750}
   m_Layer: 0
-  m_Name: game over back-Sheet_0
+  m_Name: GameOverHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7934,9 +7934,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1630466297
-  m_SortingLayer: 5
-  m_SortingOrder: 0
+  m_SortingLayerID: 601808833
+  m_SortingLayer: 1
+  m_SortingOrder: 6
   m_Sprite: {fileID: 642459677052402017, guid: 7420f66fd596193479fe1cdf54ee61c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -16108,7 +16108,7 @@ MonoBehaviour:
   defaultFirePoint: {fileID: 1885257666}
   CurrentStats:
     damage: 30
-    speed: 30
+    speed: 60
     fireRate: 0.2
     projectilePrefab: {fileID: 1068206360182666013, guid: faca61811968a1f4793f239fb8955d60, type: 3}
     laserPrefab: {fileID: 0}
@@ -17450,7 +17450,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1630466297
   m_SortingLayer: 5
-  m_SortingOrder: -1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 457173122234023767, guid: b97c509e939fff042a7daa496f05a7f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

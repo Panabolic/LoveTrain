@@ -18,11 +18,6 @@ public class LonginusLauncher_SO : Item_SO
     [Tooltip("LonginusPathData가 붙은 경로 프리팹")]
     public GameObject PathDataPrefab;
 
-    protected void Awake()
-    {
-        attachmentSocketName = "RoofSocket";
-    }
-
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
         GameObject obj = InstantiateVisual(user);
