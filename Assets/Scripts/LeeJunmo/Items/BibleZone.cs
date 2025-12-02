@@ -3,7 +3,7 @@
 public class BloodyZone : MonoBehaviour
 {
     [Header("설정")]
-    [Tooltip("장판 지속 시간 (버프가 실제로 유지되는 시간)")]
+    [Tooltip("장판 지속 시간 (버프 실제 유지 시간)")]
     [SerializeField] private float duration = 5.0f;
 
     [Tooltip("공격 속도 증가량 (1.0 = 100%)")]
@@ -13,77 +13,87 @@ public class BloodyZone : MonoBehaviour
     [SerializeField] private Animator animator;
 
     // --- 내부 변수 ---
-    private Gun buffedGun = null;        // 버프 받은 총
-    private bool isBuffActive = false;   // 현재 버프가 활성화 상태인가?
-
-    // 쿨타임 제어용 변수
-    private ItemInstance parentItem;     // 나를 소환한 아이템 인스턴스
-    private float targetCooldown;        // 파괴 시 적용할 쿨타임
+    private ItemInstance parentItem; // 나를 만든 아이템
+    private float cooldownToApply;   // 적용할 쿨타임
+    private Gun buffedGun = null;
+    private bool isBuffActive = false;
 
     private void Awake()
     {
         if (animator == null) animator = GetComponent<Animator>();
     }
 
-    // ✨ 초기화: SO에서 생성 직후 호출
+    // ✨ SO에서 생성 직후 호출해주는 초기화 함수
     public void Initialize(ItemInstance item, float cooldown)
     {
         this.parentItem = item;
-        this.targetCooldown = cooldown;
+        this.cooldownToApply = cooldown;
+    }
+
+    private void Start()
+    {
+        // 생성되자마자 등장 애니메이션
+        animator.SetTrigger("Activate");
     }
 
     // ----------------------------------------------------------------
-    // ✨ 애니메이션 이벤트 (Animator Window에서 설정 필수)
+    // ✨ 애니메이션 이벤트 (Animation Window에서 추가 필요)
     // ----------------------------------------------------------------
 
-    // 1. OnBuffStart: 장판이 완전히 깔렸을 때 호출
+    // 1. 장판이 깔리는 타이밍에 호출
     public void OnBuffStart()
     {
         if (isBuffActive) return;
 
         isBuffActive = true;
-        Debug.Log("[BloodyZone] 애니메이션 이벤트: 버프 활성화 시작");
+        // Debug.Log("[BloodyZone] 버프 활성화");
 
-        // 설정된 지속 시간 후에 버프 해제 및 종료 예약
+        // 설정된 지속 시간 후에 종료 함수 예약
         Invoke(nameof(OnBuffDurationEnd), duration);
     }
 
-    // 2. OnBuffDurationEnd: 지속 시간이 끝났을 때 (Invoke로 호출됨)
+    // 2. 지속 시간이 끝났을 때 (Invoke로 호출됨)
     private void OnBuffDurationEnd()
     {
-        // 퇴장 애니메이션 실행 (isOff 트리거 -> 사라지는 모션)
+        // 퇴장 애니메이션 트리거
         animator.SetBool("isOff", true);
 
-        // 퇴장 애니메이션 시간 고려하여 잠시 후 파괴 (예: 1초 뒤)
+        // 애니메이션이 끝날 즈음 파괴 (예: 1초 뒤)
         Destroy(gameObject, 1.0f);
     }
 
+    // (만약 애니메이션 끝나는 프레임에 이벤트를 심었다면 거기서 Destroy 호출해도 됨)
+    public void OnBuffEnd()
+    {
+        // 애니메이션 이벤트로 종료 처리할 경우 사용
+    }
+
     // ----------------------------------------------------------------
-    // ✨ 파괴 및 쿨타임 로직
+    // ✨ 파괴 및 쿨타임 시작 로직
     // ----------------------------------------------------------------
 
     private void OnDestroy()
     {
-        // 1. 버프가 남아있다면 깔끔하게 해제
+        // 버프 해제
         RemoveBuff();
 
-        // 2. ✨ 핵심: 장판이 사라질 때 아이템의 쿨타임을 시작시킴
+        // ✨ 핵심: 장판이 사라질 때 아이템의 쿨타임을 수동으로 시작시킴
         if (parentItem != null)
         {
-            parentItem.StartCooldownManual(targetCooldown);
-            Debug.Log($"[BloodyZone] 장판 파괴됨 -> 쿨타임 {targetCooldown}초 시작!");
+            parentItem.StartCooldownManual(cooldownToApply);
+            // Debug.Log($"[BloodyZone] 장판 파괴 -> 쿨타임 {cooldownToApply}초 시작");
         }
     }
 
     // ----------------------------------------------------------------
-    // 충돌 처리 (기존 유지)
+    // 충돌 처리
     // ----------------------------------------------------------------
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!isBuffActive) return; // 아직 깔리는 중이면 무시
+        if (!isBuffActive) return;
 
-        Train train = collision.GetComponentInParent<Train>();
+        Train train = collision.GetComponent<Train>();
         if (train != null)
         {
             Gun gun = train.GetComponentInChildren<Gun>();
@@ -100,10 +110,7 @@ public class BloodyZone : MonoBehaviour
         if (!isBuffActive) return;
 
         Train train = collision.GetComponentInParent<Train>();
-        if (train != null)
-        {
-            RemoveBuff();
-        }
+        if (train != null) RemoveBuff();
     }
 
     private void RemoveBuff()
@@ -112,7 +119,6 @@ public class BloodyZone : MonoBehaviour
         {
             buffedGun.AddFireRateMultiplier(-buffAmount);
             buffedGun = null;
-            // 주의: isBuffActive는 여기서 끄지 않음 (다른 기차가 들어올 수 있으므로)
         }
     }
 }

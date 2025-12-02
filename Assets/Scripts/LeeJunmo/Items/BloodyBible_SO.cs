@@ -5,7 +5,7 @@ using UnityEngine;
 public class BloodyBible_SO : Item_SO
 {
     [Header("피의 성서 데이터")]
-    [Tooltip("레벨별 쿨타임 (장판이 사라진 후부터 적용될 시간)")]
+    [Tooltip("장판이 사라진 후 적용될 쿨타임")]
     public float[] cooldownByLevel = { 15f, 12f, 10f };
 
     [Header("생성 설정")]
@@ -15,30 +15,14 @@ public class BloodyBible_SO : Item_SO
     [Header("프리팹")]
     public GameObject ZonePrefab;
 
-    // 아이템 사용 시 호출되는 메인 함수
-    public override void OnCooldownComplete(GameObject user, ItemInstance instance)
+    // ✨ 중요: 이 아이템은 수동으로 쿨타임을 관리한다고 선언
+    public override bool IsManualCooldown => true;
+
+    public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        if (ZonePrefab == null) return;
-
-        // 1. 랜덤 위치 계산 (절대 좌표 X)
-        float randomX = Random.Range(-spawnRangeX, spawnRangeX);
-        Vector3 spawnPos = new Vector3(randomX, -8.65f, 0f);
-
-        // 2. 장판 생성
-        GameObject zoneObj = Instantiate(ZonePrefab, spawnPos, Quaternion.identity);
-
-        // 3. 다음 쿨타임 시간 계산
-        float nextCooldown = GetCooldownForLevel(instance.currentUpgrade);
-
-        // 4. ✨ 장판에게 데이터 전달 (아이템 인스턴스 + 쿨타임 시간)
-        BloodyZone zoneScript = zoneObj.GetComponent<BloodyZone>();
-        if (zoneScript != null)
-        {
-            zoneScript.Initialize(instance, nextCooldown);
-        }
-
-        // ⚠️ 주의: 여기서 시스템이 자동으로 instance.currentCooldown을 설정하지 않도록 해야 합니다.
-        // (만약 부모 클래스 로직이 강제로 쿨타임을 돌린다면, 여기서 instance.currentCooldown = 0 등으로 막아야 함)
+        // 장착 시 따라다니는 비주얼(책)이 있다면 생성, 없으면 null
+        // return InstantiateVisual(user); 
+        return null;
     }
 
     public override float GetCooldownForLevel(int level)
@@ -47,7 +31,30 @@ public class BloodyBible_SO : Item_SO
         return cooldownByLevel[index];
     }
 
-    // 툴팁 등 표시용
+    public override void OnCooldownComplete(GameObject user, ItemInstance instance)
+    {
+        if (ZonePrefab == null) return;
+
+        // 1. 랜덤 위치 계산 (절대 좌표 X, 높이는 사용자 Y)
+        float randomX = Random.Range(-spawnRangeX, spawnRangeX);
+        Vector3 spawnPos = new Vector3(randomX, -8.65f, 0f);
+
+        // 2. 장판 생성
+        GameObject zoneObj = Instantiate(ZonePrefab, spawnPos, Quaternion.identity);
+
+        // 3. 실제 적용할 쿨타임 값 가져오기
+        float realCooldown = GetCooldownForLevel(instance.currentUpgrade);
+
+        // 4. ✨ 장판에게 "네가 사라지면 이 아이템 쿨타임을 시작해라"고 전달
+        BloodyZone zoneScript = zoneObj.GetComponent<BloodyZone>();
+        if (zoneScript != null)
+        {
+            zoneScript.Initialize(instance, realCooldown);
+        }
+
+        Debug.Log($"[{itemName}] 장판 생성됨. (쿨타임 대기 중)");
+    }
+
     protected override Dictionary<string, string> GetStatReplacements(int level)
     {
         int index = Mathf.Clamp(level - 1, 0, cooldownByLevel.Length - 1);
@@ -55,11 +62,5 @@ public class BloodyBible_SO : Item_SO
         {
             { "Cooldown", cooldownByLevel[index].ToString() }
         };
-    }
-
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        // 장착 시 비주얼이 필요하다면 사용 (필요 없으면 null 리턴)
-        return InstantiateVisual(user);
     }
 }

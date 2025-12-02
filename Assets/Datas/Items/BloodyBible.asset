@@ -24,7 +24,7 @@ MonoBehaviour:
   itemSimpleScript: "\uAC70\uC9D3\uB41C \uAD50\uB9AC"
   cooldownTime: 0
   cooldownByLevel:
-  - 10
+  - 40
   - 37
   - 34
   - 31
