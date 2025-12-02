@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     protected float deathToDeactive; // 사망에서 비활성화까지 걸리는 시간
 
     // Target Components
-    protected Rigidbody2D targetRigid;
+    protected Rigidbody2D       targetRigid;
     protected TrainLevelManager levelManager;
 
     protected virtual void Awake()
@@ -46,10 +46,10 @@ public class Enemy : MonoBehaviour
     protected virtual void OnEnable()
     {
         // init Default value
-        currentHP = hp;
-        isAlive = true;
-        sprite.enabled = true;
-        sprite.color = originalColor;
+        currentHP       = CalculateCalibratedHP();
+        isAlive         = true;
+        sprite.enabled  = true;
+        sprite.color    = originalColor;
 
         // Layer 변경
         gameObject.layer = LayerMask.NameToLayer("Enemy");
@@ -71,13 +71,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    protected virtual float CalculateCalibratedHP()
+    {
+        calibratedHP = hp;
+
+        return calibratedHP;
+    }
+
     public virtual void TakeDamage(float damageAmount)
     {
         if (!isAlive) return;
 
         currentHP -= damageAmount;
 
-        if (currentHP <= 0) StartCoroutine(Die());
+        if (currentHP <= 0)
+            StartCoroutine(Die());
     }
 
     protected virtual IEnumerator Die()

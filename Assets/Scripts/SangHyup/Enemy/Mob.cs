@@ -9,8 +9,8 @@ public class Mob : Enemy
     protected ParticleSystem    hitEffect;
 
     [Tooltip("Mob Specification")]
-    [SerializeField] protected float moveSpeed = 4.0f;
-    [SerializeField] protected int hpIncreasePercent = 10;
+    [SerializeField] protected float    moveSpeed   = 2.0f;
+    [SerializeField] protected bool     isEliteMob  = false;
 
     protected Vector2 moveDirection = Vector2.zero;
 
@@ -34,14 +34,6 @@ public class Mob : Enemy
 
         // 초기화
         deathToDeactive = 3.0f; // Die 애니메이션 추가 전까진 임시로
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-
-        calibratedHP = hp * (1 + ( (GameManager.Instance.gameTime / 60.0f) * (1.0f + hpIncreasePercent) / 100) ) * (1.0f + PoolManager.instance.eventDebuffPercent / 100);
-        currentHP = calibratedHP;
     }
 
     private void FixedUpdate()
@@ -112,6 +104,28 @@ public class Mob : Enemy
 
             StartCoroutine(Die());
         }
+    }
+
+    protected override float CalculateCalibratedHP()
+    {
+        // 체력 보정 공식
+        // (기본체력 x (1 + (게임시간(분) x 체력증가율%)) x 이벤트 디버프) x 엘리트 몹 보정
+
+        // 게임 시간(분) 및 체력 증가율 계산
+        float gameTimeMin   = GameManager.Instance.gameTime / 60.0f;
+        float hpIncrease    = 1.0f + (PoolManager.instance.hpIncrease / 100.0f);
+
+        // 체력 보정값 및 이벤트 디버프 계산
+        float calibratedValue   = 1.0f + (gameTimeMin * hpIncrease);
+        float eventDebuff       = 1.0f + (PoolManager.instance.eventDebuff / 100.0f);
+
+        // 엘리트 몹 보정
+        float eliteMultiplier = isEliteMob ? 1.5f : 1.0f;
+
+        // 최종 보정 체력 계산
+        calibratedHP = hp * calibratedValue * eventDebuff * eliteMultiplier;
+
+        return calibratedHP;
     }
 
     public override void TakeDamage(float damageAmount)

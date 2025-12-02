@@ -1,6 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public enum EnemyName
@@ -25,7 +23,11 @@ public class PoolManager : MonoBehaviour
 
     public List<Enemy> activeEnemies = new List<Enemy>();
 
-    public int eventDebuffPercent = 0;
+    [Header("Enemy HP Calibration Value")]
+    [Tooltip("백분율로 작성해주세요. (1.2배라면 20 입력)")]
+    public int hpIncrease = 10;
+    [Tooltip("백분율로 작성해주세요. (1.2배라면 20 입력)")]
+    public int eventDebuff = 0;
 
     private void Awake()
     {

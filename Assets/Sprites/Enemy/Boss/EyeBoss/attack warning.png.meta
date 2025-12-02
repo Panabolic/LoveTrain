@@ -1,31 +1,19 @@
 fileFormatVersion: 2
-guid: d83d44fd33a0cbe4a845297e1f856ec1
+guid: c50062f256e220a46b0329ca19d71630
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8200246906327157222
-    second: revolver_0
+      213: 7126320529457648472
+    second: attack warning_0
   - first:
-      213: -7678855795506106104
-    second: revolver_1
+      213: -1966780319777835192
+    second: attack warning_1
   - first:
-      213: 5208397401540870810
-    second: revolver_2
+      213: -8482180339811059214
+    second: attack warning_2
   - first:
-      213: -7223635787595274093
-    second: revolver_3
-  - first:
-      213: -6503262208299778937
-    second: revolver_4
-  - first:
-      213: 6988889500551189402
-    second: revolver_5
-  - first:
-      213: -2449976758162541232
-    second: revolver_6
-  - first:
-      213: -1620222468401392774
-    second: revolver_7
+      213: 2510739404484110851
+    second: attack warning_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 10
+  spritePixelsToUnits: 37
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -93,7 +81,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -122,7 +110,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -135,7 +123,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -148,7 +136,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -160,89 +148,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: revolver_0
+      name: attack warning_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 128
-        height: 64
-      alignment: 9
-      pivot: {x: 0.55, y: 0.27}
+        x: 14
+        y: 406
+        width: 37
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6e940225d112dc170800000000000000
-      internalID: 8200246906327157222
+      spriteID: 85395e1c3c6c5e260800000000000000
+      internalID: 7126320529457648472
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: revolver_1
+      name: attack warning_1
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 128
-        height: 64
-      alignment: 9
-      pivot: {x: 0.55, y: 0.27}
+        x: 78
+        y: 406
+        width: 37
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 801b86b96593f6590800000000000000
-      internalID: -7678855795506106104
+      spriteID: 847b96838b794b4e0800000000000000
+      internalID: -1966780319777835192
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: revolver_2
+      name: attack warning_2
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 128
-        height: 64
-      alignment: 9
-      pivot: {x: 0.55, y: 0.27}
+        x: 142
+        y: 406
+        width: 37
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a9249e767d1f74840800000000000000
-      internalID: 5208397401540870810
+      spriteID: 2f972c4ebed394a80800000000000000
+      internalID: -8482180339811059214
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: revolver_3
+      name: attack warning_3
       rect:
         serializedVersion: 2
-        x: 384
-        y: 0
-        width: 128
-        height: 64
-      alignment: 9
-      pivot: {x: 0.55, y: 0.27}
+        x: 206
+        y: 406
+        width: 37
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 398a59d068d70cb90800000000000000
-      internalID: -7223635787595274093
+      spriteID: 30ae9d79f20f7d220800000000000000
+      internalID: 2510739404484110851
       vertices: []
       indices: 
       edges: []
@@ -251,7 +239,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 0e70e9bc97b9e5e4183a1cad9471d42a
+    spriteID: 7ddad0852b93425488a8eab5818a88c6
     internalID: 0
     vertices: []
     indices: 
@@ -261,12 +249,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":1.0},"gridSpriteSize":{"x":128.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":37.0,"y":106.0},"gridSpriteOffset":{"x":14.0,"y":0.0},"gridSpritePadding":{"x":27.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      revolver_0: 8200246906327157222
-      revolver_1: -7678855795506106104
-      revolver_2: 5208397401540870810
-      revolver_3: -7223635787595274093
+      attack warning_0: 7126320529457648472
+      attack warning_1: -1966780319777835192
+      attack warning_2: -8482180339811059214
+      attack warning_3: 2510739404484110851
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
