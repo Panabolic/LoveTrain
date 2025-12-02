@@ -7,6 +7,7 @@ public class TrainBoss : Boss
     // Components
     protected Rigidbody2D rigid2D;
 
+    [Header("Train Boss Specification")]
     [Tooltip("이동 속도 (km/h)")]
     [SerializeField] private float moveSpeed = 20.0f;
     [Tooltip("Phase 1 피격 넉백 퍼센트 (%)")]

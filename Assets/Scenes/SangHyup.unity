@@ -4215,8 +4215,9 @@ MonoBehaviour:
   panelRectTransform: {fileID: 34130429}
   lineImage: {fileID: 245831758}
   panelImage: {fileID: 34130430}
-  minAngle: 135
-  maxAngle: 0
+  angleAtZeroSpeed: 180
+  angleAtThreshold: 135
+  angleAtMaxSpeed: 0
   needleSmoothSpeed: 5
   effectDuration: 0.5
   shakeStrength: 15
@@ -8727,6 +8728,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
   levelAtlas: {fileID: 11400000, guid: b16c247355a6bd04c9d130780f6e593e, type: 2}
+--- !u!1001 &904072044
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 914558337710541312, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 914558337710541312, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 914558337710541312, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 914558337710541312, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 914558337710541312, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 914558337710541312, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 914558337710541312, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 914558337710541312, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 914558337710541312, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 914558337710541312, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8958191303323060444, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
+      propertyPath: m_Name
+      value: EyeBoss
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
 --- !u!1 &904847691
 GameObject:
   m_ObjectHideFlags: 0
@@ -9571,7 +9629,8 @@ MonoBehaviour:
   bosses:
   - {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
   activeEnemies: []
-  eventDebuffPercent: 0
+  hpIncrease: 10
+  eventDebuff: 0
 --- !u!1 &1002504241
 GameObject:
   m_ObjectHideFlags: 0
@@ -13375,6 +13434,11 @@ MonoBehaviour:
   deathMoveDistance: 27.5
   deathMoveSpeed: 1
   destroyDelay: 4
+  handObject: {fileID: 0}
+  handTargetPos: {fileID: 0}
+  handMoveDuration: 2
+  overlayBorderAnim: {fileID: 0}
+  overlayEffectAnim: {fileID: 0}
   tempDieUI: {fileID: 884425090}
 --- !u!50 &1426277363
 Rigidbody2D:
@@ -20023,3 +20087,4 @@ SceneRoots:
   - {fileID: 411490951}
   - {fileID: 541883011}
   - {fileID: 2107259417}
+  - {fileID: 904072044}

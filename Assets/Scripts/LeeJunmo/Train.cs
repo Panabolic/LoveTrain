@@ -3,11 +3,6 @@ using System.Collections;
 using UnityEngine;
 using System;
 
-public enum TrainCar
-{
-    front, middle, rear
-}
-
 public class Train : MonoBehaviour
 {
     // Components

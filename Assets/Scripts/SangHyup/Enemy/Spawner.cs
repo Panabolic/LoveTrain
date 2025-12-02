@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System; // Action �̺�Ʈ�� ���� �ʿ�
+using System;
 
 
 public class Spawner : MonoBehaviour
@@ -23,19 +23,12 @@ public class Spawner : MonoBehaviour
     private float eliteMobTimer;
     private float bossTimer;
 
-    //private bool isSpawning = false; // For GameManager
 
     private void Start()
     {
         mobTimer        = 0f;
         eliteMobTimer   = 19.99f;
         bossTimer       = 0f;
-
-        /*if (GameManager.Instance != null)
-        {
-            GameManager.Instance.OnGameStateChanged += HandleGameStateChange;
-            HandleGameStateChange(GameManager.Instance.CurrentState);
-        }*/
     }
 
     private void Update()
@@ -67,14 +60,6 @@ public class Spawner : MonoBehaviour
             bossTimer = 0f;
         }
     }
-
-    /*/// <summary>
-    /// GameManager�� ���� ���濡 ���� ���� ����/������ �����մϴ�.
-    /// </summary>
-    private void HandleGameStateChange(GameState newState)
-    {
-        isSpawning = (newState == GameState.Playing);
-    }*/
 
     private void SpawnMob()
     {
