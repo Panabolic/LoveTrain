@@ -39,7 +39,7 @@ public class LightningBolt : MonoBehaviour
 
         // 1. 랜덤 스케일 적용
         float randomScale = Random.Range(scaleRange.x, scaleRange.y);
-        transform.localScale = Vector3.one * randomScale;
+        transform.localScale = new Vector3(randomScale, 1f, 1f);
 
         // 2. 랜덤 번개 타입 선택 및 애니메이션 실행
         if (lightningTypes != null && lightningTypes.Length > 0)

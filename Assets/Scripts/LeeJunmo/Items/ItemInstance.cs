@@ -6,6 +6,7 @@ public class ItemInstance
 {
     public Item_SO itemData;
     public float currentCooldown;
+    public float maxCooldown;
     private GameObject instantiatedObject = null; // 실체화된 오브젝트 참조
 
     // --- 업그레이드를 위한 새 변수 ---
@@ -53,6 +54,13 @@ public class ItemInstance
         itemData.UpgradeLevel(this);
     }
 
+    // ✨ 외부(BloodyZone)에서 호출하여 쿨타임을 시작시키는 메서드
+    public void StartCooldownManual(float cooldownTime)
+    {
+        this.maxCooldown = cooldownTime;
+        this.currentCooldown = cooldownTime;
+        Debug.Log($"[ItemInstance] 쿨타임 카운트 시작: {cooldownTime}초");
+    }
 
     public void instantiatedItemUpgrade()
     {

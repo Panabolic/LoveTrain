@@ -9,6 +9,7 @@ public class LaserSpriteStrategy : IWeaponStrategy
 
     // --- 레이저 전용 스탯 ---
     private float maxDuration;
+    private float laserScale;
     private float cooldownTime;
 
     // --- 내부 타이머 ---
@@ -38,16 +39,18 @@ public class LaserSpriteStrategy : IWeaponStrategy
             laserInstance = Object.Instantiate(laserPrefab, gun.FirePoint);
             laserInstance.transform.localPosition = Vector3.zero;
             laserInstance.transform.localRotation = Quaternion.identity;
+            laserInstance.transform.localScale = new Vector2(1f, laserScale);
 
             laserScript = laserInstance.GetComponent<LaserBeamSprite>();
             laserInstance.SetActive(false);
         }
     }
 
-    public void SetLaserStats(float duration, float cooldown)
+    public void SetLaserStats(float duration, float cooldown, float scale)
     {
         this.maxDuration = duration;
         this.cooldownTime = cooldown;
+        this.laserScale = scale;
     }
 
     public void Process(bool isTriggerHeld)
