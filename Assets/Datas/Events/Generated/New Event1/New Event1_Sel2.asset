@@ -17,7 +17,7 @@ MonoBehaviour:
   - description: "\uADF8\uB8F9 \uC124\uBA85"
     outcomes:
     - weight: 100
-      effectLogic: {fileID: 0}
+      effectLogic: {fileID: 11400000, guid: cdfcf6e49ee88264695b2d5f2ab3c93f, type: 2}
       parameters:
         intValue: 0
         intValue2: 0
