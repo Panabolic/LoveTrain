@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d6d854fe49cd274c929270c980aabf4, type: 3}
+  m_Name: "\uB7EC\uBE0C \uD2B8\uB808\uC778_Sel1"
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventSO
+  description: "[Selection 1] \uB728\uAC70\uC6B4 \uC99D\uAE30\uB97C \uBFDC\uC5B4
+    \uC720\uD639\uC5D0 \uC751\uD574\uC900\uB2E4"
+  rollGroups:
+  - description: "\uADF8\uB8F9 \uC124\uBA85"
+    outcomes:
+    - weight: 100
+      effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
+      parameters:
+        intValue: 0
+        intValue2: 0
+        floatValue: -70
+        floatValue2: 0
+        soReference: {fileID: 0}
+        prefabReference: {fileID: 0}
+        boolValue: 0
+      outputSettings:
+        includeDefaultText: 1
+        specialText: 
+        order: 0
