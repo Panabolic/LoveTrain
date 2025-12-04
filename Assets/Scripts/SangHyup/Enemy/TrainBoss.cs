@@ -127,7 +127,7 @@ public class TrainBoss : Boss
         isStunned = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
         {
@@ -145,6 +145,25 @@ public class TrainBoss : Boss
             /* �÷��̾� ���̱� */
         }
     }
+/*
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
+        {
+            Train train = collision.transform.GetComponentInParent<Train>();
+
+            if (train != null)
+            {
+                train.TakeDamage(damage); // Train ��ũ��Ʈ�� �°� ���� �ʿ�
+                if (CameraShakeManager.Instance != null)
+                {
+                    CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
+                }
+            }
+
+            *//* �÷��̾� ���̱� *//*
+        }
+    }*/
 
     protected override IEnumerator Die()
     {
