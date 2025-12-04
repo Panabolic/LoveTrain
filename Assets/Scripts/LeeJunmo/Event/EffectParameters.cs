@@ -20,4 +20,7 @@ public class EffectParameters
 
     [Tooltip("MonsterPrefab??")]
     public GameObject prefabReference;
+
+    [Tooltip("FlyMob or GroundMob")]
+    public bool boolValue;
 }
