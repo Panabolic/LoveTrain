@@ -145,8 +145,8 @@ public class EventMakerWindow : EditorWindow
         if (GUILayout.Button("삭제", GUILayout.Width(50))) { selections.RemoveAt(index); return; }
         EditorGUILayout.EndHorizontal();
 
-        selection.selectionText = EditorGUILayout.TextField("버튼 텍스트", selection.selectionText);
-        selection.selectionUnderText = EditorGUILayout.TextField("하단 설명", selection.selectionUnderText);
+        selection.selectionText = EditorGUILayout.TextField("선택지 제목", selection.selectionText);
+        selection.selectionUnderText = EditorGUILayout.TextField("선택지 내용", selection.selectionUnderText);
         EditorGUILayout.Space();
 
         for (int g = 0; g < selection.rollGroups.Count; g++)
