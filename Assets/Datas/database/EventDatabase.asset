@@ -13,10 +13,4 @@ MonoBehaviour:
   m_Name: EventDatabase
   m_EditorClassIdentifier: Assembly-CSharp::EventDatabase
   eventList:
-  - {fileID: 11400000, guid: 6b23a763b6ab98c49b771ab5f53fc6bb, type: 2}
-  - {fileID: 11400000, guid: 1194f33915b52a04e976c996c1dd73aa, type: 2}
-  - {fileID: 11400000, guid: 33889fe8165c8f148a50e292adb1dc29, type: 2}
-  - {fileID: 11400000, guid: aaef39877020adf4c933cc02c9c6123d, type: 2}
-  - {fileID: 11400000, guid: 6654fdaa239462043ace448633990758, type: 2}
-  - {fileID: 11400000, guid: ab09157f6ceca7949aee56edeab5b6cd, type: 2}
-  - {fileID: 11400000, guid: 9db4bd0c3dc1b1848bb2e09e0e530579, type: 2}
+  - {fileID: 11400000, guid: bb66a5d317991ba4f8653f4124350d89, type: 2}

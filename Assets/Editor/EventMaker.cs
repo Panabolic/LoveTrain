@@ -29,6 +29,9 @@ public enum EditorEffectType
     [InspectorName("속도 변경")]
     ModifySpeed,
 
+    [InspectorName("적 체력 강화 (영구)")]
+    IncreaseEnemyHealthBuff, // ✨ 추가됨
+
     [InspectorName("몬스터 무리 소환 (1회)")]
     SpawnMobBatch,
 
@@ -50,10 +53,10 @@ public class TempOutcomeData
     public int param_Int2;
     public float param_Float1;
     public float param_Float2;
-    public bool param_Bool; // 공중 여부
+    public bool param_Bool;
 
     public Item_SO param_Item;
-    public GameObject param_Prefab; // 프리팹
+    public GameObject param_Prefab;
 
     [TextArea] public string resultDescription = "결과 텍스트...";
     public bool includeDefaultText = true;
@@ -94,7 +97,7 @@ public class EventMakerWindow : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("🚂 이벤트 생성기 (프리팹 지원)", EditorStyles.boldLabel);
+        GUILayout.Label("🚂 이벤트 생성기 (통합 버전)", EditorStyles.boldLabel);
         EditorGUILayout.Space();
 
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
@@ -212,6 +215,11 @@ public class EventMakerWindow : EditorWindow
                 outcome.param_Float1 = EditorGUILayout.FloatField("속도 변화량", outcome.param_Float1);
                 break;
 
+            // ✨ [추가됨] 체력 강화
+            case EditorEffectType.IncreaseEnemyHealthBuff:
+                outcome.param_Int1 = EditorGUILayout.IntField("체력 증가량(%)", outcome.param_Int1);
+                break;
+
             // [배치 스폰]
             case EditorEffectType.SpawnMobBatch:
                 EditorGUILayout.LabelField("설정 (프리팹 사용):", EditorStyles.boldLabel);
@@ -284,7 +292,7 @@ public class EventMakerWindow : EditorWindow
                     outcome.parameters.floatValue2 = outData.param_Float2;
                     outcome.parameters.boolValue = outData.param_Bool;
                     outcome.parameters.soReference = outData.param_Item;
-                    outcome.parameters.prefabReference = outData.param_Prefab; // 프리팹 매핑
+                    outcome.parameters.prefabReference = outData.param_Prefab;
 
                     outcome.outputSettings = new EventResultOutput();
                     outcome.outputSettings.specialText = outData.resultDescription;
@@ -310,8 +318,10 @@ public class EventMakerWindow : EditorWindow
 
         string mainEventPath = $"{folderPath}/{eventTitle}.asset";
         AssetDatabase.CreateAsset(mainEvent, mainEventPath);
+
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+
         Selection.activeObject = mainEvent;
         Debug.Log($"🎉 이벤트 생성 성공: {mainEventPath}");
     }
@@ -327,12 +337,20 @@ public class EventMakerWindow : EditorWindow
             case EditorEffectType.UpgradeRandomItemToMax: targetFileName = "Effect_UpgradeRandomItemToMax"; break;
             case EditorEffectType.UpgradeRandomItemNTimes: targetFileName = "Effect_UpgradeRandomItemNTimes"; break;
             case EditorEffectType.ModifySpeed: targetFileName = "Effect_ModifySpeed"; break;
+            // ✨ 파일명 매핑 추가
+            case EditorEffectType.IncreaseEnemyHealthBuff: targetFileName = "Effect_IncreaseEnemyHealthBuff"; break;
             case EditorEffectType.SpawnMobBatch: targetFileName = "Effect_SpawnMobBatch"; break;
             case EditorEffectType.SpawnMobPeriodically: targetFileName = "Effect_SpawnMobPeriodically"; break;
         }
+
         if (string.IsNullOrEmpty(targetFileName)) return null;
+
         string[] guids = AssetDatabase.FindAssets($"{targetFileName} t:GameEffectSO");
-        if (guids.Length > 0) return AssetDatabase.LoadAssetAtPath<GameEffectSO>(AssetDatabase.GUIDToAssetPath(guids[0]));
+        if (guids.Length > 0)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guids[0]);
+            return AssetDatabase.LoadAssetAtPath<GameEffectSO>(path);
+        }
         return null;
     }
 }
