@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc52c99cfa32c8b49a16d68e16abd314, type: 3}
+  m_Name: "\uBA38\uC2E0 \uC2A4\uD53C\uB9BF"
+  m_EditorClassIdentifier: Assembly-CSharp::SO_Event
+  EventTitle: "\uBA38\uC2E0 \uC2A4\uD53C\uB9BF"
+  EventText: "\"\uC57C! \uAE30\uACC4\uB294 \uB450\uB4E4\uACA8 \uD328\uC11C \uC815\uC2E0\uC744
+    \uCC28\uB9AC\uAC8C \uD574\uC57C\uC9C0! \uADF8\uAC8C '\uBA38\uC2E0 \uC2A4\uD53C\uB9BF'\uC774\uC57C!\"\r\n\r\n\"\uBB34\uC2DD\uD55C
+    \uC18C\uB9AC! \uC815\uBC00\uD558\uAC8C \uB098\uC0AC\uB97C \uC870\uC5EC\uC57C\uC9C0,
+    \uADF8\uB7EC\uB2E4 \uB2E4 \uBD80\uC11C\uC9C4\uB2E4\uACE0!\u201C\r\n\r\n\uAE30\uCC28\uC758
+    \uC790\uCE6D \uCC9C\uC7AC \uC815\uBE44\uACF5 \uAE40\uC528\uC640 \uBC15\uC528\uAC00
+    \uC0B0\uB354\uBBF8 \uAC19\uC740 \uACE0\uCCA0\uC744 \uB450\uACE0 \uB17C\uC7C1
+    \uC911\uC774\uB2E4 \uAE40\uC528\uB294 \uD29C\uB2DD\uC740 '\uD55C\uBC29'\uC774\uB77C\uBA70
+    \uAC70\uB300\uD55C \uB9DD\uCE58\uB97C \uB4E4\uACE0 \uC788\uACE0, \uBC15\uC528\uB294
+    '\uC548\uC804\uC81C\uC77C'\uC774\uB77C\uBA70 \uC815\uBC00 \uB4DC\uB77C\uC774\uBC84\uB97C
+    \uB4E4\uACE0 \uC788\uB2E4. \uB458 \uC911 \uD55C \uBA85\uC5D0\uAC8C \uAE30\uCC28
+    \uC815\uBE44\uB97C \uB9E1\uACA8\uC57C \uD560 \uB4EF \uD558\uB2E4."
+  Selections:
+  - selectionText: "\uAE40\uC528\uC5D0\uAC8C \uB9E1\uAE34\uB2E4"
+    selectionUnderText: "10% \uD655\uB960\uB85C \uBCF4\uC720 \uC544\uC774\uD15C [3]\uAC1C
+      \uCD5C\uB300\uB85C \uC5C5\uADF8\uB808\uC774\uB4DC"
+    eventToTrigger: {fileID: 11400000, guid: edc5b7f9e897bdb438960bea3f0e6ab0, type: 2}
+  - selectionText: "\uBC15\uC528\uC5D0\uAC8C \uB9E1\uAE34\uB2E4"
+    selectionUnderText: "40% \uD655\uB960\uB85C \uBCF4\uC720 \uC544\uC774\uD15C [3]\uAC1C
+      [2]\uB9CC\uD07C \uC5C5\uADF8\uB808\uC774\uB4DC"
+    eventToTrigger: {fileID: 11400000, guid: 448d3a5a618f5dd4eb4d1dc3af95763b, type: 2}
+  - selectionText: "\uCC28\uB77C\uB9AC \uB0B4\uAC00 \uC9C1\uC811\uD55C\uB2E4"
+    selectionUnderText: "\uBCF4\uC720 \uC544\uC774\uD15C [3]\uAC1C [1]\uB9CC\uD07C
+      \uC5C5\uADF8\uB808\uC774\uB4DC"
+    eventToTrigger: {fileID: 11400000, guid: 028a6adfbf8c6014e9d9c5baed2c2e8c, type: 2}

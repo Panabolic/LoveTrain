@@ -5555,7 +5555,7 @@ MonoBehaviour:
   leverAfter: {fileID: -560888265471310478, guid: caa89508701dcf844a2c4ca1b0e9f4d1, type: 3}
   MouseUI: {fileID: 181188488}
   KeyUI: {fileID: 1002504241}
-  startEvent: {fileID: 11400000, guid: 28ed9e2e6fbe4b049aa11b945ebf88f6, type: 2}
+  startEvent: {fileID: 11400000, guid: f9591f6ed34b2b84d922e0cfa7923d2c, type: 2}
   moveSpeed: 30
   destroyDelay: 4
 --- !u!61 &541883009
