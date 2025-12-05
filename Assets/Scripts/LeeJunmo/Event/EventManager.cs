@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using TMPro;
 using DG.Tweening;
-using UnityEngine.UI; // ScrollRect 사용을 위해 필수
-using System.Collections.Generic;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using System;
 
@@ -17,17 +17,13 @@ public class EventManager : MonoBehaviour
     [SerializeField] private GameObject eventImage;
     [SerializeField] private GameObject eventSelections;
 
-    [Header("텍스트 및 스크롤 컴포넌트")]
+    [Header("텍스트 및 스크롤")]
     [SerializeField] private TextMeshProUGUI eventTitleBox;
     [SerializeField] private TextMeshProUGUI eventTextBox;
-
-    // ✨ [추가] 스크롤 뷰 연결 변수
-    [SerializeField] private ScrollRect eventTextScrollRect;
+    [SerializeField] private ScrollRect eventTextScrollRect; // ✨ 스크롤 뷰
 
     [Header("애니메이션 설정")]
     [SerializeField] private float panelMoveDuration = 0.5f;
-
-    [Header("패널 위치")]
     [SerializeField] private Vector2 onScreenPosition = new Vector2(0, 0);
     [SerializeField] private Vector2 offScreenPeekPosition = new Vector2(800, 0);
     [SerializeField] private Vector2 offScreenHiddenPosition = new Vector2(1000, 0);
@@ -39,8 +35,9 @@ public class EventManager : MonoBehaviour
     [SerializeField] private GameObject playerObject;
 
     private SO_Event currentEvent;
+    private List<Button> selectionButtons = new List<Button>();
 
-    // --- 변수들 ---
+    // --- 상태 변수들 ---
     private Tween currentTypingTween;
     private bool isTyping = false;
     private string fullTextToSkipTo = "";
@@ -50,8 +47,6 @@ public class EventManager : MonoBehaviour
     private bool hasSelectionBeenMade = false;
     private bool justSelected = false;
     private bool isAnimatingPanel = false;
-
-    private List<Button> selectionButtons = new List<Button>();
 
     private void Awake()
     {
@@ -70,11 +65,17 @@ public class EventManager : MonoBehaviour
             .OnUpdate(UnscaledUpdate);
     }
 
-    public void StartEvent(SO_Event e)
+    // ✨ [수정] 외부에서 이벤트를 요청할 때 사용 (큐에 등록)
+    public void RequestEvent(SO_Event e)
+    {
+        GameManager.Instance.RegisterUIQueue(() => ProcessEvent(e));
+    }
+
+    // ✨ [추가] 큐에서 호출되는 실제 이벤트 실행 로직
+    private void ProcessEvent(SO_Event e)
     {
         if (isAnimatingPanel) return;
 
-        // 초기화
         isTextFullyDisplayed = false;
         hasSelectionBeenMade = false;
         isShowingResultText = false;
@@ -82,14 +83,13 @@ public class EventManager : MonoBehaviour
         fullTextToSkipTo = "";
         justSelected = false;
 
-        Physics2D.simulationMode = SimulationMode2D.Script;
-        Time.timeScale = 0f;
+        // GameManager에서 이미 시간을 멈췄으므로 여기서 Time.timeScale 조작 안 함
 
         currentEvent = e;
         if (eventTitleBox != null) eventTitleBox.text = e.EventTitle;
         if (eventTextBox != null) eventTextBox.text = "";
 
-        // ✨ [추가] 텍스트 초기화 후 스크롤을 맨 위로 올림
+        // 스크롤 초기화
         if (eventTextScrollRect != null) eventTextScrollRect.verticalNormalizedPosition = 1f;
 
         InitSelection();
@@ -103,15 +103,19 @@ public class EventManager : MonoBehaviour
         });
     }
 
-    // ✨ [추가] 스크롤을 강제로 맨 아래로 내리는 헬퍼 함수
+    public void RandomEventStart()
+    {
+        if (isAnimatingPanel) return;
+        SO_Event e = eventDatabase.GetRandomEvent();
+        if (e != null) RequestEvent(e); // 큐 등록 함수 호출
+    }
+
+    // ✨ 스크롤을 맨 아래로 내리는 헬퍼
     private void ForceScrollToBottom()
     {
         if (eventTextScrollRect != null)
         {
-            // 텍스트가 추가된 직후 UI 사이즈 계산이 늦을 수 있으므로 강제 업데이트
             Canvas.ForceUpdateCanvases();
-
-            // 스크롤 위치를 0(바닥)으로 설정
             eventTextScrollRect.verticalNormalizedPosition = 0f;
         }
     }
@@ -137,8 +141,7 @@ public class EventManager : MonoBehaviour
                 (charIndex) =>
                 {
                     eventTextBox.text = fullText + trimmedLine.Substring(0, charIndex);
-                    // ✨ [추가] 글자가 써질 때마다 스크롤을 아래로 유지
-                    ForceScrollToBottom();
+                    ForceScrollToBottom(); // ✨ 스크롤 추적
                 },
                 charCount, duration
             ).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => { isTyping = false; });
@@ -154,9 +157,54 @@ public class EventManager : MonoBehaviour
         isTyping = false;
         fullTextToSkipTo = "";
         isTextFullyDisplayed = true;
-        EnableSelections();
 
-        // 다 출력된 후에는 사용자가 위로 올려볼 수 있으니 강제 스크롤은 중지해도 됨
+        EnableSelections();
+    }
+
+    private void UnscaledUpdate()
+    {
+        if (justSelected) justSelected = false;
+
+        bool skipInput = (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame);
+        bool toggleInput = (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame);
+
+        if (skipInput && isTyping && !justSelected)
+        {
+            bool wasResultText = isShowingResultText;
+
+            StopAllCoroutines();
+            if (currentTypingTween != null && currentTypingTween.IsActive()) currentTypingTween.Kill();
+
+            if (!string.IsNullOrEmpty(fullTextToSkipTo))
+            {
+                eventTextBox.text = fullTextToSkipTo;
+                ForceScrollToBottom(); // ✨ 스킵 시에도 스크롤 하단 이동
+            }
+
+            isTyping = false;
+            fullTextToSkipTo = "";
+            isShowingResultText = false;
+
+            if (!wasResultText)
+            {
+                isTextFullyDisplayed = true;
+                EnableSelections();
+            }
+
+            if (wasResultText)
+            {
+                StartCoroutine(WaitAndClosePanel(2.0f));
+            }
+            return;
+        }
+
+        if (toggleInput && !isTyping && isTextFullyDisplayed && !hasSelectionBeenMade)
+        {
+            if (isAnimatingPanel) return;
+
+            if (isPanelOnScreen) AnimatePanelToPeek();
+            else AnimatePanelOnScreen(null);
+        }
     }
 
     public void SelectionChoice(int selectionIndex)
@@ -170,13 +218,12 @@ public class EventManager : MonoBehaviour
         {
             StopAllCoroutines();
             if (currentTypingTween != null && currentTypingTween.IsActive()) currentTypingTween.Kill();
-
             if (!string.IsNullOrEmpty(fullTextToSkipTo)) eventTextBox.text = fullTextToSkipTo;
 
             isTyping = false;
             fullTextToSkipTo = "";
             isTextFullyDisplayed = true;
-            ForceScrollToBottom(); // 스킵했을 때도 맨 아래로
+            ForceScrollToBottom();
         }
 
         if (eventSelections != null) eventSelections.SetActive(false);
@@ -224,10 +271,8 @@ public class EventManager : MonoBehaviour
 
         currentTypingTween = DOTween.To(
             () => 0,
-            (charIndex) =>
-            {
+            (charIndex) => {
                 eventTextBox.text = fullText + trimmedLine.Substring(0, charIndex);
-                // ✨ [추가] 결과 텍스트 나올 때도 스크롤 추적
                 ForceScrollToBottom();
             },
             charCount, duration
@@ -241,58 +286,10 @@ public class EventManager : MonoBehaviour
         StartCoroutine(WaitAndClosePanel(2.0f));
     }
 
-    private void UnscaledUpdate()
-    {
-        if (justSelected) justSelected = false;
-
-        bool skipInput = (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame);
-        bool toggleInput = (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame);
-
-        if (skipInput && isTyping && !justSelected)
-        {
-            bool wasResultText = isShowingResultText;
-            StopAllCoroutines();
-            if (currentTypingTween != null && currentTypingTween.IsActive()) currentTypingTween.Kill();
-
-            if (!string.IsNullOrEmpty(fullTextToSkipTo))
-            {
-                eventTextBox.text = fullTextToSkipTo;
-                ForceScrollToBottom(); // 스킵 시 맨 아래로
-            }
-
-            isTyping = false;
-            fullTextToSkipTo = "";
-            isShowingResultText = false;
-
-            if (!wasResultText)
-            {
-                isTextFullyDisplayed = true;
-                EnableSelections();
-            }
-            if (wasResultText) StartCoroutine(WaitAndClosePanel(2.0f));
-            return;
-        }
-        // ... (패널 토글 로직 동일) ...
-        if (toggleInput && !isTyping && isTextFullyDisplayed && !hasSelectionBeenMade)
-        {
-            if (isAnimatingPanel) return;
-            if (isPanelOnScreen) AnimatePanelToPeek();
-            else AnimatePanelOnScreen(null);
-        }
-    }
-
-    // ... (나머지 초기화, 애니메이션 함수들은 기존과 동일) ...
-    public void RandomEventStart()
-    {
-        if (isAnimatingPanel) return;
-        SO_Event e = eventDatabase.GetRandomEvent();
-        if (e != null) StartEvent(e);
-    }
-
     private IEnumerator WaitAndClosePanel(float delay)
     {
         yield return new WaitForSecondsRealtime(delay);
-        AnimatePanelToHidden(true);
+        AnimatePanelToHidden();
     }
 
     public void InitSelection()
@@ -329,13 +326,18 @@ public class EventManager : MonoBehaviour
         }
     }
 
+    #region --- 애니메이션 함수 ---
+
     private void AnimatePanelOnScreen(Action onComplete)
     {
         isPanelOnScreen = true;
         isAnimatingPanel = true;
         eventBoardRect.DOAnchorPos(onScreenPosition, panelMoveDuration)
             .SetEase(Ease.OutBack).SetUpdate(true)
-            .OnComplete(() => { isAnimatingPanel = false; onComplete?.Invoke(); });
+            .OnComplete(() => {
+                isAnimatingPanel = false;
+                onComplete?.Invoke();
+            });
     }
 
     private void AnimatePanelToPeek()
@@ -347,7 +349,7 @@ public class EventManager : MonoBehaviour
             .OnComplete(() => { isAnimatingPanel = false; });
     }
 
-    private void AnimatePanelToHidden(bool eventEnded)
+    private void AnimatePanelToHidden()
     {
         isPanelOnScreen = false;
         isAnimatingPanel = true;
@@ -356,12 +358,14 @@ public class EventManager : MonoBehaviour
             .OnComplete(() => {
                 isAnimatingPanel = false;
                 eventUIPanel.SetActive(false);
-                if (eventEnded)
+
+                // ✨ [핵심] 이벤트 종료 시 GameManager에게 알림
+                // 다음 대기 중인 팝업(레벨업 등)이 있다면 실행됨
+                if (GameManager.Instance != null)
                 {
-                    Time.timeScale = 1f;
-                    Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
-                    if (GameManager.Instance != null) GameManager.Instance.EndEvent();
+                    GameManager.Instance.CloseUI();
                 }
             });
     }
+    #endregion
 }

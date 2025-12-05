@@ -20,11 +20,9 @@ public class BloodyBible_SO : Item_SO
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        // 장착 시 따라다니는 비주얼(책)이 있다면 생성, 없으면 null
-        // return InstantiateVisual(user); 
-        return null;
+        return InstantiateVisual(user); 
     }
-
+    
     public override float GetCooldownForLevel(int level)
     {
         int index = Mathf.Clamp(level - 1, 0, cooldownByLevel.Length - 1);

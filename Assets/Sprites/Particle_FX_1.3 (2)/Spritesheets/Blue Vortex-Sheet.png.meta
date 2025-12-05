@@ -1,0 +1,1365 @@
+fileFormatVersion: 2
+guid: 5054e6c739fc3944baa2eb77d0a9cae9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3809801413513033225
+    second: Blue Vortex-Sheet_0
+  - first:
+      213: -6643411884248281165
+    second: Blue Vortex-Sheet_1
+  - first:
+      213: -3994039646949138966
+    second: Blue Vortex-Sheet_2
+  - first:
+      213: 7517143841571734150
+    second: Blue Vortex-Sheet_3
+  - first:
+      213: -5013033109451000862
+    second: Blue Vortex-Sheet_4
+  - first:
+      213: -744032663622616896
+    second: Blue Vortex-Sheet_5
+  - first:
+      213: 960187623146525910
+    second: Blue Vortex-Sheet_6
+  - first:
+      213: 7913509043122726451
+    second: Blue Vortex-Sheet_7
+  - first:
+      213: 381340033735095959
+    second: Blue Vortex-Sheet_8
+  - first:
+      213: -3912536300850241482
+    second: Blue Vortex-Sheet_9
+  - first:
+      213: 8716024093773993505
+    second: Blue Vortex-Sheet_10
+  - first:
+      213: 5004855392909235147
+    second: Blue Vortex-Sheet_11
+  - first:
+      213: -6883067536370203234
+    second: Blue Vortex-Sheet_12
+  - first:
+      213: -5709653259414974324
+    second: Blue Vortex-Sheet_13
+  - first:
+      213: 4746392139510379497
+    second: Blue Vortex-Sheet_14
+  - first:
+      213: -2079563140558965563
+    second: Blue Vortex-Sheet_15
+  - first:
+      213: -7432960525949596957
+    second: Blue Vortex-Sheet_16
+  - first:
+      213: -1354933888561856919
+    second: Blue Vortex-Sheet_17
+  - first:
+      213: 8003818989845847476
+    second: Blue Vortex-Sheet_18
+  - first:
+      213: -6747904544528992255
+    second: Blue Vortex-Sheet_19
+  - first:
+      213: 7789461256226410995
+    second: Blue Vortex-Sheet_20
+  - first:
+      213: -3995985024060120624
+    second: Blue Vortex-Sheet_21
+  - first:
+      213: 7148238503332079205
+    second: Blue Vortex-Sheet_22
+  - first:
+      213: -4180624213461983030
+    second: Blue Vortex-Sheet_23
+  - first:
+      213: -7905636758150769709
+    second: Blue Vortex-Sheet_24
+  - first:
+      213: 2717096615412224549
+    second: Blue Vortex-Sheet_25
+  - first:
+      213: -3244535566307689939
+    second: Blue Vortex-Sheet_26
+  - first:
+      213: 7876410318312649758
+    second: Blue Vortex-Sheet_27
+  - first:
+      213: -4509770917399774511
+    second: Blue Vortex-Sheet_28
+  - first:
+      213: 429415428848158200
+    second: Blue Vortex-Sheet_29
+  - first:
+      213: 7557369921922977644
+    second: Blue Vortex-Sheet_30
+  - first:
+      213: -8118169266037526706
+    second: Blue Vortex-Sheet_31
+  - first:
+      213: -6894027942557520028
+    second: Blue Vortex-Sheet_32
+  - first:
+      213: 1944141365511376351
+    second: Blue Vortex-Sheet_33
+  - first:
+      213: -4256408184887007694
+    second: Blue Vortex-Sheet_34
+  - first:
+      213: -3525723555725635035
+    second: Blue Vortex-Sheet_35
+  - first:
+      213: 7271734649928911319
+    second: Blue Vortex-Sheet_36
+  - first:
+      213: -7528837407430117813
+    second: Blue Vortex-Sheet_37
+  - first:
+      213: 5460486995903478845
+    second: Blue Vortex-Sheet_38
+  - first:
+      213: -3739714543510026263
+    second: Blue Vortex-Sheet_39
+  - first:
+      213: -2958094123429834496
+    second: Blue Vortex-Sheet_40
+  - first:
+      213: -6375609230357673717
+    second: Blue Vortex-Sheet_41
+  - first:
+      213: -5310671401321889733
+    second: Blue Vortex-Sheet_42
+  - first:
+      213: -6628041847204621418
+    second: Blue Vortex-Sheet_43
+  - first:
+      213: -4393841315316437532
+    second: Blue Vortex-Sheet_44
+  - first:
+      213: -4654416212572372338
+    second: Blue Vortex-Sheet_45
+  - first:
+      213: -7570818966254437586
+    second: Blue Vortex-Sheet_46
+  - first:
+      213: -4759044314238891316
+    second: Blue Vortex-Sheet_47
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 338
+        width: 67
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 906b93d43322fd430800000000000000
+      internalID: 3809801413513033225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 371
+        width: 53
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bfc5cee61cddc3a0800000000000000
+      internalID: -6643411884248281165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 348
+        width: 68
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aed15c83a125298c0800000000000000
+      internalID: -3994039646949138966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 395
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68206621f72425860800000000000000
+      internalID: 7517143841571734150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 357
+        width: 69
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e3b6e772f02e6ab0800000000000000
+      internalID: -5013033109451000862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 351
+        width: 78
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c87c770c3aaca5f0800000000000000
+      internalID: -744032663622616896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 361
+        width: 63
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d410635e85435d00800000000000000
+      internalID: 960187623146525910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 361
+        width: 12
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 336eb221c8e62dd60800000000000000
+      internalID: 7913509043122726451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 343
+        width: 32
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7967a618dbaca4500800000000000000
+      internalID: 381340033735095959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 360
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6302001c6f0e3b9c0800000000000000
+      internalID: -3912536300850241482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 342
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 126152bdbb985f870800000000000000
+      internalID: 8716024093773993505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 342
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc39d868671d47540800000000000000
+      internalID: 5004855392909235147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 344
+        width: 18
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9581a13b8e6a70a0800000000000000
+      internalID: -6883067536370203234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 344
+        width: 23
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c805be19c9c33c0b0800000000000000
+      internalID: -5709653259414974324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 345
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e3f830e0829ed140800000000000000
+      internalID: 4746392139510379497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 348
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c4bcf67758e323e0800000000000000
+      internalID: -2079563140558965563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 353
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ea064d78c1d8d890800000000000000
+      internalID: -7432960525949596957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 347
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96eb12e9ece423de0800000000000000
+      internalID: -1354933888561856919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 348
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bd994817f6431f60800000000000000
+      internalID: 8003818989845847476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 339
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 108fa159190aa52a0800000000000000
+      internalID: -6747904544528992255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 339
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f11b010eb9b91c60800000000000000
+      internalID: 7789461256226410995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 339
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d1ad11dac86b88c0800000000000000
+      internalID: -3995985024060120624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 338
+        width: 20
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 566e0e8bb05a33360800000000000000
+      internalID: 7148238503332079205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 200
+        width: 69
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac0a3318d607bf5c0800000000000000
+      internalID: -4180624213461983030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 202
+        width: 53
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d3172b1149894290800000000000000
+      internalID: -7905636758150769709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 240
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 522df06d9f015b520800000000000000
+      internalID: 2717096615412224549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 193
+        width: 65
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2afb1db71819f2d0800000000000000
+      internalID: -3244535566307689939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 207
+        width: 51
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e143f381471ae4d60800000000000000
+      internalID: 7876410318312649758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 213
+        width: 44
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dabff19e331a61c0800000000000000
+      internalID: -4509770917399774511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 195
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f50191be0795f500800000000000000
+      internalID: 429415428848158200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 218
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6fc07047eb21e860800000000000000
+      internalID: 7557369921922977644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 206
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4fe65f7018765f80800000000000000
+      internalID: -8118169266037526706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 200
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46fed34cc1e7350a0800000000000000
+      internalID: -6894027942557520028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 213
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fddc27c754afafa10800000000000000
+      internalID: 1944141365511376351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 213
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 236aeb8ae433ee4c0800000000000000
+      internalID: -4256408184887007694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 194
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5221fbc2b1d121fc0800000000000000
+      internalID: -3525723555725635035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_36
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 193
+        width: 26
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d989e503246ae460800000000000000
+      internalID: 7271734649928911319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_37
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 199
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4674767442348790800000000000000
+      internalID: -7528837407430117813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_38
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 206
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3c777bedfb87cb40800000000000000
+      internalID: 5460486995903478845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_39
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 196
+        width: 20
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e709b0cf6dd91cc0800000000000000
+      internalID: -3739714543510026263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_40
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 204
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0015bc0411db2f6d0800000000000000
+      internalID: -2958094123429834496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_41
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 204
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0944d53f294587a0800000000000000
+      internalID: -6375609230357673717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_42
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 189
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3002656f74bc46b0800000000000000
+      internalID: -5310671401321889733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_43
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 65
+        width: 43
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 693d1fc8e077404a0800000000000000
+      internalID: -6628041847204621418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_44
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 66
+        width: 33
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ede0217a90f503c0800000000000000
+      internalID: -4393841315316437532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_45
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 66
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e820ec46d11386fb0800000000000000
+      internalID: -4654416212572372338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_46
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 67
+        width: 21
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2b3d99134c0fe690800000000000000
+      internalID: -7570818966254437586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Vortex-Sheet_47
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 68
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccac273296a74fdb0800000000000000
+      internalID: -4759044314238891316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Blue Vortex-Sheet_0: 3809801413513033225
+      Blue Vortex-Sheet_1: -6643411884248281165
+      Blue Vortex-Sheet_10: 8716024093773993505
+      Blue Vortex-Sheet_11: 5004855392909235147
+      Blue Vortex-Sheet_12: -6883067536370203234
+      Blue Vortex-Sheet_13: -5709653259414974324
+      Blue Vortex-Sheet_14: 4746392139510379497
+      Blue Vortex-Sheet_15: -2079563140558965563
+      Blue Vortex-Sheet_16: -7432960525949596957
+      Blue Vortex-Sheet_17: -1354933888561856919
+      Blue Vortex-Sheet_18: 8003818989845847476
+      Blue Vortex-Sheet_19: -6747904544528992255
+      Blue Vortex-Sheet_2: -3994039646949138966
+      Blue Vortex-Sheet_20: 7789461256226410995
+      Blue Vortex-Sheet_21: -3995985024060120624
+      Blue Vortex-Sheet_22: 7148238503332079205
+      Blue Vortex-Sheet_23: -4180624213461983030
+      Blue Vortex-Sheet_24: -7905636758150769709
+      Blue Vortex-Sheet_25: 2717096615412224549
+      Blue Vortex-Sheet_26: -3244535566307689939
+      Blue Vortex-Sheet_27: 7876410318312649758
+      Blue Vortex-Sheet_28: -4509770917399774511
+      Blue Vortex-Sheet_29: 429415428848158200
+      Blue Vortex-Sheet_3: 7517143841571734150
+      Blue Vortex-Sheet_30: 7557369921922977644
+      Blue Vortex-Sheet_31: -8118169266037526706
+      Blue Vortex-Sheet_32: -6894027942557520028
+      Blue Vortex-Sheet_33: 1944141365511376351
+      Blue Vortex-Sheet_34: -4256408184887007694
+      Blue Vortex-Sheet_35: -3525723555725635035
+      Blue Vortex-Sheet_36: 7271734649928911319
+      Blue Vortex-Sheet_37: -7528837407430117813
+      Blue Vortex-Sheet_38: 5460486995903478845
+      Blue Vortex-Sheet_39: -3739714543510026263
+      Blue Vortex-Sheet_4: -5013033109451000862
+      Blue Vortex-Sheet_40: -2958094123429834496
+      Blue Vortex-Sheet_41: -6375609230357673717
+      Blue Vortex-Sheet_42: -5310671401321889733
+      Blue Vortex-Sheet_43: -6628041847204621418
+      Blue Vortex-Sheet_44: -4393841315316437532
+      Blue Vortex-Sheet_45: -4654416212572372338
+      Blue Vortex-Sheet_46: -7570818966254437586
+      Blue Vortex-Sheet_47: -4759044314238891316
+      Blue Vortex-Sheet_5: -744032663622616896
+      Blue Vortex-Sheet_6: 960187623146525910
+      Blue Vortex-Sheet_7: 7913509043122726451
+      Blue Vortex-Sheet_8: 381340033735095959
+      Blue Vortex-Sheet_9: -3912536300850241482
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

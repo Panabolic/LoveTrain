@@ -27,7 +27,7 @@ public class LaserGun : MonoBehaviour, IInstantiatedItem
         // 2. Gun에게 기본 스탯 전달
         // ✨ [중요] GunStats.fireRate 필드를 '틱 주기'로 사용합니다.
         GunStats newBaseStats = gunController.CurrentStats;
-        newBaseStats.damage = newDamage;
+        newBaseStats.damage = newBaseStats.damage / 2.7f;
         newBaseStats.fireRate = newTickRate; // Gun.cs가 이 값을 공속 배율로 나눌 것임
         newBaseStats.laserPrefab = itemData.LaserProjectilePrefab;
 

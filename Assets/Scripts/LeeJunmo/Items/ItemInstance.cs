@@ -15,7 +15,7 @@ public class ItemInstance
         itemData = data;
         currentUpgrade = 1;
         // 처음 생성 시 쿨타임 적용 (게임 시작 시 바로 발사 안 되게 하려면 값 유지, 바로 쏘려면 0)
-        currentCooldown = itemData.GetCooldownForLevel(currentUpgrade);
+        currentCooldown = 0f;
     }
 
     public void HandleEquip(GameObject user)

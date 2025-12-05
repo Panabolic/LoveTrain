@@ -29,12 +29,12 @@ MonoBehaviour:
   - 300
   countByLevel: 020000000300000003000000040000000400000005000000
   cooldownByLevel:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  - 30
+  - 26
+  - 22
+  - 18
+  - 14
+  - 10
   spawnRangeX: 24
   spawnDelayMin: 0.05
   spawnDelayMax: 0.4

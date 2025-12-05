@@ -29,10 +29,13 @@ public class Gun : MonoBehaviour
     [Header("현재 스탯")]
     public GunStats CurrentStats; // 실제 게임에서 적용되는 최종 스탯
 
+    public TrainLevelManager levelManager;
+
     // --- 내부 변수 (언더바 제거) ---
     private GunStats baseStats; // 아이템 배율이 적용되지 않은 '무기 순수 스탯'
     private float damageMultiplier = 0f; // 데미지 배율 (0.1 = 10% 증가)
     private float fireRateMultiplier = 0f; // 공속 배율
+    private float damageEachLevel = 2f;
 
     private Sprite defaultHolderSprite; // 맨 처음 거치대 이미지 백업
     private GameObject currentVisualObj; // 현재 장착된 커스텀 외형 프리팹
@@ -72,6 +75,7 @@ public class Gun : MonoBehaviour
     private void Start()
     {
         SetWeapon(new ProjectileStrategy());
+        levelManager.OnLevelUp += OnLevelUpDamageIncrease;
     }
 
     // -------------------------------------------------------
@@ -137,6 +141,11 @@ public class Gun : MonoBehaviour
     {
         baseStats = newStats; // 베이스 스탯 교체
         UpdateStats(); // 배율 재적용하여 CurrentStats 갱신
+    }
+
+    public void OnLevelUpDamageIncrease()
+    {
+        CurrentStats.damage += (levelManager.CurrentLevel * damageEachLevel);
     }
 
     public void AddDamageMultiplier(float amount)

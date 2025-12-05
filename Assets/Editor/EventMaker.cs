@@ -58,7 +58,7 @@ public class TempOutcomeData
     public Item_SO param_Item;
     public GameObject param_Prefab;
 
-    [TextArea] public string resultDescription = "결과 텍스트...";
+    [TextArea] public string resultDescription = null;
     public bool includeDefaultText = true;
     public EventResultOutput.OutputOrder outputOrder = EventResultOutput.OutputOrder.DefaultFirst;
 }

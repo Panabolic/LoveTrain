@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: a80c19642142cdb45958e7477c375fc9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -988585722487777013
+    second: Lifestream Particle_0
+  - first:
+      213: 1193463395029247725
+    second: Lifestream Particle_1
+  - first:
+      213: -4434934382287069613
+    second: Lifestream Particle_2
+  - first:
+      213: -2317582059692943705
+    second: Lifestream Particle_3
+  - first:
+      213: 1302238234247432858
+    second: Lifestream Particle_4
+  - first:
+      213: -2226167971188364817
+    second: Lifestream Particle_5
+  - first:
+      213: 63747446653311577
+    second: Lifestream Particle_6
+  - first:
+      213: 5325395149478813025
+    second: Lifestream Particle_7
+  - first:
+      213: 5129766686945473102
+    second: Lifestream Particle_8
+  - first:
+      213: -3189586195162550690
+    second: Lifestream Particle_9
+  - first:
+      213: -106559926212093889
+    second: Lifestream Particle_10
+  - first:
+      213: -7978134081866502435
+    second: Lifestream Particle_11
+  - first:
+      213: -7367123695496537181
+    second: Lifestream Particle_12
+  - first:
+      213: -9157426657878348632
+    second: Lifestream Particle_13
+  - first:
+      213: 2552490032848605851
+    second: Lifestream Particle_14
+  - first:
+      213: -2208667407057714664
+    second: Lifestream Particle_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Lifestream Particle_0
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 123
+        width: 55
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b09d71de586d742f0800000000000000
+      internalID: -988585722487777013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_1
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 120
+        width: 56
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de6662172a8009010800000000000000
+      internalID: 1193463395029247725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_2
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 123
+        width: 59
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35edc953da2f372c0800000000000000
+      internalID: -4434934382287069613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_3
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 127
+        width: 42
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a61f22556b46dfd0800000000000000
+      internalID: -2317582059692943705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_4
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 133
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9a004546ca721210800000000000000
+      internalID: 1302238234247432858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_5
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 136
+        width: 7
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe927f266001b11e0800000000000000
+      internalID: -2226167971188364817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_6
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 127
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95adb1907f972e000800000000000000
+      internalID: 63747446653311577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_7
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 135
+        width: 7
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16dd54d5caa97e940800000000000000
+      internalID: 5325395149478813025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_8
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 31
+        width: 11
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4274048f97903740800000000000000
+      internalID: 5129766686945473102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_9
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 34
+        width: 12
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5ea8d031405cb3d0800000000000000
+      internalID: -3189586195162550690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_10
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 31
+        width: 8
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3816dacf4c658ef0800000000000000
+      internalID: -106559926212093889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_11
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 32
+        width: 7
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddee8ef8259f74190800000000000000
+      internalID: -7978134081866502435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_12
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 42
+        width: 6
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3abd0991808b2c990800000000000000
+      internalID: -7367123695496537181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_13
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 37
+        width: 8
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ace77809f84ae080800000000000000
+      internalID: -9157426657878348632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_14
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 32
+        width: 11
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b929aa449244c6320800000000000000
+      internalID: 2552490032848605851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lifestream Particle_15
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 33
+        width: 43
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 812875ff1bc3951e0800000000000000
+      internalID: -2208667407057714664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Lifestream Particle_0: -988585722487777013
+      Lifestream Particle_1: 1193463395029247725
+      Lifestream Particle_10: -106559926212093889
+      Lifestream Particle_11: -7978134081866502435
+      Lifestream Particle_12: -7367123695496537181
+      Lifestream Particle_13: -9157426657878348632
+      Lifestream Particle_14: 2552490032848605851
+      Lifestream Particle_15: -2208667407057714664
+      Lifestream Particle_2: -4434934382287069613
+      Lifestream Particle_3: -2317582059692943705
+      Lifestream Particle_4: 1302238234247432858
+      Lifestream Particle_5: -2226167971188364817
+      Lifestream Particle_6: 63747446653311577
+      Lifestream Particle_7: 5325395149478813025
+      Lifestream Particle_8: 5129766686945473102
+      Lifestream Particle_9: -3189586195162550690
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

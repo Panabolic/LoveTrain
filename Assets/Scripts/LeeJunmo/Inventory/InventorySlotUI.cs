@@ -114,6 +114,8 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     // 마우스 뗐을 때
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (currentInstance == null) return;
+
         TooltipSystem.Instance.Hide();
     }
 }

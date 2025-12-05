@@ -7,6 +7,25 @@ public class Spawner : MonoBehaviour
 {
     public static Spawner Instance;
 
+    // ✨ [수정] struct -> class로 변경 (기본값 할당을 위해)
+    [System.Serializable]
+    public class BossSpawnSetting
+    {
+        public BossName bossName;
+        [Tooltip("보스 프리팹 (PoolManager에 있다면 거기서 가져오지만, 예외적으로 직접 할당 가능)")]
+        public GameObject bossPrefab;
+
+        [Header("Timing")]
+        [Tooltip("경고 UI 시작 후, 실제로 보스가 나올 때까지의 대기 시간")]
+        public float spawnDelayAfterWarning = 4.0f; // class여야 기본값 할당 가능
+
+        [Header("Sound")]
+        [Tooltip("보스 등장 사운드 이름 (SoundManager Key)")]
+        public string spawnSoundName;
+        [Tooltip("사운드를 언제 재생할지 (0 = 경고 시작 시, 3 = 3초 뒤)")]
+        public float soundPlayDelay = 0.5f;
+    }
+
     [System.Serializable]
     public struct SpawnPhase
     {
@@ -14,23 +33,17 @@ public class Spawner : MonoBehaviour
         public float startTime;
 
         [Header("Ground Mobs Range")]
-        [Tooltip("등장할 지상 몬스터 시작 인덱스 (포함)")]
         public int groundMinIndex;
-        [Tooltip("등장할 지상 몬스터 끝 인덱스 (포함)")]
         public int groundMaxIndex;
 
         [Header("Fly Mobs Range")]
-        [Tooltip("등장할 공중 몬스터 시작 인덱스 (포함)")]
         public int flyMinIndex;
-        [Tooltip("등장할 공중 몬스터 끝 인덱스 (포함)")]
         public int flyMaxIndex;
 
         [Space]
-        [Tooltip("기본 스폰 주기 (난이도 조절용)")]
         public float spawnInterval;
     }
 
-    // 주기적 스폰 작업을 관리하는 클래스
     [System.Serializable]
     public class PeriodicSpawnTask
     {
@@ -49,64 +62,62 @@ public class Spawner : MonoBehaviour
     }
 
     [Header("Phase Settings")]
-    [Tooltip("시간대별 몬스터 등장 설정 (시간순 정렬 필수)")]
     [SerializeField] private SpawnPhase[] spawnPhases;
 
-    [Header("Spawn Interval Settings")]
-    [SerializeField] private float eliteMobSpawnInterval = 20.0f;
+    [Header("Boss Settings")]
+    [SerializeField] private BossSpawnSetting[] bossSettings; // 보스 설정 배열
     [SerializeField] private float bossSpawnInterval = 180.0f;
+
+    [Header("Interval Settings")]
+    [SerializeField] private float eliteMobSpawnInterval = 20.0f;
     [SerializeField] private float firstEliteSpawnTime = 60.0f;
 
-    [Header("Spawn Points")]
-    [SerializeField] private Transform[] mobSpawnPoints;    // 지상
-    [SerializeField] private Transform[] flyMobSpawnPoints; // 공중
+    [Header("Spawn Points - Ground")]
+    [SerializeField] private Transform[] groundFrontPoints;
+    [SerializeField] private Transform[] groundRearPoints;
+
+    [Header("Spawn Points - Fly")]
+    [SerializeField] private Transform[] flyFrontPoints;
+    [SerializeField] private Transform[] flyRearPoints;
+
+    [Header("Spawn Points - Boss")]
     [SerializeField] private Transform[] bossSpawnPoints;
 
-    // --- 내부 변수 (현재 적용 중인 범위) ---
-    private int currentGroundMin = 0;
-    private int currentGroundMax = 0;
-    private int currentFlyMin = 0;
-    private int currentFlyMax = 0;
+    // --- 제어 플래그 ---
+    private bool isSpawningEnabled = true;
+    private bool isRearSpawnEnabled = true;
+
+    // --- 내부 변수 ---
+    private int currentGroundMin, currentGroundMax;
+    private int currentFlyMin, currentFlyMax;
     private float currentSpawnInterval = 1.0f;
 
-    private float mobTimer;
-    private float eliteMobTimer;
-    private float bossTimer;
-
-    // 현재 활성화된 주기적 스폰 목록 (영구 지속)
-    [SerializeField]
+    private float mobTimer, eliteMobTimer, bossTimer;
     private List<PeriodicSpawnTask> periodicSpawnTasks = new List<PeriodicSpawnTask>();
 
-    private void Awake()
-    {
-        if (Instance == null) Instance = this;
-    }
+    private void Awake() { if (Instance == null) Instance = this; }
 
     private void Start()
     {
-        mobTimer = 0f;
-        eliteMobTimer = 19.99f;
-        bossTimer = 0f;
-
+        mobTimer = 0f; eliteMobTimer = 19.99f; bossTimer = 0f;
         periodicSpawnTasks.Clear();
         UpdatePhase(0f);
+
+        isSpawningEnabled = true;
+        isRearSpawnEnabled = true;
     }
 
     private void Update()
     {
-        if (GameManager.Instance.CurrentState != GameState.Playing) return;
+        if (GameManager.Instance.CurrentState != GameState.Playing || !isSpawningEnabled) return;
 
         float gameTime = GameManager.Instance.gameTime;
-
-        // 1. 페이즈 업데이트
         UpdatePhase(gameTime);
 
-        // 2. 타이머 갱신
         mobTimer += Time.deltaTime;
         if (gameTime >= firstEliteSpawnTime) eliteMobTimer += Time.deltaTime;
         bossTimer += Time.deltaTime;
 
-        // 3. 기본 스폰 로직
         if (mobTimer >= currentSpawnInterval)
         {
             SpawnBasicMobs();
@@ -119,79 +130,127 @@ public class Spawner : MonoBehaviour
         }
         if (bossTimer >= bossSpawnInterval)
         {
-            SpawnBoss(BossName.TrainBoss);
+            StartBossSequence(BossName.TrainBoss);
             bossTimer = 0f;
         }
 
-        // 4. 추가된 주기적 스폰 작업 처리
         HandlePeriodicTasks();
     }
 
-    private void HandlePeriodicTasks()
+    // -------------------------------------------------------
+    // 보스 시퀀스 (경고 -> 대기 -> 스폰)
+    // -------------------------------------------------------
+    public void StartBossSequence(BossName bossName)
     {
-        for (int i = 0; i < periodicSpawnTasks.Count; i++)
-        {
-            var task = periodicSpawnTasks[i];
-            task.timer += Time.deltaTime;
+        if (GameManager.Instance.CurrentState != GameState.Playing) return;
+        StartCoroutine(BossSpawnRoutine(bossName));
+    }
 
-            if (task.timer >= task.interval)
+    private IEnumerator BossSpawnRoutine(BossName bossName)
+    {
+        // 1. 설정 가져오기
+        BossSpawnSetting setting = GetBossSetting(bossName);
+
+        Debug.Log($"[Spawner] 보스({bossName}) 시퀀스 시작! 경고 UI 출력.");
+
+        // 2. 게임 상태 변경 (경고 UI 자동 출력)
+        GameManager.Instance.AppearBoss();
+
+        // 3. 사운드 재생 예약
+        if (!string.IsNullOrEmpty(setting.spawnSoundName))
+        {
+            StartCoroutine(PlaySoundDelayed(setting.spawnSoundName, setting.soundPlayDelay));
+        }
+
+        // 4. 대기 (경고 연출 시간)
+        yield return new WaitForSeconds(setting.spawnDelayAfterWarning);
+
+        // 5. 스폰
+        Debug.Log($"[Spawner] 보스({bossName}) 출현!");
+        SpawnBossObject(bossName);
+    }
+
+    private IEnumerator PlaySoundDelayed(string soundName, float delay)
+    {
+        if (delay > 0) yield return new WaitForSeconds(delay);
+
+        if (SoundManager.instance != null)
+        {
+            // BGM 혹은 SFX 중 맞는 타입으로 호출
+            SoundManager.instance.PlaySound("BGM", soundName);
+        }
+    }
+
+    private void SpawnBossObject(BossName boss)
+    {
+        if (PoolManager.instance != null)
+        {
+            GameObject bossPrefab = PoolManager.instance.GetBoss(boss);
+            if (bossPrefab != null)
             {
-                SpawnMobFromPrefab(task.prefab, task.isFly);
-                task.timer = 0f;
+                // 보스 스폰 위치에서 생성
+                Instantiate(bossPrefab, bossSpawnPoints[(int)boss].position, Quaternion.identity);
             }
         }
     }
 
-    public void AddPeriodicSpawnTask(GameObject prefab, float interval, bool isFly)
+    private BossSpawnSetting GetBossSetting(BossName name)
     {
-        if (prefab == null) return;
-        if (interval <= 0.1f) interval = 0.1f;
-
-        PeriodicSpawnTask newTask = new PeriodicSpawnTask(prefab, interval, isFly);
-        periodicSpawnTasks.Add(newTask);
-
-        Debug.Log($"[Spawner] 주기적 스폰 추가: {prefab.name} (매 {interval}초)");
+        foreach (var s in bossSettings)
+        {
+            if (s.bossName == name) return s;
+        }
+        // 설정이 없으면 기본값으로 임시 객체 생성하여 반환
+        return new BossSpawnSetting { bossName = name, spawnDelayAfterWarning = 3.0f };
     }
 
     // -------------------------------------------------------
-    // Spawn Logics
+    // 외부 제어
     // -------------------------------------------------------
-
-    private void UpdatePhase(float currentTime)
+    public void SetSpawning(bool enabled)
     {
-        if (spawnPhases == null || spawnPhases.Length == 0) return;
+        isSpawningEnabled = enabled;
+        if (!enabled) StopAllCoroutines();
+    }
 
-        // 현재 시간에 맞는 페이즈 찾기 (역순 탐색)
-        for (int i = spawnPhases.Length - 1; i >= 0; i--)
+    public void SetRearSpawning(bool enabled)
+    {
+        isRearSpawnEnabled = enabled;
+    }
+
+    // -------------------------------------------------------
+    // 일반 스폰 로직
+    // -------------------------------------------------------
+    private Transform GetRandomSpawnPoint(bool isFly)
+    {
+        List<Transform> candidates = new List<Transform>();
+
+        if (isFly)
         {
-            if (currentTime >= spawnPhases[i].startTime)
-            {
-                // ✨ 인덱스 범위 갱신
-                currentGroundMin = spawnPhases[i].groundMinIndex;
-                currentGroundMax = spawnPhases[i].groundMaxIndex;
-                currentFlyMin = spawnPhases[i].flyMinIndex;
-                currentFlyMax = spawnPhases[i].flyMaxIndex;
-
-                currentSpawnInterval = spawnPhases[i].spawnInterval;
-                return;
-            }
+            if (flyFrontPoints != null) candidates.AddRange(flyFrontPoints);
+            if (isRearSpawnEnabled && flyRearPoints != null) candidates.AddRange(flyRearPoints);
         }
+        else
+        {
+            if (groundFrontPoints != null) candidates.AddRange(groundFrontPoints);
+            if (isRearSpawnEnabled && groundRearPoints != null) candidates.AddRange(groundRearPoints);
+        }
+
+        if (candidates.Count == 0) return null;
+        return candidates[UnityEngine.Random.Range(0, candidates.Count)];
     }
 
     private void SpawnBasicMobs()
     {
-        // 50% 확률로 지상 또는 공중 스폰
         if (UnityEngine.Random.value < 0.5f)
         {
-            // ✨ 지상: Min ~ Max 사이 랜덤 선택 (Max 포함)
-            int randomIdx = UnityEngine.Random.Range(currentGroundMin, currentGroundMax + 1);
-            SpawnMobInternal(randomIdx, isFly: false);
+            int idx = UnityEngine.Random.Range(currentGroundMin, currentGroundMax + 1);
+            SpawnMobInternal(idx, isFly: false);
         }
         else
         {
-            // ✨ 공중: Min ~ Max 사이 랜덤 선택 (Max 포함)
-            int randomIdx = UnityEngine.Random.Range(currentFlyMin, currentFlyMax + 1);
-            SpawnMobInternal(randomIdx, isFly: true);
+            int idx = UnityEngine.Random.Range(currentFlyMin, currentFlyMax + 1);
+            SpawnMobInternal(idx, isFly: true);
         }
     }
 
@@ -200,7 +259,6 @@ public class Spawner : MonoBehaviour
         GameObject enemy = isFly ?
             PoolManager.instance.GetFlyMob(index) :
             PoolManager.instance.GetGroundMob(index);
-
         SpawnMobCommon(enemy, isFly);
     }
 
@@ -214,46 +272,48 @@ public class Spawner : MonoBehaviour
     {
         if (enemy == null) return;
 
-        Transform[] points = isFly ? flyMobSpawnPoints : mobSpawnPoints;
-        if (points != null && points.Length > 0)
+        Transform targetPoint = GetRandomSpawnPoint(isFly);
+        if (targetPoint != null)
         {
-            enemy.transform.position = points[UnityEngine.Random.Range(0, points.Length)].position;
+            enemy.transform.position = targetPoint.position;
+            InitEnemyPhysics(enemy);
         }
 
-        InitEnemyPhysics(enemy);
-
         Mob mob = enemy.GetComponent<Mob>();
-        if (mob != null)
+        if (mob != null) { mob.OnDied -= RespawnMob; mob.OnDied += RespawnMob; }
+    }
+
+    private void HandlePeriodicTasks()
+    {
+        if (!isSpawningEnabled) return;
+
+        for (int i = 0; i < periodicSpawnTasks.Count; i++)
         {
-            mob.OnDied -= RespawnMob;
-            mob.OnDied += RespawnMob;
+            var task = periodicSpawnTasks[i];
+            task.timer += Time.deltaTime;
+            if (task.timer >= task.interval)
+            {
+                SpawnMobFromPrefab(task.prefab, task.isFly);
+                task.timer = 0f;
+            }
         }
     }
 
-    private void InitEnemyPhysics(GameObject enemy)
+    public void AddPeriodicSpawnTask(GameObject prefab, float interval, bool isFly)
     {
-        Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-        }
+        if (prefab == null) return;
+        if (interval <= 0.1f) interval = 0.1f;
+        periodicSpawnTasks.Add(new PeriodicSpawnTask(prefab, interval, isFly));
     }
 
     private void SpawnEliteMob()
     {
-        // 엘리트 스폰 (랜덤 지상/공중)
         bool isFly = UnityEngine.Random.value > 0.5f;
-        int index = UnityEngine.Random.Range(0, 2); // (임시) 실제 배열 크기에 맞춰야 함
-
-        GameObject enemy = isFly ?
-            PoolManager.instance.GetFlyEliteMob(index) :
-            PoolManager.instance.GetGroundEliteMob(index);
-
+        int index = UnityEngine.Random.Range(0, 2);
+        GameObject enemy = isFly ? PoolManager.instance.GetFlyEliteMob(index) : PoolManager.instance.GetGroundEliteMob(index);
         SpawnMobCommon(enemy, isFly);
     }
 
-    // --- Event: Batch Spawn ---
     public void SpawnMobBatch(GameObject prefab, int count, float delay, bool isFly)
     {
         StartCoroutine(SpawnBatchRoutine(prefab, count, delay, isFly));
@@ -261,10 +321,8 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnBatchRoutine(GameObject prefab, int count, float delay, bool isFly)
     {
-        Transform[] points = isFly ? flyMobSpawnPoints : mobSpawnPoints;
-        if (points == null || points.Length == 0 || prefab == null) yield break;
-
-        Transform spawnPoint = points[UnityEngine.Random.Range(0, points.Length)];
+        Transform spawnPoint = GetRandomSpawnPoint(isFly);
+        if (spawnPoint == null) yield break;
 
         for (int i = 0; i < count; i++)
         {
@@ -278,17 +336,31 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public void SpawnBoss(BossName boss)
+    private void UpdatePhase(float currentTime)
     {
-        if (GameManager.Instance.CurrentState != GameState.Playing) return;
-        switch (boss)
+        if (spawnPhases == null || spawnPhases.Length == 0) return;
+        for (int i = spawnPhases.Length - 1; i >= 0; i--)
         {
-            case BossName.TrainBoss:
-                GameManager.Instance.AppearBoss();
-                Instantiate(PoolManager.instance.GetBoss(boss), bossSpawnPoints[(int)boss]);
-                break;
+            if (currentTime >= spawnPhases[i].startTime)
+            {
+                currentGroundMin = spawnPhases[i].groundMinIndex;
+                currentGroundMax = spawnPhases[i].groundMaxIndex;
+                currentFlyMin = spawnPhases[i].flyMinIndex;
+                currentFlyMax = spawnPhases[i].flyMaxIndex;
+                currentSpawnInterval = spawnPhases[i].spawnInterval;
+                return;
+            }
         }
     }
-    public void SpawnBoss() { SpawnBoss(BossName.TrainBoss); }
+
+    private void InitEnemyPhysics(GameObject enemy)
+    {
+        Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
+        if (rb != null) { rb.linearVelocity = Vector2.zero; rb.angularVelocity = 0f; }
+    }
+
+    // (구버전 호환용: 더 이상 Update에서 직접 호출하지 않고 StartBossSequence 사용)
+    public void SpawnBoss(BossName boss) { StartBossSequence(boss); }
+    public void SpawnBoss() { StartBossSequence(BossName.TrainBoss); }
     private void RespawnMob(Mob mob) { }
 }

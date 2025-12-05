@@ -156,4 +156,20 @@ public class PoolManager : MonoBehaviour
         for (int i = activeEnemies.Count - 1; i >= 0; i--)
             if (activeEnemies[i] != null) activeEnemies[i].DespawnWithoutExp();
     }
+
+    public void DespawnAllEnemiesExceptBoss()
+    {
+        for (int i = activeEnemies.Count - 1; i >= 0; i--)
+        {
+            Enemy enemy = activeEnemies[i];
+            if (enemy != null)
+            {
+                // Boss 컴포넌트가 있으면 건너뜀 (살려둠)
+                if (enemy.GetComponent<Boss>() != null) continue;
+
+                enemy.DespawnWithoutExp();
+            }
+        }
+    }
+
 }
