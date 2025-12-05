@@ -29,7 +29,7 @@ MonoBehaviour:
         boolValue: 0
       outputSettings:
         includeDefaultText: 1
-        specialText: "\uACB0\uACFC \uD14D\uC2A4\uD2B8..."
+        specialText: 
         order: 0
     - weight: 70
       effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
@@ -43,5 +43,5 @@ MonoBehaviour:
         boolValue: 0
       outputSettings:
         includeDefaultText: 1
-        specialText: "\uACB0\uACFC \uD14D\uC2A4\uD2B8..."
+        specialText: 
         order: 0
