@@ -1,30 +1,27 @@
-using UnityEngine;
-using DG.Tweening; // DOTweenÀ» »ç¿ëÇÏ±â À§ÇØ ÇÊ¼ö
+ï»¿using UnityEngine;
+using DG.Tweening; // DOTween
 
-// ÀÌ ½ºÅ©¸³Æ®¸¦ Ãß°¡ÇÏ¸é CanvasGroup ÄÄÆ÷³ÍÆ®°¡ ÀÚµ¿À¸·Î Ãß°¡µË´Ï´Ù.
 [RequireComponent(typeof(CanvasGroup))]
 public class UIAlphaFader : MonoBehaviour
 {
-    [Header("ÆäÀÌµå ¼³Á¤")]
-    [Tooltip("ÆäÀÌµå ÀÎ/¾Æ¿ô¿¡ °É¸®´Â ½Ã°£ (ÃÊ)")]
-    [SerializeField] private float fadeDuration = 0.5f;
+    [Header("ê¸°ë³¸ ì„¤ì •")]
+    [Tooltip("ê¸°ë³¸ í˜ì´ë“œ ì‹œê°„ (í•¨ìˆ˜ ì¸ìê°€ ì—†ì„ ë•Œ ì‚¬ìš©)")]
+    [SerializeField] private float defaultDuration = 0.5f;
 
-    [Tooltip("Start() ÇÔ¼ö È£Ãâ ½Ã ÀÚµ¿À¸·Î ÆäÀÌµå ÀÎÀ» ½ÇÇàÇÒÁö ¿©ºÎ")]
+    [Tooltip("Start() í˜¸ì¶œ ì‹œ ìë™ìœ¼ë¡œ í˜ì´ë“œ ì¸ ì‹¤í–‰ ì—¬ë¶€")]
     [SerializeField] private bool fadeInOnStart = true;
 
-    [Tooltip("Awake() ½ÃÁ¡¿¡ UI¸¦ Åõ¸íÇÏ°Ô(alpha=0) ¼³Á¤ÇÒÁö ¿©ºÎ")]
+    [Tooltip("ì‹œì‘ ì‹œ íˆ¬ëª…í•˜ê²Œ(Alpha 0) ì„¤ì •í• ì§€ ì—¬ë¶€")]
     [SerializeField] private bool startTransparent = true;
 
     private CanvasGroup canvasGroup;
 
     private void Awake()
     {
-        // RequireComponent·Î ÀÎÇØ canvasGroupÀº Ç×»ó Á¸ÀçÇÔ
         canvasGroup = GetComponent<CanvasGroup>();
 
         if (startTransparent)
         {
-            // ½ÃÀÛ ½Ã ¿ÏÀü Åõ¸íÇÏ°Ô ¼³Á¤
             canvasGroup.alpha = 0f;
         }
     }
@@ -33,27 +30,39 @@ public class UIAlphaFader : MonoBehaviour
     {
         if (fadeInOnStart)
         {
-            FadeIn();
+            FadeIn(defaultDuration);
         }
     }
 
+    // -----------------------------------------------------------------------
+    // âœ¨ [í•µì‹¬ ìˆ˜ì •] ë°˜í™˜ íƒ€ì…ì„ Tweenìœ¼ë¡œ ë³€ê²½í•˜ì—¬ ì½”ë£¨í‹´ì—ì„œ ê¸°ë‹¤ë¦´ ìˆ˜ ìˆê²Œ í•¨
+    // -----------------------------------------------------------------------
+
     /// <summary>
-    /// UI ±×·ìÀ» ¼­¼­È÷ ³ªÅ¸³ª°Ô ÇÕ´Ï´Ù (Fade In).
+    /// í™”ë©´ì„ ë°ê²Œ ë§Œë“­ë‹ˆë‹¤ (Alpha 0).
     /// </summary>
-    public void FadeIn()
+    public Tween FadeIn(float duration)
     {
-        // DOTweenÀ» »ç¿ëÇØ alpha °ªÀ» 1·Î(ºÒÅõ¸í) º¯°æ
-        canvasGroup.DOFade(1f, fadeDuration)
-            .SetUpdate(true); // Time.timeScaleÀÌ 0ÀÏ ¶§µµ (ÀÏ½ÃÁ¤Áö Áß) ÀÛµ¿
+        // 1. (ì„ íƒ) íˆ¬ëª…ë„ê°€ 1ì¸ ìƒíƒœì—ì„œ ì‹œì‘í•˜ì§€ ì•Šë„ë¡ ê°•ì œ ì„¤ì •í•  ìˆ˜ë„ ìˆìŒ
+        // canvasGroup.alpha = 0f; 
+
+        // 2. DOTween ì‹¤í–‰ ë° ë°˜í™˜
+        return canvasGroup.DOFade(1f, duration).SetUpdate(true);
     }
 
     /// <summary>
-    /// UI ±×·ìÀ» ¼­¼­È÷ »ç¶óÁö°Ô ÇÕ´Ï´Ù (Fade Out).
+    /// í™”ë©´ì„ ì–´ë‘¡ê²Œ ë§Œë“­ë‹ˆë‹¤ (Alpha 1).
     /// </summary>
-    public void FadeOut()
+    public Tween FadeOut(float duration)
     {
-        // DOTweenÀ» »ç¿ëÇØ alpha °ªÀ» 0À¸·Î(Åõ¸í) º¯°æ
-        canvasGroup.DOFade(0f, fadeDuration)
-            .SetUpdate(true); // Time.timeScaleÀÌ 0ÀÏ ¶§µµ (ÀÏ½ÃÁ¤Áö Áß) ÀÛµ¿
+        // 1. (ì„ íƒ) íˆ¬ëª…ë„ê°€ 0ì¸ ìƒíƒœì—ì„œ ì‹œì‘í•˜ì§€ ì•Šë„ë¡ ê°•ì œ ì„¤ì •í•  ìˆ˜ë„ ìˆìŒ
+        // canvasGroup.alpha = 1f;
+
+        // 2. DOTween ì‹¤í–‰ ë° ë°˜í™˜
+        return canvasGroup.DOFade(0f, duration).SetUpdate(true);
     }
+
+    // (ë§¤ê°œë³€ìˆ˜ ì—†ëŠ” ë²„ì „ - ê¸°ë³¸ê°’ ì‚¬ìš©)
+    public void FadeIn() => FadeIn(defaultDuration);
+    public void FadeOut() => FadeOut(defaultDuration);
 }

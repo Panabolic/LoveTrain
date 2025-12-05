@@ -43,6 +43,7 @@ public class LaserBeamSprite : MonoBehaviour, IRicochetSource
     public void Init(float dmg, float tickRate)
     {
         this.damage = dmg;
+        ricochetPrefab.GetComponent<Projectile>().SetDamage(dmg / 2.7f);
         // 0.05초 미만 등 너무 빨라지는 것 방지 (선택 사항)
         this.damageInterval = Mathf.Max(tickRate, 0.02f);
     }

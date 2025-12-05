@@ -2,6 +2,8 @@
 
 public class Boss : Enemy
 {
+    [SerializeField] protected SO_Event killEvent;
+
     protected override float CalculateCalibratedHP()
     {
         // 체력 보정 공식

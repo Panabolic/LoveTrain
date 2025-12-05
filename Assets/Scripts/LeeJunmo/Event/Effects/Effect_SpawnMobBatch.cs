@@ -15,7 +15,7 @@ public class Effect_SpawnMobBatch : GameEffectSO
         if (delay <= 0.05f) delay = 0.2f;
 
         Spawner spawner = Spawner.Instance;
-        if (spawner == null) spawner = FindObjectOfType<Spawner>();
+        if (spawner == null) spawner = FindFirstObjectByType<Spawner>();
 
         if (spawner != null)
         {

@@ -1,121 +1,186 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class StageManager : MonoBehaviour
 {
-    public static StageManager Instance { get; private set; }
+    public static StageManager Instance;
 
-    [Header("참조")]
-    [SerializeField] private StageDatabase backgroundDatabase;
-    [SerializeField] private Train train; // AutoScrollBackground에 연결할 Train 참조
-    [SerializeField] private Transform backgroundParent; // 배경 프리팹이 생성될 부모
+    // 스테이지별 터널 연출 설정을 묶은 클래스
+    [System.Serializable]
+    public class StageTransitionSetting
+    {
+        [Header("Tunnel Assets")]
+        public GameObject tunnelPrefab;
 
-    [Header("시작 설정")]
-    [SerializeField] private int startingBackgroundIndex = 0; // 시작 시 로드할 배경 인덱스
+        [Header("Tunnel Positions (Scene Transforms)")]
+        [Tooltip("터널이 생성될 위치 (화면 밖 오른쪽)")]
+        public Transform tunnelSpawnPoint;
 
-    // --- 내부 변수 ---
-    private GameObject currentBackgroundInstance; // 현재 로드된 배경 프리팹 인스턴스
-    private int currentBackgroundIndex;
+        [Tooltip("터널이 이동해 멈출 위치 (기차 앞)")]
+        public Transform tunnelTargetPoint;
+
+        [Tooltip("기차가 터널 안으로 들어갈 목표 지점")]
+        public Transform trainEnterPoint;
+    }
+
+    [Header("Stage Config")]
+    [Tooltip("배경 프리팹 데이터베이스")]
+    [SerializeField] private StageDatabase stageDatabase;
+
+    // 스테이지별 연출 설정 리스트 (0번 인덱스 = 1스테이지 클리어 시 사용)
+    [Header("Transition Settings (Per Stage)")]
+    [SerializeField] private List<StageTransitionSetting> transitionSettings;
+    [SerializeField] private Transform bgParent;
+
+    [Header("Player Reset")]
+    [Tooltip("다음 스테이지 시작 시 기차 좌표")]
+    [SerializeField] private Vector3 playerResetPosition = new Vector3(0f, -7.6f, 0f);
+
+    [Header("Components")]
+    [SerializeField] private Train train;
+    [SerializeField] private UIAlphaFader uiFader;
+
+    // 현재 스테이지 인덱스
+    public int CurrentStageIndex { get; private set; } = 0;
+
+    // 현재 씬에 생성된 배경 오브젝트 참조
+    private GameObject currentStageObject;
 
     private void Awake()
     {
-        // 간단한 싱글톤
-        if (Instance != null && Instance != this) { Destroy(gameObject); } else { Instance = this; }
+        if (Instance == null) Instance = this;
     }
 
     private void Start()
     {
-        if (backgroundDatabase == null || backgroundDatabase.stagePrefabs.Count == 0)
+        // 게임 시작 시 첫 번째 스테이지 로드
+        LoadStage(0);
+    }
+
+    // -----------------------------------------------------------
+    // 스테이지 로드 (배경 교체)
+    // -----------------------------------------------------------
+    private void LoadStage(int index)
+    {
+        if (stageDatabase == null || stageDatabase.stagePrefabs == null || stageDatabase.stagePrefabs.Count == 0)
         {
-            Debug.LogError("StageBackgroundDatabase가 없거나 비어있습니다!", this);
-            this.enabled = false;
+            Debug.LogError("[StageManager] StageDatabase 오류! 데이터가 비어있거나 연결되지 않았습니다.");
             return;
         }
 
-        // 게임 시작 시 첫 배경 로드
-        currentBackgroundIndex = startingBackgroundIndex;
-        LoadBackgroundByIndex(currentBackgroundIndex);
+        index = Mathf.Clamp(index, 0, stageDatabase.stagePrefabs.Count - 1);
+        CurrentStageIndex = index;
 
-        // (선택) GameManager 구독하여 Playing 상태일 때만 스크롤 활성화 등...
-        // if (GameManager.Instance != null) { ... }
+        // 기존 배경 삭제
+        if (currentStageObject != null) Destroy(currentStageObject);
+
+        // 새 배경 프리팹 생성
+        GameObject prefab = stageDatabase.stagePrefabs[index];
+        if (prefab != null)
+        {
+            currentStageObject = Instantiate(prefab, bgParent);
+        }
     }
 
-    /// <summary>
-    /// 인덱스를 사용하여 특정 배경 프리팹을 로드합니다.
-    /// </summary>
-    public void LoadBackgroundByIndex(int index)
+    // -----------------------------------------------------------
+    // ✨ DOTween Sequence를 활용한 스테이지 전환 연출 (핵심)
+    // -----------------------------------------------------------
+    public void StartStageTransitionSequence()
     {
-        if (index < 0 || index >= backgroundDatabase.stagePrefabs.Count)
+        // 1. 상태 변경 (모든 조작, 스폰, 아이템 정지)
+        if (PoolManager.instance != null) PoolManager.instance.DespawnAllEnemiesExceptBoss();
+        GameManager.Instance.ChangeState(GameState.StageTransition);
+
+        Debug.Log($"[StageManager] Stage {CurrentStageIndex + 1} 클리어! 연출 시퀀스 시작.");
+
+        // 현재 스테이지에 맞는 연출 설정 가져오기
+        int settingIndex = CurrentStageIndex % transitionSettings.Count;
+        StageTransitionSetting setting = transitionSettings[settingIndex];
+
+        // 터널 생성 (화면 밖)
+        GameObject tunnel = null;
+        if (setting.tunnelPrefab != null && setting.tunnelSpawnPoint != null)
         {
-            Debug.LogError($"잘못된 배경 인덱스입니다: {index}");
-            return;
+            tunnel = Instantiate(setting.tunnelPrefab, setting.tunnelSpawnPoint.position, Quaternion.identity);
         }
 
-        LoadBackground(backgroundDatabase.stagePrefabs[index]);
-        currentBackgroundIndex = index; // 현재 인덱스 기록
-    }
+        // ✨ 시퀀스 조립
+        Sequence seq = DOTween.Sequence();
 
-    /// <summary>
-    /// 프리팹 자체를 받아 배경을 로드하는 핵심 함수
-    /// </summary>
-    private void LoadBackground(GameObject bgPrefab)
-    {
-        // 1. 기존 배경 인스턴스가 있으면 파괴
-        if (currentBackgroundInstance != null)
+        // [Step 1] 2초 대기 (보스 사망 연출 감상)
+        seq.AppendInterval(2.0f);
+
+        // [Step 2] 터널 등장 (2초간 이동)
+        if (tunnel != null && setting.tunnelTargetPoint != null)
         {
-            Destroy(currentBackgroundInstance);
+            seq.Append(tunnel.transform.DOMove(setting.tunnelTargetPoint.position, 2.0f).SetEase(Ease.OutQuad));
+
+            // ✨ 터널 도착 직후 배경 스크롤 정지 (콜백)
+            seq.AppendCallback(() => {
+                if (currentStageObject != null)
+                {
+                    var bg = currentStageObject.GetComponent<AutoScrollBackground>();
+                    if (bg != null) bg.SetScrolling(false);
+                }
+            });
         }
 
-        // 2. 새 배경 프리팹 인스턴스화
-        if (bgPrefab != null)
+        // [Step 3] 기차 진입 (1.5초간 터널 속으로 이동)
+        if (train != null && setting.trainEnterPoint != null)
         {
-            currentBackgroundInstance = Instantiate(bgPrefab, backgroundParent);
+            seq.Append(train.transform.DOMove(setting.trainEnterPoint.position, 1.5f).SetEase(Ease.InQuad));
+        }
 
-            // 3. 프리팹 내 AutoScrollBackground 스크립트에 Train 참조 연결
-            AutoScrollBackground bgScroll = currentBackgroundInstance.GetComponent<AutoScrollBackground>();
-            if (bgScroll != null && train != null)
+        // [Step 4] 화면 암전 (FadeIn: 검은 화면이 됨)
+        if (uiFader != null)
+        {
+            seq.Append(uiFader.FadeIn(1.0f));
+        }
+
+        // [Step 5] 암전 상태에서 데이터 교체 (콜백)
+        seq.AppendCallback(() =>
+        {
+            // 배경 교체 (다음 스테이지 로드)
+            NextStageDataUpdate();
+
+            // 기차 위치 리셋 (화면 왼쪽 시작 지점으로)
+            if (train != null) train.transform.position = playerResetPosition;
+
+            // 터널 삭제
+            if (tunnel != null) Destroy(tunnel);
+        });
+
+        // 데이터 교체 후 잠시 대기 (로딩 느낌, 0.5초)
+        seq.AppendInterval(0.5f);
+
+        // [Step 6] 화면 밝아짐 (FadeOut: 검은 화면이 사라짐)
+        if (uiFader != null)
+        {
+            seq.Append(uiFader.FadeOut(1.0f));
+        }
+
+        // [Step 7] 시퀀스 종료 시 게임 재개
+        seq.OnComplete(() =>
+        {
+            if (GameManager.Instance != null)
             {
-                bgScroll.train = this.train;
-                // (선택) 초기 스크롤 상태 설정 (GameManager 연동 시)
-                // bgScroll.enabled = (GameManager.Instance?.CurrentState == GameState.Playing);
+                GameManager.Instance.gameTime = 0f;
+                GameManager.Instance.ChangeState(GameState.Playing);
+                Debug.Log("[StageManager] 다음 스테이지 시작! (Game Resumed)");
             }
-            else if (bgScroll == null)
-            {
-                Debug.LogError($"배경 프리팹 '{bgPrefab.name}'에 AutoScrollBackground.cs가 없습니다!", bgPrefab);
-            }
-        }
-        else
-        {
-            Debug.LogError("로드할 배경 프리팹이 null입니다!");
-        }
+        });
     }
 
-    /// <summary>
-    /// 다음 순서의 배경을 로드합니다. (마지막이면 처음으로)
-    /// </summary>
-    public void LoadNextBackground()
+    // 다음 스테이지 인덱스 계산 및 로드
+    private void NextStageDataUpdate()
     {
-        int nextIndex = (currentBackgroundIndex + 1) % backgroundDatabase.stagePrefabs.Count;
-        LoadBackgroundByIndex(nextIndex);
-    }
+        if (stageDatabase == null || stageDatabase.stagePrefabs.Count == 0) return;
 
-    /// <summary>
-    /// 랜덤 배경을 로드합니다. (현재 배경 제외)
-    /// </summary>
-    public void LoadRandomBackground()
-    {
-        if (backgroundDatabase.stagePrefabs.Count <= 1)
-        {
-            LoadBackgroundByIndex(0); // 배경이 하나뿐임
-            return;
-        }
+        int nextIndex = (CurrentStageIndex + 1) % stageDatabase.stagePrefabs.Count;
+        LoadStage(nextIndex);
 
-        int randomIndex;
-        do
-        {
-            randomIndex = Random.Range(0, backgroundDatabase.stagePrefabs.Count);
-        } while (randomIndex == currentBackgroundIndex); // 현재와 다른 인덱스가 나올 때까지 반복
-
-        LoadBackgroundByIndex(randomIndex);
+        Debug.Log($"[StageManager] 스테이지 데이터 교체 완료: {nextIndex + 1} 스테이지");
     }
 }

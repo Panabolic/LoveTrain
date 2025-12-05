@@ -129,6 +129,8 @@ public class TrainBoss : Boss
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!isAlive) return;
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
         {
             Train train = collision.transform.GetComponentInParent<Train>();
@@ -170,6 +172,13 @@ public class TrainBoss : Boss
         yield return base.Die();
 
         yield return new WaitForSeconds(3.0f);
+
+        if (killEvent != null)
+        {
+            EventManager.Instance.RequestEvent(killEvent);
+        }
+
+        StageManager.Instance.StartStageTransitionSequence();
 
         Destroy(gameObject);
     }

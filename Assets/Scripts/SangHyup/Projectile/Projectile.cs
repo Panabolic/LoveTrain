@@ -103,6 +103,11 @@ public class Projectile : MonoBehaviour, IRicochetSource
         enemy.TakeDamage(damage);
     }
 
+    public void SetDamage(float damage)
+    {
+        this.damage = damage;
+    }
+
     public void Despawn()
     {
         CancelInvoke(nameof(Despawn));

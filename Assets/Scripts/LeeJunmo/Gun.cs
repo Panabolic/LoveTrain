@@ -200,7 +200,7 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-
+        if (GameManager.Instance.CurrentState == GameState.StageTransition) return;
         if (GameManager.Instance.CurrentState != GameState.Die)
         {
             if (Time.timeScale == 0)

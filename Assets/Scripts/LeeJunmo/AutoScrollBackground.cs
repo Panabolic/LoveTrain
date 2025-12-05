@@ -2,7 +2,7 @@
 
 public class AutoScrollBackground : MonoBehaviour
 {
-    [Tooltip("속도 정보를 가져올 TrainController를 여기에 연결해주세요.")]
+    [Tooltip("속도 정보를 가져올 TrainController (자동으로 찾습니다)")]
     public Train train;
 
     [Tooltip("카메라를 기준으로 배경 위치를 재설정합니다.")]
@@ -12,8 +12,7 @@ public class AutoScrollBackground : MonoBehaviour
     public ParallaxLayer[] layers;
 
     private float spriteWidth;
-
-    private bool isScrolling = false; // ✨ [추가] 게임 상태에 따라 조절될 플래그
+    private bool isScrolling = false;
 
     void Start()
     {
@@ -21,60 +20,72 @@ public class AutoScrollBackground : MonoBehaviour
 
         if (train == null)
         {
-            Debug.LogError("TrainController가 연결되지 않았습니다! 인스펙터에서 연결해주세요.", this.gameObject);
-            this.enabled = false;
-            return;
+            train = FindFirstObjectByType<Train>();
+            if (train == null)
+            {
+                Debug.LogError("[AutoScrollBackground] Train을 찾을 수 없습니다!");
+                this.enabled = false;
+                return;
+            }
         }
 
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnGameStateChanged += HandleGameStateChange;
-            // 현재 상태로 초기화
             HandleGameStateChange(GameManager.Instance.CurrentState);
         }
     }
 
-    /// <summary>
-    /// GameManager로부터 상태 변경 신호를 받아 스크롤 여부를 결정
-    /// </summary>
+    private void OnDestroy()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnGameStateChanged -= HandleGameStateChange;
+    }
+
     private void HandleGameStateChange(GameState newState)
     {
-        isScrolling = (newState != GameState.Start || newState == GameState.Event);
+        // ✨ [수정] StageTransition 상태는 제외 (StageManager가 수동으로 끌 예정)
+        if (newState == GameState.Start || newState == GameState.Event || newState == GameState.Die)
+        {
+            isScrolling = false;
+        }
+        else
+        {
+            isScrolling = true; // Playing, Boss, StageTransition 등에서는 일단 켬
+        }
+    }
+
+    // ✨ [추가] 외부에서 스크롤을 강제로 멈추기 위한 함수
+    public void SetScrolling(bool active)
+    {
+        isScrolling = active;
     }
 
     void Update()
     {
-        if (train == null) return;
-
-        // ✨ [추가] 스크롤이 불가능한 상태(Start, Event, Die)면 즉시 종료
         if (!isScrolling || train == null) return;
 
-        // ✨ 이제 TrainController.CurrentSpeed가 정상적으로 작동하므로 이 코드는 유효합니다.
         float currentTrainSpeed = train.CurrentSpeed;
 
-        // 각 레이어를 패럴랙스 요소에 맞게 이동시킵니다.
+        // 1. 레이어 이동 (Parallax)
         foreach (ParallaxLayer layer in layers)
         {
-            // 속도가 0이면 움직이지 않으므로 계산할 필요가 없습니다.
             if (Mathf.Approximately(currentTrainSpeed, 0)) continue;
 
-            float movement = (currentTrainSpeed / 10) * layer.parallaxFactor * Time.deltaTime;
+            float movement = (currentTrainSpeed / 10f) * layer.parallaxFactor * Time.deltaTime;
             layer.layerTransform.position -= new Vector3(movement, 0, 0);
         }
 
-        // 배경 이미지가 화면 밖으로 나가면 반대편으로 옮겨서 무한 스크롤 효과를 줍니다.
-        // 이 로직은 currentTrainSpeed를 기반으로 하므로 수정할 필요가 없습니다.
+        // 2. 무한 스크롤 재배치
         foreach (ParallaxLayer layer in layers)
         {
-            if (layer.layerTransform.childCount < 2) continue; // 자식 오브젝트가 2개 미만이면 무한 스크롤 불가
+            if (layer.layerTransform.childCount < 2) continue;
 
-            // spriteWidth는 한 번만 계산해도 되지만, 유연성을 위해 Update에 둡니다.
             spriteWidth = layer.layerTransform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x;
 
             Transform leftChild = layer.layerTransform.GetChild(0);
             Transform rightChild = layer.layerTransform.GetChild(1);
 
-            // 카메라와 이미지의 상대 위치를 계산하여 재배치 여부를 결정합니다.
             if (currentTrainSpeed > 0 && cameraTransform.position.x > rightChild.position.x)
             {
                 leftChild.position = new Vector3(rightChild.position.x + spriteWidth, leftChild.position.y, leftChild.position.z);
