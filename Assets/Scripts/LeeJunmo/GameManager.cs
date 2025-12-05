@@ -1,18 +1,16 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections.Generic; // Queue 사용을 위해 추가
+using System.Collections.Generic;
 using DG.Tweening;
 
-/// <summary>
-/// 게임의 전체적인 흐름 상태
-/// </summary>
 public enum GameState
 {
-    Start,      // 기차 출발 전
-    Playing,    // 게임 플레이 중
-    Event,      // 이벤트/UI 팝업 상태 (일시정지)
-    Boss,       // 보스전
-    Die         // 사망
+    Start,
+    Playing,
+    Event,      // 이벤트/레벨업 UI (시간 정지)
+    Boss,
+    Die,
+    Pause       // ✨ [추가] 옵션 창 등으로 인한 일시 정지
 }
 
 public class GameManager : MonoBehaviour
@@ -24,9 +22,11 @@ public class GameManager : MonoBehaviour
 
     public float gameTime = 0f;
 
-    // ✨ [핵심] UI 요청을 순차적으로 처리하기 위한 큐
     private Queue<Action> uiRequestQueue = new Queue<Action>();
-    private bool isUIProcessing = false; // 현재 UI가 열려있는지 확인
+    private bool isUIProcessing = false;
+
+    // 일시정지 전 상태를 기억하기 위한 변수
+    private GameState stateBeforePause;
 
     private void Awake()
     {
@@ -35,13 +35,10 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // DOTween 초기화
         DOTween.Init();
-
         Time.timeScale = 1f;
         Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
     }
@@ -61,74 +58,100 @@ public class GameManager : MonoBehaviour
     }
 
     // ----------------------------------------------------------------------------
-    // ✨ [핵심 기능] UI 큐 시스템 (레벨업, 이벤트 공용)
+    // ✨ [추가] 일시정지(Pause) 시스템 - Option UI에서 호출
     // ----------------------------------------------------------------------------
 
-    /// <summary>
-    /// UI를 띄우는 행동(함수)을 큐에 등록합니다.
-    /// 예: RegisterUIQueue(() => LevelUpManager.ShowChoice());
-    /// </summary>
+    public void PauseGame()
+    {
+        // Playing이나 Boss 상태일 때만 일시정지 가능 (Event나 Die 중에는 불가)
+        if (CurrentState == GameState.Playing || CurrentState == GameState.Boss)
+        {
+            stateBeforePause = CurrentState; // 현재 상태 기억
+            ChangeState(GameState.Pause);
+
+            Time.timeScale = 0f;
+            Physics2D.simulationMode = SimulationMode2D.Script;
+        }
+    }
+
+    public void ResumeGame()
+    {
+        if (CurrentState == GameState.Pause)
+        {
+            // 1. 원래 상태로 복구
+            ChangeState(stateBeforePause);
+
+            Time.timeScale = 1f;
+            Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
+
+            // 2. ✨ 일시정지 중에 쌓인 UI 요청(이벤트 등)이 있다면 처리 시작
+            ProcessNextUI();
+        }
+    }
+
+    // ----------------------------------------------------------------------------
+    // UI 큐 시스템
+    // ----------------------------------------------------------------------------
+
     public void RegisterUIQueue(Action uiAction)
     {
         uiRequestQueue.Enqueue(uiAction);
 
-        // 현재 열려있는 창이 없다면 바로 다음 작업 실행
-        if (!isUIProcessing)
+        // 현재 처리 중인 UI가 없고, 게임이 '일시정지' 상태가 아닐 때만 실행
+        if (!isUIProcessing && CurrentState != GameState.Pause)
         {
             ProcessNextUI();
         }
     }
 
-    /// <summary>
-    /// 큐에서 다음 UI 작업을 꺼내 실행합니다.
-    /// </summary>
     private void ProcessNextUI()
     {
+        // ✨ 일시정지 상태라면(옵션 창 열림) 큐를 실행하지 않고 대기
+        if (CurrentState == GameState.Pause) return;
+
         if (uiRequestQueue.Count > 0)
         {
             isUIProcessing = true;
 
-            // 1. 게임 일시 정지 (공통 처리)
             Time.timeScale = 0f;
             Physics2D.simulationMode = SimulationMode2D.Script;
 
-            // 2. 상태 변경 (이벤트 상태로 전환)
-            if (CurrentState == GameState.Playing || CurrentState == GameState.Boss)
+            // 이벤트 상태로 전환 (보스전이었든 플레잉이었든)
+            if (CurrentState != GameState.Event && CurrentState != GameState.Die)
             {
                 ChangeState(GameState.Event);
             }
 
-            // 3. 등록된 UI 함수 실행 (LevelUpManager나 EventManager의 함수가 호출됨)
             Action action = uiRequestQueue.Dequeue();
             action.Invoke();
         }
         else
         {
-            // 큐가 비었으면 게임 재개
-            isUIProcessing = false;
-            ResumeGame();
+            // 큐가 비었으면 UI 종료 처리
+            if (isUIProcessing)
+            {
+                isUIProcessing = false;
+                ResumeFromEvent();
+            }
         }
     }
 
-    /// <summary>
-    /// UI 매니저들이 작업(선택 완료, 창 닫기 등)이 끝났을 때 호출하는 함수
-    /// </summary>
     public void CloseUI()
     {
-        // 현재 창 처리가 끝났으므로 다음 창이 있는지 확인
         ProcessNextUI();
     }
 
-    private void ResumeGame()
+    private void ResumeFromEvent()
     {
         Time.timeScale = 1f;
         Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
 
-        // 이벤트 상태였다면 다시 플레이(또는 보스) 상태로 복귀
+        // 이벤트가 끝나면 기본적으로 Playing으로 돌아가되, 
+        // 만약 이전 맥락이 Boss였다면 Boss 상태 관리가 필요할 수 있음.
+        // 현재 구조상 Boss 상태는 Spawner 등에서 관리하므로 Playing으로 둬도 무방하거나,
+        // 필요 시 stateBeforeEvent 등을 도입해야 함. 여기선 Playing으로 복귀.
         if (CurrentState == GameState.Event)
         {
-            // 보스전이었다면 보스 상태로, 아니면 플레잉으로 (간단히 Playing으로 복귀 예시)
-            // 실제로는 이전 상태를 저장했다가 복구하는 것이 더 정확할 수 있음
             ChangeState(GameState.Playing);
         }
     }
@@ -147,17 +170,7 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState == GameState.Start) ChangeState(GameState.Playing);
     }
-
-    public void AppearBoss()
-    {
-        if (CurrentState == GameState.Playing) ChangeState(GameState.Boss);
-    }
-    public void BossDied()
-    {
-        if (CurrentState == GameState.Boss) ChangeState(GameState.Playing);
-    }
-    public void PlayerDied()
-    {
-        ChangeState(GameState.Die);
-    }
+    public void AppearBoss() { if (CurrentState == GameState.Playing) ChangeState(GameState.Boss); }
+    public void BossDied() { if (CurrentState == GameState.Boss) ChangeState(GameState.Playing); }
+    public void PlayerDied() { ChangeState(GameState.Die); }
 }

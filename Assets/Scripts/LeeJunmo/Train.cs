@@ -244,44 +244,39 @@ public class Train : MonoBehaviour
     {
         if (handTargetPos == null)
         {
-            // 예외 처리: 타겟이 없으면 기존 로직대로 단순히 감속 후 사망
+            // 예외 처리: 타겟이 없으면 기존 방식대로 감속
             CurrentSpeed -= (deathSpeedThreshold / 3.0f) * Time.deltaTime;
             if (CurrentSpeed <= 0) Die();
             return;
         }
 
-        // 1. 시작 위치(넉백 끝난 위치)와 목표 위치(손 위치) 사이의 총 거리 계산
-        // (주의: 이 함수는 매 프레임 실행되므로, 변하지 않는 시작점(deathKnockbackPositionX)을 기준으로 계산해야 비율이 일정하게 유지됩니다.)
-        float startX = deathKnockbackPositionX;
-        float targetX = handTargetPos.position.x;
-        float totalDistance = Mathf.Abs(startX - targetX);
+        // 1. 시간 경과에 따른 자연스러운 속도 감소 (저항력 느낌)
+        // (플레이어가 아무것도 안 하면 이 속도로 줄어들어 결국 사망)
+        float naturalDropRate = (deathSpeedThreshold / 5.0f); // 예: 5초 뒤 사망
+        CurrentSpeed -= naturalDropRate * Time.deltaTime;
 
-        // 2. 총 소요 시간 계산 (거리 / 속도)
-        // (거리가 너무 가까우면 즉시 0 처리)
-        if (totalDistance <= 0.01f)
-        {
-            CurrentSpeed = 0;
-            Die();
-            return;
-        }
+        // 2. 속도 범위 제한 (0 ~ 임계치)
+        if (CurrentSpeed > deathSpeedThreshold) CurrentSpeed = deathSpeedThreshold;
+        // (회복되면 CheckState에서 RecoverControl이 호출되므로 여기선 상한선만 둠)
 
-        float totalTime = totalDistance / deathMoveSpeed;
+        // 3. ✨ [핵심 수정] 현재 속도에 따른 위치 계산 (Lerp)
+        // ratio 1.0 = 속도 최대 (임계치) -> 시작 위치 (deathKnockbackPositionX)
+        // ratio 0.0 = 속도 0 (정지) -> 목표 위치 (handTargetPos)
 
-        // 3. 속도 감소량 계산 (초기속도 / 총시간)
-        // 이렇게 하면 정확히 목표 지점에 도착할 때 속도가 0이 됩니다.
-        float speedDropRate = deathSpeedThreshold / totalTime;
+        float ratio = Mathf.Clamp01(CurrentSpeed / deathSpeedThreshold);
 
-        // 4. 기차 위치 이동 (목표 X축을 향해 등속 이동)
-        float moveStep = deathMoveSpeed * Time.deltaTime;
-        Vector3 targetPos = new Vector3(targetX, transform.position.y, transform.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, moveStep);
+        // 시작점(넉백 후 위치)과 끝점(손 위치) 사이를 속도 비율로 보간
+        // 속도가 높을수록 시작점에, 낮을수록 손 위치에 가까워짐
+        float targetX = Mathf.Lerp(handTargetPos.position.x, deathKnockbackPositionX, ratio);
 
-        // 5. 현재 속도 감소
-        CurrentSpeed -= speedDropRate * Time.deltaTime;
+        // 부드러운 이동을 위해 MoveTowards나 Lerp 사용
+        // (프레임마다 목표 위치가 바뀌므로 부드럽게 따라가도록 설정)
+        Vector3 newPos = transform.position;
+        newPos.x = Mathf.Lerp(transform.position.x, targetX, Time.deltaTime * 5f); // 5f는 따라가는 반응 속도
+        transform.position = newPos;
 
-        // 6. 종료 조건: 속도가 0이 되었거나, 목표 위치에 도달했을 때
-        // (둘 중 하나라도 만족하면 사망 처리)
-        if (CurrentSpeed <= 0 || Mathf.Approximately(transform.position.x, targetX))
+        // 4. 사망 체크
+        if (CurrentSpeed <= 0)
         {
             CurrentSpeed = 0;
             Die();
