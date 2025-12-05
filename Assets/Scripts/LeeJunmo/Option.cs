@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem; // ✨ [필수 추가]
+using UnityEngine.InputSystem;
 
 public class Option : MonoBehaviour
 {
@@ -11,15 +11,14 @@ public class Option : MonoBehaviour
     public Slider BGMSlider;
     public Slider SFXSlider;
 
-    [Header("State")]
-    private bool isOptionOpen = false;
-    private float previousTimeScale = 1f;
+    // 내부 상태 변수는 이제 필요 없거나 최소화됩니다.
+    // GameManager의 상태(GameState.Pause)를 신뢰합니다.
 
     void Start()
     {
-        if (optionPanel != null)
-            optionPanel.SetActive(false);
+        if (optionPanel != null) optionPanel.SetActive(false);
 
+        // 사운드 매니저 연동 초기화
         if (SoundManager.instance != null)
         {
             BGMSlider.value = SoundManager.instance.GetBGMVolume() * 100f;
@@ -33,7 +32,6 @@ public class Option : MonoBehaviour
 
         BGMSlider.minValue = 0;
         BGMSlider.maxValue = 100;
-
         SFXSlider.minValue = 0;
         SFXSlider.maxValue = 100;
 
@@ -43,8 +41,6 @@ public class Option : MonoBehaviour
 
     void Update()
     {
-        // ✨ [핵심 수정] 구버전 Input 대신 신버전 InputSystem 사용
-        // 키보드가 연결되어 있고, ESC 키가 눌렸는지 확인
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             ToggleOptionPanel();
@@ -53,42 +49,45 @@ public class Option : MonoBehaviour
 
     public void ToggleOptionPanel()
     {
-        isOptionOpen = !isOptionOpen;
+        if (GameManager.Instance == null) return;
 
-        if (isOptionOpen)
+        GameState currentState = GameManager.Instance.CurrentState;
+
+        // 1. 게임 진행 중 (Playing, Boss) -> 일시정지 (옵션 열기)
+        if (currentState == GameState.Playing || currentState == GameState.Boss)
         {
+            GameManager.Instance.PauseGame();
             optionPanel.SetActive(true);
-            previousTimeScale = Time.timeScale;
-            Time.timeScale = 0f;
         }
+        // 2. 일시정지 상태 (Pause) -> 게임 재개 (옵션 닫기)
+        else if (currentState == GameState.Pause)
+        {
+            GameManager.Instance.ResumeGame();
+            optionPanel.SetActive(false);
+        }
+        // 3. 그 외 (Event, Die, Start) -> 무시 (열지 않음)
         else
         {
-            optionPanel.SetActive(false);
-            Time.timeScale = previousTimeScale;
+            // Debug.Log("현재 상태에서는 옵션을 열 수 없습니다.");
         }
     }
 
+    // 닫기 버튼용
     public void CloseOption()
     {
-        if (isOptionOpen)
+        if (GameManager.Instance.CurrentState == GameState.Pause)
         {
-            ToggleOptionPanel();
+            ToggleOptionPanel(); // ResumeGame 호출됨
         }
     }
 
     void UpdateBGMVolume(float value)
     {
-        if (SoundManager.instance != null)
-        {
-            SoundManager.instance.SetBGMVolume(value / 100f);
-        }
+        if (SoundManager.instance != null) SoundManager.instance.SetBGMVolume(value / 100f);
     }
 
     void UpdateSFXVolume(float value)
     {
-        if (SoundManager.instance != null)
-        {
-            SoundManager.instance.SetSFXVolume(value / 100f);
-        }
+        if (SoundManager.instance != null) SoundManager.instance.SetSFXVolume(value / 100f);
     }
 }

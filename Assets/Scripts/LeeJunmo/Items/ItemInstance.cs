@@ -26,33 +26,38 @@ public class ItemInstance
     // ✨ [수정됨] 쿨타임 로직
     public void Tick(float deltaTime, GameObject user)
     {
-        // 쿨타임이 없는 아이템은 무시 (GetCooldownForLevel이 0이면 패시브 등으로 간주)
+        // 쿨타임이 없는 아이템(패시브 등)은 무시
         float levelMaxCooldown = itemData.GetCooldownForLevel(currentUpgrade);
         if (levelMaxCooldown <= 0f) return;
 
-        // 쿨타임이 0보다 클 때만 줄임 (대기 상태일 때는 로직이 돌지 않음)
-        if (currentCooldown > 0f)
+        // 1. 수동 모드 대기 상태(float.MaxValue)가 아니라면 시간 감소
+        // (float.MaxValue인 경우는 장판이 깔려있는 상태이므로 시간을 줄이지 않음)
+        if (currentCooldown < float.MaxValue && currentCooldown > 0f)
         {
             currentCooldown -= deltaTime;
+        }
 
-            // 쿨타임 완료!
-            if (currentCooldown <= 0f)
+        // 2. ✨ [수정] 쿨타임 감소 후(혹은 처음부터 0일 때) 즉시 체크
+        if (currentCooldown <= 0f)
+        {
+            // 쿨타임 보정 (음수로 내려가는 것 방지)
+            currentCooldown = 0f;
+
+            // A. 효과 발동 (장판 생성, 데미지 처리 등)
+            itemData.OnCooldownComplete(user, this);
+
+            // B. 쿨타임 재설정 분기
+            if (itemData.IsManualCooldown)
             {
-                // 1. 효과 발동 (장판 생성 등)
-                itemData.OnCooldownComplete(user, this);
-
-                // 2. ✨ 쿨타임 처리 분기
-                if (itemData.IsManualCooldown)
-                {
-                    // [수동 모드] 시스템이 쿨타임을 리셋하지 않음.
-                    // 대신 무한대 값(Wait 상태)으로 보내서 StartCooldownManual이 불릴 때까지 대기
-                    currentCooldown = float.MaxValue;
-                }
-                else
-                {
-                    // [자동 모드] 기존 아이템들처럼 즉시 쿨타임 리셋
-                    currentCooldown = levelMaxCooldown;
-                }
+                // [수동 모드] (예: 성서)
+                // 장판이 사라질 때까지 대기하기 위해 무한대 값으로 설정
+                currentCooldown = float.MaxValue;
+            }
+            else
+            {
+                // [자동 모드] (예: 심장)
+                // 즉시 다음 쿨타임 적용
+                currentCooldown = levelMaxCooldown;
             }
         }
     }

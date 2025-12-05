@@ -200,23 +200,26 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        // ✨ [수정] 일시정지(이벤트) 상태 처리
-        if (Time.timeScale == 0)
+
+        if (GameManager.Instance.CurrentState != GameState.Die)
         {
-            // 게임이 멈췄다면 무조건 '발사 중지' 상태로 처리
+            if (Time.timeScale == 0)
+            {
+                // 게임이 멈췄다면 무조건 '발사 중지' 상태로 처리
+                if (currentStrategy != null)
+                {
+                    currentStrategy.Process(false);
+                }
+                return;
+            }
+
+            // 정상 플레이 상태
+            bool isTriggerHeld = fireAction != null && fireAction.action.IsPressed();
+
             if (currentStrategy != null)
             {
-                currentStrategy.Process(false);
+                currentStrategy.Process(isTriggerHeld);
             }
-            return;
-        }
-
-        // 정상 플레이 상태
-        bool isTriggerHeld = fireAction != null && fireAction.action.IsPressed();
-
-        if (currentStrategy != null)
-        {
-            currentStrategy.Process(isTriggerHeld);
         }
     }
 }
