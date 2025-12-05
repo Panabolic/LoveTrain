@@ -66,7 +66,7 @@ public class StartObject : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.StartGame();
-            EventManager.Instance.StartEvent(startEvent);
+            EventManager.Instance.RequestEvent(startEvent);
             otherUI.SetActive(true);
             otherUI.GetComponent<UIAlphaFader>().FadeIn();
         }

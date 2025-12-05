@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc52c99cfa32c8b49a16d68e16abd314, type: 3}
+  m_Name: "\uAC15\uCCA0\uC758 \uAD6C\uC138\uC8FC"
+  m_EditorClassIdentifier: Assembly-CSharp::SO_Event
+  EventTitle: "\uAC15\uCCA0\uC758 \uAD6C\uC138\uC8FC"
+  EventText: "\uC548\uAC1C\uAC00 \uC790\uC6B1\uD55C \uD654\uBB3C\uC5ED\uC5D0 \uB3C4\uCC29\uD558\uC790,
+    \uCCA0\uAC00\uBA74\uC744 \uC4F0\uACE0 \uB85C\uBE0C\uB97C \uB450\uB978 \uC0AC\uB78C\uB4E4\uC774
+    \uC120\uB85C\uB85C \uBAB0\uB824\uB4E0\uB2E4. \uADF8\uB4E4\uC740 \uAE30\uCC28\uAC00
+    \uB0B4\uBFDC\uB294 \uB9E4\uC5F0\uC744 \uAE4A\uC774 \uB4E4\uC774\uB9C8\uC2DC\uBA70
+    \uD669\uD640\uD55C \uD45C\uC815\uC744 \uC9D3\uB294\uB2E4.\r\n\r\n\"\uC624\uC624!
+    \uC608\uC5B8\uC774 \uC2E4\uD604\uB418\uC5C8\uB2E4! \uAC15\uCCA0\uC758 \uBC40,
+    \uC704\uB300\uD55C '\uCE59\uCE59\uD3ED\uD3ED' \uB2D8\uAED8\uC11C \uAC15\uB9BC\uD558\uC168\uB2E4!
+    \uC800\uD76C\uC758 \uBE44\uCC9C\uD55C \uC0B4\uC810\uC744 \uC5F0\uB8CC\uB85C \uC368
+    \uC8FC\uC2DC\uC635\uC18C\uC11C!\"\r\n\r\n\uADF8\uB4E4\uC740 \uAE30\uCC28 \uBC14\uD034\uC5D0
+    \uD3D0\uC720\uB97C \uBC14\uB974\uACE0, \uC120\uB85C\uC5D0 \uB204\uC6B0\uBA70
+    \uAE30\uCC28 \uBC14\uD034\uC5D0 \uAC08\uB9AC\uAE30\uB97C \uAC04\uCCAD\uD55C\uB2E4."
+  Selections:
+  - selectionText: "\uADF8\uB4E4\uC758 \uC18C\uC6D0\uB300\uB85C \uD574\uC900\uB2E4"
+    selectionUnderText: "\uC544\uC774\uD15C : \"\uAC70\uB300\uD55C \uC544\uAC00\uB9AC\"
+      \uD68D\uB4DD"
+    eventToTrigger: {fileID: 11400000, guid: ffe019340eb397e4e8c72fd5797a7879, type: 2}
+  - selectionText: "\uC774\uB2E8\uC774\uB2E4! \uC57D\uD0C8 -\uC544\uB2C8 \uC815\uD654\uD558\uB77C!"
+    selectionUnderText: "\uB79C\uB364 \uC544\uC774\uD15C [3]\uAC1C \uD68D\uB4DD,
+      2\uCD08\uB9C8\uB2E4 \uD2B9\uC815 \uBAAC\uC2A4\uD130 \uC0DD\uC131"
+    eventToTrigger: {fileID: 11400000, guid: 84fe14e86bf664b4c9f6d9ccb9b65f23, type: 2}

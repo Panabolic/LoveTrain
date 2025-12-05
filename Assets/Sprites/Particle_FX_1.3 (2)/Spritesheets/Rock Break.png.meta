@@ -1,0 +1,1079 @@
+fileFormatVersion: 2
+guid: 99fa20ac185de8846b3de2209a754715
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4806047964761588409
+    second: Rock Break_0
+  - first:
+      213: 4369147810087363688
+    second: Rock Break_1
+  - first:
+      213: 1985285019559827467
+    second: Rock Break_2
+  - first:
+      213: 6167361602551348663
+    second: Rock Break_3
+  - first:
+      213: 7498920719728579016
+    second: Rock Break_4
+  - first:
+      213: 8722797520947221530
+    second: Rock Break_5
+  - first:
+      213: 8091783568789485572
+    second: Rock Break_6
+  - first:
+      213: -1765686001987946482
+    second: Rock Break_7
+  - first:
+      213: -3556704921811577964
+    second: Rock Break_8
+  - first:
+      213: 1129384664533668892
+    second: Rock Break_9
+  - first:
+      213: -1418334089255314831
+    second: Rock Break_10
+  - first:
+      213: 1774833456148332784
+    second: Rock Break_11
+  - first:
+      213: 8572226929670952986
+    second: Rock Break_12
+  - first:
+      213: 8566182535916362908
+    second: Rock Break_13
+  - first:
+      213: -6395233798203338572
+    second: Rock Break_14
+  - first:
+      213: -8043461290439607066
+    second: Rock Break_15
+  - first:
+      213: -4101272597058517748
+    second: Rock Break_16
+  - first:
+      213: -5175477438487730231
+    second: Rock Break_17
+  - first:
+      213: -3498065817891483820
+    second: Rock Break_18
+  - first:
+      213: 2661750624245204058
+    second: Rock Break_19
+  - first:
+      213: -8333150256502218987
+    second: Rock Break_20
+  - first:
+      213: 400343647601381396
+    second: Rock Break_21
+  - first:
+      213: -1150563540657056579
+    second: Rock Break_22
+  - first:
+      213: -890994706627777447
+    second: Rock Break_23
+  - first:
+      213: 6456288108859156810
+    second: Rock Break_24
+  - first:
+      213: 3604296071347575127
+    second: Rock Break_25
+  - first:
+      213: -4167281618104654742
+    second: Rock Break_26
+  - first:
+      213: -4928315780129702988
+    second: Rock Break_27
+  - first:
+      213: 1936462644575538804
+    second: Rock Break_28
+  - first:
+      213: -6299185966219241345
+    second: Rock Break_29
+  - first:
+      213: -8628323425197610777
+    second: Rock Break_30
+  - first:
+      213: 3203622180269216690
+    second: Rock Break_31
+  - first:
+      213: -8423508443790362539
+    second: Rock Break_32
+  - first:
+      213: -8731080809958041418
+    second: Rock Break_33
+  - first:
+      213: -9089630535813985991
+    second: Rock Break_34
+  - first:
+      213: 8059746564547527321
+    second: Rock Break_35
+  - first:
+      213: 3276188272660556325
+    second: Rock Break_36
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Rock Break_0
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 256
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74d75eee6dc7d4db0800000000000000
+      internalID: -4806047964761588409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_1
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 265
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 864ee67d8c452ac30800000000000000
+      internalID: 4369147810087363688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_2
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 265
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0894c0f4362d8b10800000000000000
+      internalID: 1985285019559827467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_3
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 256
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bdf47193bed69550800000000000000
+      internalID: 6167361602551348663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_4
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 247
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c11d32e9a4811860800000000000000
+      internalID: 7498920719728579016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_5
+      rect:
+        serializedVersion: 2
+        x: 231
+        y: 255
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1497b3412a9d0970800000000000000
+      internalID: 8722797520947221530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_6
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 252
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4083a01a84acb4070800000000000000
+      internalID: 8091783568789485572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_7
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 253
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e08f0aaafe50f77e0800000000000000
+      internalID: -1765686001987946482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_8
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 236
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4939984c7bb04aec0800000000000000
+      internalID: -3556704921811577964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_9
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 238
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c149d406e516caf00800000000000000
+      internalID: 1129384664533668892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_10
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 239
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17a1c1519a0115ce0800000000000000
+      internalID: -1418334089255314831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_11
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 245
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f04339ff9971a810800000000000000
+      internalID: 1774833456148332784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_12
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 236
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a18131599faa6f670800000000000000
+      internalID: 8572226929670952986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_13
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 235
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9c137e71a131e670800000000000000
+      internalID: 8566182535916362908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_14
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 230
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b094827eb09f37a0800000000000000
+      internalID: -6395233798203338572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_15
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 226
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ecfdba8292ef5090800000000000000
+      internalID: -8043461290439607066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_16
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 217
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c05884d6d4a5517c0800000000000000
+      internalID: -4101272597058517748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_17
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 234
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c7e3e7c0b20d28b0800000000000000
+      internalID: -5175477438487730231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_18
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 221
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45f44a31caf547fc0800000000000000
+      internalID: -3498065817891483820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_19
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 195
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a544fc6171070f420800000000000000
+      internalID: 2661750624245204058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_20
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 207
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51fda3d1ef3ba5c80800000000000000
+      internalID: -8333150256502218987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_21
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 140
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4105d572d6e4e8500800000000000000
+      internalID: 400343647601381396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_22
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 116
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db4de934e806800f0800000000000000
+      internalID: -1150563540657056579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_23
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 118
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95ca2b6f80d82a3f0800000000000000
+      internalID: -890994706627777447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_24
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 128
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a49e02004d7599950800000000000000
+      internalID: 6456288108859156810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_25
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 96
+        width: 26
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75912063e28050230800000000000000
+      internalID: 3604296071347575127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_26
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 113
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a646bd19277da26c0800000000000000
+      internalID: -4167281618104654742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_27
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 95
+        width: 10
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bbba68c8ea1b9bb0800000000000000
+      internalID: -4928315780129702988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_28
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 95
+        width: 19
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47e0db2f382bfda10800000000000000
+      internalID: 1936462644575538804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_29
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 96
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f78506dfcbbc498a0800000000000000
+      internalID: -6299185966219241345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_30
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 102
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e82ae14f89024880800000000000000
+      internalID: -8628323425197610777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_31
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 97
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b35281466d857c20800000000000000
+      internalID: 3203622180269216690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_32
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 95
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5583f5533bfa91b80800000000000000
+      internalID: -8423508443790362539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_33
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 98
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b898393348f4d680800000000000000
+      internalID: -8731080809958041418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_34
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 96
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9398345cf252bd180800000000000000
+      internalID: -9089630535813985991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_35
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 96
+        width: 28
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 992c78f4cc8f9df60800000000000000
+      internalID: 8059746564547527321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rock Break_36
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 95
+        width: 102
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52aab3140eb577d20800000000000000
+      internalID: 3276188272660556325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Rock Break_0: -4806047964761588409
+      Rock Break_1: 4369147810087363688
+      Rock Break_10: -1418334089255314831
+      Rock Break_11: 1774833456148332784
+      Rock Break_12: 8572226929670952986
+      Rock Break_13: 8566182535916362908
+      Rock Break_14: -6395233798203338572
+      Rock Break_15: -8043461290439607066
+      Rock Break_16: -4101272597058517748
+      Rock Break_17: -5175477438487730231
+      Rock Break_18: -3498065817891483820
+      Rock Break_19: 2661750624245204058
+      Rock Break_2: 1985285019559827467
+      Rock Break_20: -8333150256502218987
+      Rock Break_21: 400343647601381396
+      Rock Break_22: -1150563540657056579
+      Rock Break_23: -890994706627777447
+      Rock Break_24: 6456288108859156810
+      Rock Break_25: 3604296071347575127
+      Rock Break_26: -4167281618104654742
+      Rock Break_27: -4928315780129702988
+      Rock Break_28: 1936462644575538804
+      Rock Break_29: -6299185966219241345
+      Rock Break_3: 6167361602551348663
+      Rock Break_30: -8628323425197610777
+      Rock Break_31: 3203622180269216690
+      Rock Break_32: -8423508443790362539
+      Rock Break_33: -8731080809958041418
+      Rock Break_34: -9089630535813985991
+      Rock Break_35: 8059746564547527321
+      Rock Break_36: 3276188272660556325
+      Rock Break_4: 7498920719728579016
+      Rock Break_5: 8722797520947221530
+      Rock Break_6: 8091783568789485572
+      Rock Break_7: -1765686001987946482
+      Rock Break_8: -3556704921811577964
+      Rock Break_9: 1129384664533668892
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

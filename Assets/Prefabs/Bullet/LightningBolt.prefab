@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LightningBolt
   lifeTime: 0.583
-  scaleRange: {x: 1, y: 1}
+  scaleRange: {x: 0.5, y: 2}
   lightningTypes:
   - triggerName: Type1
   - triggerName: Type2

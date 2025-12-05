@@ -173,10 +173,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mob
   hp: 80
-  damage: 200
-  exp: 40
+  damage: 30
+  exp: 1
   moveSpeed: 2
-  hpIncreasePercent: 10
+  isEliteMob: 0
 --- !u!95 &5323420115873639035
 Animator:
   serializedVersion: 7

@@ -1,13 +1,13 @@
-using UnityEngine;
-using TMPro; // TextMeshPro¸¦ »ç¿ëÇÏ±â À§ÇØ ÇÊ¼ö!
+ï»¿using UnityEngine;
+using TMPro; // TextMeshProë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ í•„ìˆ˜!
 
 public class SimpleSpeedUI : MonoBehaviour
 {
-    [Header("ÂüÁ¶ÇÒ ÄÄÆ÷³ÍÆ®")]
-    [Tooltip("¼Óµµ Á¤º¸¸¦ °¡Á®¿Ã TrainController")]
+    [Header("ì°¸ì¡°í•  ì»´í¬ë„ŒíŠ¸")]
+    [Tooltip("ì†ë„ ì •ë³´ë¥¼ ê°€ì ¸ì˜¬ TrainController")]
     public Train train;
 
-    [Tooltip("¼Óµµ¸¦ Ç¥½ÃÇÒ TextMeshPro UI ÄÄÆ÷³ÍÆ®")]
+    [Tooltip("ì†ë„ë¥¼ í‘œì‹œí•  TextMeshPro UI ì»´í¬ë„ŒíŠ¸")]
     public TextMeshProUGUI speedText;
 
     void Awake()
@@ -18,18 +18,22 @@ public class SimpleSpeedUI : MonoBehaviour
         }
     }
 
-    // Update´Â ¸Å ÇÁ·¹ÀÓ¸¶´Ù È£ÃâµË´Ï´Ù.
+    // UpdateëŠ” ë§¤ í”„ë ˆì„ë§ˆë‹¤ í˜¸ì¶œë©ë‹ˆë‹¤.
     void Update()
     {
-        // trainÀÌ ÇÒ´çµÇ¾ú´ÂÁö È®ÀÎ
-        if (train != null)
+        // trainì´ í• ë‹¹ë˜ì—ˆëŠ”ì§€ í™•ì¸
+        if (train != null && GameManager.Instance.CurrentState != GameState.Start)
         {
             float currentSpeed = train.CurrentSpeed;
             int displaySpeed = Mathf.RoundToInt(currentSpeed);
 
             speedText.text = $"{displaySpeed}";
+            foreach (Animator carAnim in train.carsAnim)
+            {
+                Debug.Log(carAnim.GetFloat("moveSpeed"));
+            }
 
-            // displaySpeed¿¡ µû¸¥ Train animation clip speed Á¶Àı
+            // displaySpeedì— ë”°ë¥¸ Train animation clip speed ì¡°ì ˆ
             foreach (Animator carAnim in train.carsAnim)
             {
                 carAnim.SetFloat("moveSpeed", Mathf.Clamp(displaySpeed, 0, 300) * 0.05f);
@@ -37,8 +41,12 @@ public class SimpleSpeedUI : MonoBehaviour
         }
         else
         {
-            // ¿¬°áÀÌ ¾È µÇ¾úÀ» ¶§ ¿À·ù ¸Ş½ÃÁö Ç¥½Ã
-            speedText.text = "Controller ¾øÀ½";
+            foreach (Animator carAnim in train.carsAnim)
+            {
+                Debug.Log(carAnim.GetFloat("moveSpeed"));
+            }
+            // ì—°ê²°ì´ ì•ˆ ë˜ì—ˆì„ ë•Œ ì˜¤ë¥˜ ë©”ì‹œì§€ í‘œì‹œ
+            speedText.text = "Controller ì—†ìŒ";
         }
     }
 }

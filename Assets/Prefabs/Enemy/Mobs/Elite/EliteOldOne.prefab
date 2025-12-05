@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FlyMob
   hp: 100
   damage: 50
-  exp: 70
+  exp: 5
   moveSpeed: 4
   isEliteMob: 1
   diveDistance: 20

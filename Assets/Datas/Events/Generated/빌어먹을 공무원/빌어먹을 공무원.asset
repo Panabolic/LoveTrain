@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc52c99cfa32c8b49a16d68e16abd314, type: 3}
+  m_Name: "\uBE4C\uC5B4\uBA39\uC744 \uACF5\uBB34\uC6D0"
+  m_EditorClassIdentifier: Assembly-CSharp::SO_Event
+  EventTitle: "\uBE4C\uC5B4\uBA39\uC744 \uACF5\uBB34\uC6D0"
+  EventText: "\uC5ED\uC744 \uD1B5\uACFC\uD558\uB824\uB358 \uC911 \uC815\uBCF5\uC744
+    \uC785\uC740 \uD574\uACE8 \uBAA8\uC591\uC758 \uC624\uD1A0\uB9C8\uD1A4\uC774 \uCC28\uB2E8\uAE30\uB97C
+    \uB0B4\uB9AC\uACE0 \uC55E\uC744 \uB9C9\uC544\uC120\uB2E4.\r\n\r\n\uFF02\uC090\uBE45.
+    \uC815\uAE30 \uC2B9\uCC28\uAD8C \uD655\uC778 \uBD88\uAC00. \uBD80\uC815 \uC2B9\uCC28\uC785\uB2C8\uB2E4.
+    \uBC8C\uAE08\uC744 \uB0A9\uBD80\uD558\uAC70\uB098, \uFF07\uC0AC\uD68C\uBD09\uC0AC\uFF07\uB85C
+    \uB300\uCCB4\uD558\uC2ED\uC2DC\uC624. \uD604\uC7AC \uC6B0\uB9AC \uC5ED\uC740
+    \uD574\uCDA9 \uBC15\uBA78 \uAE30\uAC04\uC785\uB2C8\uB2E4.\uFF02\r\n\r\n\uB140\uC11D\uC758
+    \uB4F1 \uB4A4\uB85C \uC218\uB9CE\uC740 \uBB34\uC784\uC2B9\uCC28\uC790\uB4E4\uC758
+    \uC2DC\uCCB4\uAC00 \uC0B0\uC744 \uC774\uB8E8\uACE0 \uC788\uB2E4. \uC5B4\uCA50\uB2F4.
+    \uD2F0\uCF13 \uAC19\uC740 \uAC8C \uC788\uC744 \uB9AC \uC5C6\uC796\uC544?"
+  Selections:
+  - selectionText: "\uC0AC\uD68C\uBD09\uC0AC? \uD574\uCDA9 \uBC15\uBA78\uC774\uB77C\uBA74
+      \uC790\uC2E0\uC788\uC9C0"
+    selectionUnderText: "\uC5D8\uB9AC\uD2B8 \uBAAC\uC2A4\uD130 5\uB9C8\uB9AC \uC18C\uD658,
+      \uB79C\uB364 \uC544\uC774\uD15C [1]\uAC1C [2]\uC5C5\uADF8\uB808\uC774\uB4DC"
+    eventToTrigger: {fileID: 11400000, guid: c41ed497c49be0f4596a330101959a54, type: 2}
+  - selectionText: "\uB0B4\uAC00 \uBC14\uB85C \uBA85\uC608 \uC5ED\uC7A5\uC774\uB2E4!
+      \uBB38 \uC5F4\uC5B4!"
+    selectionUnderText: "30%\uB85C \uC18D\uB3C4 100\uD68C\uBCF5, 70%\uB85C \uC18D\uB3C4
+      50\uAC10\uC18C"
+    eventToTrigger: {fileID: 11400000, guid: 7570a0c30b74ac24da1f9625b1eac382, type: 2}

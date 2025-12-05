@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: 706e84c0e42079349a4ef924bc12ddfd
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4813601785618970329
+    second: Holy Burst Flame_0
+  - first:
+      213: 6133761919165153210
+    second: Holy Burst Flame_1
+  - first:
+      213: -2451117015203644467
+    second: Holy Burst Flame_2
+  - first:
+      213: 8934342533240965852
+    second: Holy Burst Flame_3
+  - first:
+      213: -6917650386385009217
+    second: Holy Burst Flame_4
+  - first:
+      213: -6791686320704122754
+    second: Holy Burst Flame_5
+  - first:
+      213: -3933768628497618553
+    second: Holy Burst Flame_6
+  - first:
+      213: 6532956761361304151
+    second: Holy Burst Flame_7
+  - first:
+      213: 6333573834270772803
+    second: Holy Burst Flame_8
+  - first:
+      213: -6116872407086930682
+    second: Holy Burst Flame_9
+  - first:
+      213: -3173873999556542409
+    second: Holy Burst Flame_10
+  - first:
+      213: 366283576874202925
+    second: Holy Burst Flame_11
+  - first:
+      213: 1785366840492597586
+    second: Holy Burst Flame_12
+  - first:
+      213: 6349208665911252519
+    second: Holy Burst Flame_13
+  - first:
+      213: -2477963002872161892
+    second: Holy Burst Flame_14
+  - first:
+      213: 8930284198990850420
+    second: Holy Burst Flame_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Holy Burst Flame_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 231
+        width: 23
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d6310a02595dc240800000000000000
+      internalID: 4813601785618970329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 229
+        width: 26
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abf38a8a7ff7f1550800000000000000
+      internalID: 6133761919165153210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 226
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcbfeddaf02ebfdd0800000000000000
+      internalID: -2451117015203644467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_3
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 227
+        width: 30
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdacd73a2392dfb70800000000000000
+      internalID: 8934342533240965852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_4
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 227
+        width: 22
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb58d27ff919fff90800000000000000
+      internalID: -6917650386385009217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_5
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 131
+        width: 49
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e701d8476451fb1a0800000000000000
+      internalID: -6791686320704122754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_6
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 131
+        width: 89
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 789e2dd36427869c0800000000000000
+      internalID: -3933768628497618553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_7
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 130
+        width: 81
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75a4de5bf89b9aa50800000000000000
+      internalID: 6532956761361304151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_8
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 127
+        width: 90
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34e0b6678df55e750800000000000000
+      internalID: 6333573834270772803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_9
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 127
+        width: 92
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 605e13f44f08c1ba0800000000000000
+      internalID: -6116872407086930682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_10
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 39
+        width: 83
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 730859ec96224f3d0800000000000000
+      internalID: -3173873999556542409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_11
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 39
+        width: 79
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2775a6f8fc451500800000000000000
+      internalID: 366283576874202925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_12
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 39
+        width: 71
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 251a251aea5e6c810800000000000000
+      internalID: 1785366840492597586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_13
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 42
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 726d87064abec1850800000000000000
+      internalID: 6349208665911252519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_14
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 41
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c999e3717c18c9dd0800000000000000
+      internalID: -2477963002872161892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Holy Burst Flame_15
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 41
+        width: 27
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47922201a2ebeeb70800000000000000
+      internalID: 8930284198990850420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Holy Burst Flame_0: 4813601785618970329
+      Holy Burst Flame_1: 6133761919165153210
+      Holy Burst Flame_10: -3173873999556542409
+      Holy Burst Flame_11: 366283576874202925
+      Holy Burst Flame_12: 1785366840492597586
+      Holy Burst Flame_13: 6349208665911252519
+      Holy Burst Flame_14: -2477963002872161892
+      Holy Burst Flame_15: 8930284198990850420
+      Holy Burst Flame_2: -2451117015203644467
+      Holy Burst Flame_3: 8934342533240965852
+      Holy Burst Flame_4: -6917650386385009217
+      Holy Burst Flame_5: -6791686320704122754
+      Holy Burst Flame_6: -3933768628497618553
+      Holy Burst Flame_7: 6532956761361304151
+      Holy Burst Flame_8: 6333573834270772803
+      Holy Burst Flame_9: -6116872407086930682
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

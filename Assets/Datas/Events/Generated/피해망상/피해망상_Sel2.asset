@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d6d854fe49cd274c929270c980aabf4, type: 3}
+  m_Name: "\uD53C\uD574\uB9DD\uC0C1_Sel2"
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventSO
+  description: "[Selection 2] \uC54C\uC544\uC11C \uD0C0\uB77C\uACE0 \uD55C\uB2E4"
+  rollGroups:
+  - description: "\uADF8\uB8F9 \uC124\uBA85"
+    outcomes:
+    - weight: 30
+      effectLogic: {fileID: 11400000, guid: 9cf51f2e02078004faae119b8e260b10, type: 2}
+      parameters:
+        intValue: 1
+        intValue2: 0
+        floatValue: 0
+        floatValue2: 0
+        soReference: {fileID: 11400000, guid: 16111b2c7fc13c6449e0ad52b5ff710f, type: 2}
+        prefabReference: {fileID: 0}
+        boolValue: 0
+      outputSettings:
+        includeDefaultText: 1
+        specialText: "\uC774 \uB610\uD55C \uC2E0\uC758 \uB73B\uC774\uACA0\uC9C0\uC694"
+        order: 1
+    - weight: 70
+      effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
+      parameters:
+        intValue: 0
+        intValue2: 0
+        floatValue: -70
+        floatValue2: 0
+        soReference: {fileID: 0}
+        prefabReference: {fileID: 0}
+        boolValue: 0
+      outputSettings:
+        includeDefaultText: 1
+        specialText: "\uC774 \uBD88\uACBD\uD55C \uC790\uAC00!!!!!!!!!"
+        order: 1

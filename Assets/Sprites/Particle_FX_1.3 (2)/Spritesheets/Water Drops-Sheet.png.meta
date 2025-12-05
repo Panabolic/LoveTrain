@@ -1,0 +1,793 @@
+fileFormatVersion: 2
+guid: 04830bf053b504b469f854ffce4f8a60
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7918784963580175715
+    second: Water Drops-Sheet_0
+  - first:
+      213: 8573017291989456872
+    second: Water Drops-Sheet_1
+  - first:
+      213: 1166445648459688896
+    second: Water Drops-Sheet_2
+  - first:
+      213: 933523855743439828
+    second: Water Drops-Sheet_3
+  - first:
+      213: 6278082672336131939
+    second: Water Drops-Sheet_4
+  - first:
+      213: 5077181816760961111
+    second: Water Drops-Sheet_5
+  - first:
+      213: 6996143612129108975
+    second: Water Drops-Sheet_6
+  - first:
+      213: -7492756800491383466
+    second: Water Drops-Sheet_7
+  - first:
+      213: 8903018834603900622
+    second: Water Drops-Sheet_8
+  - first:
+      213: 506420496381331261
+    second: Water Drops-Sheet_9
+  - first:
+      213: -3396234634343648505
+    second: Water Drops-Sheet_10
+  - first:
+      213: -67410563605464623
+    second: Water Drops-Sheet_11
+  - first:
+      213: 8803617848149271297
+    second: Water Drops-Sheet_12
+  - first:
+      213: 3305722339815228753
+    second: Water Drops-Sheet_13
+  - first:
+      213: 2581643063190556743
+    second: Water Drops-Sheet_14
+  - first:
+      213: -5803529799009260215
+    second: Water Drops-Sheet_15
+  - first:
+      213: -887057496790365648
+    second: Water Drops-Sheet_16
+  - first:
+      213: 8896164814847128654
+    second: Water Drops-Sheet_17
+  - first:
+      213: -6708816036238419288
+    second: Water Drops-Sheet_18
+  - first:
+      213: 97596783830000422
+    second: Water Drops-Sheet_19
+  - first:
+      213: 1002449307812763914
+    second: Water Drops-Sheet_20
+  - first:
+      213: 3036826784076179919
+    second: Water Drops-Sheet_21
+  - first:
+      213: -827671848716695916
+    second: Water Drops-Sheet_22
+  - first:
+      213: -6637361885248964187
+    second: Water Drops-Sheet_23
+  - first:
+      213: 6526017033629338153
+    second: Water Drops-Sheet_24
+  - first:
+      213: -2989669024066009906
+    second: Water Drops-Sheet_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Water Drops-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 320
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 365a6e608fc25ed60800000000000000
+      internalID: 7918784963580175715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 318
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e710562ec979f670800000000000000
+      internalID: 8573017291989456872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 314
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cb6d3e132c003010800000000000000
+      internalID: 1166445648459688896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 305
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d3d0f2300b84fc00800000000000000
+      internalID: 933523855743439828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 306
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36751238dea302750800000000000000
+      internalID: 6278082672336131939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 309
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7580c1856f5c57640800000000000000
+      internalID: 5077181816760961111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 308
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe3e29e4c8b471160800000000000000
+      internalID: 6996143612129108975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 558
+        y: 310
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65591566361640890800000000000000
+      internalID: -7492756800491383466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 304
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ece7d29b570ed8b70800000000000000
+      internalID: 8903018834603900622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 308
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3749c122ca270700800000000000000
+      internalID: 506420496381331261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 301
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 703711618962ed0d0800000000000000
+      internalID: -3396234634343648505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 302
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d9ff261372801ff0800000000000000
+      internalID: -67410563605464623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 299
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 103e9311acbbc2a70800000000000000
+      internalID: 8803617848149271297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 299
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15582ce14f840ed20800000000000000
+      internalID: 3305722339815228753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 158
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 740135610b6d3d320800000000000000
+      internalID: 2581643063190556743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 154
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94da8ae6568b57fa0800000000000000
+      internalID: -5803529799009260215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 149
+        width: 49
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03a867018e980b3f0800000000000000
+      internalID: -887057496790365648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 149
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e44ba44e3c6857b70800000000000000
+      internalID: 8896164814847128654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 149
+        width: 52
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8aa90902c5f75e2a0800000000000000
+      internalID: -6708816036238419288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 150
+        width: 195
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 623686ff1cbba5100800000000000000
+      internalID: 97596783830000422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 0
+        width: 120
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a091481955a69ed00800000000000000
+      internalID: 1002449307812763914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 3
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc9a04dced9f42a20800000000000000
+      internalID: 3036826784076179919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 0
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49686aab6d48384f0800000000000000
+      internalID: -827671848716695916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 10
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a9b408188a53e3a0800000000000000
+      internalID: -6637361885248964187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 0
+        width: 107
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92a00af6ae1119a50800000000000000
+      internalID: 6526017033629338153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water Drops-Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 0
+        width: 48
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec48e80dcdf8286d0800000000000000
+      internalID: -2989669024066009906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Water Drops-Sheet_0: 7918784963580175715
+      Water Drops-Sheet_1: 8573017291989456872
+      Water Drops-Sheet_10: -3396234634343648505
+      Water Drops-Sheet_11: -67410563605464623
+      Water Drops-Sheet_12: 8803617848149271297
+      Water Drops-Sheet_13: 3305722339815228753
+      Water Drops-Sheet_14: 2581643063190556743
+      Water Drops-Sheet_15: -5803529799009260215
+      Water Drops-Sheet_16: -887057496790365648
+      Water Drops-Sheet_17: 8896164814847128654
+      Water Drops-Sheet_18: -6708816036238419288
+      Water Drops-Sheet_19: 97596783830000422
+      Water Drops-Sheet_2: 1166445648459688896
+      Water Drops-Sheet_20: 1002449307812763914
+      Water Drops-Sheet_21: 3036826784076179919
+      Water Drops-Sheet_22: -827671848716695916
+      Water Drops-Sheet_23: -6637361885248964187
+      Water Drops-Sheet_24: 6526017033629338153
+      Water Drops-Sheet_25: -2989669024066009906
+      Water Drops-Sheet_3: 933523855743439828
+      Water Drops-Sheet_4: 6278082672336131939
+      Water Drops-Sheet_5: 5077181816760961111
+      Water Drops-Sheet_6: 6996143612129108975
+      Water Drops-Sheet_7: -7492756800491383466
+      Water Drops-Sheet_8: 8903018834603900622
+      Water Drops-Sheet_9: 506420496381331261
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

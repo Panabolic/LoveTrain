@@ -5,21 +5,24 @@ using UnityEngine;
 public class BloodyBible_SO : Item_SO
 {
     [Header("피의 성서 데이터")]
-    [Tooltip("레벨별 쿨타임")]
+    [Tooltip("장판이 사라진 후 적용될 쿨타임")]
     public float[] cooldownByLevel = { 15f, 12f, 10f };
 
     [Header("생성 설정")]
-    [Tooltip("맵의 X축 생성 범위 (예: 8로 설정하면 -8 ~ +8 사이의 절대 좌표에서 랜덤 생성)")]
-    public float spawnRangeX = 8.0f; // ✨ [수정] 플레이어 위치 무관한 절대 범위
+    [Tooltip("맵의 X축 생성 범위")]
+    public float spawnRangeX = 8.0f;
 
     [Header("프리팹")]
     public GameObject ZonePrefab;
 
+    // ✨ 중요: 이 아이템은 수동으로 쿨타임을 관리한다고 선언
+    public override bool IsManualCooldown => true;
+
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        return InstantiateVisual(user);
+        return InstantiateVisual(user); 
     }
-
+    
     public override float GetCooldownForLevel(int level)
     {
         int index = Mathf.Clamp(level - 1, 0, cooldownByLevel.Length - 1);
@@ -30,17 +33,24 @@ public class BloodyBible_SO : Item_SO
     {
         if (ZonePrefab == null) return;
 
-        // ✨ [핵심 수정] 플레이어 X위치를 더하지 않음!
-        // 맵의 절대적인 범위 (-Range ~ +Range) 내에서 무작위 X 결정
+        // 1. 랜덤 위치 계산 (절대 좌표 X, 높이는 사용자 Y)
         float randomX = Random.Range(-spawnRangeX, spawnRangeX);
+        Vector3 spawnPos = new Vector3(randomX, -8.65f, 0f);
 
-        // Y축은 플레이어(기차)와 동일한 높이 유지 (선로 위)
-        Vector3 spawnPos = new Vector3(randomX, user.transform.position.y, 0f);
+        // 2. 장판 생성
+        GameObject zoneObj = Instantiate(ZonePrefab, spawnPos, Quaternion.identity);
 
-        // 장판 생성
-        Instantiate(ZonePrefab, spawnPos, Quaternion.identity);
+        // 3. 실제 적용할 쿨타임 값 가져오기
+        float realCooldown = GetCooldownForLevel(instance.currentUpgrade);
 
-        Debug.Log($"[{itemName}] 장판 생성! 절대 위치 X: {randomX:F2}");
+        // 4. ✨ 장판에게 "네가 사라지면 이 아이템 쿨타임을 시작해라"고 전달
+        BloodyZone zoneScript = zoneObj.GetComponent<BloodyZone>();
+        if (zoneScript != null)
+        {
+            zoneScript.Initialize(instance, realCooldown);
+        }
+
+        Debug.Log($"[{itemName}] 장판 생성됨. (쿨타임 대기 중)");
     }
 
     protected override Dictionary<string, string> GetStatReplacements(int level)

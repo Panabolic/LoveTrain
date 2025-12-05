@@ -22,11 +22,12 @@ public class LaserGun : MonoBehaviour, IInstantiatedItem
         float newDuration = itemData.durationByLevel[levelIndex];
         float newTickRate = itemData.tickRateByLevel[levelIndex]; // 이게 틱 주기
         float newCooldown = itemData.cooldownByLevel[levelIndex];
+        float newlaserScale = itemData.laserScale[levelIndex];
 
         // 2. Gun에게 기본 스탯 전달
         // ✨ [중요] GunStats.fireRate 필드를 '틱 주기'로 사용합니다.
         GunStats newBaseStats = gunController.CurrentStats;
-        newBaseStats.damage = newDamage;
+        newBaseStats.damage = newBaseStats.damage / 2.7f;
         newBaseStats.fireRate = newTickRate; // Gun.cs가 이 값을 공속 배율로 나눌 것임
         newBaseStats.laserPrefab = itemData.LaserProjectilePrefab;
 
@@ -35,7 +36,7 @@ public class LaserGun : MonoBehaviour, IInstantiatedItem
 
         // 3. 전략 설정 (지속시간, 쿨타임은 전략이 관리)
         LaserSpriteStrategy strategy = new LaserSpriteStrategy();
-        strategy.SetLaserStats(newDuration, newCooldown);
+        strategy.SetLaserStats(newDuration, newCooldown,newlaserScale);
 
         gunController.SetWeapon(strategy);
 

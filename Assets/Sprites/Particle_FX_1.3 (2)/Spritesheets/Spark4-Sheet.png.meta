@@ -1,0 +1,1521 @@
+fileFormatVersion: 2
+guid: ba35fcb94fa0eed4493d14d8f4c153e5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2459376703948510176
+    second: Spark4-Sheet_0
+  - first:
+      213: 7358671158887656342
+    second: Spark4-Sheet_1
+  - first:
+      213: 5681239511457685960
+    second: Spark4-Sheet_2
+  - first:
+      213: 49834766019296685
+    second: Spark4-Sheet_3
+  - first:
+      213: -8583130661987899964
+    second: Spark4-Sheet_4
+  - first:
+      213: 6822496286109083654
+    second: Spark4-Sheet_5
+  - first:
+      213: -2946851870140896858
+    second: Spark4-Sheet_6
+  - first:
+      213: 3173903368630587316
+    second: Spark4-Sheet_7
+  - first:
+      213: -7274230349888373766
+    second: Spark4-Sheet_8
+  - first:
+      213: 3407008437749583725
+    second: Spark4-Sheet_9
+  - first:
+      213: -3614514858018184940
+    second: Spark4-Sheet_10
+  - first:
+      213: -5621831200585186523
+    second: Spark4-Sheet_11
+  - first:
+      213: 8203331797908949291
+    second: Spark4-Sheet_12
+  - first:
+      213: -5109037039958556947
+    second: Spark4-Sheet_13
+  - first:
+      213: 5720211576715179957
+    second: Spark4-Sheet_14
+  - first:
+      213: 5581594849965434614
+    second: Spark4-Sheet_15
+  - first:
+      213: 5068608741906745107
+    second: Spark4-Sheet_16
+  - first:
+      213: -7790028868327010253
+    second: Spark4-Sheet_17
+  - first:
+      213: -7400691276731701837
+    second: Spark4-Sheet_18
+  - first:
+      213: -6219659421128695362
+    second: Spark4-Sheet_19
+  - first:
+      213: -6060650814167394667
+    second: Spark4-Sheet_20
+  - first:
+      213: -4831884454462855005
+    second: Spark4-Sheet_21
+  - first:
+      213: -4123442753633773296
+    second: Spark4-Sheet_22
+  - first:
+      213: 7565976206182148448
+    second: Spark4-Sheet_23
+  - first:
+      213: -8566971742770246662
+    second: Spark4-Sheet_24
+  - first:
+      213: -7355119899170524442
+    second: Spark4-Sheet_25
+  - first:
+      213: -4809422610901043544
+    second: Spark4-Sheet_26
+  - first:
+      213: -868219412673417986
+    second: Spark4-Sheet_27
+  - first:
+      213: 8555610345271523465
+    second: Spark4-Sheet_28
+  - first:
+      213: -4868479999663427377
+    second: Spark4-Sheet_29
+  - first:
+      213: 1105899696001130819
+    second: Spark4-Sheet_30
+  - first:
+      213: -5020882885439338931
+    second: Spark4-Sheet_31
+  - first:
+      213: -5240028446626958580
+    second: Spark4-Sheet_32
+  - first:
+      213: 8013453540510245193
+    second: Spark4-Sheet_33
+  - first:
+      213: -1498542720962206499
+    second: Spark4-Sheet_34
+  - first:
+      213: -4692206028665357334
+    second: Spark4-Sheet_35
+  - first:
+      213: -6489458067124876928
+    second: Spark4-Sheet_36
+  - first:
+      213: -2166124999437987715
+    second: Spark4-Sheet_37
+  - first:
+      213: -5532485762225897205
+    second: Spark4-Sheet_38
+  - first:
+      213: -5837416534367272857
+    second: Spark4-Sheet_39
+  - first:
+      213: 275628580894879829
+    second: Spark4-Sheet_40
+  - first:
+      213: 984756372831575309
+    second: Spark4-Sheet_41
+  - first:
+      213: -5383428988505859763
+    second: Spark4-Sheet_42
+  - first:
+      213: -2844121373406341133
+    second: Spark4-Sheet_43
+  - first:
+      213: 2274280010985229668
+    second: Spark4-Sheet_44
+  - first:
+      213: 404253004863804801
+    second: Spark4-Sheet_45
+  - first:
+      213: 2217248461223579502
+    second: Spark4-Sheet_46
+  - first:
+      213: 7253741501801500388
+    second: Spark4-Sheet_47
+  - first:
+      213: 9100407507394026622
+    second: Spark4-Sheet_48
+  - first:
+      213: 3559944165854637188
+    second: Spark4-Sheet_49
+  - first:
+      213: 7275010785396347144
+    second: Spark4-Sheet_50
+  - first:
+      213: -6086997550269571713
+    second: Spark4-Sheet_51
+  - first:
+      213: 797300587995910620
+    second: Spark4-Sheet_52
+  - first:
+      213: 8433611720446544278
+    second: Spark4-Sheet_53
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Spark4-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 630
+        width: 16
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e3d8b7f416712220800000000000000
+      internalID: 2459376703948510176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 813
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69b296c5e604f1660800000000000000
+      internalID: 7358671158887656342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 813
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c169543c31d7de40800000000000000
+      internalID: 5681239511457685960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 805
+        width: 10
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dad7b06a47c01b000800000000000000
+      internalID: 49834766019296685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 798
+        width: 18
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c5a277632892e880800000000000000
+      internalID: -8583130661987899964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 799
+        width: 6
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60824fe99306eae50800000000000000
+      internalID: 6822496286109083654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 667
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a96e8256ddaa17d0800000000000000
+      internalID: -2946851870140896858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 639
+        width: 7
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bf44a63c48fb0c20800000000000000
+      internalID: 3173903368630587316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 619
+        width: 19
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afbb98c890ebc0b90800000000000000
+      internalID: -7274230349888373766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 608
+        width: 23
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6f82de7f10284f20800000000000000
+      internalID: 3407008437749583725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 599
+        width: 26
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 411647c13e9a6ddc0800000000000000
+      internalID: -3614514858018184940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 640
+        width: 12
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52389ed0f4e3bf1b0800000000000000
+      internalID: -5621831200585186523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 639
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b29870d9ec618d170800000000000000
+      internalID: 8203331797908949291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 630
+        width: 6
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: deef4f881ed0919b0800000000000000
+      internalID: -5109037039958556947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 630
+        width: 9
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b77f2e3f16426f40800000000000000
+      internalID: 5720211576715179957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 620
+        width: 6
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f6e65881fec57d40800000000000000
+      internalID: 5581594849965434614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 619
+        width: 9
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3178acecbc0575640800000000000000
+      internalID: 5068608741906745107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 608
+        width: 6
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3309451840244e390800000000000000
+      internalID: -7790028868327010253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 668
+        y: 608
+        width: 9
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b5231e8e767b4990800000000000000
+      internalID: -7400691276731701837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 599
+        width: 6
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb166bba5b45fa9a0800000000000000
+      internalID: -6219659421128695362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 449
+        width: 30
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 596ded9f13e34eba0800000000000000
+      internalID: -6060650814167394667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 486
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a8620860b2b1fcb0800000000000000
+      internalID: -4831884454462855005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 474
+        width: 11
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 019100a99a696c6c0800000000000000
+      internalID: -4123442753633773296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 470
+        width: 7
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0696b84f54fbff860800000000000000
+      internalID: 7565976206182148448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 477
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afbce57f6900c1980800000000000000
+      internalID: -8566971742770246662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 464
+        width: 11
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e2b889bb6d5de990800000000000000
+      internalID: -7355119899170524442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 467
+        width: 11
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a6f286ed9f714db0800000000000000
+      internalID: -4809422610901043544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 449
+        width: 9
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efca0805b0773f3f0800000000000000
+      internalID: -868219412673417986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 449
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 988f09a8742abb670800000000000000
+      internalID: 8555610345271523465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 449
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc0b7ff0c3faf6cb0800000000000000
+      internalID: -4868479999663427377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 449
+        width: 27
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3412c590ae1f85f00800000000000000
+      internalID: 1105899696001130819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 449
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d46cc821e9d325ab0800000000000000
+      internalID: -5020882885439338931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 449
+        width: 32
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c03bbd104eda747b0800000000000000
+      internalID: -5240028446626958580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 452
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 941a53ab981853f60800000000000000
+      internalID: 8013453540510245193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 452
+        width: 11
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd4ec4cb55b143be0800000000000000
+      internalID: -1498542720962206499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 449
+        width: 34
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aeb74703a7fe1eeb0800000000000000
+      internalID: -4692206028665357334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_36
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 453
+        width: 19
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0898a344540d0f5a0800000000000000
+      internalID: -6489458067124876928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_37
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 450
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d70d7652ac060f1e0800000000000000
+      internalID: -2166124999437987715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_38
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 449
+        width: 34
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b018e99f289a833b0800000000000000
+      internalID: -5532485762225897205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_39
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 299
+        width: 58
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7600c0707945dfea0800000000000000
+      internalID: -5837416534367272857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_40
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 299
+        width: 62
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5503f26ebba33d300800000000000000
+      internalID: 275628580894879829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_41
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 301
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0d9de024be8aad00800000000000000
+      internalID: 984756372831575309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_42
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 299
+        width: 62
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d49519a8bd73a45b0800000000000000
+      internalID: -5383428988505859763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_43
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 299
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f7d4000ea6a788d0800000000000000
+      internalID: -2844121373406341133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_44
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 299
+        width: 44
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46dcb8ece9ddf8f10800000000000000
+      internalID: 2274280010985229668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_45
+      rect:
+        serializedVersion: 2
+        x: 636
+        y: 299
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1859a4257f13c9500800000000000000
+      internalID: 404253004863804801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_46
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 299
+        width: 47
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6f430e5abf35ce10800000000000000
+      internalID: 2217248461223579502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_47
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 188
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ee0363c6777aa460800000000000000
+      internalID: 7253741501801500388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_48
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 149
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7cd48579642b4e70800000000000000
+      internalID: 9100407507394026622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_49
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 149
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48c6df18b56776130800000000000000
+      internalID: 3559944165854637188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_50
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 149
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8015fa0c3c706f460800000000000000
+      internalID: 7275010785396347144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_51
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 0
+        width: 12
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7d52837af3a68ba0800000000000000
+      internalID: -6086997550269571713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_52
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 149
+        width: 41
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd1d4b619a4901b00800000000000000
+      internalID: 797300587995910620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spark4-Sheet_53
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 149
+        width: 40
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69989c23d253a0570800000000000000
+      internalID: 8433611720446544278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Spark4-Sheet_0: 2459376703948510176
+      Spark4-Sheet_1: 7358671158887656342
+      Spark4-Sheet_10: -3614514858018184940
+      Spark4-Sheet_11: -5621831200585186523
+      Spark4-Sheet_12: 8203331797908949291
+      Spark4-Sheet_13: -5109037039958556947
+      Spark4-Sheet_14: 5720211576715179957
+      Spark4-Sheet_15: 5581594849965434614
+      Spark4-Sheet_16: 5068608741906745107
+      Spark4-Sheet_17: -7790028868327010253
+      Spark4-Sheet_18: -7400691276731701837
+      Spark4-Sheet_19: -6219659421128695362
+      Spark4-Sheet_2: 5681239511457685960
+      Spark4-Sheet_20: -6060650814167394667
+      Spark4-Sheet_21: -4831884454462855005
+      Spark4-Sheet_22: -4123442753633773296
+      Spark4-Sheet_23: 7565976206182148448
+      Spark4-Sheet_24: -8566971742770246662
+      Spark4-Sheet_25: -7355119899170524442
+      Spark4-Sheet_26: -4809422610901043544
+      Spark4-Sheet_27: -868219412673417986
+      Spark4-Sheet_28: 8555610345271523465
+      Spark4-Sheet_29: -4868479999663427377
+      Spark4-Sheet_3: 49834766019296685
+      Spark4-Sheet_30: 1105899696001130819
+      Spark4-Sheet_31: -5020882885439338931
+      Spark4-Sheet_32: -5240028446626958580
+      Spark4-Sheet_33: 8013453540510245193
+      Spark4-Sheet_34: -1498542720962206499
+      Spark4-Sheet_35: -4692206028665357334
+      Spark4-Sheet_36: -6489458067124876928
+      Spark4-Sheet_37: -2166124999437987715
+      Spark4-Sheet_38: -5532485762225897205
+      Spark4-Sheet_39: -5837416534367272857
+      Spark4-Sheet_4: -8583130661987899964
+      Spark4-Sheet_40: 275628580894879829
+      Spark4-Sheet_41: 984756372831575309
+      Spark4-Sheet_42: -5383428988505859763
+      Spark4-Sheet_43: -2844121373406341133
+      Spark4-Sheet_44: 2274280010985229668
+      Spark4-Sheet_45: 404253004863804801
+      Spark4-Sheet_46: 2217248461223579502
+      Spark4-Sheet_47: 7253741501801500388
+      Spark4-Sheet_48: 9100407507394026622
+      Spark4-Sheet_49: 3559944165854637188
+      Spark4-Sheet_5: 6822496286109083654
+      Spark4-Sheet_50: 7275010785396347144
+      Spark4-Sheet_51: -6086997550269571713
+      Spark4-Sheet_52: 797300587995910620
+      Spark4-Sheet_53: 8433611720446544278
+      Spark4-Sheet_6: -2946851870140896858
+      Spark4-Sheet_7: 3173903368630587316
+      Spark4-Sheet_8: -7274230349888373766
+      Spark4-Sheet_9: 3407008437749583725
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

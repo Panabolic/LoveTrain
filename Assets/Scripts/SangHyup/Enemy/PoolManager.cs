@@ -15,18 +15,30 @@ public class PoolManager : MonoBehaviour
 {
     public static PoolManager instance;
 
-    [SerializeField] private GameObject[]       mobs;           // Mob prefab array
-                     private List<GameObject>[] mobPools;       // Array of pooled mob lists
-    [SerializeField] private GameObject[]       eliteMobs;       // Elite Mob prefab array
-                     private List<GameObject>[] eliteMobPools;  // Array of pooled elite mob lists
-    [SerializeField] private GameObject[]       bosses;
+    [Header("--- Mob Prefabs ---")]
+    [SerializeField] private GameObject[] groundMobs; // 지상 일반
+    [SerializeField] private GameObject[] flyMobs;    // 공중 일반
+
+    [Space]
+    [SerializeField] private GameObject[] groundEliteMobs; // ✨ 지상 엘리트
+    [SerializeField] private GameObject[] flyEliteMobs;    // ✨ 공중 엘리트
+
+    [Space]
+    [SerializeField] private GameObject[] bosses;
+
+    // --- Pooling Lists ---
+    private List<GameObject>[] groundMobPools;
+    private List<GameObject>[] flyMobPools;
+    private List<GameObject>[] groundEliteMobPools; // ✨
+    private List<GameObject>[] flyEliteMobPools;    // ✨
+
+    // 동적 풀 (이벤트/프리팹 스폰용)
+    private Dictionary<string, List<GameObject>> dynamicPools = new Dictionary<string, List<GameObject>>();
 
     public List<Enemy> activeEnemies = new List<Enemy>();
 
-    [Header("Enemy HP Calibration Value")]
-    [Tooltip("백분율로 작성해주세요. (1.2배라면 20 입력)")]
+    [Header("Calibration")]
     public int hpIncrease = 10;
-    [Tooltip("백분율로 작성해주세요. (1.2배라면 20 입력)")]
     public int eventDebuff = 0;
 
     private void Awake()
@@ -36,100 +48,71 @@ public class PoolManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
-        mobPools = new List<GameObject>[mobs.Length];
-        for (int i = 0; i < mobPools.Length; i++)
-        {
-            mobPools[i] = new List<GameObject>();
-        }
+        // 풀 초기화
+        InitializePools(groundMobs, out groundMobPools);
+        InitializePools(flyMobs, out flyMobPools);
+        InitializePools(groundEliteMobs, out groundEliteMobPools); // ✨
+        InitializePools(flyEliteMobs, out flyEliteMobPools);       // ✨
+    }
 
-        eliteMobPools = new List<GameObject>[eliteMobs.Length];
-        for (int i = 0; i < eliteMobPools.Length; i++)
+    private void InitializePools(GameObject[] prefabs, out List<GameObject>[] pools)
+    {
+        pools = new List<GameObject>[prefabs.Length];
+        for (int i = 0; i < pools.Length; i++)
         {
-            eliteMobPools[i] = new List<GameObject>();
+            pools[i] = new List<GameObject>();
         }
     }
 
-    public void RegisterEnemy(Enemy enemy)
+    // ------------------------------------------------------------
+    // 만능 프리팹 풀링 (이벤트용)
+    // ------------------------------------------------------------
+    public GameObject GetMob(GameObject prefab)
     {
-        if (!activeEnemies.Contains(enemy))
+        if (prefab == null) return null;
+        string key = prefab.name;
+
+        if (!dynamicPools.ContainsKey(key))
         {
-            activeEnemies.Add(enemy);
+            dynamicPools.Add(key, new List<GameObject>());
         }
+
+        List<GameObject> pool = dynamicPools[key];
+        return GetFromPoolList(pool, prefab);
     }
 
-    public void UnregisterEnemy(Enemy enemy)
+    // ------------------------------------------------------------
+    // 인덱스 기반 Getter (자동 스폰용)
+    // ------------------------------------------------------------
+
+    // 일반 몬스터
+    public GameObject GetGroundMob(int index)
     {
-        if (activeEnemies.Contains(enemy))
-        {
-            activeEnemies.Remove(enemy);
-        }
+        if (index < 0 || index >= groundMobs.Length) return null;
+        return GetFromPool(groundMobPools[index], groundMobs[index]);
     }
-    
-    public void DespawnAllEnemies()
+    public GameObject GetFlyMob(int index)
     {
-        // 리스트를 순회하며 비활성화 (역순 순회 권장: 리스트 변경 가능성 대비)
-        for (int i = activeEnemies.Count - 1; i >= 0; i--)
-        {
-            if (activeEnemies[i] != null)
-            {
-                activeEnemies[i].DespawnWithoutExp();
-            }
-        }
+        if (index < 0 || index >= flyMobs.Length) return null;
+        return GetFromPool(flyMobPools[index], flyMobs[index]);
     }
 
-    public GameObject GetMob(int index)
+    // ✨ 엘리트 몬스터 (분리됨)
+    public GameObject GetGroundEliteMob(int index)
     {
-        GameObject selected = null;
-
-        foreach (GameObject enemy in mobPools[index])
-        {
-            if (!enemy.activeSelf)
-            {
-                selected = enemy;
-                selected.SetActive(true);
-
-                break;
-            }
-        }
-
-        if (selected == null)
-        {
-            selected = Instantiate(mobs[index], transform);
-            mobPools[index].Add(selected);
-        }
-
-        return selected;
+        if (index < 0 || index >= groundEliteMobs.Length) return null;
+        return GetFromPool(groundEliteMobPools[index], groundEliteMobs[index]);
     }
-
-    public GameObject GetEliteMob(int index)
+    public GameObject GetFlyEliteMob(int index)
     {
-        GameObject selected = null;
-
-        foreach (GameObject enemy in eliteMobPools[index])
-        {
-            if (!enemy.activeSelf)
-            {
-                selected = enemy;
-                selected.SetActive(true);
-
-                break;
-            }
-        }
-
-        if (selected == null)
-        {
-            selected = Instantiate(eliteMobs[index], transform);
-            eliteMobPools[index].Add(selected);
-        }
-
-        return selected;
+        if (index < 0 || index >= flyEliteMobs.Length) return null;
+        return GetFromPool(flyEliteMobPools[index], flyEliteMobs[index]);
     }
 
     public GameObject GetBoss(BossName boss)
@@ -137,5 +120,56 @@ public class PoolManager : MonoBehaviour
         return bosses[(int)boss];
     }
 
-    public int GetPooledEnemyCount(EnemyName enemyName) { return mobPools[(int)enemyName].Count; }
+    // --- 내부 로직 ---
+    private GameObject GetFromPool(List<GameObject> pool, GameObject prefab)
+    {
+        return GetFromPoolList(pool, prefab);
+    }
+
+    private GameObject GetFromPoolList(List<GameObject> pool, GameObject prefab)
+    {
+        GameObject selected = null;
+        foreach (GameObject obj in pool)
+        {
+            if (obj != null && !obj.activeSelf)
+            {
+                selected = obj;
+                selected.SetActive(true);
+                break;
+            }
+        }
+
+        if (selected == null)
+        {
+            selected = Instantiate(prefab, transform);
+            selected.name = prefab.name;
+            pool.Add(selected);
+        }
+        return selected;
+    }
+
+    public void RegisterEnemy(Enemy enemy) { if (!activeEnemies.Contains(enemy)) activeEnemies.Add(enemy); }
+    public void UnregisterEnemy(Enemy enemy) { if (activeEnemies.Contains(enemy)) activeEnemies.Remove(enemy); }
+
+    public void DespawnAllEnemies()
+    {
+        for (int i = activeEnemies.Count - 1; i >= 0; i--)
+            if (activeEnemies[i] != null) activeEnemies[i].DespawnWithoutExp();
+    }
+
+    public void DespawnAllEnemiesExceptBoss()
+    {
+        for (int i = activeEnemies.Count - 1; i >= 0; i--)
+        {
+            Enemy enemy = activeEnemies[i];
+            if (enemy != null)
+            {
+                // Boss 컴포넌트가 있으면 건너뜀 (살려둠)
+                if (enemy.GetComponent<Boss>() != null) continue;
+
+                enemy.DespawnWithoutExp();
+            }
+        }
+    }
+
 }

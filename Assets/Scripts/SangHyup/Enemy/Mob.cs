@@ -86,7 +86,7 @@ public class Mob : Enemy
         return;
     }
 
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
         {
@@ -105,6 +105,26 @@ public class Mob : Enemy
             StartCoroutine(Die());
         }
     }
+
+/*    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
+        {
+            Train train = collision.transform.GetComponentInParent<Train>();
+
+            if (train != null)
+            {
+                train.TakeDamage(damage); // Train 스크립트에 맞게 수정 필요
+                if (CameraShakeManager.Instance != null)
+                {
+                    CameraShakeManager.Instance.ShakeCamera(); // 기본 설정으로 흔들기
+                                                               // 또는 원하는 값으로 흔들기: CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
+                }
+            }
+
+            StartCoroutine(Die());
+        }
+    }*/
 
     protected override float CalculateCalibratedHP()
     {

@@ -173,5 +173,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e04a98648b000043b0da35dad60948b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaserBeamSprite
-  ricochetPrefab: {fileID: 1068206360182666013, guid: faca61811968a1f4793f239fb8955d60, type: 3}
+  ricochetPrefab: {fileID: 1068206360182666013, guid: aa0fa220fc202084ca27dca84cc26a20, type: 3}
   ricochetBulletSpeed: 60

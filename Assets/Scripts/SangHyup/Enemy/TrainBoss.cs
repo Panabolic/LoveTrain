@@ -52,7 +52,7 @@ public class TrainBoss : Boss
         // Movement Logic
         SetMoveDirection(targetRigid.position);
 
-        if (isAlive && !isStunned)
+        if (isAlive && !isStunned && !targetRigid.gameObject.GetComponent<Train>().IsDead)
         {
             rigid2D.linearVelocity = new Vector2(moveDirection.x * moveSpeed, rigid2D.linearVelocity.y);
 
@@ -127,6 +127,25 @@ public class TrainBoss : Boss
         isStunned = false;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
+        {
+            Train train = collision.transform.GetComponentInParent<Train>();
+
+            if (train != null)
+            {
+                train.TakeDamage(damage, true); // Train ��ũ��Ʈ�� �°� ���� �ʿ�
+                if (CameraShakeManager.Instance != null)
+                {
+                    CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
+                }
+            }
+
+            /* �÷��̾� ���̱� */
+        }
+    }
+/*
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
@@ -142,9 +161,9 @@ public class TrainBoss : Boss
                 }
             }
 
-            /* �÷��̾� ���̱� */
+            *//* �÷��̾� ���̱� *//*
         }
-    }
+    }*/
 
     protected override IEnumerator Die()
     {

@@ -11,6 +11,7 @@ public class LaserGun_SO : Item_SO
     public float[] durationByLevel = { 1f, 3f, 5f };       // 최대 발사 지속 시간
     public float[] tickRateByLevel = { 0.07f, 0.07f, 0.07f };// 데미지 입히는 주기 (낮을수록 빠름)
     public float[] cooldownByLevel = { 0.6f, 0.6f, 0.6f };     // 과열 후 쿨타임
+    public float[] laserScale = { 1f, 1.5f, 2f };
 
     public GameObject LaserProjectilePrefab;
 

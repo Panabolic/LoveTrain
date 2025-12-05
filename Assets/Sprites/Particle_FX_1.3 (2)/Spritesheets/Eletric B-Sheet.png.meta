@@ -1,0 +1,897 @@
+fileFormatVersion: 2
+guid: 0c0b1b9874e716f4c8438577f84707ab
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5550390403992462305
+    second: Eletric B-Sheet_0
+  - first:
+      213: 1374911977311448012
+    second: Eletric B-Sheet_1
+  - first:
+      213: 6294222557487667155
+    second: Eletric B-Sheet_2
+  - first:
+      213: 8056376593700734599
+    second: Eletric B-Sheet_3
+  - first:
+      213: 6579306948370753023
+    second: Eletric B-Sheet_4
+  - first:
+      213: -6909536501032762081
+    second: Eletric B-Sheet_5
+  - first:
+      213: -6380718851288244628
+    second: Eletric B-Sheet_6
+  - first:
+      213: 155635698731270254
+    second: Eletric B-Sheet_7
+  - first:
+      213: 6350689667056390547
+    second: Eletric B-Sheet_8
+  - first:
+      213: -8953003264084800621
+    second: Eletric B-Sheet_9
+  - first:
+      213: -5911117644959423454
+    second: Eletric B-Sheet_10
+  - first:
+      213: -1716070144196718186
+    second: Eletric B-Sheet_11
+  - first:
+      213: -3918667330675010254
+    second: Eletric B-Sheet_12
+  - first:
+      213: 4798561000967980801
+    second: Eletric B-Sheet_13
+  - first:
+      213: -7789457300736698051
+    second: Eletric B-Sheet_14
+  - first:
+      213: 6692265502478701405
+    second: Eletric B-Sheet_15
+  - first:
+      213: -6287611019833159470
+    second: Eletric B-Sheet_16
+  - first:
+      213: -3863573883615725345
+    second: Eletric B-Sheet_17
+  - first:
+      213: 8013557255772218525
+    second: Eletric B-Sheet_18
+  - first:
+      213: 3965761713974428225
+    second: Eletric B-Sheet_19
+  - first:
+      213: -8499398004061901336
+    second: Eletric B-Sheet_20
+  - first:
+      213: 3542345808884357374
+    second: Eletric B-Sheet_21
+  - first:
+      213: 8089730122041227490
+    second: Eletric B-Sheet_22
+  - first:
+      213: 3954050309388999186
+    second: Eletric B-Sheet_23
+  - first:
+      213: 4661491867477611707
+    second: Eletric B-Sheet_24
+  - first:
+      213: -8912844718501967314
+    second: Eletric B-Sheet_25
+  - first:
+      213: 8809660602338963159
+    second: Eletric B-Sheet_26
+  - first:
+      213: -4230062135626685717
+    second: Eletric B-Sheet_27
+  - first:
+      213: -965601805546755779
+    second: Eletric B-Sheet_28
+  - first:
+      213: -3884989978661629209
+    second: Eletric B-Sheet_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Eletric B-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 245
+        width: 25
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1cda45b55d09f2b0800000000000000
+      internalID: -5550390403992462305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 191
+        width: 98
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccb2415a82ba41310800000000000000
+      internalID: 1374911977311448012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 224
+        width: 40
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d79d4c5112995750800000000000000
+      internalID: 6294222557487667155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 194
+        width: 41
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 786cd44d3dffdcf60800000000000000
+      internalID: 8056376593700734599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 201
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff5e5e59fc46e4b50800000000000000
+      internalID: 6579306948370753023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 191
+        width: 27
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f15c85d19256c10a0800000000000000
+      internalID: -6909536501032762081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 103
+        width: 30
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6e5351e2022377a0800000000000000
+      internalID: -6380718851288244628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 159
+        width: 12
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e604f39e7dde82200800000000000000
+      internalID: 155635698731270254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 106
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 391d3a3da9e222850800000000000000
+      internalID: 6350689667056390547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 98
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39b005367fa80c380800000000000000
+      internalID: -8953003264084800621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 95
+        width: 23
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22466a202dd77fda0800000000000000
+      internalID: -5911117644959423454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 96
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6915085cb4b4f28e0800000000000000
+      internalID: -1716070144196718186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 38
+        width: 16
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 235103223d81e99c0800000000000000
+      internalID: -3918667330675010254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 60
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1074db77ec9e79240800000000000000
+      internalID: 4798561000967980801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 46
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d391484fad946e390800000000000000
+      internalID: -7789457300736698051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 18
+        width: 14
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5318d17404bfdc50800000000000000
+      internalID: 6692265502478701405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 30
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d05305371bedb8a0800000000000000
+      internalID: -6287611019833159470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 36
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd8bb9fd504d16ac0800000000000000
+      internalID: -3863573883615725345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 0
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d94ae81dddfd53f60800000000000000
+      internalID: 8013557255772218525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 23
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1424a417447390730800000000000000
+      internalID: 3965761713974428225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 26
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ede93b0c821c0a80800000000000000
+      internalID: -8499398004061901336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 25
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef8552abeb0f82130800000000000000
+      internalID: 3542345808884357374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 11
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e87b0d4fae744070800000000000000
+      internalID: 8089730122041227490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 10
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21a97239ecb9fd630800000000000000
+      internalID: 3954050309388999186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 15
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb41064e722f0b040800000000000000
+      internalID: 4661491867477611707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 6
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2a497763f63f4480800000000000000
+      internalID: -8912844718501967314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 0
+        width: 22
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7deea2a64a3324a70800000000000000
+      internalID: 8809660602338963159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 0
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be2242446eccb45c0800000000000000
+      internalID: -4230062135626685717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 1
+        width: 15
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d39e8e9164e7992f0800000000000000
+      internalID: -965601805546755779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eletric B-Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 0
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e2dbeda23eb51ac0800000000000000
+      internalID: -3884989978661629209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Eletric B-Sheet_0: -5550390403992462305
+      Eletric B-Sheet_1: 1374911977311448012
+      Eletric B-Sheet_10: -5911117644959423454
+      Eletric B-Sheet_11: -1716070144196718186
+      Eletric B-Sheet_12: -3918667330675010254
+      Eletric B-Sheet_13: 4798561000967980801
+      Eletric B-Sheet_14: -7789457300736698051
+      Eletric B-Sheet_15: 6692265502478701405
+      Eletric B-Sheet_16: -6287611019833159470
+      Eletric B-Sheet_17: -3863573883615725345
+      Eletric B-Sheet_18: 8013557255772218525
+      Eletric B-Sheet_19: 3965761713974428225
+      Eletric B-Sheet_2: 6294222557487667155
+      Eletric B-Sheet_20: -8499398004061901336
+      Eletric B-Sheet_21: 3542345808884357374
+      Eletric B-Sheet_22: 8089730122041227490
+      Eletric B-Sheet_23: 3954050309388999186
+      Eletric B-Sheet_24: 4661491867477611707
+      Eletric B-Sheet_25: -8912844718501967314
+      Eletric B-Sheet_26: 8809660602338963159
+      Eletric B-Sheet_27: -4230062135626685717
+      Eletric B-Sheet_28: -965601805546755779
+      Eletric B-Sheet_29: -3884989978661629209
+      Eletric B-Sheet_3: 8056376593700734599
+      Eletric B-Sheet_4: 6579306948370753023
+      Eletric B-Sheet_5: -6909536501032762081
+      Eletric B-Sheet_6: -6380718851288244628
+      Eletric B-Sheet_7: 155635698731270254
+      Eletric B-Sheet_8: 6350689667056390547
+      Eletric B-Sheet_9: -8953003264084800621
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

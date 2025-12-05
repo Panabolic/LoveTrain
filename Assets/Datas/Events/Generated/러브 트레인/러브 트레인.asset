@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc52c99cfa32c8b49a16d68e16abd314, type: 3}
+  m_Name: "\uB7EC\uBE0C \uD2B8\uB808\uC778"
+  m_EditorClassIdentifier: Assembly-CSharp::SO_Event
+  EventTitle: "\uB7EC\uBE0C \uD2B8\uB808\uC778"
+  EventText: "\uC5ED\uC744 \uC9C0\uB098\uC790\uB9C8\uC790 \uC120\uB85C\uB97C \uAC00\uB85C\uB9C9\uACE0
+    \uC788\uB294 \uAC70\uB300\uD55C \uBD84\uD64D\uC0C9 \uC810\uC561\uC9C8 \uAD34\uBB3C\uACFC
+    \uB9C8\uC8FC\uCCE4\uB2E4. \uAD34\uBB3C\uC740 \uC218\uB9CE\uC740 \uB208\uC744
+    \uAE5C\uBE61\uC774\uBA70 \uB2F9\uC2E0\uC758 \uAE30\uCC28\uB97C \uADF8\uC73D\uD558\uAC8C
+    \uBC14\uB77C\uBCF8\uB2E4. \uAE30\uCC28\uC758 \uB9E4\uB044\uB7EC\uC6B4 \uAC15\uCCA0
+    \uBC14\uB514\uC640 \uB728\uAC70\uC6B4 \uC5D4\uC9C4 \uC5F4\uAE30\uC5D0 \uBC18\uD55C
+    \uAC83 \uAC19\uB2E4.\r\n\r\n\u201C(\uC218\uC90D\uAC8C \uAFC8\uD2C0\uAC70\uB9AC\uBA70
+    \uC8FD\uC740 \uC0DD\uC120\uC758 \uBA38\uB9AC\uB97C \uAF43\uB2E4\uBC1C\uCC98\uB7FC
+    \uB0B4\uBBFC\uB2E4) \uAFB8\uB974\uB975\u2026 \uB028?\u201C\r\n\r\n\uAE30\uCC28\uC758
+    \uAE30\uC801 \uC18C\uB9AC\uB85C \uB300\uB2F5\uD574\uC918\uC57C \uD560 \uAC83
+    \uAC19\uB2E4. \uC5B4\uB5BB\uAC8C \uD560\uAE4C?"
+  Selections:
+  - selectionText: "\uB728\uAC70\uC6B4 \uC99D\uAE30\uB97C \uBFDC\uC5B4 \uC720\uD639\uC5D0
+      \uC751\uD574\uC900\uB2E4"
+    selectionUnderText: "\uC18D\uB3C4 70\uAC10\uC18C"
+    eventToTrigger: {fileID: 11400000, guid: efe572a8f5de94c48ac51345f8136dc6, type: 2}
+  - selectionText: "\"\uB0B4 \uC2A4\uD0C0\uC77C \uC544\uB0D0\" \uB9E4\uBAB0\uCC28\uAC8C
+      \uAC70\uC808\uD55C\uB2E4"
+    selectionUnderText: "\uD2B9\uC218 \uBAAC\uC2A4\uD130 \uBB34\uB9AC \uB4F1\uC7A5"
+    eventToTrigger: {fileID: 11400000, guid: d4b60c7e1ae0c314da041ce5cc6a2ed2, type: 2}
+  - selectionText: "\"\uB10C \uB098\uC5D0\uAC8C \uBB58 \uC904\uC218\uC788\uC9C0?\"
+      \uC120\uBB3C\uC744 \uC694\uAD6C\uD55C\uB2E4"
+    selectionUnderText: "\uC801 HP 10%\uC99D\uAC00"
+    eventToTrigger: {fileID: 11400000, guid: 38ade63c16706d742adbf1dc3a3a54b3, type: 2}

@@ -29,7 +29,12 @@ public class Item_SO : ScriptableObject
     public string itemSimpleScript;
     [Header("쿨타임 설정")]
     public float cooldownTime = 0f; // 이 아이템의 쿨타임 (0이면 쿨타임 없음)
-
+    /// <summary>
+    /// ✨ [추가됨] true일 경우 시스템이 쿨타임을 자동 초기화하지 않음.
+    /// (BloodyBible 처럼 장판이 사라질 때 수동으로 쿨타임을 돌려야 하는 경우 사용)
+    /// 기본값: false (기존 아이템들과 동일하게 자동 쿨타임)
+    /// </summary>
+    public virtual bool IsManualCooldown => false;
     // --- 이벤트 훅 (Event Hooks) ---
     // 자식 클래스들이 이 중에서 필요한 것만 골라 재정의(override)합니다.
 

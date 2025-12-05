@@ -31,4 +31,4 @@ MonoBehaviour:
   - 28
   - 25
   spawnRangeX: 15
-  ZonePrefab: {fileID: 197958623005720994, guid: 2163572e4be8b8943ac392759936fd76, type: 3}
+  ZonePrefab: {fileID: 892054615579162525, guid: 2163572e4be8b8943ac392759936fd76, type: 3}
