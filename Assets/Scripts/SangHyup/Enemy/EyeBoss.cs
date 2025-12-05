@@ -4,26 +4,26 @@ using UnityEngine;
 public class EyeBoss : Boss
 {
     [Header("Eye Boss Specification")]
-    [SerializeField] private float waitTimeBetweenPatterns = 2.0f;
+    [SerializeField] private float waitTimeBetweenPatterns      = 2.0f;
     [Range(0.1f, 1.0f)]
-    [SerializeField] private float instantKillPatternThreshold = 0.2f; // 체력 비율 임계값
+    [SerializeField] private float instantKillPatternThreshold  = 0.2f; // 체력 비율 임계값
+    [SerializeField] private float patternWaitTime              = 5.0f;
 
+    [Header("Reference")]
+    [SerializeField] private GameObject     Tentacle;
+    [SerializeField] private Transform[]    leftSpawnPoints;
+    [SerializeField] private Transform[]    rightSpawnPoints;
 
     private bool canAttack = true;
 
-
-
     private void Update()
     {
-        if (!isAlive) return;
+        if (!isAlive || !canAttack) return;
 
-        if (canAttack)
-        {
-            canAttack = false;
+        //int patternIndex = Random.Range(0, 2);
 
-            StartCoroutine(AttackPattern1());
-            StartCoroutine(AttackPattern2());
-        }
+        StartCoroutine(AttackPattern1());
+        //StartCoroutine(AttackPattern2());
     }
 
     public override void TakeDamage(float damageAmount)
@@ -46,19 +46,29 @@ public class EyeBoss : Boss
         {
             case 0:
                 // 왼쪽 공격 패턴
+                canAttack = false;
 
+                foreach (Transform spawnPoint in leftSpawnPoints)
+                {
+                    Instantiate(Tentacle, spawnPoint.position, Quaternion.identity);
+                }
 
-                yield return new WaitForSeconds(4.0f);
+                yield return new WaitForSeconds(patternWaitTime);
 
-
+                canAttack = true;
                 break;
             case 1:
                 // 오른쪽 공격 패턴
+                canAttack = false;
 
+                foreach (Transform spawnPoint in rightSpawnPoints)
+                {
+                    Instantiate(Tentacle, spawnPoint.position, Quaternion.identity);
+                }
 
-                yield return new WaitForSeconds(4.0f);
+                yield return new WaitForSeconds(patternWaitTime);
 
-
+                canAttack = true;
                 break;
         }
 

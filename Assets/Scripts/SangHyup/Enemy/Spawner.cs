@@ -13,9 +13,9 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float firstEliteSpawnTime = 60.0f;
 
     [Header("Spawn Points")]
-    [SerializeField] private Transform[] mobSpawnPoints;
-    [SerializeField] private Transform[] FlyMobSpawnPoints;
-    [SerializeField] private Transform[] bossSpawnPoints;
+    [SerializeField] private Transform[]        mobSpawnPoints;
+    [SerializeField] private BoxCollider2D[]    flyMobSpawnAreas;
+    [SerializeField] private Transform[]        bossSpawnPoints;
 
     private int mobIndex;
 
@@ -78,7 +78,12 @@ public class Spawner : MonoBehaviour
         }
         else if (mobIndex == 1)
         {
-            enemy.transform.position = FlyMobSpawnPoints[UnityEngine.Random.Range(0, FlyMobSpawnPoints.Length)].position;
+            int     whichArea   = UnityEngine.Random.Range(0, flyMobSpawnAreas.Length);
+            Bounds  bounds      = flyMobSpawnAreas[whichArea].bounds;
+
+            float randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
+
+            enemy.transform.position = new Vector3(30.0f, randomY, 0f);
         }
 
         Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
@@ -111,7 +116,12 @@ public class Spawner : MonoBehaviour
         }
         else if (mobIndex == 1)
         {
-            enemy.transform.position = FlyMobSpawnPoints[UnityEngine.Random.Range(0, FlyMobSpawnPoints.Length)].position;
+            int whichArea = UnityEngine.Random.Range(0, flyMobSpawnAreas.Length);
+            Bounds bounds = flyMobSpawnAreas[whichArea].bounds;
+
+            float randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
+
+            enemy.transform.position = new Vector3(30.0f, randomY, 0f);
         }
 
         enemy.GetComponent<Mob>().OnDied -= RespawnMob; // �ߺ� ���� ����
