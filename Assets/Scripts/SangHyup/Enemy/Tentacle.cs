@@ -28,6 +28,7 @@ public class Tentacle : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(collision);
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<Train>().TakeDamage(damage);
@@ -38,7 +39,7 @@ public class Tentacle : MonoBehaviour
     {
         yield return new WaitForSeconds(attackWaitTime);
 
-        animator.SetTrigger("Attack");
+        animator.SetTrigger("attack");
 
         yield return new WaitForSeconds(0.2f);
 

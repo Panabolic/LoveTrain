@@ -7,12 +7,13 @@ public class EyeBoss : Boss
     [SerializeField] private float waitTimeBetweenPatterns      = 2.0f;
     [Range(0.1f, 1.0f)]
     [SerializeField] private float instantKillPatternThreshold  = 0.2f; // 체력 비율 임계값
-    [SerializeField] private float patternWaitTime              = 5.0f;
+    [SerializeField] private float patternWaitTime              = 7.0f;
 
     [Header("Reference")]
     [SerializeField] private GameObject     Tentacle;
-    [SerializeField] private Transform[]    leftSpawnPoints;
-    [SerializeField] private Transform[]    rightSpawnPoints;
+    [SerializeField] private Transform[]    leftTentaclePoints;
+    [SerializeField] private Transform[]    rightTentaclePoints;
+    [SerializeField] private Transform[]    middleTentaclePoints;
 
     private bool canAttack = true;
 
@@ -20,10 +21,12 @@ public class EyeBoss : Boss
     {
         if (!isAlive || !canAttack) return;
 
-        //int patternIndex = Random.Range(0, 2);
+        int patternIndex = Random.Range(0, 2);
 
-        StartCoroutine(AttackPattern1());
-        //StartCoroutine(AttackPattern2());
+        if (patternIndex == 0)
+            StartCoroutine(AttackPattern1());
+        if (patternIndex == 1)
+            StartCoroutine(AttackPattern2());
     }
 
     public override void TakeDamage(float damageAmount)
@@ -48,7 +51,7 @@ public class EyeBoss : Boss
                 // 왼쪽 공격 패턴
                 canAttack = false;
 
-                foreach (Transform spawnPoint in leftSpawnPoints)
+                foreach (Transform spawnPoint in leftTentaclePoints)
                 {
                     Instantiate(Tentacle, spawnPoint.position, Quaternion.identity);
                 }
@@ -61,7 +64,7 @@ public class EyeBoss : Boss
                 // 오른쪽 공격 패턴
                 canAttack = false;
 
-                foreach (Transform spawnPoint in rightSpawnPoints)
+                foreach (Transform spawnPoint in rightTentaclePoints)
                 {
                     Instantiate(Tentacle, spawnPoint.position, Quaternion.identity);
                 }
@@ -78,9 +81,18 @@ public class EyeBoss : Boss
 
     private IEnumerator AttackPattern2()
     {
-        
+        // 왼쪽 공격 패턴
+        canAttack = false;
+
+        foreach (Transform spawnPoint in middleTentaclePoints)
+        {
+            Instantiate(Tentacle, spawnPoint.position, Quaternion.identity);
+        }
+
+        yield return new WaitForSeconds(patternWaitTime);
+
+        canAttack = true;
 
         yield return null;
-
     }
 }

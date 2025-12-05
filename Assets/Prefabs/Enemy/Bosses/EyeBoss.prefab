@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1517056859562472103}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.25, y: -1.25, z: 0}
+  m_LocalPosition: {x: -24.25, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 1718302559663505026}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.8, y: -2.4, z: 0}
+  m_LocalPosition: {x: -8.8, y: -2.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -87,7 +87,7 @@ Transform:
   m_GameObject: {fileID: 4007224247727329993}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.8, y: -0.9, z: 0}
+  m_LocalPosition: {x: 5.7, y: -0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 4114387302891562538}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18, y: -0.2, z: 0}
+  m_LocalPosition: {x: 18.1, y: -0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 4818540116112197160}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.1, y: 0, z: 0}
+  m_LocalPosition: {x: 14.1, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -180,7 +180,7 @@ Transform:
   m_GameObject: {fileID: 5077753684927304797}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.3, y: -0.2, z: 0}
+  m_LocalPosition: {x: -17.3, y: -0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -211,7 +211,7 @@ Transform:
   m_GameObject: {fileID: 6114420212326744860}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.8, y: -1, z: 0}
+  m_LocalPosition: {x: -2.8, y: -1.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -242,7 +242,7 @@ Transform:
   m_GameObject: {fileID: 7561707598770447651}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.2, y: -0.3, z: 0}
+  m_LocalPosition: {x: 22.4, y: -0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -277,7 +277,7 @@ Transform:
   m_GameObject: {fileID: 8958191303323060444}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 13, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -337,7 +337,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1388612601
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7817718566108575959, guid: ec7eb3296783ee1468d5d85b781b2bd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -419,21 +419,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EyeBoss
   hp: 700
   damage: 50
-  exp: 1000
+  exp: 100
   waitTimeBetweenPatterns: 2
   instantKillPatternThreshold: 0.2
-  patternWaitTime: 3
+  patternWaitTime: 6
   Tentacle: {fileID: 6642445466029022954, guid: 2c07a90848346df419dcfec1e898831e, type: 3}
-  leftSpawnPoints:
+  leftTentaclePoints:
   - {fileID: 7224506124874240020}
   - {fileID: 8615302654909460714}
   - {fileID: 2315438584543118992}
   - {fileID: 8550045885985894063}
-  rightSpawnPoints:
+  rightTentaclePoints:
   - {fileID: 4732039550777618310}
   - {fileID: 8615293539129125230}
   - {fileID: 7747947751319013693}
   - {fileID: 7741494182506128172}
+  middleTentaclePoints:
+  - {fileID: 2315438584543118992}
+  - {fileID: 8550045885985894063}
+  - {fileID: 4732039550777618310}
 --- !u!95 &7417052634081002744
 Animator:
   serializedVersion: 7

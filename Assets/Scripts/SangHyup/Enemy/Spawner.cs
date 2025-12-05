@@ -416,5 +416,6 @@ public class Spawner : MonoBehaviour
 
     // (하위 호환)
     public void SpawnBoss(BossName boss) { StartBossSequence(boss); }
-    public void SpawnBoss() { StartBossSequence(BossName.TrainBoss); }
+    public void SpawnTrainBoss() { StartBossSequence(BossName.TrainBoss); }
+    public void SpawnEyeBoss() { StartBossSequence(BossName.EyeBoss); }
 }

@@ -8,7 +8,7 @@ public enum EnemyName
 
 public enum BossName
 {
-    TrainBoss
+    TrainBoss, EyeBoss
 }
 
 public class PoolManager : MonoBehaviour

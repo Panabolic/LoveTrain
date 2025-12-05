@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrainBoss
   hp: 500
   damage: 10000
-  exp: 30
+  exp: 100
   moveSpeed: 15
   p1KnockbackRatio: 0.9
   p2HpRatio: 0.4
