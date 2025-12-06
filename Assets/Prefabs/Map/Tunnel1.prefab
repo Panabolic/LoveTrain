@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6662483780530721613}
   m_Layer: 0
-  m_Name: Turnel1
+  m_Name: Tunnel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

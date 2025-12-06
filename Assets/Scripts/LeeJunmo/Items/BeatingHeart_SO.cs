@@ -91,6 +91,7 @@ public class BeatingHeart_SO : Item_SO
         {
             Vector2 OffsetedVisualTransform = new Vector2(visualTrasform.transform.position.x - 1.6f, visualTrasform.transform.position.y);
             Instantiate(EffectPrefab, OffsetedVisualTransform, Quaternion.identity);
+            SoundEventBus.Publish(SoundID.Item_BeatingHeart);
         }
     }
 

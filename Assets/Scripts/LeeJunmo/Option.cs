@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
@@ -11,18 +9,17 @@ public class Option : MonoBehaviour
     public Slider BGMSlider;
     public Slider SFXSlider;
 
-    // 내부 상태 변수는 이제 필요 없거나 최소화됩니다.
-    // GameManager의 상태(GameState.Pause)를 신뢰합니다.
-
     void Start()
     {
         if (optionPanel != null) optionPanel.SetActive(false);
 
-        // 사운드 매니저 연동 초기화
-        if (SoundManager.instance != null)
+        // 사운드 매니저와 슬라이더 연동
+        // (SoundManager가 아직 생성 안 됐을 경우를 대비해 null 체크)
+        if (SoundManager.Instance != null)
         {
-            BGMSlider.value = SoundManager.instance.GetBGMVolume() * 100f;
-            SFXSlider.value = SoundManager.instance.GetSFXVolume() * 100f;
+            // 0~1 사이 값으로 가져와서 0~100 슬라이더에 맞춤
+            BGMSlider.value = SoundManager.Instance.GetBGMVolume() * 100f;
+            SFXSlider.value = SoundManager.Instance.GetSFXVolume() * 100f;
         }
         else
         {
@@ -30,11 +27,13 @@ public class Option : MonoBehaviour
             SFXSlider.value = 100;
         }
 
+        // 슬라이더 범위 설정 (0 ~ 100)
         BGMSlider.minValue = 0;
         BGMSlider.maxValue = 100;
         SFXSlider.minValue = 0;
         SFXSlider.maxValue = 100;
 
+        // 이벤트 리스너 등록
         BGMSlider.onValueChanged.AddListener(UpdateBGMVolume);
         SFXSlider.onValueChanged.AddListener(UpdateSFXVolume);
     }
@@ -53,41 +52,39 @@ public class Option : MonoBehaviour
 
         GameState currentState = GameManager.Instance.CurrentState;
 
-        // 1. 게임 진행 중 (Playing, Boss) -> 일시정지 (옵션 열기)
-        if (currentState == GameState.Playing || currentState == GameState.Boss)
+        // Start, Playing, Boss 상태에서 옵션 열기 허용
+        if (currentState == GameState.Playing || currentState == GameState.Boss || currentState == GameState.Start)
         {
             GameManager.Instance.PauseGame();
             optionPanel.SetActive(true);
         }
-        // 2. 일시정지 상태 (Pause) -> 게임 재개 (옵션 닫기)
         else if (currentState == GameState.Pause)
         {
             GameManager.Instance.ResumeGame();
             optionPanel.SetActive(false);
         }
-        // 3. 그 외 (Event, Die, Start) -> 무시 (열지 않음)
-        else
-        {
-            // Debug.Log("현재 상태에서는 옵션을 열 수 없습니다.");
-        }
     }
 
-    // 닫기 버튼용
     public void CloseOption()
     {
         if (GameManager.Instance.CurrentState == GameState.Pause)
         {
-            ToggleOptionPanel(); // ResumeGame 호출됨
+            // Pause 상태일 때만 닫기 동작 수행 (ResumeGame 호출)
+            GameManager.Instance.ResumeGame();
+            optionPanel.SetActive(false);
         }
     }
 
     void UpdateBGMVolume(float value)
     {
-        if (SoundManager.instance != null) SoundManager.instance.SetBGMVolume(value / 100f);
+        // 0~100 값을 0~1로 변환하여 전달
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.SetBGMVolume(value / 100f);
     }
 
     void UpdateSFXVolume(float value)
     {
-        if (SoundManager.instance != null) SoundManager.instance.SetSFXVolume(value / 100f);
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.SetSFXVolume(value / 100f);
     }
 }

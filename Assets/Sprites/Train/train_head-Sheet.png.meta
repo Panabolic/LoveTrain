@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: 93ea63fa9e695c6418f663d33db4602b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2778134545970398318
+    second: train_head-Sheet_0
+  - first:
+      213: -5943440260833581651
+    second: train_head-Sheet_1
+  - first:
+      213: -8432816881775490966
+    second: train_head-Sheet_2
+  - first:
+      213: -4643059940456759753
+    second: train_head-Sheet_3
+  - first:
+      213: 4086027179247946301
+    second: train_head-Sheet_4
+  - first:
+      213: 2997167632285975370
+    second: train_head-Sheet_5
+  - first:
+      213: -2777943052058355809
+    second: train_head-Sheet_6
+  - first:
+      213: 8095654218702409774
+    second: train_head-Sheet_7
+  - first:
+      213: -1979928504881574108
+    second: train_head-Sheet_8
+  - first:
+      213: -8505660510640678582
+    second: train_head-Sheet_9
+  - first:
+      213: 4907738609569919073
+    second: train_head-Sheet_10
+  - first:
+      213: 8689684520625101656
+    second: train_head-Sheet_11
+  - first:
+      213: 1354112549532782920
+    second: train_head-Sheet_12
+  - first:
+      213: 1478617694406627707
+    second: train_head-Sheet_13
+  - first:
+      213: 2233957681240564177
+    second: train_head-Sheet_14
+  - first:
+      213: -4728136198004106876
+    second: train_head-Sheet_15
+  - first:
+      213: -8992925888873875092
+    second: train_head-Sheet_16
+  - first:
+      213: 6092224848977467327
+    second: train_head-Sheet_17
+  - first:
+      213: 1925629838102805316
+    second: train_head-Sheet_18
+  - first:
+      213: -3914648859816390078
+    second: train_head-Sheet_19
+  - first:
+      213: -4512730313398792229
+    second: train_head-Sheet_20
+  - first:
+      213: 6485501449897917789
+    second: train_head-Sheet_21
+  - first:
+      213: 1627023534106466786
+    second: train_head-Sheet_22
+  - first:
+      213: -2083529289214582148
+    second: train_head-Sheet_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: train_head-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 15
+        width: 66
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29b713189551279d0800000000000000
+      internalID: -2778134545970398318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 40
+        width: 24
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da5624d8298a48da0800000000000000
+      internalID: -5943440260833581651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 40
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a68cad999bd98fa80800000000000000
+      internalID: -8432816881775490966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 15
+        width: 66
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73e7a3a8599809fb0800000000000000
+      internalID: -4643059940456759753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 40
+        width: 24
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3a4aa1221c74b830800000000000000
+      internalID: 4086027179247946301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 40
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4344b6f414189920800000000000000
+      internalID: 2997167632285975370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 15
+        width: 66
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f971cc72383c279d0800000000000000
+      internalID: -2777943052058355809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 40
+        width: 24
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e20562a8e9a895070800000000000000
+      internalID: 8095654218702409774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 40
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42f0dd1d381e584e0800000000000000
+      internalID: -1979928504881574108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 15
+        width: 66
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a49d13b94d2d5f980800000000000000
+      internalID: -8505660510640678582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 40
+        width: 24
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16072e9534acb1440800000000000000
+      internalID: 4907738609569919073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 40
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85bd1161806f79870800000000000000
+      internalID: 8689684520625101656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 15
+        width: 66
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 841dccc7036cac210800000000000000
+      internalID: 1354112549532782920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 40
+        width: 24
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b71d6b185fa158410800000000000000
+      internalID: 1478617694406627707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 40
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d16991dcac900f10800000000000000
+      internalID: 2233957681240564177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 15
+        width: 66
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4899c4cbd29426eb0800000000000000
+      internalID: -4728136198004106876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 40
+        width: 24
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c693246fc85b23380800000000000000
+      internalID: -8992925888873875092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 40
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb71c1fd83eeb8450800000000000000
+      internalID: 6092224848977467327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 15
+        width: 66
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44bb205a22639ba10800000000000000
+      internalID: 1925629838102805316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 40
+        width: 24
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 242914a4a9f5ca9c0800000000000000
+      internalID: -3914648859816390078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 40
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdf4abe70bf8f51c0800000000000000
+      internalID: -4512730313398792229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 15
+        width: 66
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5d327ff431210a50800000000000000
+      internalID: 6485501449897917789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 40
+        width: 24
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e9dd9fa849549610800000000000000
+      internalID: 1627023534106466786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: train_head-Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 976
+        y: 40
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c722e358621d513e0800000000000000
+      internalID: -2083529289214582148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      train_head-Sheet_0: -2778134545970398318
+      train_head-Sheet_1: -5943440260833581651
+      train_head-Sheet_10: 4907738609569919073
+      train_head-Sheet_11: 8689684520625101656
+      train_head-Sheet_12: 1354112549532782920
+      train_head-Sheet_13: 1478617694406627707
+      train_head-Sheet_14: 2233957681240564177
+      train_head-Sheet_15: -4728136198004106876
+      train_head-Sheet_16: -8992925888873875092
+      train_head-Sheet_17: 6092224848977467327
+      train_head-Sheet_18: 1925629838102805316
+      train_head-Sheet_19: -3914648859816390078
+      train_head-Sheet_2: -8432816881775490966
+      train_head-Sheet_20: -4512730313398792229
+      train_head-Sheet_21: 6485501449897917789
+      train_head-Sheet_22: 1627023534106466786
+      train_head-Sheet_23: -2083529289214582148
+      train_head-Sheet_3: -4643059940456759753
+      train_head-Sheet_4: 4086027179247946301
+      train_head-Sheet_5: 2997167632285975370
+      train_head-Sheet_6: -2777943052058355809
+      train_head-Sheet_7: 8095654218702409774
+      train_head-Sheet_8: -1979928504881574108
+      train_head-Sheet_9: -8505660510640678582
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

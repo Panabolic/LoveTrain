@@ -113,6 +113,6 @@ public class TrainLevelManager : MonoBehaviour
         }
 
         // 3. 최종 공식: (목표 레벨 * (기본값 + 구간변수)) + 벽변수
-        return (targetLevel * (baseRequiredXP + levelPeriodVariable)) + wallVariable;
+        return ((targetLevel-1) * (baseRequiredXP + levelPeriodVariable)) + wallVariable;
     }
 }

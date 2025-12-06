@@ -1,19 +1,22 @@
 fileFormatVersion: 2
-guid: e60751502b86ad742b74738cfa942eea
+guid: 1af694b3925967c4ea311af681100837
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5406385088889148968
-    second: map2 part3 sheet_0
+      213: -2593732073867138626
+    second: restart1_0
   - first:
-      213: -8297580762413903044
-    second: map2 part3 sheet_1
+      213: 4681668895767201059
+    second: restart1_1
   - first:
-      213: 5605047432197531296
-    second: map2 part3 sheet_2
+      213: 6798502209595949153
+    second: restart1_2
   - first:
-      213: -4543400204244138662
-    second: map2 part3 sheet_3
+      213: -7443343763488034081
+    second: restart1_3
+  - first:
+      213: 5936942107935980134
+    second: restart1_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,12 +58,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -84,7 +87,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -109,89 +112,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: map2 part3 sheet_0
+      name: restart1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 1024
-        height: 512
+        y: 1
+        width: 67
+        height: 28
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8d92bc9e769a8f4b0800000000000000
-      internalID: -5406385088889148968
+      spriteID: eb9ac96cb66310cd0800000000000000
+      internalID: -2593732073867138626
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: map2 part3 sheet_1
+      name: restart1_1
       rect:
         serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 1024
-        height: 512
+        x: 64
+        y: 3
+        width: 24
+        height: 26
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c335431524219dc80800000000000000
-      internalID: -8297580762413903044
+      spriteID: 32503306e01a8f040800000000000000
+      internalID: 4681668895767201059
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: map2 part3 sheet_2
+      name: restart1_2
       rect:
         serializedVersion: 2
-        x: 2048
-        y: 0
-        width: 1024
-        height: 512
+        x: 86
+        y: 3
+        width: 29
+        height: 26
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a6695951f029cd40800000000000000
-      internalID: 5605047432197531296
+      spriteID: 160cca75db1295e50800000000000000
+      internalID: 6798502209595949153
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: map2 part3 sheet_3
+      name: restart1_3
       rect:
         serializedVersion: 2
-        x: 3072
-        y: 0
-        width: 1024
-        height: 512
+        x: 113
+        y: 1
+        width: 26
+        height: 28
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a554791169992f0c0800000000000000
-      internalID: -4543400204244138662
+      spriteID: fd23d2c984ee3b890800000000000000
+      internalID: -7443343763488034081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: restart1_4
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 3
+        width: 24
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66a35935461446250800000000000000
+      internalID: 5936942107935980134
       vertices: []
       indices: 
       edges: []
@@ -200,7 +225,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 957339c37e890ed44993dc91ebf0d034
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -208,14 +233,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":1.0},"gridSpriteSize":{"x":1024.0,"y":512.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      map2 part3 sheet_0: -5406385088889148968
-      map2 part3 sheet_1: -8297580762413903044
-      map2 part3 sheet_2: 5605047432197531296
-      map2 part3 sheet_3: -4543400204244138662
+      restart1_0: -2593732073867138626
+      restart1_1: 4681668895767201059
+      restart1_2: 6798502209595949153
+      restart1_3: -7443343763488034081
+      restart1_4: 5936942107935980134
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

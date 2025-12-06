@@ -1,53 +1,108 @@
-using UnityEngine;
-using TMPro; // TextMeshPro »ç¿ë
-using UnityEngine.UI; // Image »ç¿ë
+ï»¿using UnityEngine;
+using TMPro; // TextMeshPro ì‚¬ìš©
+using UnityEngine.UI; // Slider ì‚¬ìš©
+using DG.Tweening; // âœ¨ DOTween ì‚¬ìš©
 
 public class LevelUI : MonoBehaviour
 {
-    [Header("ÂüÁ¶")]
-    [Tooltip("±âÂ÷ÀÇ TrainLevelManager¸¦ ¿¬°á")]
+    [Header("ì°¸ì¡°")]
+    [Tooltip("ê¸°ì°¨ì˜ TrainLevelManagerë¥¼ ì—°ê²°")]
     [SerializeField] private TrainLevelManager levelManager;
 
-    [Header("UI ¿ä¼Ò")]
+    [Header("UI ìš”ì†Œ")]
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Slider xpBarSlider;
+
+    [Header("ì• ë‹ˆë©”ì´ì…˜ ì„¤ì •")]
+    [SerializeField] private float fillDuration = 0.5f;
+
+    // ë‚´ë¶€ ë³€ìˆ˜
+    private int displayedLevel;
+    private Tween xpTween;
 
     void Start()
     {
         if (levelManager == null)
         {
-            Debug.LogError("LevelManager°¡ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù!", this);
+            Debug.LogError("TrainLevelManagerê°€ ì—°ê²°ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤!", this);
             this.enabled = false;
             return;
         }
 
-        // ÀÌº¥Æ® ±¸µ¶: °æÇèÄ¡¸¦ ¾ò°Å³ª ·¹º§¾÷ÇÒ ¶§¸¶´Ù UpdateUI ÇÔ¼ö°¡ ÀÚµ¿ È£ÃâµÊ
+        // ì´ˆê¸°í™”: ì‹œì‘ ì‹œì ì˜ ë ˆë²¨ê³¼ ê²½í—˜ì¹˜ë¥¼ ë°”ë¡œ ì ìš©
+        displayedLevel = levelManager.CurrentLevel;
+        levelText.text = $"LV {displayedLevel}";
+        xpBarSlider.value = levelManager.CurrentLevelProgress;
+
+        // ì‚¬ìš©ìë‹˜ì˜ êµ¬ì¡° ìœ ì§€: UpdateUI í•˜ë‚˜ë¡œ ëª¨ë“  ì´ë²¤íŠ¸ ì²˜ë¦¬
         levelManager.OnExperienceGained += UpdateUI;
         levelManager.OnLevelUp += UpdateUI;
-
-        // °ÔÀÓ ½ÃÀÛ ½Ã UI ÃÊ±âÈ­
-        UpdateUI();
     }
 
     void OnDestroy()
     {
-        // ¿ÀºêÁ§Æ® ÆÄ±« ½Ã ÀÌº¥Æ® ±¸µ¶ ÇØÁ¦ (¸Ş¸ğ¸® ´©¼ö ¹æÁö)
         if (levelManager != null)
         {
             levelManager.OnExperienceGained -= UpdateUI;
             levelManager.OnLevelUp -= UpdateUI;
         }
+        xpTween?.Kill();
     }
 
     /// <summary>
-    /// UI¸¦ ÃÖ½Å Á¤º¸·Î ¾÷µ¥ÀÌÆ®ÇÕ´Ï´Ù.
+    /// UIë¥¼ ìµœì‹  ì •ë³´ë¡œ ì—…ë°ì´íŠ¸í•©ë‹ˆë‹¤. (ê²½í—˜ì¹˜ íšë“ ë° ë ˆë²¨ì—… ìë™ ë¶„ê¸°)
     /// </summary>
     private void UpdateUI()
     {
-        // ·¹º§ ÅØ½ºÆ® ¾÷µ¥ÀÌÆ® (¿¹: "LV 2")
-        levelText.text = $"LV {levelManager.CurrentLevel}";
+        // 1. ë ˆë²¨ì—… ìƒí™©ì¸ì§€ ì²´í¬ (í˜„ì¬ í‘œì‹œëœ ë ˆë²¨ < ì‹¤ì œ ë ˆë²¨)
+        if (levelManager.CurrentLevel > displayedLevel)
+        {
+            PlayLevelUpSequence();
+        }
+        // 2. ë‹¨ìˆœ ê²½í—˜ì¹˜ íšë“ ìƒí™©
+        else
+        {
+            PlayExpGainAnimation();
+        }
+    }
 
-        // °æÇèÄ¡ ¹Ù(Image Fill) ¾÷µ¥ÀÌÆ®
-        xpBarSlider.value = levelManager.CurrentLevelProgress;
+    // ë‹¨ìˆœ ê²½í—˜ì¹˜ íšë“ ì• ë‹ˆë©”ì´ì…˜
+    private void PlayExpGainAnimation()
+    {
+        float targetValue = levelManager.CurrentLevelProgress;
+
+        xpTween?.Kill();
+        // ê²Œì„ ì •ì§€(UI íŒì—…) ìƒíƒœì—ì„œë„ ê²Œì´ì§€ê°€ ì°¨ì˜¤ë¥´ë„ë¡ SetUpdate(true) ì„¤ì •
+        xpTween = xpBarSlider.DOValue(targetValue, fillDuration)
+            .SetEase(Ease.OutQuad)
+            .SetUpdate(true);
+    }
+
+    // ë ˆë²¨ì—… ì‹œí€€ìŠ¤ ì• ë‹ˆë©”ì´ì…˜
+    private void PlayLevelUpSequence()
+    {
+        xpTween?.Kill();
+        Sequence seq = DOTween.Sequence().SetUpdate(true);
+
+        // [A] ë‚¨ì€ ê²Œì´ì§€ë¥¼ ê½‰ ì±„ì›€ (1.0)
+        float currentVal = xpBarSlider.value;
+        float timeToFill = fillDuration * (1f - currentVal);
+        seq.Append(xpBarSlider.DOValue(1f, timeToFill).SetEase(Ease.Linear));
+
+        // [B] ê½‰ ì°¬ ë’¤ ë ˆë²¨ í…ìŠ¤íŠ¸ ê°±ì‹  ë° ê²Œì´ì§€ ë¦¬ì…‹ (0.0)
+        seq.AppendCallback(() => {
+            displayedLevel = levelManager.CurrentLevel;
+            levelText.text = $"LV {displayedLevel}";
+            xpBarSlider.value = 0f;
+        });
+
+        // [C] í˜„ì¬ ê²½í—˜ì¹˜ëŸ‰(ì´ˆê³¼ë¶„)ê¹Œì§€ ë‹¤ì‹œ ì±„ì›€
+        float newTarget = levelManager.CurrentLevelProgress;
+        if (newTarget > 0)
+        {
+            seq.Append(xpBarSlider.DOValue(newTarget, fillDuration).SetEase(Ease.OutQuad));
+        }
+
+        xpTween = seq;
     }
 }

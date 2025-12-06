@@ -112,6 +112,8 @@ public class StageManager : MonoBehaviour
         // [Step 1] 2초 대기 (보스 사망 연출 감상)
         seq.AppendInterval(2.0f);
 
+        seq.Append(train.transform.DOMove(playerResetPosition, 2.0f).SetEase(Ease.OutQuad));
+
         // [Step 2] 터널 등장 (2초간 이동)
         if (tunnel != null && setting.tunnelTargetPoint != null)
         {

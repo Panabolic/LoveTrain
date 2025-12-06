@@ -21,8 +21,7 @@ MonoBehaviour:
   MaxUpgrade: 3
   itemScript: "{CoolTime}\uCD08 \uB9C8\uB2E4 {Damage}\uC758 \uCD1D\uC54C {BulletNum}\uBC1C
     \uBC1C\uC0AC."
-  itemSimpleScript: "\uC8FC\uAE30\uC801\uC73C\uB85C \uC804\uBC29\uC5D0 \uCD1D\uC54C
-    \uBC1C\uC0AC."
+  itemSimpleScript: "\uCD1D\uC758 \uC545\uB9C8 \uAC8C\uC784 \uB0B4\uB0B4 \uC0C1\uB959"
   cooldownTime: 0
   damageByLevel: 6400000064000000c8000000
   bulletNumByLevel: 010000000100000003000000
