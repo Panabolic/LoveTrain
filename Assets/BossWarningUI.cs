@@ -69,12 +69,6 @@ public class BossWarningUI : MonoBehaviour
         topBand.anchoredPosition = new Vector2(topStartX, topBand.anchoredPosition.y);
         bottomBand.anchoredPosition = new Vector2(bottomStartX, bottomBand.anchoredPosition.y);
 
-        // 2. 사운드 재생
-        if (SoundManager.instance != null && !string.IsNullOrEmpty(warningSoundName))
-        {
-            // SoundManager.instance.PlaySound("ETC", warningSoundName); 
-        }
-
         // 3. 애니메이션 실행
         Sequence seq = DOTween.Sequence();
 

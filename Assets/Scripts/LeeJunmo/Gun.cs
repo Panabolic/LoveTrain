@@ -67,6 +67,7 @@ public class Gun : MonoBehaviour
     {
         if (fireAction != null) fireAction.action.Enable();
     }
+
     private void OnDisable()
     {
         if (fireAction != null) fireAction.action.Disable();
@@ -200,26 +201,39 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.CurrentState == GameState.StageTransition) return;
-        if (GameManager.Instance.CurrentState != GameState.Die)
+        // 1. 예외 상태 체크 (사망, 스테이지 전환)
+        // 이 상태일 때는 무조건 발사를 멈추고 입력을 받지 않습니다.
+        if (GameManager.Instance != null)
         {
-            if (Time.timeScale == 0)
+            GameState currentState = GameManager.Instance.CurrentState;
+            if (currentState == GameState.Die || currentState == GameState.StageTransition)
             {
-                // 게임이 멈췄다면 무조건 '발사 중지' 상태로 처리
+                // 레이저 등이 켜져 있을 수 있으므로 '발사 중지(false)' 신호를 보냄
                 if (currentStrategy != null)
                 {
                     currentStrategy.Process(false);
                 }
-                return;
+                return; // 업데이트 종료
             }
+        }
 
-            // 정상 플레이 상태
-            bool isTriggerHeld = fireAction != null && fireAction.action.IsPressed();
-
+        // 2. 일시정지 체크 (기존 로직 유지)
+        if (Time.timeScale == 0)
+        {
+            // 게임이 멈췄다면 무조건 '발사 중지' 상태로 처리
             if (currentStrategy != null)
             {
-                currentStrategy.Process(isTriggerHeld);
+                currentStrategy.Process(false);
             }
+            return;
+        }
+
+        // 3. 정상 플레이 상태: 입력 처리
+        bool isTriggerHeld = fireAction != null && fireAction.action.IsPressed();
+
+        if (currentStrategy != null)
+        {
+            currentStrategy.Process(isTriggerHeld);
         }
     }
 }

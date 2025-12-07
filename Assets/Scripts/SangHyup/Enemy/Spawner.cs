@@ -37,7 +37,6 @@ public class Spawner : MonoBehaviour
         public BossName bossName;
         public GameObject bossPrefab;
         public float spawnDelayAfterWarning = 4.0f;
-        public string spawnSoundName;
         public float soundPlayDelay = 0.5f;
     }
 
@@ -334,9 +333,6 @@ public class Spawner : MonoBehaviour
 
         GameManager.Instance.AppearBoss();
 
-        if (!string.IsNullOrEmpty(setting.spawnSoundName))
-            StartCoroutine(PlaySoundDelayed(setting.spawnSoundName, setting.soundPlayDelay));
-
         yield return new WaitForSeconds(setting.spawnDelayAfterWarning);
 
         SpawnBossObject(bossName);
@@ -398,12 +394,6 @@ public class Spawner : MonoBehaviour
     {
         Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
         if (rb != null) { rb.linearVelocity = Vector2.zero; rb.angularVelocity = 0f; }
-    }
-
-    private IEnumerator PlaySoundDelayed(string soundName, float delay)
-    {
-        if (delay > 0) yield return new WaitForSeconds(delay);
-        if (SoundManager.instance != null) SoundManager.instance.PlaySound("BGM", soundName);
     }
 
     private BossSpawnSetting GetBossSetting(BossName name)

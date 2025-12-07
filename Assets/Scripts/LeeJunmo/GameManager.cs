@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -127,6 +128,27 @@ public class GameManager : MonoBehaviour
             Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
             if (CurrentState == GameState.Event) ChangeState(GameState.Playing);
         }
+    }
+
+    public void RestartGame()
+    {
+        // 2. 시간이 멈춰있을 경우를 대비해 시간을 다시 흐르게 설정
+        // (일시정지 후 재시작 시 게임이 멈춰있는 버그 방지)
+        Time.timeScale = 1;
+
+        // 3. 현재 활성화된 씬의 이름을 가져와서 다시 로드
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void QuitGame()
+    {
+        // Debug.Log("게임을 종료합니다...");
+        Application.Quit();
+
+        // (에디터에서는 작동 안 함, 빌드된 게임에서만 작동)
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     public void CloseUI() { ProcessNextUI(); }

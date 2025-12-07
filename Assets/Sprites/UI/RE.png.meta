@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: c5b4d0434eaacd94fb1aa5d4a5c115af
+guid: f9e75c9bd6208d34f915d62bcb1eb006
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3272076116788870998
-    second: map2 part2_0
+      213: 6258226151252248829
+    second: RE_0
+  - first:
+      213: -3293012623711600400
+    second: RE_1
+  - first:
+      213: -4496789600839811909
+    second: RE_2
+  - first:
+      213: -4710671530319447181
+    second: RE_3
+  - first:
+      213: 5664840365803818926
+    second: RE_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +87,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +112,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: map2 part2_0
+      name: RE_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1024
-        height: 257
+        x: 2
+        y: 1
+        width: 33
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +127,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aa082c4ab104792d0800000000000000
-      internalID: -3272076116788870998
+      spriteID: df8437de68fa9d650800000000000000
+      internalID: 6258226151252248829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RE_1
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 1
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f00bc2477edc42d0800000000000000
+      internalID: -3293012623711600400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RE_2
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 1
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbcb54cdea13891c0800000000000000
+      internalID: -4496789600839811909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RE_3
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 1
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37b73cd833550aeb0800000000000000
+      internalID: -4710671530319447181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RE_4
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 1
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eafc7019c4e8d9e40800000000000000
+      internalID: 5664840365803818926
       vertices: []
       indices: 
       edges: []
@@ -135,7 +235,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      map2 part2_0: -3272076116788870998
+      RE_0: 6258226151252248829
+      RE_1: -3293012623711600400
+      RE_2: -4496789600839811909
+      RE_3: -4710671530319447181
+      RE_4: 5664840365803818926
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

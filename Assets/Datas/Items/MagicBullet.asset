@@ -21,6 +21,6 @@ MonoBehaviour:
   MaxUpgrade: 3
   itemScript: "\uD0C4\uD658\uC774 \uC801\uC5D0 \uC801\uC911 \uC2DC {Bounce}\uBC88
     \uD295\uAE34\uB2E4."
-  itemSimpleScript: "\"\uC88B\uB2E4. [\uACC4\uC57D](\uC744)\uB97C \uBC1B\uC544\uB4E4\uC774\uC9C0.\""
+  itemSimpleScript: "\uC88B\uB2E4. \uACC4\uC57D\uC744 \uBC1B\uC544\uB4E4\uC774\uC9C0."
   cooldownTime: 0
   bounceCounts: 010000000200000003000000

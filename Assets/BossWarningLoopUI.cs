@@ -90,12 +90,6 @@ public class BossWarningLoopUI : MonoBehaviour
 
         // 2. 위치 리셋 (저장된 초기 위치로 복구)
         ResetPositions();
-
-        // 3. 사운드 재생
-        if (SoundManager.instance != null && !string.IsNullOrEmpty(warningSoundName))
-        {
-            // SoundManager.instance.PlaySound("ETC", warningSoundName);
-        }
     }
 
     private void Update()
