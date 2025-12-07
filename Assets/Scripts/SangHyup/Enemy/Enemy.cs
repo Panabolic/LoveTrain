@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
 {
     // Components
     protected SpriteRenderer    sprite;
+    protected Material          material;
     protected Collider2D        collision;
     protected Animator          animator;
 
@@ -20,7 +21,8 @@ public class Enemy : MonoBehaviour
     protected float currentHP;
     protected bool  isAlive = true;
 
-    private Color originalColor;        //TODO
+    private Color originalColor;
+    private float hitEffectDuration = 0.05f;
 
     protected float deathToDeactive; // 사망에서 비활성화까지 걸리는 시간
 
@@ -32,10 +34,11 @@ public class Enemy : MonoBehaviour
     {
         // Get Components
         sprite      = GetComponent<SpriteRenderer>();
+        material    = sprite.material;
         collision   = GetComponent<Collider2D>();
         animator    = GetComponent<Animator>();
 
-        // variable init
+        // Init Values
         originalColor = sprite.color;
 
         // Get Target Components
@@ -66,9 +69,7 @@ public class Enemy : MonoBehaviour
         AnimationClip[] animationClips =  animator.runtimeAnimatorController.animationClips;
 
         foreach (AnimationClip clip in animationClips)
-        {
             if (clip.name == "Die") deathToDeactive = clip.length;
-        }
     }
 
     protected virtual float CalculateCalibratedHP()
@@ -84,8 +85,19 @@ public class Enemy : MonoBehaviour
 
         currentHP -= damageAmount;
 
+        StartCoroutine(HitEffect());
+
         if (currentHP <= 0)
             StartCoroutine(Die());
+    }
+
+    private IEnumerator HitEffect()
+    {
+        material.SetInt("_isHit", 1);
+
+        yield return new WaitForSeconds(hitEffectDuration);
+
+        material.SetInt("_isHit", 0);
     }
 
     protected virtual IEnumerator Die()

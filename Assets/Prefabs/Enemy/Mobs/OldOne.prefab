@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7952231668978450729}
   - component: {fileID: 2368361504287518499}
   - component: {fileID: 8940403247188048896}
-  - component: {fileID: 6818465723368671168}
   - component: {fileID: 4081152586623250049}
+  - component: {fileID: 6818465723368671168}
   - component: {fileID: -7234808882947436624}
   - component: {fileID: -8354657419493083395}
   m_Layer: 6
@@ -63,7 +63,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: c1c939ebc967976438540eb559590b06, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -160,24 +160,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.8125, y: 1}
   m_Direction: 0
---- !u!114 &6818465723368671168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4821721425770472742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d44acb619053149adf1869b80b20ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FlyMob
-  hp: 100
-  damage: 30
-  exp: 2
-  moveSpeed: 2
-  isEliteMob: 0
-  diveDistance: 20
 --- !u!95 &4081152586623250049
 Animator:
   serializedVersion: 7
@@ -200,6 +182,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6818465723368671168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821721425770472742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d44acb619053149adf1869b80b20ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlyMob
+  hp: 100
+  damage: 30
+  exp: 2
+  moveSpeed: 2
+  isEliteMob: 0
+  diveDistance: 20
 --- !u!199 &-7234808882947436624
 ParticleSystemRenderer:
   serializedVersion: 6

@@ -112,11 +112,24 @@ public class TrainBoss : Boss
     {
         float   knockbackRatio  = isPhase2 ? p2KnockbackRatio : p1KnockbackRatio;
         float   knockbackSpeed  = moveSpeed * knockbackRatio;
+        float   force           = -moveDirection.x * knockbackSpeed;
+
+        StartCoroutine(Stun());
+        rigid2D.linearVelocityX = force;
+    }
+
+    /*
+    // 구 버전의 넉백 시스템
+    private void Knockback()
+    {
+        float   knockbackRatio  = isPhase2 ? p2KnockbackRatio : p1KnockbackRatio;
+        float   knockbackSpeed  = moveSpeed * knockbackRatio;
         Vector2 force           = new Vector2(-moveDirection.x * knockbackSpeed, 0);
 
         StartCoroutine(Stun());
         rigid2D.AddForce(force, ForceMode2D.Impulse);
     }
+    */
 
     private IEnumerator Stun()
     {

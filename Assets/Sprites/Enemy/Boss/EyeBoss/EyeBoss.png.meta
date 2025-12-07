@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ec7eb3296783ee1468d5d85b781b2bd1
+guid: c9b29dd80dd39f14199f4bc9e3e286bd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7817718566108575959
-    second: EyeBoss_0
+      213: -8923657496432267282
+    second: EyeBoss 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,39 +139,35 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EyeBoss_0
+      name: EyeBoss 1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 404
+        y: 332
         width: 1024
-        height: 108
+        height: 180
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline:
-      - - {x: 512, y: 54}
-        - {x: -512, y: 54}
-        - {x: -512, y: -54}
-        - {x: 512, y: -54}
+      outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 7d8b0e6ad9d1e7c60800000000000000
-      internalID: 7817718566108575959
+      spriteID: eef27eb59ccc82480800000000000000
+      internalID: -8923657496432267282
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EyeBoss_1
+      name: EyeBoss 1_1
       rect:
         serializedVersion: 2
         x: 1024
-        y: 404
+        y: 332
         width: 1024
-        height: 108
+        height: 180
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bf78334ec97bad4c96488f85e68499b
-      internalID: 1008915164
+      spriteID: a2f544ee6788109409311541d1e93a9b
+      internalID: 1479688153
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EyeBoss_2
+      name: EyeBoss 1_2
       rect:
         serializedVersion: 2
         x: 2048
-        y: 404
+        y: 332
         width: 1024
-        height: 108
+        height: 180
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,20 +198,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc2c905496388ac478e89295d26cd4f3
-      internalID: 1921934611
+      spriteID: ec29797abc479204b969925754d86683
+      internalID: -204866337
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: EyeBoss_3
+      name: EyeBoss 1_3
       rect:
         serializedVersion: 2
         x: 3072
-        y: 404
+        y: 332
         width: 1024
-        height: 108
+        height: 180
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,8 +220,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a821a570af57a54483aeaa36d7cc155
-      internalID: -1871272989
+      spriteID: c330ed3fbc43abb44bc03d4a62135384
+      internalID: -493428283
       vertices: []
       indices: 
       edges: []
@@ -234,7 +230,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 88b61dd1d63880541b80935d3f376f68
+    spriteID: 578018759af1b154ebed4296bb7564a4
     internalID: 0
     vertices: []
     indices: 
@@ -244,12 +240,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":1024.0,"y":108.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":300.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":1024.0,"y":180.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":153.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      EyeBoss_0: 7817718566108575959
-      EyeBoss_1: 1008915164
-      EyeBoss_2: 1921934611
-      EyeBoss_3: -1871272989
+      EyeBoss 1_0: -8923657496432267282
+      EyeBoss 1_1: 1479688153
+      EyeBoss 1_2: -204866337
+      EyeBoss 1_3: -493428283
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

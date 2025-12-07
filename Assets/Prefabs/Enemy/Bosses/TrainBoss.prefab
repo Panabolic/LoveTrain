@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6689125601842537860}
   - component: {fileID: 4689050059270023402}
   - component: {fileID: 1449604853457184621}
-  - component: {fileID: 5038125827243619280}
   - component: {fileID: 5644954347624938170}
+  - component: {fileID: 5038125827243619280}
   m_Layer: 6
   m_Name: TrainBoss
   m_TagString: Boss
@@ -61,7 +61,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: c1c939ebc967976438540eb559590b06, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -167,27 +167,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 9.428572, y: 1.2857143}
   m_EdgeRadius: 0
---- !u!114 &5038125827243619280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2704498708188189439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 266e4c36401a87041bcc44f98ecb1f3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrainBoss
-  hp: 500
-  damage: 10000
-  exp: 100
-  killEvent: {fileID: 11400000, guid: eeed221ac54d07740a2d865a3ca5282f, type: 2}
-  moveSpeed: 15
-  p1KnockbackRatio: 0.9
-  p2HpRatio: 0.4
-  p2KnockbackRatio: 0.7
-  stunDuration: 0.5
 --- !u!95 &5644954347624938170
 Animator:
   serializedVersion: 7
@@ -210,3 +189,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5038125827243619280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2704498708188189439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 266e4c36401a87041bcc44f98ecb1f3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrainBoss
+  hp: 500
+  damage: 10000
+  exp: 100
+  killEvent: {fileID: 11400000, guid: eeed221ac54d07740a2d865a3ca5282f, type: 2}
+  moveSpeed: 15
+  p1KnockbackRatio: 0.9
+  p2HpRatio: 0.4
+  p2KnockbackRatio: 0.7
+  stunDuration: 0.1

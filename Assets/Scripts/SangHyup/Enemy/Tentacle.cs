@@ -7,18 +7,27 @@ public class Tentacle : MonoBehaviour
     // Components
     private Animator        animator;
     private BoxCollider2D   collision;
+    private BoxCollider2D   rangeBox;
 
+    private EyeBoss owner;
 
-    private float   damage = 50.0f;
-    private float   attackWaitTime = 3.0f;
+    private float   hp;
+    private float   damage;
+
+    private float   attackWaitTime  = 3.0f;
+    private float   toAttack        = 0.2f;
+    private float   toDestroy       = 0.3f;
+
 
     private void Awake()
     {
         // Get Components
         animator    = GetComponent<Animator>();
         collision   = GetComponent<BoxCollider2D>();
+        rangeBox    = transform.GetChild(0).GetComponent<BoxCollider2D>();
 
-        collision.enabled = false;
+        collision.enabled   = true;
+        rangeBox.enabled    = false;
     }
 
     private void Start()
@@ -26,9 +35,15 @@ public class Tentacle : MonoBehaviour
         StartCoroutine(Attack());
     }
 
+    public void Initialize(EyeBoss owner)
+    {
+        this.owner = owner;
+
+        owner.RegisterTentacle(gameObject);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision);
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<Train>().TakeDamage(damage);
@@ -37,18 +52,40 @@ public class Tentacle : MonoBehaviour
 
     private IEnumerator Attack()
     {
+        // 공격 경고
         yield return new WaitForSeconds(attackWaitTime);
 
         animator.SetTrigger("attack");
 
-        yield return new WaitForSeconds(0.2f);
+        // 피격 활성화까지
+        yield return new WaitForSeconds(toAttack);
 
-        collision.enabled = true;
+        collision.enabled   = false;
+        rangeBox.enabled    = true;
 
-        yield return new WaitForSeconds(0.5f);
+        // 소멸까지
+        yield return new WaitForSeconds(toDestroy);
 
         Destroy(gameObject);
     }
 
-    public void SetDamage(float damageAmount) { damage = damageAmount; }
+    public void TakeDamage(float damageAmount)
+    {
+        hp -= damageAmount;
+
+        // 피격 파티클 재생
+
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        owner.UnregisterTentacle(gameObject);
+    }
+
+    public void SetHP(float hpAmount)           { hp = hpAmount; }
+    public void SetDamage(float damageAmount)   { damage = damageAmount; }
 }

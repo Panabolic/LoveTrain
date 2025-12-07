@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1517056859562472103}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.25, y: -1.5, z: 0}
+  m_LocalPosition: {x: -24, y: -3.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 1718302559663505026}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.8, y: -2.7, z: 0}
+  m_LocalPosition: {x: -10.285714, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -87,7 +87,7 @@ Transform:
   m_GameObject: {fileID: 4007224247727329993}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.7, y: -0.9, z: 0}
+  m_LocalPosition: {x: 3.428571, y: -2.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 4114387302891562538}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.1, y: -0.6, z: 0}
+  m_LocalPosition: {x: 17.142857, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 4818540116112197160}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.1, y: -0.25, z: 0}
+  m_LocalPosition: {x: 10.285714, y: -2.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -180,7 +180,7 @@ Transform:
   m_GameObject: {fileID: 5077753684927304797}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.3, y: -0.9, z: 0}
+  m_LocalPosition: {x: -17.142857, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -211,7 +211,7 @@ Transform:
   m_GameObject: {fileID: 6114420212326744860}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.8, y: -1.8, z: 0}
+  m_LocalPosition: {x: -3.428571, y: -3.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -242,7 +242,7 @@ Transform:
   m_GameObject: {fileID: 7561707598770447651}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.4, y: -0.65, z: 0}
+  m_LocalPosition: {x: 24, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -259,8 +259,8 @@ GameObject:
   - component: {fileID: 914558337710541312}
   - component: {fileID: 2172232483194010783}
   - component: {fileID: 4588214445424286341}
-  - component: {fileID: 4092092942707898459}
   - component: {fileID: 7417052634081002744}
+  - component: {fileID: 4092092942707898459}
   m_Layer: 6
   m_Name: EyeBoss
   m_TagString: Boss
@@ -316,7 +316,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: c1c939ebc967976438540eb559590b06, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -338,12 +338,12 @@ SpriteRenderer:
   m_SortingLayerID: -1388612601
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7817718566108575959, guid: ec7eb3296783ee1468d5d85b781b2bd1, type: 3}
+  m_Sprite: {fileID: -8923657496432267282, guid: c9b29dd80dd39f14199f4bc9e3e286bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 56.88889, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -387,57 +387,25 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 56.88889, y: 6}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 56.88889, y: 10}
+    newSize: {x: 56.88889, y: 10}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -28.44378, y: 3.0000439}
-      - {x: 28.443785, y: 3}
-      - {x: 28.44378, y: -1.06}
-      - {x: 16.070255, y: -0.7319689}
-      - {x: 8.820373, y: -1.7836428}
-      - {x: 3.6141226, y: -1.0546865}
-      - {x: -8.546268, y: -3.3573742}
-      - {x: -20.319546, y: -1.5728235}
-      - {x: -28.44378, y: -2.9}
+    - - {x: -28.445, y: 5}
+      - {x: 28.445, y: 5}
+      - {x: 28.445, y: -3}
+      - {x: 16, y: -2.45}
+      - {x: 8.8, y: -3.75}
+      - {x: 3.6, y: -3}
+      - {x: -4.75, y: -5}
+      - {x: -9.5, y: -5}
+      - {x: -20.8, y: -3.5}
+      - {x: -28.445, y: -5}
   m_UseDelaunayMesh: 0
---- !u!114 &4092092942707898459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8958191303323060444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3abe2f54af73bac46b1febe1064c26f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EyeBoss
-  hp: 700
-  damage: 50
-  exp: 100
-  waitTimeBetweenPatterns: 2
-  instantKillPatternThreshold: 0.2
-  patternWaitTime: 6
-  Tentacle: {fileID: 6642445466029022954, guid: 2c07a90848346df419dcfec1e898831e, type: 3}
-  leftTentaclePoints:
-  - {fileID: 7224506124874240020}
-  - {fileID: 8615302654909460714}
-  - {fileID: 2315438584543118992}
-  - {fileID: 8550045885985894063}
-  rightTentaclePoints:
-  - {fileID: 4732039550777618310}
-  - {fileID: 8615293539129125230}
-  - {fileID: 7747947751319013693}
-  - {fileID: 7741494182506128172}
-  middleTentaclePoints:
-  - {fileID: 2315438584543118992}
-  - {fileID: 8550045885985894063}
-  - {fileID: 4732039550777618310}
 --- !u!95 &7417052634081002744
 Animator:
   serializedVersion: 7
@@ -460,3 +428,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4092092942707898459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8958191303323060444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3abe2f54af73bac46b1febe1064c26f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EyeBoss
+  hp: 700
+  damage: 50
+  exp: 100
+  killEvent: {fileID: 0}
+  waitTimeBetweenPatterns: 2
+  EnragePatternThreshold: 0.2
+  patternWaitTime: 6
+  tentacleHP: 300
+  tentacleDamage: 50
+  weakTentacleHP: 150
+  tentacle: {fileID: 6642445466029022954, guid: 2c07a90848346df419dcfec1e898831e, type: 3}
+  weakTentacle: {fileID: 6642445466029022954, guid: 2b08e312d5325ed4c81d7e5b62ed17aa, type: 3}

@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 1008297613081942833}
   - component: {fileID: 6841250641885935775}
   m_Layer: 6
-  m_Name: Tentacle
+  m_Name: WeakTentacle
   m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,7 @@ SpriteRenderer:
   m_SortingLayerID: -1388612601
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3738584978066984072, guid: 63a8e5b457444224495e4a4eb6d9a1f3, type: 3}
+  m_Sprite: {fileID: 5409643685368519350, guid: f2f072c5de0939d458da9a7c8f2e59de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -228,7 +228,7 @@ Animator:
   m_GameObject: {fileID: 6642445466029022954}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a3f3db868a888814e83b1332224836f4, type: 2}
+  m_Controller: {fileID: 9100000, guid: d044b26ead2f11d4589fc2e40bff9233, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
