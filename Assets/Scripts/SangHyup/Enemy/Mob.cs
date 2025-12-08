@@ -106,38 +106,44 @@ public class Mob : Enemy
         }
     }
 
-/*    protected virtual void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
+    /*    protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
-            Train train = collision.transform.GetComponentInParent<Train>();
-
-            if (train != null)
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
             {
-                train.TakeDamage(damage); // Train 스크립트에 맞게 수정 필요
-                if (CameraShakeManager.Instance != null)
-                {
-                    CameraShakeManager.Instance.ShakeCamera(); // 기본 설정으로 흔들기
-                                                               // 또는 원하는 값으로 흔들기: CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
-                }
-            }
+                Train train = collision.transform.GetComponentInParent<Train>();
 
-            StartCoroutine(Die());
-        }
-    }*/
+                if (train != null)
+                {
+                    train.TakeDamage(damage); // Train 스크립트에 맞게 수정 필요
+                    if (CameraShakeManager.Instance != null)
+                    {
+                        CameraShakeManager.Instance.ShakeCamera(); // 기본 설정으로 흔들기
+                                                                   // 또는 원하는 값으로 흔들기: CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
+                    }
+                }
+
+                StartCoroutine(Die());
+            }
+        }*/
 
     protected override float CalculateCalibratedHP()
     {
-        // 체력 보정 공식
-        // (기본체력 x (1 + (게임시간(분) x 체력증가율%)) x 이벤트 디버프) x 엘리트 몹 보정
+        // [수정 1] 게임 시간(분)을 정수(int)로 변환하여 소수점 버림
+        // 예: 0분 59초(0.9xxx) -> 0, 1분 1초(1.0xxx) -> 1
+        int gameTimeMin = (int)(GameManager.Instance.gameTime / 60.0f);
 
-        // 게임 시간(분) 및 체력 증가율 계산
-        float gameTimeMin   = GameManager.Instance.gameTime / 60.0f;
-        float hpIncrease    = 1.0f + (PoolManager.instance.hpIncrease / 100.0f);
+        // [수정 2] 순수 증가율만 계산 (기존의 1.0f + 제거)
+        // 예: 10% -> 0.1
+        float increaseRate = PoolManager.instance.hpIncrease / 100.0f;
 
-        // 체력 보정값 및 이벤트 디버프 계산
-        float calibratedValue   = 1.0f + (gameTimeMin * hpIncrease);
-        float eventDebuff       = 1.0f + (PoolManager.instance.eventDebuff / 100.0f);
+        // 체력 보정값 계산
+        // 공식: 기본배율(1) + (지나간 분 * 분당 증가율)
+        // 예: 0분 -> 1 + (0 * 0.1) = 1.0 (100%)
+        // 예: 2분 -> 1 + (2 * 0.1) = 1.2 (120%)
+        float calibratedValue = 1.0f + (gameTimeMin * increaseRate);
+
+        // 이벤트 디버프 계산 (이건 기존 유지, 배율이므로 1.0 + 방식 맞음)
+        float eventDebuff = 1.0f + (PoolManager.instance.eventDebuff / 100.0f);
 
         // 엘리트 몹 보정
         float eliteMultiplier = isEliteMob ? 1.5f : 1.0f;

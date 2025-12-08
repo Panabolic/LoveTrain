@@ -6,7 +6,7 @@ public class ProgressUIController : MonoBehaviour
 {
     [Header("시간 설정")]
     [Tooltip("목표 시간(초 단위). (기본값: 3분 = 180초)")]
-    [SerializeField] private float totalTimeInSeconds = 180f;
+    [SerializeField] private float totalTimeInSeconds = 900f;
 
     [Header("UI 연결")]
     // [수정] Slider 대신 TextMeshProUGUI를 연결

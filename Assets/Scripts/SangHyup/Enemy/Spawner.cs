@@ -111,34 +111,35 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.CurrentState != GameState.Playing || !isSpawningEnabled) return;
-
-        float gameTime = GameManager.Instance.gameTime;
-        UpdatePhase(gameTime);
-
-        mobTimer += Time.deltaTime;
-        if (gameTime >= firstEliteSpawnTime) eliteMobTimer += Time.deltaTime;
-        bossTimer += Time.deltaTime;
-
-        if (mobTimer >= currentSpawnInterval)
+        if (GameManager.Instance.CurrentState == GameState.Boss || GameManager.Instance.CurrentState == GameState.Playing)
         {
-            SpawnBasicMobs();
-            mobTimer = 0f;
-        }
-        if (eliteMobTimer >= eliteMobSpawnInterval)
-        {
-            SpawnEliteMob();
-            eliteMobTimer = 0f;
-        }
-        if (bossTimer >= bossSpawnInterval)
-        {
-            StartBossSequence(BossName.TrainBoss);
-            bossTimer = 0f;
-        }
 
-        HandlePeriodicTasks();
+            float gameTime = GameManager.Instance.gameTime;
+            UpdatePhase(gameTime);
+
+            mobTimer += Time.deltaTime;
+            if (gameTime >= firstEliteSpawnTime) eliteMobTimer += Time.deltaTime;
+            bossTimer += Time.deltaTime;
+
+            if (mobTimer >= currentSpawnInterval)
+            {
+                SpawnBasicMobs();
+                mobTimer = 0f;
+            }
+            if (eliteMobTimer >= eliteMobSpawnInterval)
+            {
+                SpawnEliteMob();
+                eliteMobTimer = 0f;
+            }
+            if (bossTimer >= bossSpawnInterval)
+            {
+                StartBossSequence(BossName.TrainBoss);
+                bossTimer = 0f;
+            }
+
+            HandlePeriodicTasks();
+        }
     }
-
     // -------------------------------------------------------
     // ✨ [핵심 로직 수정] 위치 계산 (Transform vs Bounds 통합)
     // -------------------------------------------------------

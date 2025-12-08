@@ -168,7 +168,6 @@ public class StageManager : MonoBehaviour
         {
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.gameTime = 0f;
                 GameManager.Instance.ChangeState(GameState.Playing);
                 Debug.Log("[StageManager] 다음 스테이지 시작! (Game Resumed)");
             }

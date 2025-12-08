@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
     // --- Pause & UI Logic (기존 유지) ---
     public void PauseGame()
     {
-        if (CurrentState == GameState.Playing || CurrentState == GameState.Boss)
+        if (CurrentState == GameState.Playing || CurrentState == GameState.Boss || CurrentState == GameState.Start)
         {
             stateBeforePause = CurrentState;
             ChangeState(GameState.Pause);
