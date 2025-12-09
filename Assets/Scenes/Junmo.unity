@@ -3084,7 +3084,7 @@ MonoBehaviour:
   eventObjectPrefab: {fileID: 3828569272167909342, guid: 7a71431e9e68b4842b03e768c9261405, type: 3}
   spawnPoints:
   - {fileID: 813859251446729677}
-  spawnInterval: 60
+  spawnInterval: 45
 --- !u!1 &222855046
 GameObject:
   m_ObjectHideFlags: 0
@@ -7733,7 +7733,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.5
+    spawnInterval: 0.8
   - startTime: 120
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7743,7 +7743,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.4
+    spawnInterval: 0.7
   - startTime: 240
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7763,7 +7763,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.2
+    spawnInterval: 0.6
   - startTime: 480
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7773,7 +7773,37 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.1
+    spawnInterval: 0.5
+  - startTime: 600
+    groundMinIndex: 0
+    groundMaxIndex: 0
+    flyMinIndex: 0
+    flyMaxIndex: 0
+    groundEliteMinIndex: 0
+    groundEliteMaxIndex: 0
+    flyEliteMinIndex: 0
+    flyEliteMaxIndex: 0
+    spawnInterval: 0.4
+  - startTime: 720
+    groundMinIndex: 0
+    groundMaxIndex: 0
+    flyMinIndex: 0
+    flyMaxIndex: 0
+    groundEliteMinIndex: 0
+    groundEliteMaxIndex: 0
+    flyEliteMinIndex: 0
+    flyEliteMaxIndex: 0
+    spawnInterval: 0.3
+  - startTime: 840
+    groundMinIndex: 0
+    groundMaxIndex: 0
+    flyMinIndex: 0
+    flyMaxIndex: 0
+    groundEliteMinIndex: 0
+    groundEliteMaxIndex: 0
+    flyEliteMinIndex: 0
+    flyEliteMaxIndex: 0
+    spawnInterval: 0.2
   bossSettings:
   - bossName: 0
     bossPrefab: {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
@@ -16649,7 +16679,7 @@ MonoBehaviour:
   deathKnockbackPositionX: 0
   deathKnockbackDuration: 0.5
   deathMoveDistance: 27.5
-  deathMoveSpeed: 1
+  deathMoveSpeed: 2
   destroyDelay: 4
   handObject: {fileID: 839351749}
   explosionObject: {fileID: 4892325194489509817, guid: 7281742e0645f8d4f9c06b37bfaaaef9, type: 3}

@@ -440,9 +440,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3abe2f54af73bac46b1febe1064c26f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EyeBoss
-  hp: 700
+  hp: 200
   damage: 50
-  exp: 100
+  exp: 200
   killEvent: {fileID: 0}
   waitTimeBetweenPatterns: 2
   EnragePatternThreshold: 0.2
