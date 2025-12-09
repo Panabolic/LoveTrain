@@ -194,10 +194,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec27a36568152e4698effbf489181f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mob
-  hp: 80
+  hp: 130
   damage: 50
-  exp: 10
-  moveSpeed: 2
+  exp: 20
+  moveSpeed: 1.5
   isEliteMob: 1
 --- !u!199 &-8110103440476578621
 ParticleSystemRenderer:

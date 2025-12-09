@@ -7814,8 +7814,8 @@ MonoBehaviour:
     spawnDelayAfterWarning: 4
     soundPlayDelay: 2
   bossSpawnInterval: 180
-  eliteMobSpawnInterval: 20
-  firstEliteSpawnTime: 60
+  eliteMobSpawnInterval: 15
+  firstEliteSpawnTime: 50
   groundFrontPoints:
   - {fileID: 919450327}
   groundRearPoints:
@@ -16753,15 +16753,15 @@ MonoBehaviour:
   levelPeriodStep: 2
   experienceWalls:
   - targetLevel: 10
-    bonusXP: 0
+    bonusXP: 100
   - targetLevel: 20
-    bonusXP: 0
+    bonusXP: 200
   - targetLevel: 30
-    bonusXP: 0
+    bonusXP: 300
   - targetLevel: 40
-    bonusXP: 0
+    bonusXP: 400
   - targetLevel: 50
-    bonusXP: 0
+    bonusXP: 500
 --- !u!114 &1426277366
 MonoBehaviour:
   m_ObjectHideFlags: 0

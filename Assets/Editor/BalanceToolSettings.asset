@@ -59,14 +59,14 @@ MonoBehaviour:
     isExpanded: 1
     items:
     - targetObject: {fileID: -706577889030096837, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
-      propertyPath: damage
-      displayName: Damage
+      propertyPath: exp
+      displayName: Exp
     - targetObject: {fileID: 0}
       propertyPath: spawnPhases
       displayName: Spawn Phases
     - targetObject: {fileID: 6818465723368671168, guid: 5310438f295510d438ac35837755d237, type: 3}
-      propertyPath: moveSpeed
-      displayName: Move Speed
+      propertyPath: exp
+      displayName: Exp
     - targetObject: {fileID: 4092092942707898459, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
       propertyPath: tentacleHP
       displayName: Tentacle HP
@@ -76,18 +76,12 @@ MonoBehaviour:
     - targetObject: {fileID: 3822308281078264570, guid: f9a2b6704fd3f564f832675bbf397d5d, type: 3}
       propertyPath: exp
       displayName: Exp
-  - groupName: "\uAE30\uCC28"
+    - targetObject: {fileID: -3736601168465054147, guid: 714856b33a23f984cb55de349811f6e7, type: 3}
+      propertyPath: exp
+      displayName: Exp
+  - groupName: "\uC0C8 \uADF8\uB8F9"
     isExpanded: 1
     items:
     - targetObject: {fileID: 0}
-      propertyPath: deathMoveSpeed
-      displayName: Death Move Speed
-    - targetObject: {fileID: 0}
-      propertyPath: fireAction
-      displayName: Fire Action
-  - groupName: "\uC774\uBCA4\uD2B8"
-    isExpanded: 1
-    items:
-    - targetObject: {fileID: 0}
-      propertyPath: spawnInterval
-      displayName: Spawn Interval
+      propertyPath: 
+      displayName: 
