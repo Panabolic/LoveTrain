@@ -25,9 +25,9 @@ MonoBehaviour:
     \uB108\uBB34 \uCEF7\uB2E4"
   cooldownTime: 0
   damageByLevel:
-  - 5
-  - 5
-  - 5
+  - 10
+  - 10
+  - 10
   durationByLevel:
   - 1
   - 3

@@ -36,7 +36,7 @@ MonoBehaviour:
   - 11
   - 7
   missileSpeed: 12
-  verticalDistance: 5
-  gasMoveSpeed: 3
+  verticalDistance: 6
+  gasMoveSpeed: 5
   MissilePrefab: {fileID: 7276846939354661861, guid: f544ccf4d5c80f6478827d8f2111eaac, type: 3}
   GasPrefab: {fileID: 8901307093622197889, guid: a0bf8563326594145a62c014fd782b7d, type: 3}
