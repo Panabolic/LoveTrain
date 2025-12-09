@@ -3,15 +3,16 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 
-// 설정 데이터 저장용 SO
+// 설정 데이터
 public class BalanceToolSettings : ScriptableObject
 {
     [System.Serializable]
     public class WatchItem
     {
-        public Object targetObject;   // 감시할 오브젝트
-        public string propertyPath;   // 선택된 변수의 경로
-        public string displayName;    // 변수 이름 (UI 표시용)
+        public Object targetObject;   // (표시용) 오브젝트
+        public string globalObjectId; // ✨ (저장용) 절대 주소 ID
+        public string propertyPath;
+        public string displayName;
     }
 
     [System.Serializable]
@@ -31,7 +32,6 @@ public class CustomBalanceTool : EditorWindow
     private Vector2 scrollPos;
     private const string SETTING_PATH = "Assets/Editor/BalanceToolSettings.asset";
 
-    // 기본 4열
     private int columnCount = 4;
 
     [MenuItem("Tools/Custom Balance Tool")]
@@ -43,6 +43,52 @@ public class CustomBalanceTool : EditorWindow
     private void OnEnable()
     {
         LoadSettings();
+        // 툴이 켜질 때 저장된 ID를 이용해 오브젝트를 복구 시도
+        RestoreSceneReferences();
+    }
+
+    // ✨ [핵심] 끊어진 씬 오브젝트 연결을 복구하는 함수
+    private void RestoreSceneReferences()
+    {
+        if (settings == null) return;
+
+        bool changed = false;
+        foreach (var group in settings.groups)
+        {
+            foreach (var item in group.items)
+            {
+                // 타겟이 없는데 ID는 저장되어 있다면? -> 복구 시도!
+                if (item.targetObject == null && !string.IsNullOrEmpty(item.globalObjectId))
+                {
+                    if (GlobalObjectId.TryParse(item.globalObjectId, out GlobalObjectId id))
+                    {
+                        Object obj = GlobalObjectId.GlobalObjectIdentifierToObjectSlow(id);
+                        if (obj != null)
+                        {
+                            item.targetObject = obj;
+                            changed = true;
+                        }
+                    }
+                }
+            }
+        }
+        if (changed) EditorUtility.SetDirty(settings); // 변경사항 반영
+    }
+
+    // ✨ [핵심] 오브젝트가 할당될 때 ID를 저장하는 함수
+    private void SaveTargetReference(BalanceToolSettings.WatchItem item, Object newTarget)
+    {
+        item.targetObject = newTarget;
+        if (newTarget != null)
+        {
+            // 오브젝트의 고유 주민등록번호(GlobalObjectId)를 문자열로 저장
+            item.globalObjectId = GlobalObjectId.GetGlobalObjectIdSlow(newTarget).ToString();
+        }
+        else
+        {
+            item.globalObjectId = "";
+        }
+        SaveSettings();
     }
 
     private void OnGUI()
@@ -54,9 +100,9 @@ public class CustomBalanceTool : EditorWindow
         GUIStyle groupHeaderStyle = new GUIStyle(EditorStyles.toolbar);
         GUIStyle groupTitleStyle = new GUIStyle(EditorStyles.label) { fontStyle = FontStyle.Bold };
 
-        EditorGUILayout.LabelField("🎛️ 밸런스 대시보드 V4", headerStyle);
+        EditorGUILayout.LabelField("🎛️ 밸런스 대시보드 V5 (참조 보호)", headerStyle);
 
-        // --- 상단 설정 바 ---
+        // 상단 설정 바
         EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
         EditorGUILayout.LabelField($"레이아웃: {columnCount}열", GUILayout.Width(80));
         columnCount = (int)GUILayout.HorizontalSlider(columnCount, 1, 5);
@@ -65,9 +111,9 @@ public class CustomBalanceTool : EditorWindow
         if (GUILayout.Button("모두 접기", EditorStyles.miniButtonRight)) ToggleAllGroups(false);
         EditorGUILayout.EndHorizontal();
 
-        // 아이템 SO 자동 로드 버튼
+        // 아이템 SO 자동 로드
         EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("📦 모든 아이템 SO 불러오기 (자동 그룹 생성)", GUILayout.Height(30)))
+        if (GUILayout.Button("📦 모든 아이템 SO 불러오기", GUILayout.Height(30)))
         {
             LoadAllItemSOs();
         }
@@ -81,7 +127,7 @@ public class CustomBalanceTool : EditorWindow
         {
             var group = settings.groups[g];
 
-            // [1] 그룹 헤더
+            // 그룹 헤더
             EditorGUILayout.BeginHorizontal(groupHeaderStyle);
             group.isExpanded = EditorGUILayout.Foldout(group.isExpanded, GUIContent.none, true);
             group.groupName = EditorGUILayout.TextField(group.groupName, groupTitleStyle, GUILayout.Width(200));
@@ -96,7 +142,7 @@ public class CustomBalanceTool : EditorWindow
 
             if (GUILayout.Button("그룹 삭제", EditorStyles.toolbarButton, GUILayout.Width(60)))
             {
-                if (EditorUtility.DisplayDialog("그룹 삭제", $"'{group.groupName}' 그룹을 삭제하시겠습니까?", "삭제", "취소"))
+                if (EditorUtility.DisplayDialog("그룹 삭제", $"'{group.groupName}' 삭제?", "삭제", "취소"))
                 {
                     settings.groups.RemoveAt(g);
                     SaveSettings();
@@ -105,7 +151,7 @@ public class CustomBalanceTool : EditorWindow
             }
             EditorGUILayout.EndHorizontal();
 
-            // [2] 그룹 내용
+            // 그룹 내용
             if (group.isExpanded)
             {
                 EditorGUILayout.BeginVertical(EditorStyles.helpBox);
@@ -123,7 +169,6 @@ public class CustomBalanceTool : EditorWindow
 
                         EditorGUILayout.BeginVertical(GUILayout.Width(position.width / columnCount - 15));
 
-                        // 아이템 그리기
                         if (DrawWatchItem(group.items, i))
                         {
                             EditorGUILayout.EndVertical();
@@ -145,7 +190,6 @@ public class CustomBalanceTool : EditorWindow
 
         EditorGUILayout.Space(10);
 
-        // [3] 새 그룹 추가
         if (GUILayout.Button("+ 새 그룹 만들기", GUILayout.Height(35)))
         {
             settings.groups.Add(new BalanceToolSettings.WatchGroup());
@@ -165,29 +209,31 @@ public class CustomBalanceTool : EditorWindow
 
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
-        // 1. 상단: 오브젝트 슬롯 & 관리 버튼
+        // 1. 오브젝트 슬롯 & 버튼
         EditorGUILayout.BeginHorizontal();
         Object newTarget = EditorGUILayout.ObjectField(item.targetObject, typeof(Object), true);
         if (newTarget != item.targetObject)
         {
-            item.targetObject = newTarget;
+            // ✨ 오브젝트 변경 시 ID도 같이 저장
+            SaveTargetReference(item, newTarget);
             item.propertyPath = "";
             item.displayName = "";
-            SaveSettings();
         }
 
-        // ➕ 복제
+        // 복제
         if (GUILayout.Button(new GUIContent("+", "복제"), GUILayout.Width(20)))
         {
             var newItem = new BalanceToolSettings.WatchItem();
+            // 복제 시에도 ID와 타겟 모두 복사
             newItem.targetObject = item.targetObject;
+            newItem.globalObjectId = item.globalObjectId;
             newItem.propertyPath = "";
             list.Insert(index + 1, newItem);
             SaveSettings();
             listChanged = true;
         }
 
-        // X 삭제
+        // 삭제
         if (GUILayout.Button("X", GUILayout.Width(20)))
         {
             list.RemoveAt(index);
@@ -202,23 +248,19 @@ public class CustomBalanceTool : EditorWindow
             return true;
         }
 
-        // 2. 스크립트 선택 로직 (개선됨)
-        // 타겟이 GameObject이면 -> 스크립트 목록을 보여줌
+        // 2. 컴포넌트/변수 선택
         if (item.targetObject is GameObject go)
         {
             DrawComponentSelector(go, item);
         }
-        // 타겟이 Component이면 -> 변수 선택 + 스크립트 변경 기능 제공
         else if (item.targetObject is Component comp)
         {
-            // 상단에 작은 글씨로 스크립트 변경 옵션 제공
             if (comp.gameObject != null)
             {
                 DrawComponentSelector(comp.gameObject, item, true);
             }
             DrawPropertySelector(item);
         }
-        // 타겟이 ScriptableObject 등 그 외 -> 변수 선택만 제공
         else if (item.targetObject != null)
         {
             DrawPropertySelector(item);
@@ -232,13 +274,11 @@ public class CustomBalanceTool : EditorWindow
         return false;
     }
 
-    // ✨ [핵심] 스크립트(컴포넌트) 선택 UI
     private void DrawComponentSelector(GameObject go, BalanceToolSettings.WatchItem item, bool isMini = false)
     {
         Component[] comps = go.GetComponents<Component>();
         string[] compNames = comps.Select(c => c.GetType().Name).ToArray();
 
-        // 현재 선택된 컴포넌트 인덱스 찾기
         int currentIndex = -1;
         if (item.targetObject is Component currentComp)
         {
@@ -248,7 +288,6 @@ public class CustomBalanceTool : EditorWindow
             }
         }
 
-        // UI 그리기
         if (!isMini)
         {
             EditorGUILayout.BeginHorizontal();
@@ -258,34 +297,40 @@ public class CustomBalanceTool : EditorWindow
 
             if (newIndex >= 0 && newIndex < comps.Length && comps[newIndex] != item.targetObject)
             {
-                item.targetObject = comps[newIndex];
-                item.propertyPath = ""; // 변수 초기화
-                SaveSettings();
+                SaveTargetReference(item, comps[newIndex]); // ID 저장 포함
+                item.propertyPath = "";
             }
 
             if (currentIndex == -1)
-                EditorGUILayout.HelpBox("밸런싱할 스크립트를 선택하세요.", MessageType.Warning);
+                EditorGUILayout.HelpBox("스크립트를 선택하세요.", MessageType.Warning);
         }
         else
         {
-            // 이미 선택된 상태에서는 작은 버튼으로 변경 기능 제공
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("스크립트:", EditorStyles.miniLabel, GUILayout.Width(50));
+
             int newIndex = EditorGUILayout.Popup(currentIndex, compNames, EditorStyles.miniPullDown);
             EditorGUILayout.EndHorizontal();
 
             if (newIndex >= 0 && newIndex < comps.Length && comps[newIndex] != item.targetObject)
             {
-                item.targetObject = comps[newIndex];
+                SaveTargetReference(item, comps[newIndex]); // ID 저장 포함
                 item.propertyPath = "";
-                SaveSettings();
             }
         }
     }
 
-    // 변수 선택 및 값 표시 UI
     private void DrawPropertySelector(BalanceToolSettings.WatchItem item)
     {
+        // 씬 오브젝트가 끊어졌을 경우를 대비해 널 체크
+        if (item.targetObject == null)
+        {
+            EditorGUILayout.LabelField("오브젝트 로딩 중...", EditorStyles.centeredGreyMiniLabel);
+            // 복구 시도
+            if (!string.IsNullOrEmpty(item.globalObjectId)) RestoreSceneReferences();
+            return;
+        }
+
         SerializedObject so = new SerializedObject(item.targetObject);
         so.Update();
 
@@ -303,10 +348,9 @@ public class CustomBalanceTool : EditorWindow
 
         int current = paths.IndexOf(item.propertyPath);
 
-        // 드롭다운
         EditorGUILayout.BeginHorizontal();
         if (item.targetObject is Component)
-            EditorGUILayout.LabelField("↳ 변수:", GUILayout.Width(50)); // 들여쓰기 느낌
+            EditorGUILayout.LabelField("↳ 변수:", GUILayout.Width(50));
         else
             EditorGUILayout.LabelField("변수:", GUILayout.Width(40));
 
@@ -319,7 +363,6 @@ public class CustomBalanceTool : EditorWindow
             item.displayName = names[newIdx];
         }
 
-        // 값 표시
         if (!string.IsNullOrEmpty(item.propertyPath))
         {
             SerializedProperty p = so.FindProperty(item.propertyPath);
@@ -333,7 +376,7 @@ public class CustomBalanceTool : EditorWindow
         }
         else if (item.targetObject is ScriptableObject)
         {
-            EditorGUILayout.LabelField("변수를 선택하세요 ▼", EditorStyles.centeredGreyMiniLabel);
+            EditorGUILayout.LabelField("변수 선택 ▼", EditorStyles.centeredGreyMiniLabel);
         }
 
         if (so.ApplyModifiedProperties()) EditorUtility.SetDirty(item.targetObject);
@@ -352,7 +395,7 @@ public class CustomBalanceTool : EditorWindow
             if (itemSO != null)
             {
                 var newItem = new BalanceToolSettings.WatchItem();
-                newItem.targetObject = itemSO;
+                SaveTargetReference(newItem, itemSO); // ID 저장
                 newItem.propertyPath = "";
                 itemGroup.items.Add(newItem);
             }
@@ -362,11 +405,7 @@ public class CustomBalanceTool : EditorWindow
         {
             settings.groups.Add(itemGroup);
             SaveSettings();
-            Debug.Log($"[밸런스 툴] {itemGroup.items.Count}개의 아이템 SO를 불러왔습니다.");
-        }
-        else
-        {
-            Debug.LogWarning("[밸런스 툴] Item_SO 타입의 에셋을 찾을 수 없습니다.");
+            Debug.Log($"[밸런스 툴] {itemGroup.items.Count}개의 아이템 SO 로드 완료.");
         }
     }
 

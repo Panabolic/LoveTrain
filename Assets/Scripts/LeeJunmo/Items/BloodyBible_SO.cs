@@ -4,60 +4,52 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BloodyBible", menuName = "Items/BloodyBible")]
 public class BloodyBible_SO : Item_SO
 {
-    [Header("피의 성서 데이터")]
-    [Tooltip("장판이 사라진 후 적용될 쿨타임")]
-    public float[] cooldownByLevel = { 15f, 12f, 10f };
+    [Header("피의 성경 밸런스 설정")]
+    [Tooltip("장판 지속 시간 (레벨별)")]
+    public float[] durationByLevel = { 5.0f, 6.0f, 7.0f };
 
-    [Header("생성 설정")]
-    [Tooltip("맵의 X축 생성 범위")]
-    public float spawnRangeX = 8.0f;
+    [Tooltip("공격 속도 증가량 (0.5 = 50%, 1.0 = 100%)")]
+    public float[] buffAmountByLevel = { 0.5f, 0.7f, 1.0f };
 
-    [Header("프리팹")]
-    public GameObject ZonePrefab;
+    [Tooltip("스킬 쿨타임 (레벨별)")]
+    public float[] cooldownByLevel = { 15.0f, 14.0f, 12.0f };
 
-    // ✨ 중요: 이 아이템은 수동으로 쿨타임을 관리한다고 선언
-    public override bool IsManualCooldown => true;
+    public GameObject ZonePrefab; // 장판 프리팹
 
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        return InstantiateVisual(user); 
-    }
-    
-    public override float GetCooldownForLevel(int level)
-    {
-        int index = Mathf.Clamp(level - 1, 0, cooldownByLevel.Length - 1);
-        return cooldownByLevel[index];
-    }
-
-    public override void OnCooldownComplete(GameObject user, ItemInstance instance)
+    // 아이템 사용 시 호출되는 함수 (Active Item 로직)
+    // 구조상 ItemInstance에서 호출하거나, 별도의 ActiveItem 로직에서 호출될 것입니다.
+    public void UseSkill(GameObject user, ItemInstance instance)
     {
         if (ZonePrefab == null) return;
 
-        // 1. 랜덤 위치 계산 (절대 좌표 X, 높이는 사용자 Y)
-        float randomX = Random.Range(-spawnRangeX, spawnRangeX);
-        Vector3 spawnPos = new Vector3(randomX, -8.65f, 0f);
+        // 1. 현재 레벨에 맞는 스탯 계산
+        int levelIndex = Mathf.Clamp(instance.currentUpgrade - 1, 0, durationByLevel.Length - 1);
 
-        // 2. 장판 생성
-        GameObject zoneObj = Instantiate(ZonePrefab, spawnPos, Quaternion.identity);
+        float currentDuration = durationByLevel[levelIndex];
+        float currentBuff = buffAmountByLevel[levelIndex];
+        float currentCooldown = cooldownByLevel[levelIndex];
 
-        // 3. 실제 적용할 쿨타임 값 가져오기
-        float realCooldown = GetCooldownForLevel(instance.currentUpgrade);
+        // 2. 장판 생성 (플레이어 위치 또는 마우스 위치 등 기획에 따라 다름)
+        // 여기서는 플레이어 위치에 생성한다고 가정
+        GameObject zoneObj = Instantiate(ZonePrefab, user.transform.position, Quaternion.identity);
 
-        // 4. ✨ 장판에게 "네가 사라지면 이 아이템 쿨타임을 시작해라"고 전달
-        BloodyZone zoneScript = zoneObj.GetComponent<BloodyZone>();
-        if (zoneScript != null)
+        // 3. 데이터 주입
+        BloodyZone zoneLogic = zoneObj.GetComponent<BloodyZone>();
+        if (zoneLogic != null)
         {
-            zoneScript.Initialize(instance, realCooldown);
+            // ✨ user(플레이어) 정보도 같이 넘겨서 충돌 체크에 활용
+            zoneLogic.Initialize(instance, currentCooldown, currentDuration, currentBuff, user);
         }
-
-        Debug.Log($"[{itemName}] 장판 생성됨. (쿨타임 대기 중)");
     }
 
+    // (참고) 툴팁용 정보 갱신
     protected override Dictionary<string, string> GetStatReplacements(int level)
     {
-        int index = Mathf.Clamp(level - 1, 0, cooldownByLevel.Length - 1);
+        int index = Mathf.Clamp(level - 1, 0, durationByLevel.Length - 1);
         return new Dictionary<string, string>
         {
+            { "Duration", durationByLevel[index].ToString() },
+            { "Buff", (buffAmountByLevel[index] * 100).ToString() + "%" },
             { "Cooldown", cooldownByLevel[index].ToString() }
         };
     }

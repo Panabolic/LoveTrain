@@ -61,6 +61,8 @@ public class PoisonMissileLauncher : MonoBehaviour, IInstantiatedItem
 
     private void Update()
     {
+        if (GameManager.Instance.CurrentState != GameState.Playing || GameManager.Instance.CurrentState != GameState.Boss) return;
+
         if (Time.timeScale == 0) return;
 
         if (cooldownTimer > 0)

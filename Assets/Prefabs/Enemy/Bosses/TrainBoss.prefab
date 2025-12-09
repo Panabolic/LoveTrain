@@ -205,8 +205,8 @@ MonoBehaviour:
   damage: 10000
   exp: 150
   killEvent: {fileID: 11400000, guid: eeed221ac54d07740a2d865a3ca5282f, type: 2}
-  moveSpeed: 15
-  p1KnockbackRatio: 0.9
+  moveSpeed: 7
+  p1KnockbackForce: 15
   p2HpRatio: 0.4
-  p2KnockbackRatio: 0.7
-  stunDuration: 0.1
+  p2KnockbackForce: 5
+  stunDuration: 0.33

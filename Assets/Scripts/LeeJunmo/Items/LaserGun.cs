@@ -18,28 +18,33 @@ public class LaserGun : MonoBehaviour, IInstantiatedItem
         int levelIndex = instance.currentUpgrade - 1;
 
         // 1. SO에서 데이터 추출
-        float newDamage = itemData.damageByLevel[levelIndex];
         float newDuration = itemData.durationByLevel[levelIndex];
-        float newTickRate = itemData.tickRateByLevel[levelIndex]; // 이게 틱 주기
+        float newTickRate = itemData.tickRateByLevel[levelIndex]; // 틱 주기
         float newCooldown = itemData.cooldownByLevel[levelIndex];
         float newlaserScale = itemData.laserScale[levelIndex];
 
-        // 2. Gun에게 기본 스탯 전달
-        // ✨ [중요] GunStats.fireRate 필드를 '틱 주기'로 사용합니다.
-        GunStats newBaseStats = gunController.CurrentStats;
-        newBaseStats.damage = newBaseStats.damage / 2.7f;
-        newBaseStats.fireRate = newTickRate; // Gun.cs가 이 값을 공속 배율로 나눌 것임
+        // 2. Gun에게 스탯 전달
+
+        // ✨ [핵심 수정 1] 비율 설정
+        gunController.SetWeaponDamageRatio(itemData.damageRatio);
+
+        // ✨ [핵심 수정 2] CurrentStats가 아닌 '순수 BaseStats'를 가져와서 수정해야 함
+        // (이미 증폭된 데미지를 다시 Base로 넣는 실수 방지)
+        GunStats newBaseStats = gunController.BaseStats;
+
+        // 데미지는 건드리지 않습니다! (SetWeaponDamageRatio로 처리됨)
+        newBaseStats.fireRate = newTickRate; // 틱 주기 설정
         newBaseStats.laserPrefab = itemData.LaserProjectilePrefab;
 
-        // Gun 내부에서 (기본 틱 주기 / (1 + 공속배율)) 계산이 일어남
+        // 변경된 베이스 스탯 적용 (이때 UpdateStats가 돌면서 올바른 데미지가 계산됨)
         gunController.ChangeBaseStats(newBaseStats);
 
-        // 3. 전략 설정 (지속시간, 쿨타임은 전략이 관리)
+        // 3. 전략 설정
         LaserSpriteStrategy strategy = new LaserSpriteStrategy();
-        strategy.SetLaserStats(newDuration, newCooldown,newlaserScale);
+        strategy.SetLaserStats(newDuration, newCooldown, newlaserScale);
 
         gunController.SetWeapon(strategy);
 
-        Debug.Log($"레이저 세팅 완료: 데미지{newDamage}, 기본틱{newTickRate}, 지속{newDuration}");
+        Debug.Log($"레이저 세팅 완료: 최종데미지 {gunController.CurrentStats.damage}");
     }
 }

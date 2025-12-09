@@ -30,6 +30,8 @@ public class Revolver : MonoBehaviour, IInstantiatedItem
 
     private void Update()
     {
+        if (GameManager.Instance.CurrentState != GameState.Playing || GameManager.Instance.CurrentState != GameState.Boss) return;
+
         if (itemData == null || isFiring) return;
 
         fireTimer -= Time.deltaTime;

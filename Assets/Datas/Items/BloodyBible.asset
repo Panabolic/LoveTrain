@@ -19,10 +19,24 @@ MonoBehaviour:
   spritesByLevel: []
   controllersByLevel: []
   MaxUpgrade: 6
-  itemScript: "{CoolTime}\uB9C8\uB2E4 \uACF5\uACA9\uC18D\uB3C4\uB97C 100% \uC99D\uAC00\uC2DC\uD0A4\uB294
+  itemScript: "{Cooldown}\uB9C8\uB2E4 \uACF5\uACA9\uC18D\uB3C4\uB97C 100% \uC99D\uAC00\uC2DC\uD0A4\uB294
     \uC7A5\uD310\uC744 \uC0DD\uC131"
   itemSimpleScript: "\uB5A0\uC624\uB974\uB294 \uC2E0\uC131\uC744 \uB9C8\uC8FC\uD574\uB77C"
   cooldownTime: 0
+  durationByLevel:
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  buffAmountByLevel:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   cooldownByLevel:
   - 40
   - 36
@@ -30,5 +44,4 @@ MonoBehaviour:
   - 28
   - 24
   - 20
-  spawnRangeX: 15
   ZonePrefab: {fileID: 892054615579162525, guid: 2163572e4be8b8943ac392759936fd76, type: 3}

@@ -60,6 +60,10 @@ public class Spawner : MonoBehaviour
     [SerializeField] private SpawnPhase[] spawnPhases;
 
     [Header("Boss Settings")]
+    // ✨ [추가] 보스 등장 순서 (인스펙터에서 설정)
+    [Tooltip("등장할 보스 순서 (예: Train -> Eye -> Train)")]
+    [SerializeField] private BossName[] bossSequence;
+
     [SerializeField] private BossSpawnSetting[] bossSettings;
     [SerializeField] private float bossSpawnInterval = 180.0f;
 
@@ -89,6 +93,9 @@ public class Spawner : MonoBehaviour
     private float currentSpawnInterval = 1.0f;
 
     private float mobTimer, eliteMobTimer, bossTimer;
+    // ✨ [추가] 다음 보스 인덱스
+    private int nextBossIndex = 0;
+
     private List<PeriodicSpawnTask> periodicSpawnTasks = new List<PeriodicSpawnTask>();
 
     private void Awake() { if (Instance == null) Instance = this; }
@@ -96,12 +103,11 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         mobTimer = 0f;
-
-        // ✨ [핵심 수정 1] 시작하자마자 쿨타임이 꽉 찬 상태로 시작 (대기 상태)
-        // -> 50초가 되는 순간 즉시 발사하기 위함
         eliteMobTimer = eliteMobSpawnInterval;
 
         bossTimer = 0f;
+        nextBossIndex = 0; // 초기화
+
         periodicSpawnTasks.Clear();
         UpdatePhase(0f);
 
@@ -117,10 +123,10 @@ public class Spawner : MonoBehaviour
             UpdatePhase(gameTime);
 
             mobTimer += Time.deltaTime;
-
-            // 50초 이후부터 타이머 증가 (사실상 위에서 이미 꽉 채워뒀으므로 '재장전' 용도)
             if (gameTime >= firstEliteSpawnTime) eliteMobTimer += Time.deltaTime;
 
+            // 보스 타이머는 Playing 상태일 때만 흐르게 할 수도 있지만, 
+            // 보통 시간 기반 게임은 계속 흐르게 둡니다.
             bossTimer += Time.deltaTime;
 
             if (mobTimer >= currentSpawnInterval)
@@ -129,22 +135,51 @@ public class Spawner : MonoBehaviour
                 mobTimer = 0f;
             }
 
-            // ✨ [핵심 수정 2] "50초가 지났고(AND) 쿨타임도 찼으면" -> 스폰
-            // 50초가 되는 순간 (참 && 참)이 되어 즉시 발사됨. 
-            // 그 후 타이머가 0이 되어 15초 쿨타임이 돌기 시작함.
             if (gameTime >= firstEliteSpawnTime && eliteMobTimer >= eliteMobSpawnInterval)
             {
                 SpawnEliteMob();
                 eliteMobTimer = 0f;
             }
 
+            // ✨ [수정] 보스 스폰 로직 개선
             if (bossTimer >= bossSpawnInterval)
             {
-                StartBossSequence(BossName.TrainBoss);
-                bossTimer = 0f;
+                // 현재 게임 상태가 Playing일 때만 보스 소환 시도 (이미 보스전 중이면 스킵 or 대기)
+                if (GameManager.Instance.CurrentState == GameState.Playing)
+                {
+                    SpawnNextBoss();
+                    bossTimer = 0f; // 성공적으로 소환했을 때만 리셋
+                }
+                // 만약 보스전 중이라 소환을 못했다면? 
+                // -> 타이머를 0으로 리셋하지 않고 유지해서, 보스전 끝나자마자 바로 다음 보스 나오게 하려면 
+                //    else 블록을 비워두세요. (지금 코드는 Playing이 아니면 타이머가 계속 증가함)
             }
 
             HandlePeriodicTasks();
+        }
+    }
+
+    // ✨ [추가] 다음 순서의 보스를 소환하는 함수
+    private void SpawnNextBoss()
+    {
+        if (bossSequence == null || bossSequence.Length == 0)
+        {
+            Debug.LogWarning("[Spawner] Boss Sequence가 비어있습니다! 기본값(TrainBoss)을 소환합니다.");
+            StartBossSequence(BossName.TrainBoss);
+            return;
+        }
+
+        // 인덱스가 배열 범위를 넘어가면? -> 마지막 보스 반복 (또는 0으로 돌려서 루프 가능)
+        // 루프를 원하면: int index = nextBossIndex % bossSequence.Length;
+        int index = Mathf.Clamp(nextBossIndex, 0, bossSequence.Length - 1);
+
+        BossName bossToSpawn = bossSequence[index];
+        StartBossSequence(bossToSpawn);
+
+        // 다음 보스를 위해 인덱스 증가
+        if (nextBossIndex < bossSequence.Length)
+        {
+            nextBossIndex++;
         }
     }
 
@@ -196,7 +231,7 @@ public class Spawner : MonoBehaviour
 
     private void SpawnEliteMob()
     {
-        Debug.Log("Elite Mob Spawned");
+        // Debug.Log("Elite Mob Spawned");
 
         bool isFly = UnityEngine.Random.value > 0.5f;
         GameObject enemy = null;
@@ -307,7 +342,9 @@ public class Spawner : MonoBehaviour
     // -------------------------------------------------------
     public void StartBossSequence(BossName bossName)
     {
-        if (GameManager.Instance.CurrentState != GameState.Playing) return;
+        // 보스전이 이미 진행 중이라면 무시 (혹은 중첩 가능하게 하려면 제거)
+        if (GameManager.Instance.CurrentState == GameState.Boss) return;
+
         StartCoroutine(BossSpawnRoutine(bossName));
     }
 
@@ -330,7 +367,9 @@ public class Spawner : MonoBehaviour
             GameObject bossPrefab = PoolManager.instance.GetBoss(boss);
             if (bossPrefab != null)
             {
-                Instantiate(bossPrefab, bossSpawnPoints[(int)boss].position, Quaternion.identity);
+                // 인덱스 범위 체크 (안전장치)
+                int pointIndex = Mathf.Clamp((int)boss, 0, bossSpawnPoints.Length - 1);
+                Instantiate(bossPrefab, bossSpawnPoints[pointIndex].position, Quaternion.identity);
             }
         }
     }
