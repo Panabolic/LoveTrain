@@ -28,7 +28,7 @@ MonoBehaviour:
   - 10
   - 10
   gasTickRateByLevel:
-  - 0.3
+  - 0.4
   - 0.3
   - 0.2
   cooldownByLevel:

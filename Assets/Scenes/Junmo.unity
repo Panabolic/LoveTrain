@@ -7733,7 +7733,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.8
+    spawnInterval: 0.7
   - startTime: 120
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7743,7 +7743,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.7
+    spawnInterval: 0.65
   - startTime: 240
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7753,7 +7753,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.3
+    spawnInterval: 0.55
   - startTime: 360
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7763,7 +7763,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.6
+    spawnInterval: 0.45
   - startTime: 480
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7773,7 +7773,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.5
+    spawnInterval: 0.35
   - startTime: 600
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7783,7 +7783,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.4
+    spawnInterval: 0.25
   - startTime: 720
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7793,7 +7793,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.3
+    spawnInterval: 0.15
   - startTime: 840
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7803,7 +7803,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.2
+    spawnInterval: 0.1
   bossSettings:
   - bossName: 0
     bossPrefab: {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}

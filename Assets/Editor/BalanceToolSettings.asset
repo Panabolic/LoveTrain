@@ -17,17 +17,17 @@ MonoBehaviour:
     isExpanded: 1
     items:
     - targetObject: {fileID: 11400000, guid: 022ee112c533fdb4c8a2b357f4f14916, type: 2}
-      propertyPath: damageByLevel
-      displayName: Damage By Level
+      propertyPath: cooldownByLevel
+      displayName: Cooldown By Level
     - targetObject: {fileID: 11400000, guid: 16111b2c7fc13c6449e0ad52b5ff710f, type: 2}
-      propertyPath: itemSimpleScript
-      displayName: Item Simple Script
+      propertyPath: cooldownByLevel
+      displayName: Cooldown By Level
     - targetObject: {fileID: 11400000, guid: 53a45bb8d838472489cc35ead4911034, type: 2}
       propertyPath: itemSimpleScript
       displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 2f16041ca38cb364fa4bea9fba979ed7, type: 2}
-      propertyPath: cooldownByLevel
-      displayName: Cooldown By Level
+      propertyPath: damageByLevel
+      displayName: Damage By Level
     - targetObject: {fileID: 11400000, guid: 4366a5ee3f48b3444b0df497f5f32f68, type: 2}
       propertyPath: healAmountByLevel
       displayName: Heal Amount By Level
@@ -41,11 +41,11 @@ MonoBehaviour:
       propertyPath: cooldownByLevel
       displayName: Cooldown By Level
     - targetObject: {fileID: 11400000, guid: 52af24b9b60a1f44fbd0f7adf1462ec6, type: 2}
-      propertyPath: cooldownTime
-      displayName: Cooldown Time
+      propertyPath: bounceCounts
+      displayName: Bounce Counts
     - targetObject: {fileID: 11400000, guid: 0f0a20156e5b03a4c945f0e4757cdaa9, type: 2}
-      propertyPath: verticalDistance
-      displayName: Vertical Distance
+      propertyPath: cooldownByLevel
+      displayName: Cooldown By Level
     - targetObject: {fileID: 11400000, guid: 3247ef69ee0fb5440bc22b8b5db6c822, type: 2}
       propertyPath: damageByLevel
       displayName: Damage By Level
@@ -53,8 +53,11 @@ MonoBehaviour:
       propertyPath: DamageByLevel
       displayName: Damage By Level
     - targetObject: {fileID: 11400000, guid: 5a8bc95122134a84599f530d8a94639b, type: 2}
-      propertyPath: damageByLevel
-      displayName: Damage By Level
+      propertyPath: bulletNumByLevel
+      displayName: Bullet Num By Level
+    - targetObject: {fileID: 5343568755907405682, guid: 2163572e4be8b8943ac392759936fd76, type: 3}
+      propertyPath: duration
+      displayName: Duration
   - groupName: "\uBAAC\uC2A4\uD130"
     isExpanded: 1
     items:
@@ -68,20 +71,20 @@ MonoBehaviour:
       propertyPath: exp
       displayName: Exp
     - targetObject: {fileID: 4092092942707898459, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
-      propertyPath: tentacleHP
-      displayName: Tentacle HP
+      propertyPath: hp
+      displayName: Hp
     - targetObject: {fileID: 5038125827243619280, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
       propertyPath: exp
       displayName: Exp
     - targetObject: {fileID: 3822308281078264570, guid: f9a2b6704fd3f564f832675bbf397d5d, type: 3}
-      propertyPath: exp
-      displayName: Exp
+      propertyPath: hp
+      displayName: Hp
     - targetObject: {fileID: -3736601168465054147, guid: 714856b33a23f984cb55de349811f6e7, type: 3}
-      propertyPath: exp
-      displayName: Exp
+      propertyPath: hp
+      displayName: Hp
   - groupName: "\uC0C8 \uADF8\uB8F9"
     isExpanded: 1
     items:
     - targetObject: {fileID: 0}
-      propertyPath: 
-      displayName: 
+      propertyPath: firstEliteSpawnTime
+      displayName: First Elite Spawn Time
