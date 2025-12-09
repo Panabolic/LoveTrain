@@ -55,3 +55,9 @@ MonoBehaviour:
     - targetObject: {fileID: 11400000, guid: 5a8bc95122134a84599f530d8a94639b, type: 2}
       propertyPath: 
       displayName: 
+  - groupName: "\uC0C8 \uADF8\uB8F9"
+    isExpanded: 1
+    items:
+    - targetObject: {fileID: -706577889030096837, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
+      propertyPath: hp
+      displayName: Hp
