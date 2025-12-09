@@ -23,12 +23,13 @@ MonoBehaviour:
     \uC8FC\uACE0 \uB109\uBC31 \uBD80\uC5EC, \uCDA9\uB3CC \uB370\uBBF8\uC9C0\uB85C
     \uCC98\uCE58 \uC2DC \uC18D\uB3C4\uB97C {Heal}\uB9CC\uD07C \uD68C\uBCF5{CoolTime}\uCD08
     \uB9C8\uB2E4 \uBC1C\uB3D9 \uAC00\uB2A5."
-  itemSimpleScript: "\uB05D\uC5C6\uB294 \uD5C8\uAE30"
+  itemSimpleScript: "\uC624\uB298\uC758 \uBA54\uB274\uB294 \uC601 \uBCC4\uB85C\uAD70"
   cooldownTime: 2
-  mawDamageByLevel: 640000007800000096000000
+  mawDamageByLevel: 82000000a0000000c8000000
   cooldownByLevel:
   - 2
   - 1.5
   - 1
+  healAmountByLevel: 0a0000001400000028000000
   knockbackDirection: {x: 1, y: 0.3}
   knockbackPower: 15

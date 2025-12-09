@@ -17,47 +17,44 @@ MonoBehaviour:
     isExpanded: 1
     items:
     - targetObject: {fileID: 11400000, guid: 022ee112c533fdb4c8a2b357f4f14916, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: damageByLevel
+      displayName: Damage By Level
     - targetObject: {fileID: 11400000, guid: 16111b2c7fc13c6449e0ad52b5ff710f, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 53a45bb8d838472489cc35ead4911034, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 2f16041ca38cb364fa4bea9fba979ed7, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: cooldownByLevel
+      displayName: Cooldown By Level
     - targetObject: {fileID: 11400000, guid: 4366a5ee3f48b3444b0df497f5f32f68, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: healAmountByLevel
+      displayName: Heal Amount By Level
     - targetObject: {fileID: 11400000, guid: 5bdde4e227f365f4cbe3377e27489799, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: killCountCondition
+      displayName: Kill Count Condition
     - targetObject: {fileID: 11400000, guid: 6a42c5e12a58b254c8b1c05b103de06c, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: tickRateByLevel
+      displayName: Tick Rate By Level
     - targetObject: {fileID: 11400000, guid: 2f17630df9f4da4468db50269fdf83ad, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: cooldownByLevel
+      displayName: Cooldown By Level
     - targetObject: {fileID: 11400000, guid: 52af24b9b60a1f44fbd0f7adf1462ec6, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: cooldownTime
+      displayName: Cooldown Time
     - targetObject: {fileID: 11400000, guid: 0f0a20156e5b03a4c945f0e4757cdaa9, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: verticalDistance
+      displayName: Vertical Distance
     - targetObject: {fileID: 11400000, guid: 3247ef69ee0fb5440bc22b8b5db6c822, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: damageByLevel
+      displayName: Damage By Level
     - targetObject: {fileID: 11400000, guid: efe2dc8d24232c34a82ae10ef688adca, type: 2}
-      propertyPath: 
-      displayName: 
+      propertyPath: DamageByLevel
+      displayName: Damage By Level
     - targetObject: {fileID: 11400000, guid: 5a8bc95122134a84599f530d8a94639b, type: 2}
-      propertyPath: 
-      displayName: 
-  - groupName: "\uC0C8 \uADF8\uB8F9"
+      propertyPath: damageByLevel
+      displayName: Damage By Level
+  - groupName: "\uBAAC\uC2A4\uD130"
     isExpanded: 1
-    items:
-    - targetObject: {fileID: -706577889030096837, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
-      propertyPath: hp
-      displayName: Hp
+    items: []

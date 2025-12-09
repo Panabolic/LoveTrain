@@ -27,13 +27,14 @@ MonoBehaviour:
   Selections:
   - selectionText: "\uB728\uAC70\uC6B4 \uC99D\uAE30\uB97C \uBFDC\uC5B4 \uC720\uD639\uC5D0
       \uC751\uD574\uC900\uB2E4"
-    selectionUnderText: "\uC18D\uB3C4 70\uAC10\uC18C"
-    eventToTrigger: {fileID: 11400000, guid: efe572a8f5de94c48ac51345f8136dc6, type: 2}
+    selectionUnderText: "\uC18D\uB3C4 70\uAC10\uC18C, \uC801 HP 10% \uC99D\uAC00"
+    eventToTrigger: {fileID: 11400000, guid: f3edbc97ea1687f40a37829834309377, type: 2}
   - selectionText: "\"\uB0B4 \uC2A4\uD0C0\uC77C \uC544\uB0D0\" \uB9E4\uBAB0\uCC28\uAC8C
       \uAC70\uC808\uD55C\uB2E4"
-    selectionUnderText: "\uD2B9\uC218 \uBAAC\uC2A4\uD130 \uBB34\uB9AC \uB4F1\uC7A5"
-    eventToTrigger: {fileID: 11400000, guid: d4b60c7e1ae0c314da041ce5cc6a2ed2, type: 2}
+    selectionUnderText: "\uD2B9\uC218 \uBAAC\uC2A4\uD130 \uBB34\uB9AC \uB4F1\uC7A5,
+      \uC801 HP 15% \uC99D\uAC00"
+    eventToTrigger: {fileID: 11400000, guid: 6c06e31b17fc2244f8d22125973608ba, type: 2}
   - selectionText: "\"\uB10C \uB098\uC5D0\uAC8C \uBB58 \uC904\uC218\uC788\uC9C0?\"
       \uC120\uBB3C\uC744 \uC694\uAD6C\uD55C\uB2E4"
-    selectionUnderText: "\uC801 HP 10%\uC99D\uAC00"
-    eventToTrigger: {fileID: 11400000, guid: 38ade63c16706d742adbf1dc3a3a54b3, type: 2}
+    selectionUnderText: "\uC801 HP 30%\uC99D\uAC00"
+    eventToTrigger: {fileID: 11400000, guid: b3d635cd60b206045b7c77908d13baef, type: 2}
