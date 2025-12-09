@@ -3084,7 +3084,7 @@ MonoBehaviour:
   eventObjectPrefab: {fileID: 3828569272167909342, guid: 7a71431e9e68b4842b03e768c9261405, type: 3}
   spawnPoints:
   - {fileID: 813859251446729677}
-  spawnInterval: 60
+  spawnInterval: 45
 --- !u!1 &222855046
 GameObject:
   m_ObjectHideFlags: 0
@@ -7733,7 +7733,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.5
+    spawnInterval: 0.7
   - startTime: 120
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7743,7 +7743,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.4
+    spawnInterval: 0.65
   - startTime: 240
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7753,7 +7753,7 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.3
+    spawnInterval: 0.55
   - startTime: 360
     groundMinIndex: 0
     groundMaxIndex: 0
@@ -7763,8 +7763,38 @@ MonoBehaviour:
     groundEliteMaxIndex: 0
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
-    spawnInterval: 0.2
+    spawnInterval: 0.45
   - startTime: 480
+    groundMinIndex: 0
+    groundMaxIndex: 0
+    flyMinIndex: 0
+    flyMaxIndex: 0
+    groundEliteMinIndex: 0
+    groundEliteMaxIndex: 0
+    flyEliteMinIndex: 0
+    flyEliteMaxIndex: 0
+    spawnInterval: 0.35
+  - startTime: 600
+    groundMinIndex: 0
+    groundMaxIndex: 0
+    flyMinIndex: 0
+    flyMaxIndex: 0
+    groundEliteMinIndex: 0
+    groundEliteMaxIndex: 0
+    flyEliteMinIndex: 0
+    flyEliteMaxIndex: 0
+    spawnInterval: 0.25
+  - startTime: 720
+    groundMinIndex: 0
+    groundMaxIndex: 0
+    flyMinIndex: 0
+    flyMaxIndex: 0
+    groundEliteMinIndex: 0
+    groundEliteMaxIndex: 0
+    flyEliteMinIndex: 0
+    flyEliteMaxIndex: 0
+    spawnInterval: 0.15
+  - startTime: 840
     groundMinIndex: 0
     groundMaxIndex: 0
     flyMinIndex: 0
@@ -7784,8 +7814,8 @@ MonoBehaviour:
     spawnDelayAfterWarning: 4
     soundPlayDelay: 2
   bossSpawnInterval: 180
-  eliteMobSpawnInterval: 20
-  firstEliteSpawnTime: 60
+  eliteMobSpawnInterval: 15
+  firstEliteSpawnTime: 50
   groundFrontPoints:
   - {fileID: 919450327}
   groundRearPoints:
@@ -16649,7 +16679,7 @@ MonoBehaviour:
   deathKnockbackPositionX: 0
   deathKnockbackDuration: 0.5
   deathMoveDistance: 27.5
-  deathMoveSpeed: 1
+  deathMoveSpeed: 2
   destroyDelay: 4
   handObject: {fileID: 839351749}
   explosionObject: {fileID: 4892325194489509817, guid: 7281742e0645f8d4f9c06b37bfaaaef9, type: 3}
@@ -16723,15 +16753,15 @@ MonoBehaviour:
   levelPeriodStep: 2
   experienceWalls:
   - targetLevel: 10
-    bonusXP: 0
+    bonusXP: 100
   - targetLevel: 20
-    bonusXP: 0
+    bonusXP: 200
   - targetLevel: 30
-    bonusXP: 0
+    bonusXP: 300
   - targetLevel: 40
-    bonusXP: 0
+    bonusXP: 400
   - targetLevel: 50
-    bonusXP: 0
+    bonusXP: 500
 --- !u!114 &1426277366
 MonoBehaviour:
   m_ObjectHideFlags: 0
