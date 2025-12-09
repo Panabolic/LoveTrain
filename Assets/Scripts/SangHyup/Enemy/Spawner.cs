@@ -19,7 +19,7 @@ public class Spawner : MonoBehaviour
         public int flyMinIndex;
         public int flyMaxIndex;
 
-        [Header("Elite Mobs Range")] // ✨ [추가] 엘리트 몬스터도 페이즈별로 인덱스 관리
+        [Header("Elite Mobs Range")]
         public int groundEliteMinIndex;
         public int groundEliteMaxIndex;
         public int flyEliteMinIndex;
@@ -30,7 +30,6 @@ public class Spawner : MonoBehaviour
         public float spawnInterval;
     }
 
-    // ... (BossSpawnSetting, PeriodicSpawnTask 등 기존 클래스/구조체 유지) ...
     [System.Serializable]
     public class BossSpawnSetting
     {
@@ -73,7 +72,6 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Transform[] groundRearPoints;
 
     [Header("Spawn Points - Fly")]
-    // ✨ [핵심 수정] 공중 몬스터는 BoxCollider2D 영역을 사용
     [SerializeField] private BoxCollider2D[] flyMobSpawnAreas;
 
     [Header("Spawn Points - Boss")]
@@ -83,15 +81,11 @@ public class Spawner : MonoBehaviour
     private bool isSpawningEnabled = true;
     private bool isRearSpawnEnabled = true;
 
-    // --- 내부 변수 (현재 페이즈 정보) ---
-    // 일반 몹
+    // --- 내부 변수 ---
     private int currentGroundMin, currentGroundMax;
     private int currentFlyMin, currentFlyMax;
-
-    // 엘리트 몹 (추가됨)
     private int currentGroundEliteMin, currentGroundEliteMax;
     private int currentFlyEliteMin, currentFlyEliteMax;
-
     private float currentSpawnInterval = 1.0f;
 
     private float mobTimer, eliteMobTimer, bossTimer;
@@ -101,7 +95,13 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        mobTimer = 0f; eliteMobTimer = 19.99f; bossTimer = 0f;
+        mobTimer = 0f;
+
+        // ✨ [핵심 수정 1] 시작하자마자 쿨타임이 꽉 찬 상태로 시작 (대기 상태)
+        // -> 50초가 되는 순간 즉시 발사하기 위함
+        eliteMobTimer = eliteMobSpawnInterval;
+
+        bossTimer = 0f;
         periodicSpawnTasks.Clear();
         UpdatePhase(0f);
 
@@ -113,12 +113,14 @@ public class Spawner : MonoBehaviour
     {
         if (GameManager.Instance.CurrentState == GameState.Boss || GameManager.Instance.CurrentState == GameState.Playing)
         {
-
             float gameTime = GameManager.Instance.gameTime;
             UpdatePhase(gameTime);
 
             mobTimer += Time.deltaTime;
+
+            // 50초 이후부터 타이머 증가 (사실상 위에서 이미 꽉 채워뒀으므로 '재장전' 용도)
             if (gameTime >= firstEliteSpawnTime) eliteMobTimer += Time.deltaTime;
+
             bossTimer += Time.deltaTime;
 
             if (mobTimer >= currentSpawnInterval)
@@ -126,11 +128,16 @@ public class Spawner : MonoBehaviour
                 SpawnBasicMobs();
                 mobTimer = 0f;
             }
-            if (eliteMobTimer >= eliteMobSpawnInterval)
+
+            // ✨ [핵심 수정 2] "50초가 지났고(AND) 쿨타임도 찼으면" -> 스폰
+            // 50초가 되는 순간 (참 && 참)이 되어 즉시 발사됨. 
+            // 그 후 타이머가 0이 되어 15초 쿨타임이 돌기 시작함.
+            if (gameTime >= firstEliteSpawnTime && eliteMobTimer >= eliteMobSpawnInterval)
             {
                 SpawnEliteMob();
                 eliteMobTimer = 0f;
             }
+
             if (bossTimer >= bossSpawnInterval)
             {
                 StartBossSequence(BossName.TrainBoss);
@@ -140,14 +147,14 @@ public class Spawner : MonoBehaviour
             HandlePeriodicTasks();
         }
     }
+
     // -------------------------------------------------------
-    // ✨ [핵심 로직 수정] 위치 계산 (Transform vs Bounds 통합)
+    // 위치 계산 및 스폰 로직
     // -------------------------------------------------------
     private Vector3 GetSpawnPosition(bool isFly)
     {
         if (isFly)
         {
-            // ✨ [공중] BoxCollider2D 영역 내 랜덤 좌표 계산
             if (flyMobSpawnAreas != null && flyMobSpawnAreas.Length > 0)
             {
                 int whichArea = UnityEngine.Random.Range(0, flyMobSpawnAreas.Length);
@@ -161,7 +168,6 @@ public class Spawner : MonoBehaviour
         }
         else
         {
-            // ✨ [지상] Transform 배열 중 랜덤 선택 (후방 스폰 제어 포함)
             List<Transform> candidates = new List<Transform>();
             if (groundFrontPoints != null) candidates.AddRange(groundFrontPoints);
             if (isRearSpawnEnabled && groundRearPoints != null) candidates.AddRange(groundRearPoints);
@@ -171,42 +177,30 @@ public class Spawner : MonoBehaviour
                 return candidates[UnityEngine.Random.Range(0, candidates.Count)].position;
             }
         }
-
-        // 실패 시 기본값 (0,0,0) 반환하지 않도록 에러 처리 필요하지만, 임시로 현재 위치 반환
         return transform.position;
     }
 
-    // -------------------------------------------------------
-    // 스폰 실행 로직
-    // -------------------------------------------------------
-
     private void SpawnBasicMobs()
     {
-        // 50% 확률로 지상/공중 분기
         if (UnityEngine.Random.value < 0.5f)
         {
-            // 지상
             int idx = UnityEngine.Random.Range(currentGroundMin, currentGroundMax + 1);
             SpawnMobInternal(idx, isFly: false);
         }
         else
         {
-            // 공중
             int idx = UnityEngine.Random.Range(currentFlyMin, currentFlyMax + 1);
             SpawnMobInternal(idx, isFly: true);
         }
     }
 
-    // ✨ [복구 완료] 엘리트 몬스터 스폰 로직
     private void SpawnEliteMob()
     {
         Debug.Log("Elite Mob Spawned");
 
-        // 1. 지상/공중 랜덤 선택
         bool isFly = UnityEngine.Random.value > 0.5f;
         GameObject enemy = null;
 
-        // 2. 페이즈에 맞는 인덱스 범위 내에서 랜덤 선택
         if (isFly)
         {
             int idx = UnityEngine.Random.Range(currentFlyEliteMin, currentFlyEliteMax + 1);
@@ -218,7 +212,6 @@ public class Spawner : MonoBehaviour
             enemy = PoolManager.instance.GetGroundEliteMob(idx);
         }
 
-        // 3. 공통 배치 로직 실행
         if (enemy != null)
         {
             SpawnMobCommon(enemy, isFly);
@@ -229,7 +222,6 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    // 인덱스로 스폰
     private void SpawnMobInternal(int index, bool isFly)
     {
         GameObject enemy = isFly ?
@@ -239,21 +231,17 @@ public class Spawner : MonoBehaviour
         SpawnMobCommon(enemy, isFly);
     }
 
-    // 프리팹으로 스폰 (이벤트용)
     private void SpawnMobFromPrefab(GameObject prefab, bool isFly)
     {
         GameObject enemy = PoolManager.instance.GetMob(prefab);
         SpawnMobCommon(enemy, isFly);
     }
 
-    // ✨ [공통 배치 함수] 위치 설정 및 물리 초기화
     private void SpawnMobCommon(GameObject enemy, bool isFly)
     {
         if (enemy == null) return;
 
-        // 수정된 GetSpawnPosition 함수를 사용하여 위치 결정
         enemy.transform.position = GetSpawnPosition(isFly);
-
         InitEnemyPhysics(enemy);
 
         Mob mob = enemy.GetComponent<Mob>();
@@ -267,7 +255,6 @@ public class Spawner : MonoBehaviour
     // -------------------------------------------------------
     // 페이즈 및 주기적 작업 관리
     // -------------------------------------------------------
-
     private void UpdatePhase(float currentTime)
     {
         if (spawnPhases == null || spawnPhases.Length == 0) return;
@@ -276,13 +263,11 @@ public class Spawner : MonoBehaviour
         {
             if (currentTime >= spawnPhases[i].startTime)
             {
-                // 일반 몬스터 범위
                 currentGroundMin = spawnPhases[i].groundMinIndex;
                 currentGroundMax = spawnPhases[i].groundMaxIndex;
                 currentFlyMin = spawnPhases[i].flyMinIndex;
                 currentFlyMax = spawnPhases[i].flyMaxIndex;
 
-                // ✨ [추가] 엘리트 몬스터 범위 업데이트
                 currentGroundEliteMin = spawnPhases[i].groundEliteMinIndex;
                 currentGroundEliteMax = spawnPhases[i].groundEliteMaxIndex;
                 currentFlyEliteMin = spawnPhases[i].flyEliteMinIndex;
@@ -320,7 +305,6 @@ public class Spawner : MonoBehaviour
     // -------------------------------------------------------
     // 보스 및 이벤트 스폰
     // -------------------------------------------------------
-
     public void StartBossSequence(BossName bossName)
     {
         if (GameManager.Instance.CurrentState != GameState.Playing) return;
@@ -351,7 +335,6 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    // 배치 스폰 (Event)
     public void SpawnMobBatch(GameObject prefab, int count, float delay, bool isFly)
     {
         StartCoroutine(SpawnBatchRoutine(prefab, count, delay, isFly));
@@ -359,9 +342,6 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnBatchRoutine(GameObject prefab, int count, float delay, bool isFly)
     {
-        // 배치 스폰의 경우, 한 지점에서 쏟아져 나오게 할지, 랜덤하게 퍼질지 결정해야 함.
-        // 요청: "랜덤한 하나의 스폰포인트에서만 생성"
-
         Vector3 spawnPos = GetSpawnPosition(isFly);
 
         for (int i = 0; i < count; i++)
@@ -379,7 +359,6 @@ public class Spawner : MonoBehaviour
     // -------------------------------------------------------
     // Helpers
     // -------------------------------------------------------
-
     public void SetSpawning(bool enabled)
     {
         isSpawningEnabled = enabled;
@@ -405,7 +384,6 @@ public class Spawner : MonoBehaviour
 
     private void RespawnMob(Mob mob) { }
 
-    // (하위 호환)
     public void SpawnBoss(BossName boss) { StartBossSequence(boss); }
     public void SpawnTrainBoss() { StartBossSequence(BossName.TrainBoss); }
     public void SpawnEyeBoss() { StartBossSequence(BossName.EyeBoss); }
