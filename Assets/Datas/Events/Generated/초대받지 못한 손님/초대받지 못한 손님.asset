@@ -24,7 +24,8 @@ MonoBehaviour:
   - selectionText: "\uC870\uAE08 \uAD6C\uACA8\uC84C\uC9C0\uB9CC \uC5EC\uAE30 \uCD08\uB300\uC7A5\uC785\uB2C8\uB2E4"
     selectionUnderText: "50%\uB85C \uC18D\uB3C4 70\uD68C\uBCF5, 50%\uB85C \uC18D\uB3C4
       100\uAC10\uC18C"
-    eventToTrigger: {fileID: 11400000, guid: d555fe5615f96524e97185eddd8ffbdc, type: 2}
+    eventToTrigger: {fileID: 11400000, guid: ae335b3a1b2a1dd469755abec09a7239, type: 2}
   - selectionText: "\uC544. \uCC29\uBD88 \uD0DD\uBC30 \uBC30\uB2EC\uC654\uC2B5\uB2C8\uB2E4."
-    selectionUnderText: "50%\uB85C \uBCF4\uC720 \uC544\uC774\uD15C [2]\uAC1C [1]\uC5C5\uADF8\uB808\uC774\uB4DC"
-    eventToTrigger: {fileID: 11400000, guid: e6863be3c97bc0349b9b5163cc9df2d9, type: 2}
+    selectionUnderText: "50%\uB85C \uBCF4\uC720 \uC544\uC774\uD15C [2]\uAC1C [1]\uC5C5\uADF8\uB808\uC774\uB4DC,
+      50%\uB85C \uC18D\uB3C4 70\uAC10\uC18C"
+    eventToTrigger: {fileID: 11400000, guid: dd6d85e845ec12a4f9772b55452b6129, type: 2}

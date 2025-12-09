@@ -21,14 +21,14 @@ MonoBehaviour:
   MaxUpgrade: 6
   itemScript: "{CoolTime}\uB9C8\uB2E4 \uACF5\uACA9\uC18D\uB3C4\uB97C 100% \uC99D\uAC00\uC2DC\uD0A4\uB294
     \uC7A5\uD310\uC744 \uC0DD\uC131"
-  itemSimpleScript: "\uAC70\uC9D3\uB41C \uAD50\uB9AC"
+  itemSimpleScript: "\uB5A0\uC624\uB974\uB294 \uC2E0\uC131\uC744 \uB9C8\uC8FC\uD574\uB77C"
   cooldownTime: 0
   cooldownByLevel:
   - 40
-  - 37
-  - 34
-  - 31
+  - 36
+  - 32
   - 28
-  - 25
+  - 24
+  - 20
   spawnRangeX: 15
   ZonePrefab: {fileID: 892054615579162525, guid: 2163572e4be8b8943ac392759936fd76, type: 3}

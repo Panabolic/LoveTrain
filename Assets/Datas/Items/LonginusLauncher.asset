@@ -25,9 +25,12 @@ MonoBehaviour:
     \uD53C\uB3C4 \uC3DF\uAC8C \uD558\uB9AC\uB77C"
   cooldownTime: 0
   damageByLevel:
+  - 200
+  - 200
   - 300
   - 300
-  - 300
+  - 400
+  - 400
   cooldownByLevel:
   - 30
   - 26
