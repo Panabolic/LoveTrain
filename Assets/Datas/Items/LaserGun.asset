@@ -22,12 +22,9 @@ MonoBehaviour:
   itemScript: "\uCD1D\uAE30\uB97C {Damage}\uC758 \uB808\uC774\uC800\uB97C \uBC1C\uC0AC\uD558\uB294
     \uCD1D\uAE30\uB85C \uBCC0\uACBD"
   itemSimpleScript: "\uADF8\uAC83\uC740 \uCD1D\uC774\uB77C\uACE0 \uD558\uAE30\uC5D0\uB294
-    \uB108\uBB34 \uCEF7\uB2E4"
+    \uB108\uBB34 \uCEF8\uB2E4."
   cooldownTime: 0
-  damageByLevel:
-  - 10
-  - 10
-  - 10
+  damageRatio: 0.37
   durationByLevel:
   - 1
   - 3

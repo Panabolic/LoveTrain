@@ -1,8 +1,7 @@
-﻿using DG.Tweening;
+﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public enum GameState
 {
@@ -12,7 +11,8 @@ public enum GameState
     Boss,
     Die,
     Pause,
-    StageTransition // ✨ 스테이지 전환 상태 (모든 조작 차단)
+    StageTransition,
+    Ending // 엔딩 상태
 }
 
 public class GameManager : MonoBehaviour
@@ -22,7 +22,20 @@ public class GameManager : MonoBehaviour
     public GameState CurrentState { get; private set; }
     public event Action<GameState> OnGameStateChanged;
 
+    [Header("Game Settings")]
+    [Tooltip("게임 종료(엔딩) 시간 (초) - 기본 15분(900초)")]
+    [SerializeField] private float maxGameTime = 900f;
+
+    // 외부에서 엔딩 시간 도달 여부 확인용
+    public bool IsTimeForEnding => gameTime >= maxGameTime;
+
     public float gameTime = 0f;
+
+    // ✨ [누락된 부분 복구] 통계 데이터
+    public int NormalKillCount { get; private set; }
+    public int EliteKillCount { get; private set; }
+    public int BossKillCount { get; private set; }
+    public int TotalKillCount => NormalKillCount + EliteKillCount + BossKillCount;
 
     // UI Queue 관련
     private Queue<Action> uiRequestQueue = new Queue<Action>();
@@ -43,15 +56,32 @@ public class GameManager : MonoBehaviour
     {
         ChangeState(GameState.Start);
         gameTime = 0f;
+
+        // 통계 초기화
+        NormalKillCount = 0;
+        EliteKillCount = 0;
+        BossKillCount = 0;
     }
 
     private void Update()
     {
-        // Playing이나 Boss 상태일 때만 시간 흐름
-        if (CurrentState == GameState.Playing || CurrentState == GameState.Boss)
+        // ✨ 오직 'Playing' 상태일 때만 시간이 흐름
+        if (CurrentState == GameState.Playing)
         {
             gameTime += Time.deltaTime;
         }
+    }
+
+    // ✨ [누락된 부분 복구] 킬 카운트 집계 함수
+    public void AddKillCount(bool isElite)
+    {
+        if (isElite) EliteKillCount++;
+        else NormalKillCount++;
+    }
+
+    public void AddBossKillCount()
+    {
+        BossKillCount++;
     }
 
     public void ChangeState(GameState newState)
@@ -62,28 +92,39 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Game State Changed to: {newState}");
     }
 
-    // --- Boss Logic ---
+    // --- Boss & Ending Logic ---
     public void BossDied()
     {
-        if (CurrentState == GameState.Boss)
+        // 1. 엔딩 조건 체크 (시간 도달 시)
+        if (gameTime >= maxGameTime)
         {
-            // GameManager는 직접 연출하지 않고, StageManager에게 위임
+            Debug.Log("🎉 게임 클리어! 엔딩 시퀀스를 시작합니다.");
+
+            ChangeState(GameState.Ending); // 상태 변경 (시간 정지 유지)
+
+            if (EndingManager.Instance != null)
+            {
+                EndingManager.Instance.StartEnding();
+            }
+        }
+        // 2. 스테이지 전환
+        else
+        {
             if (StageManager.Instance != null)
             {
                 StageManager.Instance.StartStageTransitionSequence();
             }
             else
             {
-                Debug.LogError("StageManager가 없습니다! 바로 Playing으로 전환합니다.");
                 ChangeState(GameState.Playing);
             }
         }
     }
 
-    // --- Pause & UI Logic (기존 유지) ---
+    // --- Pause & UI Logic ---
     public void PauseGame()
     {
-        if (CurrentState == GameState.Playing || CurrentState == GameState.Boss || CurrentState == GameState.Start)
+        if (CurrentState == GameState.Playing || CurrentState == GameState.Boss)
         {
             stateBeforePause = CurrentState;
             ChangeState(GameState.Pause);
@@ -128,27 +169,6 @@ public class GameManager : MonoBehaviour
             Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
             if (CurrentState == GameState.Event) ChangeState(GameState.Playing);
         }
-    }
-
-    public void RestartGame()
-    {
-        // 2. 시간이 멈춰있을 경우를 대비해 시간을 다시 흐르게 설정
-        // (일시정지 후 재시작 시 게임이 멈춰있는 버그 방지)
-        Time.timeScale = 1;
-
-        // 3. 현재 활성화된 씬의 이름을 가져와서 다시 로드
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void QuitGame()
-    {
-        // Debug.Log("게임을 종료합니다...");
-        Application.Quit();
-
-        // (에디터에서는 작동 안 함, 빌드된 게임에서만 작동)
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
     }
 
     public void CloseUI() { ProcessNextUI(); }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de25d3ee2d664348b82ea5f88c5c342, type: 3}
   m_Name: BloodyBible
   m_EditorClassIdentifier: Assembly-CSharp::BloodyBible_SO
-  itemName: "\uD53C \uBB4D\uC740 \uC131\uACBD"
+  itemName: "\uD53C \uBB3B\uC740 \uC131\uACBD"
   instantiatedPrefab: {fileID: 8784218837775428088, guid: 6e843e8257f28544eb0fbd2106be2b97, type: 3}
   attachmentSocketName: TrainF
   iconSprite: {fileID: -1403542765748039057, guid: 34458ade272b39b4e81c77101fea1ea7, type: 3}

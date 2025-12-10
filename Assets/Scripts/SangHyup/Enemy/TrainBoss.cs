@@ -29,7 +29,7 @@ public class TrainBoss : Boss
 
     private bool isPhase2 = false;
 
-    // 넉백 쿨타임
+    // 넉백 쿨타임 (다단히트 방지)
     private float knockbackCooldown = 0.2f;
     private float lastKnockbackTime = -999f;
 
@@ -52,13 +52,10 @@ public class TrainBoss : Boss
             return;
         }
 
-        // 2. ✨ [수정] 플레이어 사망 여부와 상관없이 이동 로직 실행
-        // (정지 로직 삭제함)
-
-        // 3. 방향 설정 (무조건 왼쪽)
+        // 2. 방향 설정 (무조건 왼쪽)
         SetMoveDirection(targetRigid.position);
 
-        // 4. 스턴 상태가 아니면 이동
+        // 3. 스턴 상태가 아니면 이동 (플레이어 생존 여부 상관없이 계속 전진)
         if (!isStunned)
         {
             rigid2D.linearVelocity = new Vector2(moveDirection.x * moveSpeed, rigid2D.linearVelocity.y);
@@ -67,7 +64,7 @@ public class TrainBoss : Boss
 
     protected virtual void SetMoveDirection(Vector2 targetPos)
     {
-        // ✨ [핵심 수정] 플레이어 위치와 상관없이 무조건 왼쪽으로 이동
+        // 플레이어 위치와 상관없이 무조건 왼쪽으로 이동
         moveDirection = Vector2.left;
         sprite.flipX = false;
     }
@@ -78,6 +75,7 @@ public class TrainBoss : Boss
 
         CheckPhase();
 
+        // 넉백 쿨타임 체크
         if (Time.time >= lastKnockbackTime + knockbackCooldown)
         {
             Knockback();
@@ -96,6 +94,7 @@ public class TrainBoss : Boss
 
     private void Knockback()
     {
+        // 고정된 힘(Force) 사용
         float currentKnockbackForce = isPhase2 ? p2KnockbackForce : p1KnockbackForce;
 
         // 보스는 왼쪽으로 가므로 넉백은 오른쪽(+)
@@ -138,14 +137,32 @@ public class TrainBoss : Boss
     protected override IEnumerator Die()
     {
         yield return base.Die();
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(3.0f); // 사망 연출 대기
 
+        // ✨ [수정] 킬 이벤트(보상) 띄우기 전 엔딩 여부 체크
         if (killEvent != null)
         {
-            EventManager.Instance.RequestEvent(killEvent);
+            // GameManager가 있고, 아직 엔딩 시간이 아니라면 -> 보상 획득 이벤트 실행
+            // (엔딩 시간이면 보상 창 안 띄움)
+            if (GameManager.Instance != null && !GameManager.Instance.IsTimeForEnding)
+            {
+                EventManager.Instance.RequestEvent(killEvent);
+            }
         }
 
-        StageManager.Instance.StartStageTransitionSequence();
+        // ✨ [수정] GameManager에게 사망 보고 (엔딩/스테이지 전환 위임)
+        if (GameManager.Instance != null)
+        {
+            // 보스 킬 카운트 증가 + 엔딩 판정 요청
+            GameManager.Instance.AddBossKillCount();
+            GameManager.Instance.BossDied();
+        }
+        else
+        {
+            // 비상용 (GameManager 없을 때)
+            StageManager.Instance.StartStageTransitionSequence();
+        }
+
         Destroy(gameObject);
     }
 }

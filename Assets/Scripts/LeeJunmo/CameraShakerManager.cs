@@ -87,6 +87,17 @@ public class CameraShakeManager : MonoBehaviour
             });
     }
 
+    // ✨ [추가] 외부에서 카메라 기준 위치를 갱신하는 함수
+    public void UpdateOriginalPosition()
+    {
+        if (cameraTransform != null)
+        {
+            originalLocalPosition = cameraTransform.localPosition;
+            Debug.Log($"[CameraShake] 기준 위치 갱신됨: {originalLocalPosition}");
+        }
+    }
+
+
     /// <summary>
     /// 카메라 흔들림을 즉시 멈추고 원래 위치로 복원합니다.
     /// </summary>

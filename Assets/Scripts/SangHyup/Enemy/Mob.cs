@@ -180,6 +180,11 @@ public class Mob : Enemy
 
     protected override IEnumerator Die()
     {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.AddKillCount(isEliteMob);
+        }
+
         yield return base.Die(); // base.Die()가 isAlive = false 처리
 
         yield return new WaitForSeconds(1.0f); // 1초 대기

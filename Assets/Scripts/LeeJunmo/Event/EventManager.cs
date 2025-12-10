@@ -340,7 +340,7 @@ public class EventManager : MonoBehaviour
             });
     }
 
-    private void AnimatePanelToPeek()
+    public void AnimatePanelToPeek()
     {
         isPanelOnScreen = false;
         isAnimatingPanel = true;

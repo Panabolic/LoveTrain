@@ -5332,7 +5332,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1641563918}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: TogglePanelVisibility
+        m_MethodName: AnimatePanelToPeek
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

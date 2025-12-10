@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EventObjectSpawner : MonoBehaviour
 {
@@ -13,26 +12,31 @@ public class EventObjectSpawner : MonoBehaviour
     [Tooltip("스폰 주기 (초)")]
     [SerializeField] private float spawnInterval = 30f;
 
+    // 내부 타이머 변수
+    private float spawnTimer = 0f;
+
     private void Start()
     {
-        StartCoroutine(SpawnRoutine());
+        spawnTimer = 0f;
     }
 
-    private IEnumerator SpawnRoutine()
+    private void Update()
     {
-        while (true)
-        {
-            // 주기만큼 대기
-            yield return new WaitForSeconds(spawnInterval);
+        if (GameManager.Instance == null) return;
 
-            // 게임이 플레이 중일 때만 스폰 (이벤트 중이거나 보스전 등 제외)
-            if (GameManager.Instance != null && GameManager.Instance.CurrentState == GameState.Playing)
+        // ✨ GameManager의 상태가 'Playing'일 때만 타이머 진행
+        if (GameManager.Instance.CurrentState == GameState.Playing)
+        {
+            spawnTimer += Time.deltaTime;
+
+            if (spawnTimer >= spawnInterval)
             {
                 SpawnEventObject();
+                spawnTimer = 0f; // 타이머 초기화
             }
         }
     }
-                
+
     private void SpawnEventObject()
     {
         if (eventObjectPrefab == null || spawnPoints.Length == 0) return;

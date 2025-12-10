@@ -52,6 +52,16 @@ public class RearGun : MonoBehaviour, IInstantiatedItem
 
     private void Update()
     {
+        if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss)
+        {
+            if (isShooting)
+            {
+                isShooting = false;
+                UpdateAnimationState(); // 애니메이터에게 '멈춰!' 신호 보냄
+            }
+            return;
+        }
+
         if (Time.timeScale == 0 || playerGun == null) return;
 
         // 1. 애니메이션 속도 동기화 (공속 버프 적용)

@@ -26,7 +26,7 @@ public class ItemInstance
     // ✨ [수정됨] 쿨타임 로직
     public void Tick(float deltaTime, GameObject user)
     {
-        if (GameManager.Instance.CurrentState != GameState.Playing) return;
+        if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss) return;
 
         // 쿨타임이 없는 아이템(패시브 등)은 무시
         float levelMaxCooldown = itemData.GetCooldownForLevel(currentUpgrade);
