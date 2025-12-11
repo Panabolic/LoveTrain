@@ -7,13 +7,15 @@ public class Tentacle : Enemy
     private EyeBoss owner;
 
     private float   attackWaitTime  = 3.0f;
-    private float   toAttack        = 0.2f;
+    private float   toAttack;
     private float   toDestroy       = 0.3f;
 
 
     protected override void Start()
     {
         base.Start();
+
+        toAttack = animator.GetNextAnimatorStateInfo(0).length;
 
         StartCoroutine(Attack());
     }
@@ -68,5 +70,11 @@ public class Tentacle : Enemy
         owner.UnregisterTentacle(gameObject);
     }
 
-    public void SetDamage(float damageAmount) { damage = damageAmount; } 
+    // Getters
+    public float GetAttackWaitTime() { return attackWaitTime + toAttack; }
+
+    // Setters
+    public void SetDamage(float damageAmount) { damage = damageAmount; }
+    public void SetAttackWaitTime(float time) { attackWaitTime = time; }
+
 }

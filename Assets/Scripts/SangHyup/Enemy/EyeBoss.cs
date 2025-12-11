@@ -9,7 +9,7 @@ public class EyeBoss : Boss
     [SerializeField] private float waitTimeBetweenPatterns = 2.0f;
     [Range(0.1f, 1.0f)]
     [SerializeField] private float EnragePatternThreshold   = 0.2f; // 체력 비율 임계값
-    [SerializeField] private float patternWaitTime          = 7.0f;
+    [SerializeField] private float patternWaitTime          = 9.0f;
 
     [Header("Reference")]
     [SerializeField] private GameObject tentacle;
@@ -19,6 +19,9 @@ public class EyeBoss : Boss
 
     private List<GameObject> spawnedTentacles = new List<GameObject>();
 
+    private float tentacleAttackTime;
+
+    private bool isInvincible           = false;
     private bool canAttack              = true;
     private bool enragePatternReady     = false;
     private bool isInvokeEnragePattern  = false;
@@ -26,6 +29,8 @@ public class EyeBoss : Boss
     protected override void Start()
     {
         base.Start();
+
+        tentacleAttackTime  = tentacle.GetComponent<Tentacle>().GetAttackWaitTime();
 
         int childCount      = transform.childCount;
         tentacleSpawnPoints = new Transform[childCount];
@@ -43,6 +48,8 @@ public class EyeBoss : Boss
         if (!isInvokeEnragePattern && enragePatternReady)
         {
             StartCoroutine(EnragePattern());
+
+            return;
         }
 
         int patternIndex = Random.Range(0, 2);
@@ -55,6 +62,8 @@ public class EyeBoss : Boss
 
     public override void TakeDamage(float damageAmount)
     {
+        if (isInvincible) return;
+
         base.TakeDamage(damageAmount);
 
         // 체력 비율 계산
@@ -150,6 +159,7 @@ public class EyeBoss : Boss
     private IEnumerator EnragePattern()
     {
         isInvokeEnragePattern   = true;
+        isInvincible            = true;
         canAttack               = false;
 
         int weakPoint = Random.Range(1, 7);
@@ -159,7 +169,11 @@ public class EyeBoss : Boss
 
         SpawnTentacle(tentacleSpawnPoints, weakPoints);
 
-        yield return new WaitForSeconds(patternWaitTime);
+        yield return new WaitForSeconds(tentacleAttackTime);
+
+        isInvincible = false;
+
+        yield return new WaitForSeconds(patternWaitTime - tentacleAttackTime);
 
         canAttack = true;
     }
@@ -195,7 +209,8 @@ public class EyeBoss : Boss
             Tentacle tentacleScript = spawnedTentacle.GetComponent<Tentacle>();
 
             tentacleScript.Initialize(this);
-            tentacleScript.SetDamage(10000);
+            tentacleScript.SetAttackWaitTime(8.0f);
+            tentacleScript.SetDamage(100);
         }
     }
     public void RegisterTentacle(GameObject tentacle)
