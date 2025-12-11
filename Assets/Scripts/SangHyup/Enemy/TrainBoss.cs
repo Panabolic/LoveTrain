@@ -71,6 +71,7 @@ public class TrainBoss : Boss
 
     public override void TakeDamage(float damageAmount)
     {
+        if (!isAlive || !hasEnteredScreen) return;
         base.TakeDamage(damageAmount);
 
         CheckPhase();

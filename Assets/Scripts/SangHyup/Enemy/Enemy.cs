@@ -101,18 +101,45 @@ public class Enemy : MonoBehaviour
     }
 
     // ✨ 화면 진입 확인 로직
+    // ✨ [수정] 화면 진입 확인 로직 (Pivot 점 기준 -> 영역(Bounds) 겹침 기준)
     private void CheckScreenEntry()
     {
         if (Camera.main == null) return;
 
-        // 월드 좌표 -> 뷰포트 좌표 변환 (0,0 ~ 1,1 사이면 화면 안)
-        Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
+        // 1. 카메라의 월드 공간 영역(Bounds) 계산
+        float camHeight = Camera.main.orthographicSize * 2f;
+        float camWidth = camHeight * Camera.main.aspect;
+        Vector3 camPos = Camera.main.transform.position;
 
-        // 약간의 여유(0 ~ 1)를 두고 화면 안에 들어왔는지 판단
-        if (viewPos.x >= 0f && viewPos.x <= 1f && viewPos.y >= 0f && viewPos.y <= 1f)
+        // 중심은 카메라 위치, 크기는 화면 크기 (Z축은 2D라 넉넉하게 잡음)
+        Bounds camBounds = new Bounds(new Vector3(camPos.x, camPos.y, 0), new Vector3(camWidth, camHeight, 1000f));
+
+        // 2. 적의 영역(Collider 또는 Sprite) 가져오기
+        Bounds enemyBounds;
+
+        // 우선순위: 콜라이더 > 스프라이트 > 점
+        if (collision != null)
+        {
+            enemyBounds = collision.bounds;
+        }
+        else if (sprite != null)
+        {
+            enemyBounds = sprite.bounds;
+        }
+        else
+        {
+            // 둘 다 없으면 기존 방식(점) 사용 (예외 처리)
+            Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
+            if (viewPos.x >= 0f && viewPos.x <= 1f && viewPos.y >= 0f && viewPos.y <= 1f)
+                hasEnteredScreen = true;
+            return;
+        }
+
+        // 3. 교차 검사 (조금이라도 겹치면 True)
+        if (camBounds.Intersects(enemyBounds))
         {
             hasEnteredScreen = true;
-            // Debug.Log($"{name} 화면 진입! 타겟팅 가능");
+            // Debug.Log($"{name} 발가락이라도 화면에 들어옴! 타겟팅 가능");
         }
     }
 
@@ -145,7 +172,7 @@ public class Enemy : MonoBehaviour
 
         material.SetInt("_isHit", 0);
     }
-     
+ 
     protected virtual IEnumerator Die()
     {
         isAlive = false;
