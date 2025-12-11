@@ -34,8 +34,10 @@ public class EyeBoss : Boss
             tentacleSpawnPoints[index] = transform.GetChild(index);
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (!isAlive || !canAttack) return;
 
         if (!isInvokeEnragePattern && enragePatternReady)
