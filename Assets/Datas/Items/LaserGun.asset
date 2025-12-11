@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eaa5853b81f7ae44b0a238732a130f5, type: 3}
   m_Name: LaserGun
   m_EditorClassIdentifier: Assembly-CSharp::LaserGun_SO
-  itemName: "\uB808\uC774\uC800 \uAC74"
+  itemName: BF-12000
   instantiatedPrefab: {fileID: 7912622153395854844, guid: 67a79294b5c50064b906a9dabedb0869, type: 3}
   attachmentSocketName: 
   iconSprite: {fileID: -1575477752133039954, guid: 768d5566dccb58142ae66d941b63cd80, type: 3}
@@ -27,19 +27,19 @@ MonoBehaviour:
   damageRatio: 0.37
   durationByLevel:
   - 1
-  - 3
-  - 5
+  - 2.5
+  - 3.5
   tickRateByLevel:
   - 0.1
   - 0.1
   - 0.1
   cooldownByLevel:
-  - 1
-  - 1
+  - 1.2
+  - 1.1
   - 1
   laserScale:
   - 1
+  - 1.2
   - 1.5
-  - 2
   LaserProjectilePrefab: {fileID: 7987405070560878738, guid: 422af25199ea22d4288a54eae3026cc0, type: 3}
   HolderSprite: {fileID: 21300000, guid: 129ba3bff569c5a4f959539b5ffc57e4, type: 3}

@@ -24,11 +24,11 @@ MonoBehaviour:
   itemSimpleScript: "\uB0B4\uAC00 \uC774 \uC138\uACC4\uC758 \uBCF4\uC548\uAD00\uC774
     \uB420\uAC8C"
   cooldownTime: 0
-  damageByLevel: 5000000096000000c8000000
+  damageByLevel: 500000006e000000a0000000
   bulletNumByLevel: 010000000100000003000000
   cooldownByLevel:
-  - 13
-  - 10
+  - 15
+  - 11
   - 7
   timeBetweenShots: 0.3
   BulletPrefab: {fileID: 7403974513621862308, guid: d326fca6bca71204aa8225690e217fe6, type: 3}

@@ -23,9 +23,9 @@ MonoBehaviour:
     \uB370\uBBF8\uC9C0."
   itemSimpleScript: "\uC2EC\uC7A5\uC744 \uAC00\uC838\uC640"
   cooldownTime: 15
-  damageByLevel: 5000000096000000c8000000
+  damageByLevel: 500000006e000000a0000000
   cooldownByLevel:
   - 15
   - 11
-  - 8
+  - 7
   EffectPrefab: {fileID: 3562771312614093645, guid: f4ab0e52b9de6274aa9ad611c123c684, type: 3}

@@ -32,11 +32,11 @@ MonoBehaviour:
   - 400
   - 400
   cooldownByLevel:
-  - 30
-  - 26
-  - 22
+  - 20
   - 18
+  - 16
   - 14
+  - 12
   - 10
   spearSpeed: 170
   spearLifeTime: 1.5

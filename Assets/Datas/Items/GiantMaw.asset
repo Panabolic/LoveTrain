@@ -27,8 +27,8 @@ MonoBehaviour:
   cooldownTime: 2
   mawDamageByLevel: 82000000a0000000c8000000
   cooldownByLevel:
-  - 2
   - 1.5
+  - 1.2
   - 1
   healAmountByLevel: 0a0000001400000028000000
   knockbackDirection: {x: 1, y: 0.3}
