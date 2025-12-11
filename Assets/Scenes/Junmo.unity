@@ -3199,6 +3199,7 @@ MonoBehaviour:
   eventObjectPrefab: {fileID: 3828569272167909342, guid: 7a71431e9e68b4842b03e768c9261405, type: 3}
   spawnPoints:
   - {fileID: 813859251446729677}
+  firstSpawnTime: 40
   spawnInterval: 45
 --- !u!1 &222855046
 GameObject:
@@ -5115,7 +5116,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -9.7, y: 0}
-  m_SizeDelta: {x: -6.2537, y: 0}
+  m_SizeDelta: {x: 9.7, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &361700649
 MonoBehaviour:
@@ -8116,7 +8117,7 @@ MonoBehaviour:
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
     spawnInterval: 0.1
-  bossSequence: 
+  bossSequence: 0100000000000000010000000000000001000000
   bossSettings:
   - bossName: 0
     bossPrefab: {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
@@ -17523,7 +17524,7 @@ MonoBehaviour:
   deathKnockbackPositionX: 0
   deathKnockbackDuration: 0.5
   deathMoveDistance: 27.5
-  deathMoveSpeed: 2
+  deathMoveSpeed: 1.5
   destroyDelay: 4
   handObject: {fileID: 839351749}
   explosionObject: {fileID: 4892325194489509817, guid: 7281742e0645f8d4f9c06b37bfaaaef9, type: 3}
@@ -20473,7 +20474,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 11.814178, y: 3.217589, z: -13.440147, w: -6.786829}
+  m_margin: {x: 11.814178, y: 3.217589, z: 0.24774164, w: -6.786829}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -20503,8 +20504,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 114.328156, y: -9.61}
-  m_SizeDelta: {x: 228.65631, y: 19.22}
+  m_AnchoredPosition: {x: 122.305, y: -9.61}
+  m_SizeDelta: {x: 244.61, y: 19.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1646073578
 GameObject:
