@@ -30,7 +30,7 @@ public class RevolverBullet : MonoBehaviour
         // CanHit() 이후에만 충돌 처리
         if (isCanHit)
         {
-            Mob mob = collision.GetComponent<Mob>();
+            Enemy mob = collision.GetComponent<Enemy>();
             if (mob != null)
             {
                 mob.TakeDamage(damage);
