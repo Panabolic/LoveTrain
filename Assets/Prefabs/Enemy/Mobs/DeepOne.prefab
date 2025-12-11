@@ -197,7 +197,7 @@ MonoBehaviour:
   hp: 80
   damage: 30
   exp: 1.5
-  moveSpeed: 2.5
+  moveSpeed: 2.6
   isEliteMob: 0
 --- !u!198 &148319859473381481
 ParticleSystem:

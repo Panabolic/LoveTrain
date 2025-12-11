@@ -42,8 +42,8 @@ public class MagicBullet_SO : Item_SO
         Projectile proj = obj.GetComponent<Projectile>();
         if (proj != null)
         {
-            // 1. 데미지 절반 감소
-            float newDamage = source.GetDamage() * 0.5f;
+            // 1. 데미지 65%감소
+            float newDamage = source.GetDamage() * 0.35f;
 
             // 2. 기본 속도 가져오기
             float newSpeed = source.GetSpeed();
