@@ -4,9 +4,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // Components
-    protected SpriteRenderer sprite;
-    protected Collider2D collision;
-    protected Animator animator;
+    protected SpriteRenderer    sprite;
+    protected Collider2D        collision;
+    protected Animator          animator;
+    protected Material          material;
 
     [Header("Enemy Specification")]
     [Tooltip("기본 체력")]
@@ -15,6 +16,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float damage;
     [Tooltip("주는 경험치량")]
     [SerializeField] protected float exp;
+    [Tooltip("피격 이펙트 지속시간")]
+    [SerializeField] protected float hitEffectDuration = 0.05f;
 
     protected float calibratedHP;
     protected float currentHP;
@@ -41,6 +44,7 @@ public class Enemy : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         collision = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
+        material = sprite.material;
 
         // variable init
         originalColor = sprite.color;
@@ -129,6 +133,15 @@ public class Enemy : MonoBehaviour
             StartCoroutine(Die());
     }
 
+    protected IEnumerator HitEffect()
+    {
+        material.SetInt("_isHit", 1);
+
+        yield return new WaitForSeconds(hitEffectDuration);
+
+        material.SetInt("_isHit", 0);
+    }
+     
     protected virtual IEnumerator Die()
     {
         isAlive = false;

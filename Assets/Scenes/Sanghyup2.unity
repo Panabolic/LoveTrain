@@ -8042,11 +8042,11 @@ MonoBehaviour:
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
     spawnInterval: 1
+  bossSequence: 
   bossSettings:
   - bossName: 0
     bossPrefab: {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
     spawnDelayAfterWarning: 4
-    spawnSoundName: 
     soundPlayDelay: 2
   bossSpawnInterval: 180
   eliteMobSpawnInterval: 20
@@ -14706,7 +14706,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 1.875}
+    oldSize: {x: 8, y: 4}
     newSize: {x: 1, y: 0.46875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -19326,8 +19326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f185a787dd5b6498db4b64f1d0f0cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  audioSourcePool: []
-  bgmSource: {fileID: 0}
+  soundList: []
+  sfxPoolSize: 15
 --- !u!1 &1644940989
 GameObject:
   m_ObjectHideFlags: 0
@@ -20515,6 +20515,7 @@ MonoBehaviour:
   levelManager: {fileID: 1426277365}
   levelText: {fileID: 2054807078}
   xpBarSlider: {fileID: 1687151379}
+  fillDuration: 0.5
 --- !u!1 &1699459986
 GameObject:
   m_ObjectHideFlags: 0
@@ -23724,6 +23725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8aef6070efe9ad4db9a83b7a81c5bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  maxGameTime: 900
   gameTime: 0
 --- !u!114 &2049853605
 MonoBehaviour:
@@ -25087,6 +25089,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1407307687}
     m_Modifications:
+    - target: {fileID: 775658884350152021, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 775658884350152021, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 830311195511702407, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 830311195511702407, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4091002349762611995, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -25167,9 +25185,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5271405913763961486, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271405913763961486, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271405913763961486, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5370485710490570038, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
       propertyPath: m_Name
       value: OptionUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5370485710490570038, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815354323658470795, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815354323658470795, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815354323658470795, guid: 77c55e8a440142e4ebc0928818ef1579, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -2,36 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tentacle : MonoBehaviour
+public class Tentacle : Enemy
 {
-    // Components
-    private Animator        animator;
-    private BoxCollider2D   collision;
-    private BoxCollider2D   rangeBox;
-
     private EyeBoss owner;
-
-    private float   hp;
-    private float   damage;
 
     private float   attackWaitTime  = 3.0f;
     private float   toAttack        = 0.2f;
     private float   toDestroy       = 0.3f;
 
 
-    private void Awake()
+    protected override void Start()
     {
-        // Get Components
-        animator    = GetComponent<Animator>();
-        collision   = GetComponent<BoxCollider2D>();
-        rangeBox    = transform.GetChild(0).GetComponent<BoxCollider2D>();
+        base.Start();
 
-        collision.enabled   = true;
-        rangeBox.enabled    = false;
-    }
-
-    private void Start()
-    {
         StartCoroutine(Attack());
     }
 
@@ -60,22 +43,21 @@ public class Tentacle : MonoBehaviour
         // 피격 활성화까지
         yield return new WaitForSeconds(toAttack);
 
-        collision.enabled   = false;
-        rangeBox.enabled    = true;
-
         // 소멸까지
         yield return new WaitForSeconds(toDestroy);
 
         Destroy(gameObject);
     }
 
-    public void TakeDamage(float damageAmount)
+    public override void TakeDamage(float damageAmount)
     {
-        hp -= damageAmount;
+        if (!isAlive) return;
 
-        // 피격 파티클 재생
+        currentHP -= damageAmount;
 
-        if (hp <= 0)
+        StartCoroutine(HitEffect());
+
+        if (currentHP <= 0)
         {
             Destroy(gameObject);
         }
@@ -86,6 +68,5 @@ public class Tentacle : MonoBehaviour
         owner.UnregisterTentacle(gameObject);
     }
 
-    public void SetHP(float hpAmount)           { hp = hpAmount; }
-    public void SetDamage(float damageAmount)   { damage = damageAmount; }
+    public void SetDamage(float damageAmount) { damage = damageAmount; } 
 }
