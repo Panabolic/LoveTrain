@@ -14,8 +14,8 @@ public class Mob : Enemy
 
     protected Vector2 moveDirection = Vector2.zero;
 
-    protected bool isStunned = false;
-    private float stunDuration = 0.5f;
+    protected bool isStunned    = false;
+    private float stunDuration  = 0.5f;
 
     public Action<Mob> OnDied;
 
@@ -24,8 +24,8 @@ public class Mob : Enemy
         base.Awake();
 
         // Get components
-        rigid2D = GetComponent<Rigidbody2D>();
-        hitEffect = GetComponent<ParticleSystem>();
+        rigid2D     = GetComponent<Rigidbody2D>();
+        hitEffect   = GetComponent<ParticleSystem>();
     }
 
     protected override void Start()

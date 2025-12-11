@@ -128,7 +128,11 @@ public class Enemy : MonoBehaviour
         if (!isAlive || !hasEnteredScreen) return;
 
         currentHP -= damageAmount;
+
+        StartCoroutine(HitEffect());
+
         SoundEventBus.Publish(SoundID.Enemy_Hit);
+
         if (currentHP <= 0)
             StartCoroutine(Die());
     }
