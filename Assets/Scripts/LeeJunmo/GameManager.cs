@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine.SceneManagement; // ✨ 씬 관리를 위해 추가 필수
 
 public enum GameState
 {
@@ -12,7 +13,7 @@ public enum GameState
     Die,
     Pause,
     StageTransition,
-    Ending // 엔딩 상태
+    Ending
 }
 
 public class GameManager : MonoBehaviour
@@ -26,12 +27,11 @@ public class GameManager : MonoBehaviour
     [Tooltip("게임 종료(엔딩) 시간 (초) - 기본 15분(900초)")]
     public float maxGameTime = 900f;
 
-    // 외부에서 엔딩 시간 도달 여부 확인용
     public bool IsTimeForEnding => gameTime >= maxGameTime;
 
     public float gameTime = 0f;
 
-    // ✨ [누락된 부분 복구] 통계 데이터
+    // 통계 데이터
     public int NormalKillCount { get; private set; }
     public int EliteKillCount { get; private set; }
     public int BossKillCount { get; private set; }
@@ -54,25 +54,28 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeState(GameState.Start);
-        gameTime = 0f;
-
-        // 통계 초기화
-        NormalKillCount = 0;
-        EliteKillCount = 0;
-        BossKillCount = 0;
+        // 초기 시작 시 상태 설정
+        InitializeGameData();
     }
 
     private void Update()
     {
-        // ✨ 오직 'Playing' 상태일 때만 시간이 흐름
         if (CurrentState == GameState.Playing)
         {
             gameTime += Time.deltaTime;
         }
     }
 
-    // ✨ [누락된 부분 복구] 킬 카운트 집계 함수
+    // ✨ 데이터 초기화 로직 분리 (Start와 Restart에서 공통 사용)
+    private void InitializeGameData()
+    {
+        gameTime = 0f;
+        NormalKillCount = 0;
+        EliteKillCount = 0;
+        BossKillCount = 0;
+        ChangeState(GameState.Start);
+    }
+
     public void AddKillCount(bool isElite)
     {
         if (isElite) EliteKillCount++;
@@ -95,29 +98,22 @@ public class GameManager : MonoBehaviour
     // --- Boss & Ending Logic ---
     public void BossDied()
     {
-        // 1. 엔딩 조건 체크 (시간 도달 시)
         if (gameTime >= maxGameTime)
         {
             Debug.Log("🎉 게임 클리어! 엔딩 시퀀스를 시작합니다.");
-
-            ChangeState(GameState.Ending); // 상태 변경 (시간 정지 유지)
+            ChangeState(GameState.Ending);
 
             if (EndingManager.Instance != null)
             {
                 EndingManager.Instance.StartEnding();
             }
         }
-        // 2. 스테이지 전환
         else
         {
             if (StageManager.Instance != null)
-            {
                 StageManager.Instance.StartStageTransitionSequence();
-            }
             else
-            {
                 ChangeState(GameState.Playing);
-            }
         }
     }
 
@@ -175,4 +171,26 @@ public class GameManager : MonoBehaviour
     public void StartGame() { if (CurrentState == GameState.Start) ChangeState(GameState.Playing); }
     public void AppearBoss() { if (CurrentState == GameState.Playing) ChangeState(GameState.Boss); }
     public void PlayerDied() { ChangeState(GameState.Die); }
+
+    // ✨ [추가] 게임 재시작 (타이틀로 이동)
+    public void RestartGame()
+    {
+        Time.timeScale = 1f; // 시간 정지 해제
+
+        // 데이터 초기화 (시간, 킬수 등) 및 상태를 Start로 변경
+        InitializeGameData();
+
+        // 씬 로드
+        SceneManager.LoadScene("Start");
+    }
+
+    // ✨ [추가] 게임 종료
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }
