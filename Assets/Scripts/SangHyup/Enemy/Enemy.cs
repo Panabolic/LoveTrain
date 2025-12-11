@@ -91,7 +91,7 @@ public class Enemy : MonoBehaviour
             StartCoroutine(Die());
     }
 
-    private IEnumerator HitEffect()
+    protected IEnumerator HitEffect()
     {
         material.SetInt("_isHit", 1);
 

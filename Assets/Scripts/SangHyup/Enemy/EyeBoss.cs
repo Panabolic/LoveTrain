@@ -11,11 +11,6 @@ public class EyeBoss : Boss
     [SerializeField] private float EnragePatternThreshold   = 0.2f; // 체력 비율 임계값
     [SerializeField] private float patternWaitTime          = 7.0f;
 
-    [Header("Tentacle Specification")]
-    [SerializeField] private float tentacleHP       = 300.0f;
-    [SerializeField] private float tentacleDamage   = 50.0f;
-    [SerializeField] private float weakTentacleHP   = 150.0f;
-
     [Header("Reference")]
     [SerializeField] private GameObject tentacle;
     [SerializeField] private GameObject weakTentacle;
@@ -173,15 +168,12 @@ public class EyeBoss : Boss
         {
             bool        isWeakPoint     = spawnPoint.GetSiblingIndex() == weakPoint;
             GameObject  tentaclePrefab  = isWeakPoint ? weakTentacle : tentacle;
-            float       tentacleHPValue = isWeakPoint ? weakTentacleHP : tentacleHP;
 
             GameObject spawnedTentacle = Instantiate(tentaclePrefab, spawnPoint.position, Quaternion.identity);
 
             Tentacle tentacleScript = spawnedTentacle.GetComponent<Tentacle>();
 
             tentacleScript.Initialize(this);
-            tentacleScript.SetHP(tentacleHPValue);
-            tentacleScript.SetDamage(tentacleDamage);
         }
     }
 
@@ -195,14 +187,12 @@ public class EyeBoss : Boss
 
             bool        isWeakPoint     = weakPointIndexSet.Contains(siblingIndex);
             GameObject  tentaclePrefab  = isWeakPoint ? weakTentacle : tentacle;
-            float       tentacleHPValue = isWeakPoint ? weakTentacleHP : tentacleHP;
 
             GameObject spawnedTentacle = Instantiate(tentaclePrefab, spawnPoint.position, Quaternion.identity);
     
             Tentacle tentacleScript = spawnedTentacle.GetComponent<Tentacle>();
 
             tentacleScript.Initialize(this);
-            tentacleScript.SetHP(tentacleHPValue);
             tentacleScript.SetDamage(10000);
         }
     }
