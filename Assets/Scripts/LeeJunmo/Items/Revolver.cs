@@ -30,7 +30,8 @@ public class Revolver : MonoBehaviour, IInstantiatedItem
 
     private void Update()
     {
-        if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss) return;
+        if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss
+             && GameManager.Instance.CurrentState != GameState.Ending) return;
 
         if (itemData == null || isFiring) return;
 
@@ -49,6 +50,7 @@ public class Revolver : MonoBehaviour, IInstantiatedItem
         for (int i = 0; i < currentBulletNum; i++)
         {
             CreateBullet();
+            SoundEventBus.Publish(SoundID.Item_GunSlave);
             if (i < currentBulletNum - 1) yield return new WaitForSeconds(timeBetweenShots);
         }
 

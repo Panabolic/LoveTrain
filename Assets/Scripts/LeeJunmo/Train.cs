@@ -138,6 +138,7 @@ public class Train : MonoBehaviour
         if (isDead) return;
         OnTrainDamaged?.Invoke();
         if (CameraShakeManager.Instance != null) CameraShakeManager.Instance.ShakeCamera();
+        SoundEventBus.Publish(SoundID.Player_Hit);
         if(isBossAttack)
         {
             BossModifySpeed(-damageAmount);

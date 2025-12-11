@@ -101,6 +101,7 @@ public class HealingItem : MonoBehaviour, IInstantiatedItem
         SetNumberVisible(false);
         if (heartObject != null) heartObject.SetActive(true);
 
+        SoundEventBus.Publish(SoundID.Item_HealingItem);
         yield return new WaitForSeconds(heartAnimDuration);
 
         // 하트 끄기, 숫자 켜기

@@ -18,20 +18,16 @@ public class Projectile : MonoBehaviour, IRicochetSource
     public GameObject GetRicochetPrefab() => ricochetPrefab;
     public int GetBounceDepth() => currentBounceDepth;
     public void SetBounceDepth(int depth) => currentBounceDepth = depth;
-    // ✨ [추가] 인터페이스 구현
-    public float GetDamage() => damage; // 현재 데미지 반환
 
-    // 만약 Inspector에 설정된 기본값을 쓰고 싶다면 별도 변수가 필요하겠지만,
-    // 보통은 현재 날아가는 속도를 유지하는 것이 자연스럽습니다.
+    // 인터페이스 구현
+    public float GetDamage() => damage;
     public float GetSpeed() => speed;
-
 
     private void Awake()
     {
         myCollider = GetComponent<Collider2D>();
     }
 
-    // ✨ [수정] GameObject ignore 대신 Collider2D ignoreCollider를 받음
     public virtual void Init(float _damage, float _speed, Vector3 _dir, GameObject _prefab, bool startActive = true, int bounceDepth = 0, Collider2D ignoreCollider = null)
     {
         this.damage = _damage;
@@ -49,7 +45,7 @@ public class Projectile : MonoBehaviour, IRicochetSource
         this.currentBounceDepth = bounceDepth;
         if (ricochetPrefab == null) ricochetPrefab = _prefab;
 
-        // ✨ [핵심] 물리 엔진 차원에서 충돌 무시 설정 (위치 겹쳐도 충돌 안 함)
+        // 물리 엔진 차원에서 충돌 무시 설정
         if (ignoreCollider != null && myCollider != null)
         {
             Physics2D.IgnoreCollision(myCollider, ignoreCollider, true);
@@ -77,11 +73,10 @@ public class Projectile : MonoBehaviour, IRicochetSource
     {
         if (!isCanHit) return;
 
-        // IgnoreCollision을 썼으므로 여기서 별도의 ignore 체크 불필요
-
         Enemy enemy = collision.GetComponent<Enemy>();
 
-        if (enemy != null)
+        // ✨ [핵심 수정] 적이 존재하고 && 타겟팅 가능한 상태(화면 안)일 때만 처리
+        if (enemy != null && enemy.IsTargetable)
         {
             OnHitEnemy(enemy);
 
@@ -96,6 +91,7 @@ public class Projectile : MonoBehaviour, IRicochetSource
 
             Despawn();
         }
+        // 화면 밖 적(IsTargetable == false)은 무시하고 통과함
     }
 
     protected virtual void OnHitEnemy(Enemy enemy)

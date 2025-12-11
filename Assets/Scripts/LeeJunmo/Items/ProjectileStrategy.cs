@@ -32,6 +32,8 @@ public class ProjectileStrategy : IWeaponStrategy
             gun.FirePoint.rotation
         );
 
+        SoundEventBus.Publish(SoundID.Player_Shoot);
+
         // Projectile (또는 Bullet) 컴포넌트 초기화
         Projectile bulletScript = bullet.GetComponent<Projectile>();
         if (bulletScript != null)

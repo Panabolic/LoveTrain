@@ -20,6 +20,8 @@ public class ProgressUIController : MonoBehaviour
     {
         isTimerRunning = false;
 
+        GameManager.Instance.maxGameTime = totalTimeInSeconds;
+
         // 시작 시 텍스트를 "03:00" (초기 시간)으로 초기화
         UpdateTimeText(totalTimeInSeconds);
 

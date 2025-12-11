@@ -68,6 +68,7 @@ public class EventManager : MonoBehaviour
     // ✨ [수정] 외부에서 이벤트를 요청할 때 사용 (큐에 등록)
     public void RequestEvent(SO_Event e)
     {
+        SoundEventBus.Publish(SoundID.UI_Event);
         GameManager.Instance.RegisterUIQueue(() => ProcessEvent(e));
     }
 

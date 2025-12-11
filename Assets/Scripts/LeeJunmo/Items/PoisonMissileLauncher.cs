@@ -61,7 +61,8 @@ public class PoisonMissileLauncher : MonoBehaviour, IInstantiatedItem
 
     private void Update()
     {
-        if (GameManager.Instance.CurrentState != GameState.Playing || GameManager.Instance.CurrentState != GameState.Boss) return;
+        if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss 
+            && GameManager.Instance.CurrentState != GameState.Ending) return;
 
         if (Time.timeScale == 0) return;
 
@@ -112,7 +113,7 @@ public class PoisonMissileLauncher : MonoBehaviour, IInstantiatedItem
 
         GameObject missileObj = Instantiate(missilePrefab, currentPoint.position, currentPoint.rotation);
         PoisonMissile missileScript = missileObj.GetComponent<PoisonMissile>();
-
+        SoundEventBus.Publish(SoundID.Item_Missile);
         if (missileScript != null)
         {
             // 가스 데미지도 배율 없이 SO 값 그대로(gasDamage) 전달

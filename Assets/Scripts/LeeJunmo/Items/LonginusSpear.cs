@@ -53,6 +53,7 @@ public class LonginusSpear : MonoBehaviour
             Enemy enemy = collision.GetComponent<Enemy>();
             if (enemy != null && enemy.gameObject.activeSelf)
             {
+                SoundEventBus.Publish(SoundID.Item_Longinus);
                 enemy.TakeDamage(damage);
             }
         }

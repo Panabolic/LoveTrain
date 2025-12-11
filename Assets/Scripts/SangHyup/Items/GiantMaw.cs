@@ -55,6 +55,7 @@ public class GiantMaw : MonoBehaviour, IInstantiatedItem
 
             // Attack
             animator.SetTrigger("eat");
+            SoundEventBus.Publish(SoundID.Item_GiantMaw);
 
             mob.TakeDamage(damage);
             mob.Knockback(knockbackDirection, knockbackPower);

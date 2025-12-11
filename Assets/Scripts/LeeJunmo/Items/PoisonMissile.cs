@@ -20,7 +20,7 @@ public class PoisonMissile : MonoBehaviour
     private Enemy targetEnemy;      // 타겟의 생사 확인용 스크립트
     private Vector3 lastTargetPos;  // 적의 마지막 위치 저장용
 
-    // ✨ [추가] 안전장치: 4초 뒤 자동 폭발
+    // 안전장치: 4초 뒤 자동 폭발
     private float lifeTimer = 0f;
     private float maxLifeTime = 4.0f;
 
@@ -35,14 +35,14 @@ public class PoisonMissile : MonoBehaviour
 
         this.startPos = transform.position;
         this.isHoming = false;
-        this.lifeTimer = 0f; // 타이머 초기화
+        this.lifeTimer = 0f;
     }
 
     private void Update()
     {
         if (Time.timeScale == 0) return;
 
-        // ✨ [추가] 4초 지나면 강제 폭발 (뱅뱅 도는 현상 방지)
+        // 4초 지나면 강제 폭발
         lifeTimer += Time.deltaTime;
         if (lifeTimer >= maxLifeTime)
         {
@@ -71,13 +71,13 @@ public class PoisonMissile : MonoBehaviour
     {
         isHoming = true;
 
-        // 가장 가까운 적 찾기 (Transform 뿐만 아니라 Enemy 컴포넌트도 같이 캐싱)
+        // 가장 가까운 적 찾기
         GameObject bestTargetObj = FindNearestEnemyObj();
 
         if (bestTargetObj != null)
         {
             target = bestTargetObj.transform;
-            targetEnemy = bestTargetObj.GetComponent<Enemy>(); // 생사 확인용 컴포넌트 가져오기
+            targetEnemy = bestTargetObj.GetComponent<Enemy>();
             lastTargetPos = target.position;
         }
         else
@@ -86,7 +86,6 @@ public class PoisonMissile : MonoBehaviour
         }
     }
 
-    // 기존 FindNearestEnemy를 수정하여 GameObject를 반환 (Enemy 컴포넌트 접근 위해)
     private GameObject FindNearestEnemyObj()
     {
         GameObject bestTarget = null;
@@ -97,8 +96,8 @@ public class PoisonMissile : MonoBehaviour
         {
             foreach (Enemy enemy in PoolManager.instance.activeEnemies)
             {
-                // 살아있는 적만 타겟팅 후보로 선정
-                if (enemy == null || !enemy.gameObject.activeSelf || !enemy.GetIsAlive()) continue;
+                // ✨ [수정] 살아있고(active) && 타겟팅 가능(화면 안)한 적만 찾기
+                if (enemy == null || !enemy.gameObject.activeSelf || !enemy.IsTargetable) continue;
 
                 Vector3 directionToTarget = enemy.transform.position - currentPos;
                 float dSqrToTarget = directionToTarget.sqrMagnitude;
@@ -117,20 +116,17 @@ public class PoisonMissile : MonoBehaviour
     {
         Vector3 destPos;
 
-        // ✨ [핵심 수정] 타겟이 존재하고(Active) && 실제로 살아있을 때(IsAlive)만 추적
-        if (target != null && target.gameObject.activeSelf && targetEnemy != null && targetEnemy.GetIsAlive())
+        // ✨ [수정] 타겟이 존재하고 && 타겟팅 가능(IsTargetable)할 때만 계속 추적
+        if (target != null && target.gameObject.activeSelf && targetEnemy != null && targetEnemy.IsTargetable)
         {
-            // 타겟 생존: 위치 계속 갱신
             destPos = target.position;
             lastTargetPos = destPos;
         }
         else
         {
-            // 타겟 소실(사망 포함): 
-            // 더 이상 target.position을 갱신하지 않고, '죽은 시점의 위치(lastTargetPos)'로 고정
+            // 타겟 소실(사망 or 화면 밖): 마지막 위치로 이동 후 폭발
             destPos = lastTargetPos;
 
-            // 목적지 근처 도달 시 폭발
             if (Vector3.Distance(transform.position, destPos) < 0.5f)
             {
                 Explode();
@@ -138,13 +134,12 @@ public class PoisonMissile : MonoBehaviour
             }
         }
 
-        // 회전 (뱅뱅 도는 현상을 줄이기 위해 회전 속도를 조금 높임 10f -> 15f)
+        // 회전
         Vector3 dir = destPos - transform.position;
         if (dir != Vector3.zero)
         {
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
             Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-            // Slerp 속도를 높여서 더 빨리 꺾도록 유도
             transform.rotation = Quaternion.Slerp(transform.rotation, q, 15f * Time.deltaTime);
         }
 
@@ -154,9 +149,22 @@ public class PoisonMissile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") || collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        // 땅에 닿으면 폭발
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Explode();
+        }
+        // 적에 닿았을 때
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            Enemy enemy = collision.GetComponent<Enemy>();
+
+            // ✨ [수정] 적이 화면 안에 있을 때(IsTargetable)만 폭발
+            // 화면 밖 적이라면 폭발하지 않고 그냥 통과함
+            if (enemy != null && enemy.IsTargetable)
+            {
+                Explode();
+            }
         }
     }
 
@@ -168,6 +176,7 @@ public class PoisonMissile : MonoBehaviour
             PoisonGas gasLogic = gas.GetComponent<PoisonGas>();
             if (gasLogic != null)
             {
+                SoundEventBus.Publish(SoundID.Item_MissileBoom);
                 gasLogic.Initialize(gasDamage, gasTickRate, gasMoveSpeed);
             }
         }

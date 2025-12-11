@@ -104,6 +104,7 @@ public class LaserSpriteStrategy : IWeaponStrategy
 
         if (!laserInstance.activeSelf)
         {
+            SoundEventBus.Publish(SoundID.Item_Laser);
             laserInstance.SetActive(true);
         }
 

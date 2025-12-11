@@ -28,6 +28,7 @@ public class LevelUpUIManager : MonoBehaviour
     {
         List<Item_SO> availableItems = new List<Item_SO>();
 
+        SoundEventBus.Publish(SoundID.UI_LevelUp);
         foreach (Item_SO item in itemDatabase.allItems)
         {
             ItemInstance instance = playerInventory.FindItem(item);
