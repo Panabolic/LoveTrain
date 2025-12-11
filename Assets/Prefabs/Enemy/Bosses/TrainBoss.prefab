@@ -203,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrainBoss
   hp: 250
   damage: 10000
-  exp: 200
+  exp: 150
   killEvent: {fileID: 11400000, guid: eeed221ac54d07740a2d865a3ca5282f, type: 2}
   moveSpeed: 7
   p1KnockbackForce: 15

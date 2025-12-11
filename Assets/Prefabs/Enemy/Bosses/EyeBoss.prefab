@@ -440,15 +440,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3abe2f54af73bac46b1febe1064c26f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EyeBoss
-  hp: 200
-  damage: 50
+  hp: 250
+  damage: 60
   exp: 200
   killEvent: {fileID: 0}
   waitTimeBetweenPatterns: 2
   EnragePatternThreshold: 0.2
   patternWaitTime: 6
-  tentacleHP: 300
+  tentacleHP: 350
   tentacleDamage: 50
-  weakTentacleHP: 150
+  weakTentacleHP: 170
   tentacle: {fileID: 6642445466029022954, guid: 2c07a90848346df419dcfec1e898831e, type: 3}
   weakTentacle: {fileID: 6642445466029022954, guid: 2b08e312d5325ed4c81d7e5b62ed17aa, type: 3}

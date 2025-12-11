@@ -25,12 +25,12 @@ MonoBehaviour:
   cooldownTime: 0
   damageByLevel:
   - 50
+  - 70
   - 100
-  - 150
   cooldownByLevel:
   - 0.6
+  - 0.5
   - 0.4
-  - 0.3
   bulletCountByLevel: 010000000100000003000000
   bulletSpeed: 30
   fanSpreadAngle: 15
