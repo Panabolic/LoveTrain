@@ -149,9 +149,9 @@ public class Mob : Enemy
         float eliteMultiplier = isEliteMob ? 1.5f : 1.0f;
 
         // 최종 보정 체력 계산
-        calibratedHP = hp * calibratedValue * eventDebuff * eliteMultiplier;
+        calibratedMaxHP = hp * calibratedValue * eventDebuff * eliteMultiplier;
 
-        return calibratedHP;
+        return calibratedMaxHP;
     }
 
     public override void TakeDamage(float damageAmount)

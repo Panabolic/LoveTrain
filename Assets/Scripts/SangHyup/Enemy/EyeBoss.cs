@@ -58,7 +58,7 @@ public class EyeBoss : Boss
         base.TakeDamage(damageAmount);
 
         // 체력 비율 계산
-        float currentHpRatio = currentHP / calibratedHP;
+        float currentHpRatio = currentHP / calibratedMaxHP;
 
         // 체력 비율이 임계값 이하로 떨어지면 즉사 패턴 발동
         if (!enragePatternReady && currentHpRatio <= EnragePatternThreshold)

@@ -446,7 +446,7 @@ MonoBehaviour:
   hitEffectDuration: 0.05
   killEvent: {fileID: 0}
   waitTimeBetweenPatterns: 2
-  EnragePatternThreshold: 0.2
+  EnragePatternThreshold: 0.9
   patternWaitTime: 6
   tentacle: {fileID: 6642445466029022954, guid: 2c07a90848346df419dcfec1e898831e, type: 3}
   weakTentacle: {fileID: 6642445466029022954, guid: 2b08e312d5325ed4c81d7e5b62ed17aa, type: 3}

@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     [Tooltip("피격 이펙트 지속시간")]
     [SerializeField] protected float hitEffectDuration = 0.05f;
 
-    protected float calibratedHP;
+    protected float calibratedMaxHP;
     protected float currentHP;
     protected bool isAlive = true;
 
@@ -118,8 +118,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual float CalculateCalibratedHP()
     {
-        calibratedHP = hp;
-        return calibratedHP;
+        calibratedMaxHP = hp;
+        return calibratedMaxHP;
     }
 
     public virtual void TakeDamage(float damageAmount)
