@@ -25,9 +25,6 @@ public class BossWarningLoopUI : MonoBehaviour
     [Tooltip("종료 시작 후(화면 밖으로 나갈 때까지) 기다렸다가 꺼질 시간")]
     [SerializeField] private float exitDelay = 3.0f;
 
-    [Header("Sound")]
-    [SerializeField] private string warningSoundName = "Warning";
-
     // --- 내부 상태 변수 ---
     private float timer = 0f;
     private bool isPlaying = false;
@@ -72,6 +69,7 @@ public class BossWarningLoopUI : MonoBehaviour
     {
         if (newState == GameState.Boss)
         {
+            SoundEventBus.Publish(SoundID.UI_BossWarning);
             PlaySequence();
         }
     }

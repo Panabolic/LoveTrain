@@ -106,7 +106,7 @@ public class EndingManager : MonoBehaviour
 
         if (fadePanel != null) seq.Append(fadePanel.FadeOut(1.0f)); // 밝아짐 (Alpha 0)
 
-        seq.AppendInterval(3.0f);
+/*        seq.AppendInterval(1.0f);*/
 
         seq.OnComplete(() =>
         {

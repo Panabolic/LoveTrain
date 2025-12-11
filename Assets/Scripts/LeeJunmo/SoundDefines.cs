@@ -10,7 +10,7 @@ public enum SoundID
     BGM_Battle,
     BGM_Boss,
     BGM_GameOver,
-
+    
     // UI & System
     UI_Click,
     UI_LevelUp,
@@ -31,7 +31,7 @@ public enum SoundID
     Item_CrownOfThorn,
     Item_GunSlave,
     Item_Missile,
-    Item_MIssileBoom,
+    Item_MissileBoom,
     Item_MeatGun,
 
     // Enemy

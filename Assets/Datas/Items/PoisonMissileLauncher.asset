@@ -24,19 +24,19 @@ MonoBehaviour:
   itemSimpleScript: "MOPP 4\uB2E8\uACC4 \uBC1C\uB839"
   cooldownTime: 0
   gasDamageByLevel:
-  - 10
-  - 10
+  - 8
+  - 9
   - 10
   gasTickRateByLevel:
   - 0.4
   - 0.3
-  - 0.2
+  - 0.25
   cooldownByLevel:
-  - 15
-  - 11
-  - 7
+  - 16
+  - 12
+  - 8
   missileSpeed: 12
   verticalDistance: 6
-  gasMoveSpeed: 5
+  gasMoveSpeed: 6
   MissilePrefab: {fileID: 7276846939354661861, guid: f544ccf4d5c80f6478827d8f2111eaac, type: 3}
   GasPrefab: {fileID: 8901307093622197889, guid: a0bf8563326594145a62c014fd782b7d, type: 3}

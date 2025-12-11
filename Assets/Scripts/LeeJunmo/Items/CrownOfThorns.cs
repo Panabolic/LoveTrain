@@ -89,7 +89,7 @@ public class CrownOfThorns : MonoBehaviour, IInstantiatedItem
         for (int i = 0; i < lightningCount; i++)
         {
             SpawnSingleLightning();
-
+            SoundEventBus.Publish(SoundID.Item_CrownOfThorn);
             // 랜덤 딜레이 대기
             float delay = Random.Range(minDelay, maxDelay);
             yield return new WaitForSeconds(delay);

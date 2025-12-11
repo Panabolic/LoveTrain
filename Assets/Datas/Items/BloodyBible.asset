@@ -27,9 +27,9 @@ MonoBehaviour:
   - 5
   - 5
   - 5
-  - 5
-  - 5
-  - 5
+  - 5.5
+  - 6
+  - 6.5
   buffAmountByLevel:
   - 1
   - 1
@@ -38,10 +38,11 @@ MonoBehaviour:
   - 1
   - 1
   cooldownByLevel:
-  - 40
-  - 36
-  - 32
-  - 28
-  - 24
-  - 20
+  - 25
+  - 23
+  - 21
+  - 19
+  - 17
+  - 14
+  spawnRangeX: 20
   ZonePrefab: {fileID: 892054615579162525, guid: 2163572e4be8b8943ac392759936fd76, type: 3}

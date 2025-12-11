@@ -52,7 +52,8 @@ public class RearGun : MonoBehaviour, IInstantiatedItem
 
     private void Update()
     {
-        if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss)
+        if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss
+            && GameManager.Instance.CurrentState != GameState.Ending)
         {
             if (isShooting)
             {
@@ -129,6 +130,7 @@ public class RearGun : MonoBehaviour, IInstantiatedItem
 
     private void SpawnBullet(float damage, float angleOffset)
     {
+        SoundEventBus.Publish(SoundID.Item_MeatGun);
         Quaternion finalRotation = firePoint.rotation * Quaternion.Euler(0, 0, 180f + angleOffset);
         Vector3 direction = finalRotation * Vector3.right;
 

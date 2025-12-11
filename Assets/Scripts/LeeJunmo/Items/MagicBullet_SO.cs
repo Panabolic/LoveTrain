@@ -20,6 +20,7 @@ public class MagicBullet_SO : Item_SO
         int idx = Mathf.Clamp(instance.currentUpgrade - 1, 0, bounceCounts.Length - 1);
         if (ricochetSource.GetBounceDepth() >= bounceCounts[idx]) return;
 
+        // 타겟의 위치 기준으로 가장 가까운 적 찾기
         Transform nextTarget = FindNearestEnemy(target.transform.position, target);
 
         if (nextTarget != null)
@@ -43,7 +44,7 @@ public class MagicBullet_SO : Item_SO
         if (proj != null)
         {
             // 1. 데미지 절반 감소
-            float newDamage = source.GetDamage() * 0.5f;
+            float newDamage = source.GetDamage() * 0.35f;
 
             // 2. 기본 속도 가져오기
             float newSpeed = source.GetSpeed();
@@ -55,12 +56,11 @@ public class MagicBullet_SO : Item_SO
                 if (newSpeed <= 0f) newSpeed = 15f;
             }
 
-            // ✨ [핵심 수정] 원본(0번)에서 튕길 때만 2배, 그 이후는 속도 유지
+            // 원본(0번)에서 튕길 때만 2배, 그 이후는 속도 유지
             if (source.GetBounceDepth() == 0)
             {
                 newSpeed *= 2f;
             }
-            // Depth > 0인 경우(이미 튕긴 총알)는 위에서 가져온 newSpeed(이미 2배 된 상태)를 그대로 씀
 
             // 3. 충돌 무시 설정
             Collider2D ignoreCol = hitEnemy.GetComponent<Collider2D>();
@@ -79,7 +79,10 @@ public class MagicBullet_SO : Item_SO
         {
             foreach (Enemy enemy in PoolManager.instance.activeEnemies)
             {
-                if (enemy == null || !enemy.gameObject.activeSelf || !enemy.GetIsAlive()) continue;
+                // ✨ [핵심 수정] 타겟팅 불가능한 적(사망, 화면 밖)은 제외
+                if (enemy == null || !enemy.IsTargetable) continue;
+
+                // 방금 맞은 적은 제외 (자기 자신에게 다시 튀지 않도록)
                 if (enemy.gameObject == ignoreTarget) continue;
 
                 float dSqr = (enemy.transform.position - origin).sqrMagnitude;

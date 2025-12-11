@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Settings")]
     [Tooltip("게임 종료(엔딩) 시간 (초) - 기본 15분(900초)")]
-    [SerializeField] private float maxGameTime = 900f;
+    public float maxGameTime = 900f;
 
     // 외부에서 엔딩 시간 도달 여부 확인용
     public bool IsTimeForEnding => gameTime >= maxGameTime;
