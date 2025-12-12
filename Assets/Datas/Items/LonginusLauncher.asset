@@ -19,7 +19,7 @@ MonoBehaviour:
   spritesByLevel: []
   controllersByLevel: []
   MaxUpgrade: 6
-  itemScript: "{Damage}\uB370\uBBF8\uC9C0\uC758 \uAC70\uB300\uD55C \uCC3D\uC744 {CoolTime}\uCD08
+  itemScript: "{Damage}\uB370\uBBF8\uC9C0\uC758 \uAC70\uB300\uD55C \uCC3D\uC744 {Cooldown}\uCD08
     \uB9C8\uB2E4 \uBC1C\uC0AC."
   itemSimpleScript: "\uB0A8\uC758 \uD53C\uB97C \uC3DF\uAC8C \uD558\uB294 \uC790 \uC790\uAE30
     \uD53C\uB3C4 \uC3DF\uAC8C \uD558\uB9AC\uB77C"

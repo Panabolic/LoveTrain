@@ -237,6 +237,28 @@ public class EyeBoss : Boss
 
         // 사망 파티클 이펙트
 
+        if (killEvent != null)
+        {
+            // GameManager가 있고, 아직 엔딩 시간이 아니라면 -> 보상 획득 이벤트 실행
+            // (엔딩 시간이면 보상 창 안 띄움)
+            if (GameManager.Instance != null && !GameManager.Instance.IsTimeForEnding)
+            {
+                EventManager.Instance.RequestEvent(killEvent);
+            }
+        }
+
+        if (GameManager.Instance != null)
+        {
+            // 보스 킬 카운트 증가 + 엔딩 판정 요청
+            GameManager.Instance.AddBossKillCount();
+            GameManager.Instance.BossDied();
+        }
+        else
+        {
+            // 비상용 (GameManager 없을 때)
+            StageManager.Instance.StartStageTransitionSequence();
+        }
+
         Destroy(gameObject);
     }
 }

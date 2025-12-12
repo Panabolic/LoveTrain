@@ -444,7 +444,7 @@ MonoBehaviour:
   damage: 50
   exp: 200
   hitEffectDuration: 0.05
-  killEvent: {fileID: 0}
+  killEvent: {fileID: 11400000, guid: eeed221ac54d07740a2d865a3ca5282f, type: 2}
   waitTimeBetweenPatterns: 2
   EnragePatternThreshold: 0.2
   patternWaitTime: 6
