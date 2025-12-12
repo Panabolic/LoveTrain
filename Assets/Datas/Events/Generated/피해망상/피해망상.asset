@@ -23,8 +23,8 @@ MonoBehaviour:
       \uB178\uB825\uD55C\uB2E4"
     selectionUnderText: "50%\uB85C \uC18D\uB3C4 50\uC99D\uAC00, 50%\uB85C \uC18D\uB3C4
       50\uAC10\uC18C "
-    eventToTrigger: {fileID: 11400000, guid: e106927c8aa613745aa2132677b09c1d, type: 2}
+    eventToTrigger: {fileID: 11400000, guid: b7ba4b5e87ebc634096346e7bb04ee87, type: 2}
   - selectionText: "\uC54C\uC544\uC11C \uD0C0\uB77C\uACE0 \uD55C\uB2E4"
-    selectionUnderText: "30%\uB85C \uC544\uC774\uD15C : \"\uD53C \uBB3B\uC740 \uC131\uACBD\"
+    selectionUnderText: "40%\uB85C \uC544\uC774\uD15C : \"\uD53C \uBB3B\uC740 \uC131\uACBD\"
       \uD68D\uB4DD, 70%\uB85C \uC18D\uB3C4 70\uAC10\uC18C"
-    eventToTrigger: {fileID: 11400000, guid: 0acf3a32b5329d04c91d2b91898d21e8, type: 2}
+    eventToTrigger: {fileID: 11400000, guid: 9a6e9a55bd42c14468d317dd8ccf9069, type: 2}

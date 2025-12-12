@@ -13716,12 +13716,12 @@ MonoBehaviour:
   - {fileID: 1539323361}
   creditSpawnInterval: 3
   developerNames:
-  - "\uBC14\uBCF4"
-  - "\uBA4D\uCCAD\uC774"
+  - "\uAE30\uD68D"
+  - "\uC774\uC8FC\uC601, \uC774\uC0C1\uD604"
+  - "\uD504\uB85C\uADF8\uB798\uBC0D"
+  - "\uC774\uC0C1\uD611, \uC774\uC900\uBAA8"
+  - "\uADF8\uB798\uD53D"
   - "\uAE40\uCC2C\uC6B0"
-  - "\uAE40\uCC2C\uC6B0 \uC544\uB2D8"
-  - "\uAE40\uCC2C\uC6B0\uC758 \uB3C4\uD50C\uAC31\uC5B4"
-  - "\uAE40\uCC2C\uC6B0\uC758 \uC544\uB0B4"
 --- !u!1 &1135306558
 GameObject:
   m_ObjectHideFlags: 0
@@ -22734,8 +22734,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB300\uCDA9 \uC6B0\uB9AC\uB294 \uC0B4\uC544\uB0A8\uC558\uACE0, \uC6B0\uB9AC\uB294
-    \uAC1C\uCA54\uACE0, \uBAA8\uB450\uAC00 \uB110 \uCC2C\uC591\uD55C\uB2E4."
+  m_text: "\uC6B0\uB9AC\uB294 \uC0B4\uC544\uB0A8\uC558\uB2E4. \uBB3C\uB860 \uB0B4\uC77C\uB3C4,
+    \uADF8 \uB2E4\uC74C\uB0A0\uB3C4, \uB2E4\uC74C\uB0A0\uB3C4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 13a193043095fcf4aa6db7f0f17729f9, type: 2}
   m_sharedMaterial: {fileID: 3742713283667412413, guid: 13a193043095fcf4aa6db7f0f17729f9, type: 2}

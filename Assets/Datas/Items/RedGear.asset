@@ -20,7 +20,7 @@ MonoBehaviour:
   controllersByLevel: []
   MaxUpgrade: 5
   itemScript: "\uCD1D\uAE30 \uACF5\uACA9\uB825 {Damage}%\uB9CC\uD07C \uC99D\uAC00."
-  itemSimpleScript: "\uD478\uB978 \uD1B1\uB2C8\uBC14\uD034\uAC00 \uB354 \uC798\uB3D5\uB2C8\uB2E4"
+  itemSimpleScript: "\uACF5\uACA9\uB825 \uC99D\uAC00"
   cooldownTime: 0
   DamageByLevel:
   - 10

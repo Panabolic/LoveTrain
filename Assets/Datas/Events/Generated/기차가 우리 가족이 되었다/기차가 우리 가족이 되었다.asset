@@ -28,5 +28,6 @@ MonoBehaviour:
     selectionUnderText: "\uC544\uC774\uD15C : \"\uC0B4\uC810\uCD1D\" \uD68D\uB4DD"
     eventToTrigger: {fileID: 11400000, guid: 8ad07dcddc521c641858dcf4c8a8a007, type: 2}
   - selectionText: "\"\uC774 \uAE38 \uB05D\uC5D0 \uAD6C\uC6D0\uC774 \uC788\uAE30\uB97C\""
-    selectionUnderText: "\uC544\uC774\uD15C : \"\uBA74\uB958\uAD00\" \uD68D\uB4DD"
+    selectionUnderText: "\uC544\uC774\uD15C : \"\uAC00\uC2DC \uBA74\uB958\uAD00\"
+      \uD68D\uB4DD"
     eventToTrigger: {fileID: 11400000, guid: 71a90f9bfaad3144dbfe886a08e91595, type: 2}

@@ -194,9 +194,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec27a36568152e4698effbf489181f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mob
-  hp: 80
+  hp: 140
   damage: 30
   exp: 1.5
+  hitEffectDuration: 0.05
   moveSpeed: 3.5
   isEliteMob: 0
 --- !u!198 &5007272901908905240
