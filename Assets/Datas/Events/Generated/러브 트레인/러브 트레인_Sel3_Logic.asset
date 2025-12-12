@@ -17,10 +17,24 @@ MonoBehaviour:
   rollGroups:
   - description: "\uADF8\uB8F9 \uC124\uBA85"
     outcomes:
-    - weight: 100
+    - weight: 50
       effectLogic: {fileID: 11400000, guid: 38f1bdf6884ed864c890ececaeadf1cd, type: 2}
       parameters:
-        intValue: 30
+        intValue: 15
+        intValue2: 0
+        floatValue: 0
+        floatValue2: 0
+        soReference: {fileID: 0}
+        prefabReference: {fileID: 0}
+        boolValue: 0
+      outputSettings:
+        includeDefaultText: 1
+        specialText: 
+        order: 0
+    - weight: 50
+      effectLogic: {fileID: 11400000, guid: 065521c2a5f3f674d887812e41b680a0, type: 2}
+      parameters:
+        intValue: 3
         intValue2: 0
         floatValue: 0
         floatValue2: 0

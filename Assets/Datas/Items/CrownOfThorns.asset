@@ -21,7 +21,8 @@ MonoBehaviour:
   MaxUpgrade: 6
   itemScript: "{Damage}\uB370\uBBF8\uC9C0\uC758 \uBC88\uAC1C\uB97C {Cooldown}\uCD08
     \uB9C8\uB2E4 {Count}\uBC88 \uB0B4\uB9AC\uCE5C\uB2E4."
-  itemSimpleScript: "\uCC9C\uBC8C... \uCC9C\uBC8C... \uCC9C\uBC8C\uC774\uB77C\uACE0!!!"
+  itemSimpleScript: "\uC77C\uC815\uC2DC\uAC04\uB9C8\uB2E4 \uBB34\uC791\uC704\uB85C
+    \uACF5\uACA9\uD558\uB294 \uBC88\uAC1C\uAC00 \uB5A8\uC5B4\uC9D0"
   cooldownTime: 0
   damageByLevel:
   - 200

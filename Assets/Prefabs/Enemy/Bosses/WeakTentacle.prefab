@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca87aa4b53c69f248ade158e4f5cee19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tentacle
-  hp: 150
+  hp: 250
   damage: 50
   exp: 0
+  hitEffectDuration: 0.05

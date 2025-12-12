@@ -194,10 +194,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d44acb619053149adf1869b80b20ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlyMob
-  hp: 100
+  hp: 150
   damage: 30
   exp: 1.5
-  moveSpeed: 3
+  hitEffectDuration: 0.05
+  moveSpeed: 1.8
   isEliteMob: 0
   diveDistance: 20
 --- !u!199 &5519484526037667846

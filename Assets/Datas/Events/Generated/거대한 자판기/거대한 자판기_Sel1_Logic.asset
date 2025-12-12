@@ -19,7 +19,7 @@ MonoBehaviour:
     - weight: 5
       effectLogic: {fileID: 11400000, guid: 065521c2a5f3f674d887812e41b680a0, type: 2}
       parameters:
-        intValue: 7
+        intValue: 8
         intValue2: 0
         floatValue: 0
         floatValue2: 0

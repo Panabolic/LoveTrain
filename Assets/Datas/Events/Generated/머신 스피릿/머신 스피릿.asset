@@ -28,12 +28,12 @@ MonoBehaviour:
   - selectionText: "\uAE40\uC528\uC5D0\uAC8C \uB9E1\uAE34\uB2E4"
     selectionUnderText: "10% \uD655\uB960\uB85C \uBCF4\uC720 \uC544\uC774\uD15C [3]\uAC1C
       \uCD5C\uB300\uB85C \uC5C5\uADF8\uB808\uC774\uB4DC"
-    eventToTrigger: {fileID: 11400000, guid: edc5b7f9e897bdb438960bea3f0e6ab0, type: 2}
+    eventToTrigger: {fileID: 11400000, guid: 7d4add2a74a075c418c5295e8e3c087c, type: 2}
   - selectionText: "\uBC15\uC528\uC5D0\uAC8C \uB9E1\uAE34\uB2E4"
-    selectionUnderText: "40% \uD655\uB960\uB85C \uBCF4\uC720 \uC544\uC774\uD15C [3]\uAC1C
-      [2]\uB9CC\uD07C \uC5C5\uADF8\uB808\uC774\uB4DC"
-    eventToTrigger: {fileID: 11400000, guid: 448d3a5a618f5dd4eb4d1dc3af95763b, type: 2}
+    selectionUnderText: "60% \uD655\uB960\uB85C \uBCF4\uC720 \uC544\uC774\uD15C [2]\uAC1C
+      [1]\uB9CC\uD07C \uC5C5\uADF8\uB808\uC774\uB4DC"
+    eventToTrigger: {fileID: 11400000, guid: 3cc221346e70ac1468a485ae5b90baa9, type: 2}
   - selectionText: "\uCC28\uB77C\uB9AC \uB0B4\uAC00 \uC9C1\uC811\uD55C\uB2E4"
-    selectionUnderText: "\uBCF4\uC720 \uC544\uC774\uD15C [3]\uAC1C [1]\uB9CC\uD07C
+    selectionUnderText: "\uBCF4\uC720 \uC544\uC774\uD15C [1]\uAC1C [1]\uB9CC\uD07C
       \uC5C5\uADF8\uB808\uC774\uB4DC"
-    eventToTrigger: {fileID: 11400000, guid: 028a6adfbf8c6014e9d9c5baed2c2e8c, type: 2}
+    eventToTrigger: {fileID: 11400000, guid: 8a9b0ac937f26b84cbe3c0bf82934421, type: 2}

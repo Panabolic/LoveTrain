@@ -22,7 +22,7 @@ MonoBehaviour:
       parameters:
         intValue: 0
         intValue2: 0
-        floatValue: -70
+        floatValue: 70
         floatValue2: 0
         soReference: {fileID: 0}
         prefabReference: {fileID: 0}

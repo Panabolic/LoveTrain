@@ -22,8 +22,8 @@ MonoBehaviour:
   itemScript: "{SpeedBonus}\uB9CC\uD07C \uCCB4\uB825 \uC99D\uAC00, {KillReq}\uB9CC\uD07C
     \uC801 \uCC98\uCE58\uC2DC \uCD5C\uB300 \uCCB4\uB825\uC758 {HealAmt}\uB9CC\uD07C
     \uD68C\uBCF5."
-  itemSimpleScript: "\uCCB4\uB825\uBCF4\uB2E4 \uC88B\uC740\uAC83\uC740 \uB354 \uB9CE\uC740
-    \uCCB4\uB825"
+  itemSimpleScript: "\uBAAC\uC2A4\uD130\uB97C \uCC98\uCE58\uD558\uBA74 \uC18D\uB3C4
+    \uD68C\uBCF5"
   cooldownTime: 0
   maxSpeedBonusByLevel:
   - 0

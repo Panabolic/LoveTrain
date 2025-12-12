@@ -28,8 +28,8 @@ MonoBehaviour:
   - selectionText: "\uADF8\uB4E4\uC758 \uC18C\uC6D0\uB300\uB85C \uD574\uC900\uB2E4"
     selectionUnderText: "\uC544\uC774\uD15C : \"\uAC70\uB300\uD55C \uC544\uAC00\uB9AC\"
       \uD68D\uB4DD"
-    eventToTrigger: {fileID: 11400000, guid: ffe019340eb397e4e8c72fd5797a7879, type: 2}
+    eventToTrigger: {fileID: 11400000, guid: d5cdf1e3ad8167c4b946824c712e2eff, type: 2}
   - selectionText: "\uC774\uB2E8\uC774\uB2E4! \uC57D\uD0C8 -\uC544\uB2C8 \uC815\uD654\uD558\uB77C!"
-    selectionUnderText: "\uB79C\uB364 \uC544\uC774\uD15C [3]\uAC1C \uD68D\uB4DD,
-      2\uCD08\uB9C8\uB2E4 \uD2B9\uC815 \uBAAC\uC2A4\uD130 \uC0DD\uC131"
-    eventToTrigger: {fileID: 11400000, guid: 84fe14e86bf664b4c9f6d9ccb9b65f23, type: 2}
+    selectionUnderText: "\uB79C\uB364 \uC544\uC774\uD15C [2]\uAC1C \uD68D\uB4DD,
+      \uC801 HP 10%\uC99D\uAC00"
+    eventToTrigger: {fileID: 11400000, guid: 37f3fa87437e5994db1cfe38bf10b405, type: 2}

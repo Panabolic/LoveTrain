@@ -18,7 +18,7 @@ MonoBehaviour:
     \uC2DC\uD5D8\uD574 \uBCF4\uC138\uC694. \uAE30\uD68C\uB294 \uB2E8 \uD55C\uBC88\uC785\uB2C8\uB2E4\""
   Selections:
   - selectionText: "\uB3D9\uC804\uC744 \uD22C\uC785\uAD6C\uC5D0 \uB123\uB294\uB2E4"
-    selectionUnderText: "5%\uB85C \uC544\uC774\uD15C [7]\uAC1C \uD68D\uB4DD"
+    selectionUnderText: "5%\uB85C \uC544\uC774\uD15C [8]\uAC1C \uD68D\uB4DD"
     eventToTrigger: {fileID: 11400000, guid: 6f548ffd1bc84f547909c0ffc47b7445, type: 2}
   - selectionText: "\uC790\uD310\uAE30\uB97C \uBC1C\uB85C \uAC77\uC5B4\uCC2C\uB2E4"
     selectionUnderText: "40%\uB85C \uC544\uC774\uD15C[1]\uAC1C \uD68D\uB4DD, 60%\uB85C

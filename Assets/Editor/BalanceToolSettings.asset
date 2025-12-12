@@ -18,60 +18,56 @@ MonoBehaviour:
     items:
     - targetObject: {fileID: 11400000, guid: 022ee112c533fdb4c8a2b357f4f14916, type: 2}
       globalObjectId: 
-      propertyPath: damageByLevel
-      displayName: Damage By Level
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 16111b2c7fc13c6449e0ad52b5ff710f, type: 2}
       globalObjectId: 
-      propertyPath: durationByLevel
-      displayName: Duration By Level
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 53a45bb8d838472489cc35ead4911034, type: 2}
       globalObjectId: 
-      propertyPath: AttackSpeedByLevel
-      displayName: Attack Speed By Level
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 2f16041ca38cb364fa4bea9fba979ed7, type: 2}
       globalObjectId: 
-      propertyPath: cooldownByLevel
-      displayName: Cooldown By Level
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 4366a5ee3f48b3444b0df497f5f32f68, type: 2}
       globalObjectId: 
-      propertyPath: mawDamageByLevel
-      displayName: Maw Damage By Level
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 5bdde4e227f365f4cbe3377e27489799, type: 2}
       globalObjectId: 
-      propertyPath: maxSpeedBonusByLevel
-      displayName: Max Speed Bonus By Level
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 6a42c5e12a58b254c8b1c05b103de06c, type: 2}
       globalObjectId: 
-      propertyPath: laserScale
-      displayName: Laser Scale
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 2f17630df9f4da4468db50269fdf83ad, type: 2}
       globalObjectId: 
-      propertyPath: cooldownByLevel
-      displayName: Cooldown By Level
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 52af24b9b60a1f44fbd0f7adf1462ec6, type: 2}
       globalObjectId: 
-      propertyPath: itemName
-      displayName: Item Name
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 0f0a20156e5b03a4c945f0e4757cdaa9, type: 2}
       globalObjectId: 
-      propertyPath: itemName
-      displayName: Item Name
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 3247ef69ee0fb5440bc22b8b5db6c822, type: 2}
       globalObjectId: 
-      propertyPath: cooldownByLevel
-      displayName: Cooldown By Level
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: efe2dc8d24232c34a82ae10ef688adca, type: 2}
       globalObjectId: 
-      propertyPath: DamageByLevel
-      displayName: Damage By Level
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 5a8bc95122134a84599f530d8a94639b, type: 2}
       globalObjectId: 
-      propertyPath: itemName
-      displayName: Item Name
-    - targetObject: {fileID: 5343568755907405682, guid: 2163572e4be8b8943ac392759936fd76, type: 3}
-      globalObjectId: GlobalObjectId_V1-1-2163572e4be8b8943ac392759936fd76-5343568755907405682-0
-      propertyPath: zoneCollider
-      displayName: Zone Collider
+      propertyPath: itemSimpleScript
+      displayName: Item Simple Script
   - groupName: "\uBAAC\uC2A4\uD130"
     isExpanded: 1
     items:
@@ -89,20 +85,48 @@ MonoBehaviour:
       displayName: Move Speed
     - targetObject: {fileID: 4092092942707898459, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
       globalObjectId: 
-      propertyPath: tentacleHP
-      displayName: Tentacle HP
+      propertyPath: weakTentacle
+      displayName: Weak Tentacle
+    - targetObject: {fileID: 6841250641885935775, guid: 2b08e312d5325ed4c81d7e5b62ed17aa, type: 3}
+      globalObjectId: GlobalObjectId_V1-1-2b08e312d5325ed4c81d7e5b62ed17aa-6841250641885935775-0
+      propertyPath: damage
+      displayName: Damage
+    - targetObject: {fileID: 6841250641885935775, guid: 2c07a90848346df419dcfec1e898831e, type: 3}
+      globalObjectId: GlobalObjectId_V1-1-2c07a90848346df419dcfec1e898831e-6841250641885935775-0
+      propertyPath: damage
+      displayName: Damage
     - targetObject: {fileID: 5038125827243619280, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
       globalObjectId: 
+      propertyPath: hp
+      displayName: Hp
+    - targetObject: {fileID: 4341406946175861976, guid: 1f56e65633c42b9448e40b0d61c93036, type: 3}
+      globalObjectId: GlobalObjectId_V1-1-1f56e65633c42b9448e40b0d61c93036-4341406946175861976-0
+      propertyPath: hp
+      displayName: Hp
+    - targetObject: {fileID: 421807233599022777, guid: 817ca5d82ddd8934bbe7d17eb6391801, type: 3}
+      globalObjectId: GlobalObjectId_V1-1-817ca5d82ddd8934bbe7d17eb6391801-421807233599022777-0
       propertyPath: moveSpeed
       displayName: Move Speed
-    - targetObject: {fileID: 3822308281078264570, guid: f9a2b6704fd3f564f832675bbf397d5d, type: 3}
-      globalObjectId: 
+    - targetObject: {fileID: 7501476291206407111, guid: 4aefa1c54eae4b44fbb46fb4060a02f3, type: 3}
+      globalObjectId: GlobalObjectId_V1-1-4aefa1c54eae4b44fbb46fb4060a02f3-7501476291206407111-0
       propertyPath: hp
       displayName: Hp
-    - targetObject: {fileID: -3736601168465054147, guid: 714856b33a23f984cb55de349811f6e7, type: 3}
-      globalObjectId: 
+    - targetObject: {fileID: 666783420869733545, guid: 8cc335822b1c80d4b8ffdaa7d1e43542, type: 3}
+      globalObjectId: GlobalObjectId_V1-1-8cc335822b1c80d4b8ffdaa7d1e43542-666783420869733545-0
       propertyPath: hp
       displayName: Hp
+    - targetObject: {fileID: 5791892976592445364, guid: 0a9c8343d6d423747be1db068d0b7265, type: 3}
+      globalObjectId: GlobalObjectId_V1-1-0a9c8343d6d423747be1db068d0b7265-5791892976592445364-0
+      propertyPath: hp
+      displayName: Hp
+    - targetObject: {fileID: 1193011253326684286, guid: 3967c78faf3864641860db89b0818e70, type: 3}
+      globalObjectId: GlobalObjectId_V1-1-3967c78faf3864641860db89b0818e70-1193011253326684286-0
+      propertyPath: diveDistance
+      displayName: Dive Distance
+    - targetObject: {fileID: 6470405589438324375, guid: 52d26eda428a6fb43b7f2b2b745fb934, type: 3}
+      globalObjectId: GlobalObjectId_V1-1-52d26eda428a6fb43b7f2b2b745fb934-6470405589438324375-0
+      propertyPath: moveSpeed
+      displayName: Move Speed
   - groupName: "\uC0C8 \uADF8\uB8F9"
     isExpanded: 1
     items:

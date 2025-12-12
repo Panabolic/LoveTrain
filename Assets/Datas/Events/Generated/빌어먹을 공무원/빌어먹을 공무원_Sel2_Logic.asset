@@ -10,33 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d6d854fe49cd274c929270c980aabf4, type: 3}
-  m_Name: "\uB7EC\uBE0C \uD2B8\uB808\uC778_Sel2_Logic"
+  m_Name: "\uBE4C\uC5B4\uBA39\uC744 \uACF5\uBB34\uC6D0_Sel2_Logic"
   m_EditorClassIdentifier: Assembly-CSharp::GameEventSO
-  description: "[Selection 2] \"\uB0B4 \uC2A4\uD0C0\uC77C \uC544\uB0D0\" \uB9E4\uBAB0\uCC28\uAC8C
-    \uAC70\uC808\uD55C\uB2E4"
+  description: "[Selection 2] \uB0B4\uAC00 \uBC14\uB85C \uBA85\uC608 \uC5ED\uC7A5\uC774\uB2E4!
+    \uBB38 \uC5F4\uC5B4!"
   rollGroups:
   - description: "\uADF8\uB8F9 \uC124\uBA85"
     outcomes:
-    - weight: 40
-      effectLogic: {fileID: 11400000, guid: de7ee38087513794bad37d3c1d21b325, type: 2}
+    - weight: 30
+      effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
       parameters:
-        intValue: 1
+        intValue: 0
         intValue2: 0
-        floatValue: 0.5
+        floatValue: 100
         floatValue2: 0
         soReference: {fileID: 0}
-        prefabReference: {fileID: 4821721425770472742, guid: f9a2b6704fd3f564f832675bbf397d5d, type: 3}
+        prefabReference: {fileID: 0}
         boolValue: 0
       outputSettings:
         includeDefaultText: 1
         specialText: 
         order: 0
-    - weight: 60
+    - weight: 70
       effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
       parameters:
         intValue: 0
         intValue2: 0
-        floatValue: 150
+        floatValue: -50
         floatValue2: 0
         soReference: {fileID: 0}
         prefabReference: {fileID: 0}
