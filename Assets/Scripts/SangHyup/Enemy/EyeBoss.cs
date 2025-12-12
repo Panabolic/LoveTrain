@@ -235,6 +235,7 @@ public class EyeBoss : Boss
 
         spawnedTentacles.Clear();
 
+        yield return new WaitForSeconds(2.0f);
         // 사망 파티클 이펙트
 
         if (killEvent != null)

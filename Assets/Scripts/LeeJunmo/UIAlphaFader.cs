@@ -19,7 +19,7 @@ public class UIAlphaFader : MonoBehaviour
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
-
+        gameObject.SetActive(true);
         if (startTransparent)
         {
             canvasGroup.alpha = 0f;

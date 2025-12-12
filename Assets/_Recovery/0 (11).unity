@@ -1995,13 +1995,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   warningPanel: {fileID: 1054286852}
   topBands:
-  - {fileID: 399653710}
-  - {fileID: 1006314937}
-  topSpeed: 700
+  - {fileID: 412368392}
+  topSpeed: 500
   bottomBands:
-  - {fileID: 220786672}
-  - {fileID: 2138492623}
-  bottomSpeed: 700
+  - {fileID: 642799228}
+  bottomSpeed: 500
   loopDuration: 3
   exitDelay: 3
 --- !u!1 &140708410
@@ -7712,14 +7710,14 @@ MonoBehaviour:
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
     spawnInterval: 0.1
-  bossSequence: 0000000001000000000000000100000000000000
+  bossSequence: 0100000000000000010000000000000001000000
   bossSettings:
-  - bossName: 0
-    spawnPoint: {fileID: 591232702}
+  - bossName: 1
+    bossPrefab: {fileID: 8958191303323060444, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
     spawnDelayAfterWarning: 4
     soundPlayDelay: 2
-  - bossName: 1
-    spawnPoint: {fileID: 1214708082}
+  - bossName: 0
+    bossPrefab: {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
     spawnDelayAfterWarning: 4
     soundPlayDelay: 2
   bossSpawnInterval: 180
@@ -7732,6 +7730,9 @@ MonoBehaviour:
   flyMobSpawnAreas:
   - {fileID: 618193285}
   - {fileID: 967016322}
+  bossSpawnPoints:
+  - {fileID: 591232702}
+  - {fileID: 1214708082}
 --- !u!4 &635583519
 Transform:
   m_ObjectHideFlags: 0
@@ -13705,8 +13706,8 @@ MonoBehaviour:
   cameraEndingSize: 12
   endingStatsPanel: {fileID: 942606012}
   normalKillText: {fileID: 1448468668}
-  eliteKillText: {fileID: 1293614315}
-  bossKillText: {fileID: 2089365852}
+  eliteKillText: {fileID: 2089365852}
+  bossKillText: {fileID: 1293614315}
   totalKillText: {fileID: 1657114888}
   fadePanel: {fileID: 501187601}
   offScreenPosition: {x: -2000, y: 48}

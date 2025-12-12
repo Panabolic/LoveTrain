@@ -6307,7 +6307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &501187600
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7712,14 +7712,14 @@ MonoBehaviour:
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
     spawnInterval: 0.1
-  bossSequence: 0000000001000000000000000100000000000000
+  bossSequence: 0100000000000000010000000000000001000000
   bossSettings:
   - bossName: 0
-    spawnPoint: {fileID: 591232702}
+    bossPrefab: {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
     spawnDelayAfterWarning: 4
     soundPlayDelay: 2
   - bossName: 1
-    spawnPoint: {fileID: 1214708082}
+    bossPrefab: {fileID: 8958191303323060444, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
     spawnDelayAfterWarning: 4
     soundPlayDelay: 2
   bossSpawnInterval: 180
@@ -7732,6 +7732,9 @@ MonoBehaviour:
   flyMobSpawnAreas:
   - {fileID: 618193285}
   - {fileID: 967016322}
+  bossSpawnPoints:
+  - {fileID: 1214708082}
+  - {fileID: 591232702}
 --- !u!4 &635583519
 Transform:
   m_ObjectHideFlags: 0
@@ -12307,8 +12310,8 @@ MonoBehaviour:
   flyEliteMobs:
   - {fileID: 4821721425770472742, guid: 714856b33a23f984cb55de349811f6e7, type: 3}
   bosses:
-  - {fileID: 8958191303323060444, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
   - {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
+  - {fileID: 8958191303323060444, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
   activeEnemies: []
   hpIncrease: 10
   eventDebuff: 0
@@ -13705,8 +13708,8 @@ MonoBehaviour:
   cameraEndingSize: 12
   endingStatsPanel: {fileID: 942606012}
   normalKillText: {fileID: 1448468668}
-  eliteKillText: {fileID: 1293614315}
-  bossKillText: {fileID: 2089365852}
+  eliteKillText: {fileID: 2089365852}
+  bossKillText: {fileID: 1293614315}
   totalKillText: {fileID: 1657114888}
   fadePanel: {fileID: 501187601}
   offScreenPosition: {x: -2000, y: 48}

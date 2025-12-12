@@ -86,7 +86,7 @@ public class TrainBoss : Boss
 
     private void CheckPhase()
     {
-        if (currentHP > hp * p2HpRatio && isPhase2 == false) return;
+        if (currentHP > calibratedMaxHP * p2HpRatio && isPhase2 == false) return;
 
         isPhase2 = true;
         animator.SetTrigger("phase2");
@@ -138,7 +138,7 @@ public class TrainBoss : Boss
     protected override IEnumerator Die()
     {
         yield return base.Die();
-        yield return new WaitForSeconds(3.0f); // 사망 연출 대기
+        yield return new WaitForSeconds(2.0f); // 사망 연출 대기
 
         // ✨ [수정] 킬 이벤트(보상) 띄우기 전 엔딩 여부 체크
         if (killEvent != null)

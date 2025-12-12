@@ -90,7 +90,6 @@ public class StageManager : MonoBehaviour
     public void StartStageTransitionSequence()
     {
         // 1. 상태 변경 (모든 조작, 스폰, 아이템 정지)
-        if (PoolManager.instance != null) PoolManager.instance.DespawnAllEnemiesExceptBoss();
         GameManager.Instance.ChangeState(GameState.StageTransition);
 
         Debug.Log($"[StageManager] Stage {CurrentStageIndex + 1} 클리어! 연출 시퀀스 시작.");
