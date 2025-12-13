@@ -1,97 +1,125 @@
 ﻿using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
-// Enemy를 상속받아 플레이어의 투사체에 맞을 수 있게 함
 public class CreditEnemy : Enemy
 {
     [Header("Credit Settings")]
     [SerializeField] private float dropSpeed = 2.0f;
     [SerializeField] private TextMeshPro contentText;
+    [Tooltip("콜라이더 여백 (글자보다 살짝 크게)")]
+    [SerializeField] private Vector2 colliderPadding = new Vector2(0.5f, 0.2f);
 
-    // Enemy의 필수 변수들 초기화 (체력 등)
+    private Color originTextColor;
+
     protected override void Awake()
     {
+        // 1. 부모(Enemy)의 Awake 실행 (플레이어 참조 가져오기 등)
+        // Enemy.cs가 Null-Safe하게 수정되었으므로 Sprite/Animator가 없어도 안전함
+        base.Awake();
+
+        // 2. CreditEnemy 전용 초기화
         currentHP = hp;
         isAlive = true;
 
-        collision = GetComponent<Collider2D>();
+        if (collision == null) collision = GetComponent<Collider2D>();
 
-        // 물리 설정 (중력 영향 X)
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb) rb.gravityScale = 0f;
+        if (rb) rb.gravityScale = 0f; // 중력 영향 받지 않게 설정
+
+        if (contentText == null) contentText = GetComponentInChildren<TextMeshPro>();
     }
 
+    /// <summary>
+    /// 크레딧 텍스트 설정 및 콜라이더 크기 자동 조절
+    /// </summary>
     public void Initialize(string text)
     {
         if (contentText != null)
         {
+            // 텍스트 및 색상 설정
             contentText.text = text;
-        }
-        else
-        {
-            // 자식에서 찾기 시도
-            contentText = GetComponentInChildren<TextMeshPro>();
-            if (contentText) contentText.text = text;
+            originTextColor = contentText.color;
+
+            // [핵심] 텍스트 메쉬를 강제로 갱신해야 정확한 Bounds 계산 가능
+            contentText.ForceMeshUpdate();
+
+            // 렌더링된 텍스트의 영역 가져오기
+            Bounds bounds = contentText.textBounds;
+
+            // BoxCollider2D 크기 및 오프셋 조정
+            if (collision is BoxCollider2D boxCol)
+            {
+                boxCol.size = new Vector2(bounds.size.x + colliderPadding.x, bounds.size.y + colliderPadding.y);
+                boxCol.offset = bounds.center;
+            }
         }
     }
 
-    private void Update()
+    protected override void Update()
     {
+        // [중요] 부모의 Update를 실행해야 'CheckScreenEntry'가 작동하여 
+        // 화면 진입 시 타겟팅 가능 상태(IsTargetable)가 됨
+        base.Update();
+
         if (!isAlive) return;
+        if (Time.timeScale == 0) return;
 
         // 아래로 이동
         transform.Translate(Vector3.down * dropSpeed * Time.deltaTime);
 
-        // 화면 밖으로 나가면 파괴 (좌표는 맵 크기에 맞춰 조정)
+        // 화면 밖으로 벗어나면 삭제
         if (transform.position.y < -20f)
         {
             Destroy(gameObject);
         }
     }
 
-    // 피격 시 효과 (Enemy의 TakeDamage 사용)
     public override void TakeDamage(float damageAmount)
     {
+        // 아직 화면에 안 들어왔거나(IsTargetable false), 죽었으면 무시
+        if (!isAlive || !IsTargetable) return;
+
+        // 부모의 TakeDamage 호출 (HP 감소, 사망 처리, 사운드 등)
         base.TakeDamage(damageAmount);
-        // 추가: 텍스트가 흔들리거나 색이 변하는 연출 가능
+
+        // 텍스트 전용 피격 연출 (빨간색 깜빡임)
+        if (contentText != null)
+        {
+            contentText.DOKill(); // 기존 트윈 중단
+            contentText.color = Color.red;
+            contentText.DOColor(originTextColor, 0.3f).SetEase(Ease.OutQuad);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // 화면 밖이면 충돌 무시
+        if (!IsTargetable) return;
+
+        // 기차와 충돌 시
         if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
         {
             Train train = collision.transform.GetComponentInParent<Train>();
 
             if (train != null)
             {
-                train.TakeDamage(damage); // Train 스크립트에 맞게 수정 필요
+                train.TakeDamage(damage, true);
                 if (CameraShakeManager.Instance != null)
                 {
-                    CameraShakeManager.Instance.ShakeCamera(); // 기본 설정으로 흔들기
-                                                               // 또는 원하는 값으로 흔들기: CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
+                    CameraShakeManager.Instance.ShakeCamera();
                 }
             }
-
             StartCoroutine(Die());
         }
     }
 
-    // 사망 처리 (부서지는 연출)
     protected override System.Collections.IEnumerator Die()
     {
-        // 텍스트가 산산조각 나거나 페이드 아웃 되는 연출 추가 가능
-        // 여기서는 간단하게 파티클 재생 후 삭제
-
-        if (GameManager.Instance != null)
-        {
-            // 사운드 재생 (예: 종이 찢는 소리?)
-            // SoundEventBus.Publish(SoundID.Credit_Break);
-        }
+        // 트윈 정리
+        if (contentText != null) contentText.DOKill();
 
         yield return null;
         Destroy(gameObject);
     }
-
-    // 플레이어와 충돌해도 데미지를 주지 않으려면 OnTriggerEnter2D를 오버라이드해서 비워두거나,
-    // Enemy의 로직을 수정해야 함. (여기서는 그대로 둠 -> 글자에 맞으면 아픔)
 }

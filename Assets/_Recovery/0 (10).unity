@@ -6307,7 +6307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &501187600
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7712,14 +7712,14 @@ MonoBehaviour:
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 0
     spawnInterval: 0.1
-  bossSequence: 0000000001000000000000000100000000000000
+  bossSequence: 0100000000000000010000000000000001000000
   bossSettings:
   - bossName: 0
-    spawnPoint: {fileID: 591232702}
+    bossPrefab: {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
     spawnDelayAfterWarning: 4
     soundPlayDelay: 2
   - bossName: 1
-    spawnPoint: {fileID: 1214708082}
+    bossPrefab: {fileID: 8958191303323060444, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
     spawnDelayAfterWarning: 4
     soundPlayDelay: 2
   bossSpawnInterval: 180
@@ -7732,6 +7732,9 @@ MonoBehaviour:
   flyMobSpawnAreas:
   - {fileID: 618193285}
   - {fileID: 967016322}
+  bossSpawnPoints:
+  - {fileID: 1214708082}
+  - {fileID: 591232702}
 --- !u!4 &635583519
 Transform:
   m_ObjectHideFlags: 0
@@ -12307,8 +12310,8 @@ MonoBehaviour:
   flyEliteMobs:
   - {fileID: 4821721425770472742, guid: 714856b33a23f984cb55de349811f6e7, type: 3}
   bosses:
-  - {fileID: 8958191303323060444, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
   - {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
+  - {fileID: 8958191303323060444, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
   activeEnemies: []
   hpIncrease: 10
   eventDebuff: 0
@@ -13705,8 +13708,8 @@ MonoBehaviour:
   cameraEndingSize: 12
   endingStatsPanel: {fileID: 942606012}
   normalKillText: {fileID: 1448468668}
-  eliteKillText: {fileID: 1293614315}
-  bossKillText: {fileID: 2089365852}
+  eliteKillText: {fileID: 2089365852}
+  bossKillText: {fileID: 1293614315}
   totalKillText: {fileID: 1657114888}
   fadePanel: {fileID: 501187601}
   offScreenPosition: {x: -2000, y: 48}
@@ -13716,12 +13719,12 @@ MonoBehaviour:
   - {fileID: 1539323361}
   creditSpawnInterval: 3
   developerNames:
-  - "\uAE30\uD68D"
-  - "\uC774\uC8FC\uC601, \uC774\uC0C1\uD604"
-  - "\uD504\uB85C\uADF8\uB798\uBC0D"
-  - "\uC774\uC0C1\uD611, \uC774\uC900\uBAA8"
-  - "\uADF8\uB798\uD53D"
+  - "\uBC14\uBCF4"
+  - "\uBA4D\uCCAD\uC774"
   - "\uAE40\uCC2C\uC6B0"
+  - "\uAE40\uCC2C\uC6B0 \uC544\uB2D8"
+  - "\uAE40\uCC2C\uC6B0\uC758 \uB3C4\uD50C\uAC31\uC5B4"
+  - "\uAE40\uCC2C\uC6B0\uC758 \uC544\uB0B4"
 --- !u!1 &1135306558
 GameObject:
   m_ObjectHideFlags: 0
@@ -22734,8 +22737,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC6B0\uB9AC\uB294 \uC0B4\uC544\uB0A8\uC558\uB2E4. \uBB3C\uB860 \uB0B4\uC77C\uB3C4,
-    \uADF8 \uB2E4\uC74C\uB0A0\uB3C4, \uB2E4\uC74C\uB0A0\uB3C4"
+  m_text: "\uB300\uCDA9 \uC6B0\uB9AC\uB294 \uC0B4\uC544\uB0A8\uC558\uACE0, \uC6B0\uB9AC\uB294
+    \uAC1C\uCA54\uACE0, \uBAA8\uB450\uAC00 \uB110 \uCC2C\uC591\uD55C\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 13a193043095fcf4aa6db7f0f17729f9, type: 2}
   m_sharedMaterial: {fileID: 3742713283667412413, guid: 13a193043095fcf4aa6db7f0f17729f9, type: 2}
