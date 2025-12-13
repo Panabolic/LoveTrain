@@ -127,6 +127,10 @@ MonoBehaviour:
       globalObjectId: GlobalObjectId_V1-1-52d26eda428a6fb43b7f2b2b745fb934-6470405589438324375-0
       propertyPath: moveSpeed
       displayName: Move Speed
+    - targetObject: {fileID: 4004836740122371514, guid: 5e72b32109c00734fa325930a1fcdad9, type: 3}
+      globalObjectId: GlobalObjectId_V1-1-5e72b32109c00734fa325930a1fcdad9-4004836740122371514-0
+      propertyPath: moveSpeed
+      displayName: Move Speed
   - groupName: "\uC0C8 \uADF8\uB8F9"
     isExpanded: 1
     items:

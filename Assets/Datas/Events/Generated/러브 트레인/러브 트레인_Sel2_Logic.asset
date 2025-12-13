@@ -25,7 +25,7 @@ MonoBehaviour:
         floatValue: 0.5
         floatValue2: 0
         soReference: {fileID: 0}
-        prefabReference: {fileID: 4821721425770472742, guid: f9a2b6704fd3f564f832675bbf397d5d, type: 3}
+        prefabReference: {fileID: 1992821342840707652, guid: 5e72b32109c00734fa325930a1fcdad9, type: 3}
         boolValue: 0
       outputSettings:
         includeDefaultText: 1
