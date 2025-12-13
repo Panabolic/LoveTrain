@@ -42,8 +42,8 @@ MonoBehaviour:
       displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 6a42c5e12a58b254c8b1c05b103de06c, type: 2}
       globalObjectId: 
-      propertyPath: itemSimpleScript
-      displayName: Item Simple Script
+      propertyPath: cooldownByLevel
+      displayName: Cooldown By Level
     - targetObject: {fileID: 11400000, guid: 2f17630df9f4da4468db50269fdf83ad, type: 2}
       globalObjectId: 
       propertyPath: itemSimpleScript
@@ -85,16 +85,16 @@ MonoBehaviour:
       displayName: Move Speed
     - targetObject: {fileID: 4092092942707898459, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
       globalObjectId: 
-      propertyPath: weakTentacle
-      displayName: Weak Tentacle
+      propertyPath: hp
+      displayName: Hp
     - targetObject: {fileID: 6841250641885935775, guid: 2b08e312d5325ed4c81d7e5b62ed17aa, type: 3}
       globalObjectId: GlobalObjectId_V1-1-2b08e312d5325ed4c81d7e5b62ed17aa-6841250641885935775-0
-      propertyPath: damage
-      displayName: Damage
+      propertyPath: hp
+      displayName: Hp
     - targetObject: {fileID: 6841250641885935775, guid: 2c07a90848346df419dcfec1e898831e, type: 3}
       globalObjectId: GlobalObjectId_V1-1-2c07a90848346df419dcfec1e898831e-6841250641885935775-0
-      propertyPath: damage
-      displayName: Damage
+      propertyPath: hp
+      displayName: Hp
     - targetObject: {fileID: 5038125827243619280, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
       globalObjectId: 
       propertyPath: hp

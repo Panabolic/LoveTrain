@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3abe2f54af73bac46b1febe1064c26f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EyeBoss
-  hp: 400
+  hp: 320
   damage: 50
   exp: 200
   hitEffectDuration: 0.05
