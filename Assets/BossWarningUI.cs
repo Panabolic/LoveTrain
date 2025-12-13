@@ -55,6 +55,7 @@ public class BossWarningUI : MonoBehaviour
     {
         if (newState == GameState.Boss)
         {
+            SoundEventBus.Publish(SoundID.UI_BossWarning);
             PlayWarningSequence();
         }
     }

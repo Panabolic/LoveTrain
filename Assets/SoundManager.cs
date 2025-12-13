@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening; // ✨ DOTween 필수
 
 public class SoundManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class SoundManager : MonoBehaviour
 
     [Header("설정")]
     [SerializeField] private int sfxPoolSize = 15; // 효과음 동시 재생 한계
+    [SerializeField] private float crossFadeDuration = 1.0f; // ✨ BGM 전환 시간
 
     // 빠른 검색을 위한 딕셔너리
     private Dictionary<SoundID, SoundData> soundMap = new Dictionary<SoundID, SoundData>();
@@ -20,8 +22,7 @@ public class SoundManager : MonoBehaviour
 
     private float masterBgmVolume = 1f;
     private float masterSfxVolume = 1f;
-    private float currentBgmClipVolume = 1f;
-
+    private float currentBgmClipVolume = 1f; // 현재 재생 중인 클립의 고유 볼륨
 
     private void Awake()
     {
@@ -39,7 +40,7 @@ public class SoundManager : MonoBehaviour
 
     private void Initialize()
     {
-        // 1. 데이터 딕셔너리로 변환 (검색 속도 UP)
+        // 1. 데이터 딕셔너리로 변환
         foreach (var data in soundList)
         {
             if (data.id != SoundID.None)
@@ -51,6 +52,7 @@ public class SoundManager : MonoBehaviour
         bgmObj.transform.SetParent(transform);
         bgmSource = bgmObj.AddComponent<AudioSource>();
         bgmSource.loop = true;
+        bgmSource.playOnAwake = false;
 
         // 3. SFX 풀 생성
         sfxSources = new List<AudioSource>();
@@ -67,58 +69,168 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    // ✨ 이벤트 버스 구독 (액션 연결)
+    // ✨ 이벤트 버스 및 GameManager 구독
     private void OnEnable()
     {
         SoundEventBus.OnPlaySound += PlaySoundHandler;
     }
 
-    // ✨ 이벤트 버스 구독 해제
+    private void Start()
+    {
+        // GameManager 상태 변화 감지
+        if (GameManager.Instance != null)
+        {
+            // 1. 이벤트 구독
+            GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
+
+            // ✨ [핵심 수정] 2. 게임 시작 시점의 상태를 강제로 한 번 적용!
+            // (이미 Title 상태라서 이벤트가 발생 안 했거나, 놓쳤을 경우를 대비)
+            HandleGameStateChanged(GameManager.Instance.CurrentState);
+        }
+    }
+
     private void OnDisable()
     {
         SoundEventBus.OnPlaySound -= PlaySoundHandler;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameStateChanged -= HandleGameStateChanged;
+        }
     }
 
-    // 실제 사운드 재생 로직
+    // ✨ 게임 상태에 따른 자동 BGM 변경 로직
+    private void HandleGameStateChanged(GameState newState)
+    {
+        switch (newState)
+        {
+            // [Title]: 타이틀 BGM 재생
+            case GameState.Title:
+                PlaySoundHandler(SoundID.BGM_Title, Vector3.zero);
+                break;
+
+            // [Start]: 게임 시작 버튼 누름 -> BGM 정지 (정적)
+            case GameState.Start:
+                PlaySoundHandler(SoundID.BGM_Stop, Vector3.zero);
+                break;
+
+            // [Playing]: 배틀 BGM 재생
+            case GameState.Playing:
+                PlaySoundHandler(SoundID.BGM_Battle, Vector3.zero);
+                break;
+
+            // [Boss]: 보스 BGM 재생
+            case GameState.Boss:
+                PlaySoundHandler(SoundID.BGM_Boss, Vector3.zero);
+                break;
+
+            // [Die]: 게임 오버 BGM 재생
+            case GameState.Die:
+                PlaySoundHandler(SoundID.BGM_GameOver, Vector3.zero);
+                break;
+
+            // ✨ [핵심] BGM을 유지해야 하는 상태들
+            // 여기에 포함된 상태가 되면, SoundManager는 아무런 명령도 내리지 않습니다.
+            // 따라서 이전에 틀어져 있던 BGM(Playing이든 Boss든)이 계속 이어집니다.
+            case GameState.Event:           // 레벨업, 보상 창
+            case GameState.Pause:           // 일시정지
+            case GameState.StageTransition: // 스테이지 이동 중
+                // 아무것도 안 함 (break) -> 기존 BGM 유지됨
+                break;
+
+            case GameState.Ending:
+                // 엔딩 BGM이 있다면 재생, 없다면 Stop
+                // PlaySoundHandler(SoundID.BGM_Ending, Vector3.zero);
+                break;
+        }
+    }
+
+    // 실제 사운드 재생 로직 (이벤트 핸들러)
     private void PlaySoundHandler(SoundID id, Vector3 position)
     {
+        // ✨ [추가] BGM 정지 명령 처리
+        if (id == SoundID.BGM_Stop)
+        {
+            StopBGM();
+            return;
+        }
+
         if (!soundMap.TryGetValue(id, out SoundData data))
         {
             Debug.LogWarning($"[SoundManager] 등록되지 않은 사운드 ID: {id}");
             return;
         }
 
-        // BGM 처리
         if (id.ToString().StartsWith("BGM"))
         {
             PlayBGM(data);
         }
-        // SFX 처리
         else
         {
             PlaySFX(data, position);
         }
     }
 
-    // --- [수정] PlayBGM 함수 (볼륨 적용 로직 추가) ---
+    // ✨ [핵심 수정] PlayBGM 함수 (DOTween 적용)
     private void PlayBGM(SoundData data)
     {
-        if (bgmSource.clip == data.clip) return;
+        // 이미 같은 곡이 재생 중이면 볼륨이나 피치만 갱신하고 종료
+        if (bgmSource.clip == data.clip && bgmSource.isPlaying) return;
 
-        bgmSource.clip = data.clip;
-        currentBgmClipVolume = data.volume; // 원래 볼륨 저장
-        bgmSource.volume = currentBgmClipVolume * masterBgmVolume; // 마스터 볼륨 반영
-        bgmSource.pitch = data.pitch;
-        bgmSource.Play();
+        // 목표 볼륨 계산
+        float targetVolume = data.volume * masterBgmVolume;
+        currentBgmClipVolume = data.volume; // 클립 고유 볼륨 기억
+
+        // 처음 재생(클립 없음)이면 바로 재생
+        if (bgmSource.clip == null)
+        {
+            bgmSource.clip = data.clip;
+            bgmSource.volume = 0f; // 0에서 시작
+            bgmSource.pitch = data.pitch;
+            bgmSource.Play();
+            bgmSource.DOFade(targetVolume, crossFadeDuration).SetUpdate(true);
+            return;
+        }
+
+        // 1. 페이드 아웃 (기존 곡 줄이기)
+        bgmSource.DOFade(0f, crossFadeDuration).SetUpdate(true).OnComplete(() =>
+        {
+            // 2. 곡 교체 및 재생
+            bgmSource.clip = data.clip;
+            bgmSource.pitch = data.pitch;
+            bgmSource.Play();
+
+            // 3. 페이드 인 (새 곡 키우기)
+            bgmSource.DOFade(targetVolume, crossFadeDuration).SetUpdate(true);
+        });
     }
 
-    // --- [수정] PlaySFX 함수 (볼륨 적용 로직 추가) ---
+    // ✨ [추가] BGM 정지 메서드 (외부에서 직접 호출 가능)
+    public void StopBGM()
+    {
+        // 재생 중이 아니면 무시
+        if (bgmSource == null || !bgmSource.isPlaying) return;
+
+        // 기존 트윈 충돌 방지
+        bgmSource.DOKill();
+
+        // 부드럽게 볼륨 0으로 줄이고 정지
+        bgmSource.DOFade(0f, crossFadeDuration)
+            .SetUpdate(true) // TimeScale 무시
+            .OnComplete(() =>
+            {
+                bgmSource.Stop();
+                bgmSource.clip = null; // 클립 비우기 (선택사항)
+            });
+    }
+
+    // PlaySFX 함수 (기존 로직 유지)
     private void PlaySFX(SoundData data, Vector3 position)
     {
         AudioSource source = GetAvailableSFXSource();
 
         source.clip = data.clip;
-        source.volume = data.volume * masterSfxVolume; // 마스터 볼륨 반영
+        source.volume = data.volume * masterSfxVolume;
         source.pitch = data.pitch;
 
         if (position != Vector3.zero)
@@ -134,13 +246,15 @@ public class SoundManager : MonoBehaviour
         source.Play();
     }
 
-    // --- [추가] 옵션 창에서 호출할 함수들 ---
+    // 옵션 창에서 호출할 함수들
     public void SetBGMVolume(float volume)
     {
         masterBgmVolume = volume;
-        // 현재 재생 중인 BGM이 있다면 즉시 볼륨 변경
         if (bgmSource != null && bgmSource.isPlaying)
         {
+            // 페이드 중일 수도 있으니 DOKill하고 즉시 적용하거나, 
+            // 현재 진행중인 트윈이 없다면 바로 적용
+            bgmSource.DOKill();
             bgmSource.volume = currentBgmClipVolume * masterBgmVolume;
         }
     }
@@ -148,18 +262,15 @@ public class SoundManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         masterSfxVolume = volume;
-        // SFX는 보통 짧아서 재생 중인 것까지 즉시 바꾸진 않지만, 필요하면 여기서 순회 가능
     }
 
     private AudioSource GetAvailableSFXSource()
     {
-        // 노는 오디오 소스 찾기
         foreach (var source in sfxSources)
         {
             if (!source.isPlaying) return source;
         }
 
-        // 없으면 제일 오래된 놈(0번) 뺏어오기 (순환)
         AudioSource recycleSource = sfxSources[0];
         sfxSources.RemoveAt(0);
         sfxSources.Add(recycleSource);
@@ -172,15 +283,19 @@ public class SoundManager : MonoBehaviour
 
         foreach (var data in soundList)
         {
-            // Pitch가 0인 경우는 소리가 안 나므로, 초기화되지 않은 상태로 간주
             if (data.pitch == 0f)
             {
-                data.pitch = 1f;  // 피치 기본값 복구
-                data.volume = 1f; // 볼륨 기본값 복구
+                data.pitch = 1f;
+                data.volume = 1f;
             }
         }
-
     }
+
+    public void PlayButtonSound()
+    {
+        SoundEventBus.Publish(SoundID.UI_Click);
+    }
+
     public float GetBGMVolume() => masterBgmVolume;
     public float GetSFXVolume() => masterSfxVolume;
 }

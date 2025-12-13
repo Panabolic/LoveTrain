@@ -211,6 +211,7 @@ public class Train : MonoBehaviour
         if (PoolManager.instance != null)
         {
             Instantiate(explosionObject);
+            SoundEventBus.Publish(SoundID.Player_Dying);
             PoolManager.instance.DespawnAllEnemiesExceptBoss(); // 화면상의 적 정리
         }
 
@@ -364,6 +365,7 @@ public class Train : MonoBehaviour
         // 4. UI 호출 (게임오버 UI 등을 미리 띄움)
         tempDieUICall();
 
+        SoundEventBus.Publish(SoundID.Player_GameOver);
         // 5. 손이 기차를 끌고 화면 밖으로 이동
         if (handObject != null)
         {

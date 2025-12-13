@@ -127,6 +127,7 @@ public class SmashEffectButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         // [충돌] 물리 효과 발동
         seq.InsertCallback(smashTime, SmashPhysics);
+        SoundEventBus.Publish(SoundID.Player_Dying);
 
         // [종료]
         seq.AppendInterval(delayAfterArrival);

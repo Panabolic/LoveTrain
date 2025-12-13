@@ -10,16 +10,20 @@ public enum SoundID
     BGM_Battle,
     BGM_Boss,
     BGM_GameOver,
-    
+    BGM_Stop,
+
     // UI & System
     UI_Click,
     UI_LevelUp,
     UI_BossWarning,
     UI_Event,
+    UI_Option,
 
     // Player
     Player_Shoot,
     Player_Hit,
+    Player_Dying,
+    Player_GameOver,
     
     // Item
     Item_BeatingHeart,
@@ -37,7 +41,8 @@ public enum SoundID
     // Enemy
     Enemy_Hit,
     Enemy_Die,
-    Boss_Roar
+    Boss_Roar,
+    Boss_Die
 }
 
 // 사운드 데이터 세팅용 클래스 (인스펙터 노출용)

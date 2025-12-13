@@ -44,6 +44,7 @@ public class BloodyBible_SO : Item_SO
         // 3. 장판 생성
         GameObject zoneObj = Instantiate(ZonePrefab, spawnPos, Quaternion.identity);
 
+        SoundEventBus.Publish(SoundID.Item_Bible);
         // 4. 데이터 주입
         BloodyZone zoneLogic = zoneObj.GetComponent<BloodyZone>();
         if (zoneLogic != null)

@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 
 public enum GameState
 {
-    Start,
-    Playing,
+    Title,   // ✨ [추가] 타이틀 화면 (Title BGM)
+    Start,   // ✨ [변경] 인게임 진입 직전, 레버 당기기 전 (BGM 없음/정적)
+    Playing, // 레버 당긴 후 (Battle BGM)
     Event,
     Boss,
     Die,
@@ -63,6 +64,35 @@ public class GameManager : MonoBehaviour
     {
         gameTime = 0f;
         NormalKillCount = 0; EliteKillCount = 0; BossKillCount = 0;
+
+        // ✨ 현재 활성화된 씬 이름 가져오기
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // 로직 분기:
+        // 1. "Start" 씬(타이틀 화면)이면 -> Title 상태로 시작 (BGM 재생, 시작 버튼 대기)
+        // 2. 그 외(게임 씬)에서 바로 실행했으면 -> Start 상태로 시작 (BGM 정지, 레버 타격 대기)
+
+        if (currentSceneName == "Start") // ※ 타이틀 씬 이름이 "Start"가 아니라면 그 이름으로 바꿔주세요!
+        {
+            ChangeState(GameState.Title);
+        }
+        else
+        {
+            Debug.Log($"[Testing] 게임 씬({currentSceneName})에서 직접 실행됨. Start 상태로 초기화.");
+            ChangeState(GameState.Start);
+
+            // 만약 레버 치는 것도 귀찮아서 바로 전투 시작하고 싶다면:
+            // if (isTestMode) ChangeState(GameState.Playing); 
+            // else ChangeState(GameState.Start);
+        }
+    }
+
+    // ✨ [추가] 타이틀 화면에서 '게임 시작' 버튼을 누르면 호출할 함수
+    // 이 함수가 호출되면 Start 상태가 되고 -> BGM이 꺼집니다.
+    public void EnterStartState()
+    {
+        // 씬 전환이 필요하다면 여기서 SceneManager.LoadScene("MainGame") 등을 호출
+        // 씬 전환 후 상태 변경
         ChangeState(GameState.Start);
     }
 
@@ -129,6 +159,7 @@ public class GameManager : MonoBehaviour
         if (CurrentState == GameState.Playing || CurrentState == GameState.Boss || CurrentState == GameState.Start)
         {
             stateBeforePause = CurrentState;
+            SoundEventBus.Publish(SoundID.UI_Option);
             ChangeState(GameState.Pause);
             Time.timeScale = 0f;
             Physics2D.simulationMode = SimulationMode2D.Script;
@@ -140,6 +171,7 @@ public class GameManager : MonoBehaviour
         if (CurrentState == GameState.Pause)
         {
             ChangeState(stateBeforePause);
+            SoundEventBus.Publish(SoundID.UI_Option);
             Time.timeScale = 1f;
             Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
             ProcessNextUI();

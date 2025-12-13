@@ -77,6 +77,7 @@ public class EventManager : MonoBehaviour
     {
         if (isAnimatingPanel) return;
 
+        SoundEventBus.Publish(SoundID.UI_Event);
         isTextFullyDisplayed = false;
         hasSelectionBeenMade = false;
         isShowingResultText = false;
