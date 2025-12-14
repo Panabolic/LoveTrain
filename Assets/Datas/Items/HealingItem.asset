@@ -19,8 +19,8 @@ MonoBehaviour:
   spritesByLevel: []
   controllersByLevel: []
   MaxUpgrade: 3
-  itemScript: "{SpeedBonus}\uB9CC\uD07C \uC18D\uB3C4 \uC99D\uAC00, {KillReq}\uB9CC\uD07C
-    \uC801 \uCC98\uCE58\uC2DC \uCD5C\uB300 \uC18D\uB3C4\uC758 {HealAmt}\uB9CC\uD07C
+  itemScript: "{SpeedBonus}\uB9CC\uD07C \uCD5C\uB300 \uC18D\uB3C4 \uC99D\uAC00, \uBAAC\uC2A4\uD130
+    {KillReq}\uB9C8\uB9AC \uCC98\uCE58\uC2DC \uCD5C\uB300 \uC18D\uB3C4\uC758 {HealAmt}\uB9CC\uD07C
     \uD68C\uBCF5."
   itemSimpleScript: "\uBAAC\uC2A4\uD130\uB97C \uCC98\uCE58\uD558\uBA74 \uC18D\uB3C4
     \uD68C\uBCF5"

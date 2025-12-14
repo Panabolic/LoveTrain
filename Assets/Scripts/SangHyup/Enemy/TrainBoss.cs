@@ -151,7 +151,7 @@ public class TrainBoss : Boss
     protected override IEnumerator Die()
     {
         yield return base.Die();
-        Vector2 explosionEffectPivot = new Vector2(0, 2f);
+        Vector2 explosionEffectPivot = new Vector2(-5f, 2f);
 
         Instantiate(killExplosionEffect, transform.position + (Vector3)explosionEffectPivot, Quaternion.identity);
         SoundEventBus.Publish(SoundID.Boss_Die);
