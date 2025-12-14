@@ -33,7 +33,7 @@ public class EyeBoss : Boss
     private bool enragePatternReady = false;
     private bool hasEnraged = false;
 
-    // ✨ [추가] 사운드 중복 재생 방지용 쿨타임 변수
+    // 사운드 중복 재생 방지용 쿨타임 변수
     private float lastAttackSoundTime = -10f;
 
     protected override void Start()
@@ -50,7 +50,6 @@ public class EyeBoss : Boss
     {
         base.Update();
 
-        // isEntranceActive가 true면 패턴 실행 안 함
         if (!isAlive || isBusy || enragePatternReady || isEntranceActive) return;
 
         int patternIndex = Random.Range(0, 2);
@@ -147,8 +146,24 @@ public class EyeBoss : Boss
 
         float duration = SpawnTentaclesAndGetDuration(allIndices, weakPoints, true);
 
-        yield return new WaitForSeconds(duration);
+        // ✨ [핵심 수정] 기존 WaitForSeconds(duration)을 아래의 루프로 대체
+        // 시간이 다 되거나(timer >= duration), 촉수가 모두 죽으면(Count == 0) 루프 탈출
+        float timer = 0f;
+        while (timer < duration)
+        {
+            // 리스트 관리는 Tentacle의 OnDestroy -> UnregisterTentacle에서 처리되므로
+            // Count가 0이 되면 모든 촉수가 죽은 것임
+            if (spawnedTentacles.Count == 0)
+            {
+                Debug.Log("모든 촉수가 파괴되어 광폭화 패턴이 조기 종료됩니다.");
+                break;
+            }
 
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // 패턴 종료: 무적 해제
         isInvincible = false;
         enragePatternReady = false;
 
@@ -179,7 +194,6 @@ public class EyeBoss : Boss
 
             if (tScript != null)
             {
-                // ✨ [수정] Setup 호출 시 보스의 사운드 재생 함수(TryPlayAttackSound)를 콜백으로 전달
                 tScript.Setup(this, currentDamage, currentDelay, TryPlayAttackSound);
                 tScript.BeginAttack();
 
@@ -188,19 +202,16 @@ public class EyeBoss : Boss
             }
         }
 
-        // 촉수 생성음은 별도로 한 번 재생
         SoundEventBus.Publish(SoundID.Boss_TentacleSpawn);
 
         return maxDuration;
     }
 
-    // ✨ [추가] 촉수들이 공격 시점에 호출할 함수 (사운드 중복 방지 로직 포함)
     private void TryPlayAttackSound()
     {
-        // 0.1초 내에 다른 촉수가 이미 소리를 냈다면 무시
         if (Time.time - lastAttackSoundTime > 0.1f)
         {
-            SoundEventBus.Publish(SoundID.Boss_TentacleAttack); // 실제 공격 타격음
+            SoundEventBus.Publish(SoundID.Boss_TentacleAttack);
             lastAttackSoundTime = Time.time;
         }
     }
@@ -230,7 +241,6 @@ public class EyeBoss : Boss
 
         Instantiate(killExplosionEffect, transform.position, Quaternion.identity);
 
-        SoundEventBus.Publish(SoundID.Boss_Die);
         yield return base.Die();
 
         yield return new WaitForSeconds(2.0f);
