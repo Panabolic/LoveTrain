@@ -9,6 +9,7 @@ public class EventTriggerObject : MonoBehaviour
     [Tooltip("오브젝트가 자동으로 파괴될 때까지의 시간 (메모리 관리용)")]
     [SerializeField] private float lifeTime = 15f;
 
+    [SerializeField] private GameObject exclamateObj;
     // 내부 변수
     private Vector3 moveDirection;
     private bool hasTriggered = false; // 이벤트 중복 발동 방지
@@ -57,6 +58,7 @@ public class EventTriggerObject : MonoBehaviour
             {
                 EventManager.Instance.RandomEventStart();
                 hasTriggered = true; // 중복 실행 방지 플래그 On
+                exclamateObj.SetActive(false);
             }
 
             // (선택 사항) 충돌 후 시각적 피드백이 필요하면 여기서 처리

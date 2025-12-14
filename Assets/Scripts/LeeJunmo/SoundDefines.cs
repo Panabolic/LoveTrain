@@ -5,27 +5,23 @@ public enum SoundID
 {
     None = 0,
 
-    // BGM
     BGM_Title,
     BGM_Battle,
     BGM_Boss,
-    BGM_GameOver,
+    BGM_Ending,
     BGM_Stop,
 
-    // UI & System
     UI_Click,
     UI_LevelUp,
     UI_BossWarning,
     UI_Event,
     UI_Option,
 
-    // Player
     Player_Shoot,
     Player_Hit,
     Player_Dying,
     Player_GameOver,
     
-    // Item
     Item_BeatingHeart,
     Item_Laser,
     Item_Bible,
@@ -38,14 +34,16 @@ public enum SoundID
     Item_MissileBoom,
     Item_MeatGun,
 
-    // Enemy
     Enemy_Hit,
     Enemy_Die,
     Boss_Roar,
     Boss_Die,
     Item_GiantMaw2,
     UI_Typing,
-    Boss_TrainBossSpawn
+    Boss_TrainBossSpawn,
+    Item_LonginusSpawn,
+    Boss_TentacleSpawn,
+    Boss_TentacleAttack
 }
 
 // 사운드 데이터 세팅용 클래스 (인스펙터 노출용)

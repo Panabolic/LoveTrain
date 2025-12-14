@@ -142,6 +142,7 @@ public class GameManager : MonoBehaviour
         {
             uiRequestQueue.Clear();
             isUIProcessing = false;
+            
             ChangeState(GameState.Ending);
             if (EndingManager.Instance != null) EndingManager.Instance.StartEnding();
         }

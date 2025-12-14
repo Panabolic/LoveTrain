@@ -35,24 +35,25 @@ public class TrainBoss : Boss
 
     private Vector2 moveDirection = Vector2.zero;
 
+    [Header("Phase Colliders")]
+    [Tooltip("1페이즈용 콜라이더")]
+    [SerializeField] private Collider2D phase1Collider;
+    [Tooltip("2페이즈용 콜라이더")]
+    [SerializeField] private Collider2D phase2Collider;
+
     protected override void Awake()
     {
         base.Awake();
         rigid2D = GetComponent<Rigidbody2D>();
         SoundEventBus.Publish(SoundID.Boss_TrainBossSpawn);
+
+        // ✨ [추가] 콜라이더 초기화 (1페이즈 ON, 2페이즈 OFF)
+        if (phase1Collider != null) phase1Collider.enabled = true;
+        if (phase2Collider != null) phase2Collider.enabled = false;
     }
 
     private void FixedUpdate()
     {
-/*        // 1. 보스가 죽었을 때 (왼쪽으로 퇴장)
-        if (!isAlive)
-        {
-            moveDirection = Vector2.left;
-            float deathMoveSpeed = 30.0f;
-            rigid2D.linearVelocity = new Vector2(moveDirection.x * deathMoveSpeed, rigid2D.linearVelocity.y);
-            return;
-        }*/
-
         // 2. 방향 설정 (무조건 왼쪽)
         SetMoveDirection(targetRigid.position);
 
@@ -87,11 +88,22 @@ public class TrainBoss : Boss
 
     private void CheckPhase()
     {
-        if (currentHP > calibratedMaxHP * p2HpRatio && isPhase2 == false) return;
+        // 아직 페이즈 2 체력이 아니거나, 이미 페이즈 2라면 리턴
+        if (currentHP > calibratedMaxHP * p2HpRatio || isPhase2 == true) return;
 
+        // --- 페이즈 2 진입 ---
+        if (!isPhase2)
+        {
+            SoundEventBus.Publish(SoundID.Boss_Roar);
+        }
         isPhase2 = true;
         animator.SetTrigger("phase2");
-        Debug.Log("TrainBoss: Entered Phase 2!");
+
+        // ✨ [추가] 콜라이더 교체
+        if (phase1Collider != null) phase1Collider.enabled = false;
+        if (phase2Collider != null) phase2Collider.enabled = true;
+
+        Debug.Log("TrainBoss: Entered Phase 2! Collider Switched.");
     }
 
     private void Knockback()
@@ -139,31 +151,27 @@ public class TrainBoss : Boss
     protected override IEnumerator Die()
     {
         yield return base.Die();
-        Instantiate(killExplosionEffect, transform.position, Quaternion.identity);
+        Vector2 explosionEffectPivot = new Vector2(0, 2f);
+
+        Instantiate(killExplosionEffect, transform.position + (Vector3)explosionEffectPivot, Quaternion.identity);
         SoundEventBus.Publish(SoundID.Boss_Die);
         yield return new WaitForSeconds(2.0f); // 사망 연출 대기
 
-        // ✨ [수정] 킬 이벤트(보상) 띄우기 전 엔딩 여부 체크
         if (killEvent != null)
         {
-            // GameManager가 있고, 아직 엔딩 시간이 아니라면 -> 보상 획득 이벤트 실행
-            // (엔딩 시간이면 보상 창 안 띄움)
             if (GameManager.Instance != null && !GameManager.Instance.IsTimeForEnding)
             {
                 EventManager.Instance.RequestEvent(killEvent);
             }
         }
 
-        // ✨ [수정] GameManager에게 사망 보고 (엔딩/스테이지 전환 위임)
         if (GameManager.Instance != null)
         {
-            // 보스 킬 카운트 증가 + 엔딩 판정 요청
             GameManager.Instance.AddBossKillCount();
             GameManager.Instance.BossDied();
         }
         else
         {
-            // 비상용 (GameManager 없을 때)
             StageManager.Instance.StartStageTransitionSequence();
         }
 

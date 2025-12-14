@@ -90,7 +90,18 @@ public class EndingManager : MonoBehaviour
         {
             ClearAllEntities();
 
-            if (trainTransform != null) trainTransform.position = trainEndingPos;
+            if (trainTransform != null)
+            {
+                // ✨ [핵심 수정] 기차를 옮기기 전에 '사망 상태'를 강제로 끔
+                Train trainScript = trainTransform.GetComponent<Train>();
+                if (trainScript != null)
+                {
+                    trainScript.ForceStopDyingState();
+                }
+
+                trainTransform.position = trainEndingPos;
+            }
+
             if (mainCamera != null)
             {
                 mainCamera.transform.position = cameraEndingPos;
@@ -105,8 +116,6 @@ public class EndingManager : MonoBehaviour
         seq.AppendInterval(0.5f);
 
         if (fadePanel != null) seq.Append(fadePanel.FadeOut(1.0f)); // 밝아짐 (Alpha 0)
-
-/*        seq.AppendInterval(1.0f);*/
 
         seq.OnComplete(() =>
         {

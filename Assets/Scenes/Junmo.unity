@@ -7757,9 +7757,9 @@ MonoBehaviour:
     flyMinIndex: 0
     flyMaxIndex: 1
     groundEliteMinIndex: 0
-    groundEliteMaxIndex: 0
+    groundEliteMaxIndex: 1
     flyEliteMinIndex: 0
-    flyEliteMaxIndex: 0
+    flyEliteMaxIndex: 1
     spawnInterval: 0.65
   - startTime: 240
     groundMinIndex: 0
@@ -7767,61 +7767,61 @@ MonoBehaviour:
     flyMinIndex: 0
     flyMaxIndex: 2
     groundEliteMinIndex: 0
-    groundEliteMaxIndex: 0
+    groundEliteMaxIndex: 2
     flyEliteMinIndex: 0
-    flyEliteMaxIndex: 0
+    flyEliteMaxIndex: 2
     spawnInterval: 0.55
   - startTime: 360
     groundMinIndex: 0
-    groundMaxIndex: 2
+    groundMaxIndex: 3
     flyMinIndex: 0
-    flyMaxIndex: 2
+    flyMaxIndex: 3
     groundEliteMinIndex: 0
-    groundEliteMaxIndex: 0
+    groundEliteMaxIndex: 3
     flyEliteMinIndex: 0
-    flyEliteMaxIndex: 0
+    flyEliteMaxIndex: 3
     spawnInterval: 0.45
   - startTime: 480
     groundMinIndex: 0
-    groundMaxIndex: 2
+    groundMaxIndex: 4
     flyMinIndex: 0
-    flyMaxIndex: 2
+    flyMaxIndex: 4
     groundEliteMinIndex: 0
-    groundEliteMaxIndex: 0
+    groundEliteMaxIndex: 4
     flyEliteMinIndex: 0
-    flyEliteMaxIndex: 0
+    flyEliteMaxIndex: 4
     spawnInterval: 0.35
   - startTime: 600
     groundMinIndex: 0
-    groundMaxIndex: 2
+    groundMaxIndex: 5
     flyMinIndex: 0
-    flyMaxIndex: 2
+    flyMaxIndex: 5
     groundEliteMinIndex: 0
-    groundEliteMaxIndex: 0
+    groundEliteMaxIndex: 5
     flyEliteMinIndex: 0
-    flyEliteMaxIndex: 0
+    flyEliteMaxIndex: 5
     spawnInterval: 0.25
   - startTime: 720
     groundMinIndex: 0
-    groundMaxIndex: 2
+    groundMaxIndex: 6
     flyMinIndex: 0
-    flyMaxIndex: 2
+    flyMaxIndex: 6
     groundEliteMinIndex: 0
-    groundEliteMaxIndex: 0
+    groundEliteMaxIndex: 6
     flyEliteMinIndex: 0
-    flyEliteMaxIndex: 0
+    flyEliteMaxIndex: 6
     spawnInterval: 0.15
   - startTime: 840
     groundMinIndex: 0
-    groundMaxIndex: 2
+    groundMaxIndex: 6
     flyMinIndex: 0
-    flyMaxIndex: 2
+    flyMaxIndex: 6
     groundEliteMinIndex: 0
-    groundEliteMaxIndex: 0
+    groundEliteMaxIndex: 6
     flyEliteMinIndex: 0
-    flyEliteMaxIndex: 0
+    flyEliteMaxIndex: 6
     spawnInterval: 0.1
-  bossSequence: 0100000001000000000000000100000000000000
+  bossSequence: 0000000001000000000000000100000000000000
   bossSettings:
   - bossName: 0
     spawnPoint: {fileID: 591232702}
@@ -12338,18 +12338,35 @@ MonoBehaviour:
   groundMobs:
   - {fileID: 3919861888170776123, guid: 817ca5d82ddd8934bbe7d17eb6391801, type: 3}
   - {fileID: 1649017107160034268, guid: 8cc335822b1c80d4b8ffdaa7d1e43542, type: 3}
-  - {fileID: 4341806392092865359, guid: 4aefa1c54eae4b44fbb46fb4060a02f3, type: 3}
   - {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
-  - {fileID: 6071565328356542251, guid: 1f56e65633c42b9448e40b0d61c93036, type: 3}
+  - {fileID: 4341806392092865359, guid: 4aefa1c54eae4b44fbb46fb4060a02f3, type: 3}
+  - {fileID: 5584618478424644684, guid: dc25738364183f348a22b4f6fb7ad32a, type: 3}
+  - {fileID: 3623188595661523926, guid: 1ff1aa3d180189b44a1148f53222f03c, type: 3}
+  - {fileID: 4706896826668493201, guid: c1c7a48bf8fb78c4dbc7917985e3ceeb, type: 3}
   flyMobs:
   - {fileID: 8902502498832743037, guid: 0a9c8343d6d423747be1db068d0b7265, type: 3}
   - {fileID: 7533867154331924226, guid: 3967c78faf3864641860db89b0818e70, type: 3}
+  - {fileID: 438246860773660558, guid: d44830828d643d744bc79504428fbb75, type: 3}
+  - {fileID: 8320858251566510659, guid: 46d4fa74d8dd7684c94379f0569cfcf5, type: 3}
+  - {fileID: 418807619872217040, guid: 7dcbcf1187af05241b56e3d25cd8f045, type: 3}
+  - {fileID: 6564382822430866042, guid: 986bc09714342d24391c773bf644e624, type: 3}
   - {fileID: 8665722468913020142, guid: 52d26eda428a6fb43b7f2b2b745fb934, type: 3}
-  - {fileID: 4821721425770472742, guid: 5310438f295510d438ac35837755d237, type: 3}
   groundEliteMobs:
+  - {fileID: 8932941077486279364, guid: 466d7f377dd2c5f4bb68c4c7e03e0ccd, type: 3}
+  - {fileID: 690665195535467368, guid: 5b685cc71fd81dc4c855552ce0ff6938, type: 3}
   - {fileID: 4821721425770472742, guid: f9a2b6704fd3f564f832675bbf397d5d, type: 3}
+  - {fileID: 3767714281121820654, guid: e07cb4648f66e604b8c90067b3b1131f, type: 3}
+  - {fileID: 8318282555647890802, guid: 542b18b78b7929e4e83942673b3ed37a, type: 3}
+  - {fileID: 8722754332247709555, guid: c26a3be3f791e994d85a67a02c363a94, type: 3}
+  - {fileID: 7931770644398241321, guid: af370f577dabd9546b58c4ca9f53aa34, type: 3}
   flyEliteMobs:
-  - {fileID: 4821721425770472742, guid: 714856b33a23f984cb55de349811f6e7, type: 3}
+  - {fileID: 4049222059826462378, guid: a374e27f84c245549ba7db8372e3fa75, type: 3}
+  - {fileID: 5030995764939153484, guid: b7a3f7f8527e7f543988ac888bc395bf, type: 3}
+  - {fileID: 2475328893934777958, guid: ff8c8475a135b084b914b81af8131524, type: 3}
+  - {fileID: 5861065108482383450, guid: a3c2b87e5ef756d4fa311337d2d5e324, type: 3}
+  - {fileID: 3345419443291833819, guid: 2d34855ed02138f499663270294fe6a7, type: 3}
+  - {fileID: 3414984846431137252, guid: 14f6e4ee6dfdf954f801b54b0423fdd1, type: 3}
+  - {fileID: 3359017015299443423, guid: 87e3434968780e74cb46270949310740, type: 3}
   bosses:
   - {fileID: 8958191303323060444, guid: 71abc64b892809244bc11e5b24916a97, type: 3}
   - {fileID: 2704498708188189439, guid: e03acaeee2ec70441a831a7682f1ca6d, type: 3}
@@ -14619,7 +14636,7 @@ Transform:
   m_GameObject: {fileID: 1214708081}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 60, y: -8.3, z: 0}
+  m_LocalPosition: {x: 70, y: -8.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24537,13 +24554,13 @@ MonoBehaviour:
     isImportant: 0
   - id: 1
     clip: {fileID: 8300000, guid: e4bfed4434a05a54bb7ef431720a3ac9, type: 3}
-    volume: 0.109
+    volume: 0.069
     pitch: 1
     loop: 1
     isImportant: 0
   - id: 2
     clip: {fileID: 8300000, guid: b647f572ecffd1149b706d64808c3dca, type: 3}
-    volume: 0.098
+    volume: 0.068
     pitch: 1
     loop: 1
     isImportant: 0
@@ -24609,7 +24626,7 @@ MonoBehaviour:
     isImportant: 0
   - id: 20
     clip: {fileID: 8300000, guid: 7fa6a777ee344aa4f91dd96b77d2dfdf, type: 3}
-    volume: 0.28
+    volume: 0.1
     pitch: 1
     loop: 0
     isImportant: 0
@@ -24639,7 +24656,7 @@ MonoBehaviour:
     isImportant: 1
   - id: 11
     clip: {fileID: 8300000, guid: 03746311831cf35429484e0f53f4e0ed, type: 3}
-    volume: 0.126
+    volume: 0.4
     pitch: 1
     loop: 0
     isImportant: 0
@@ -24702,6 +24719,36 @@ MonoBehaviour:
     volume: 0.209
     pitch: 1
     loop: 0
+    isImportant: 0
+  - id: 28
+    clip: {fileID: 8300000, guid: d0b812bc82a647d429bd7d144c177393, type: 3}
+    volume: 0.099
+    pitch: 1
+    loop: 0
+    isImportant: 1
+  - id: 33
+    clip: {fileID: 8300000, guid: 7eeeda48181d84c43bc1690419e99a2f, type: 3}
+    volume: 0.35
+    pitch: 1
+    loop: 0
+    isImportant: 1
+  - id: 34
+    clip: {fileID: 8300000, guid: d1efd50cdd7cc5c42b499e1850e542a1, type: 3}
+    volume: 0.22
+    pitch: 1
+    loop: 0
+    isImportant: 1
+  - id: 35
+    clip: {fileID: 8300000, guid: 90602bdde30fb9f45b34a8a9644575cb, type: 3}
+    volume: 0.225
+    pitch: 1
+    loop: 0
+    isImportant: 1
+  - id: 4
+    clip: {fileID: 8300000, guid: 347d35301c8f1b34d9745afe8eabaf3f, type: 3}
+    volume: 0.05
+    pitch: 1
+    loop: 1
     isImportant: 0
   sfxPoolSize: 15
   importantSfxPoolSize: 5

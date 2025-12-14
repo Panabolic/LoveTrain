@@ -138,7 +138,7 @@ public class SoundManager : MonoBehaviour
 
             // [Die]: 게임 오버 BGM 재생
             case GameState.Die:
-                PlaySoundHandler(SoundID.BGM_GameOver, Vector3.zero);
+                PlaySoundHandler(SoundID.BGM_Stop, Vector3.zero);
                 break;
 
             // BGM 유지 상태
@@ -148,6 +148,7 @@ public class SoundManager : MonoBehaviour
                 break;
 
             case GameState.Ending:
+                PlaySoundHandler(SoundID.BGM_Ending, Vector3.zero);
                 // 필요 시 엔딩 BGM 재생
                 break;
         }

@@ -134,6 +134,7 @@ public class LonginusLauncher : MonoBehaviour, IInstantiatedItem
 
         if (spearScript != null)
         {
+            SoundEventBus.Publish(SoundID.Item_LonginusSpawn);
             spearScript.Initialize(damage, speed, spearLifeTime, startPos, targetPos, OnSpearDisappeared);
         }
 

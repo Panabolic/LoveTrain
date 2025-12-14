@@ -26,9 +26,9 @@ MonoBehaviour:
     \uBC1C\uC0AC"
   cooldownTime: 0
   gasDamageByLevel:
-  - 8
-  - 9
-  - 10
+  - 20
+  - 20
+  - 20
   gasTickRateByLevel:
   - 0.4
   - 0.3

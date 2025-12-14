@@ -54,8 +54,8 @@ MonoBehaviour:
       displayName: Item Simple Script
     - targetObject: {fileID: 11400000, guid: 0f0a20156e5b03a4c945f0e4757cdaa9, type: 2}
       globalObjectId: 
-      propertyPath: itemSimpleScript
-      displayName: Item Simple Script
+      propertyPath: gasDamageByLevel
+      displayName: Gas Damage By Level
     - targetObject: {fileID: 11400000, guid: 3247ef69ee0fb5440bc22b8b5db6c822, type: 2}
       globalObjectId: 
       propertyPath: itemSimpleScript

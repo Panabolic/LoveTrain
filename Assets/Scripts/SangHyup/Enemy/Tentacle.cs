@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System; // ✨ Action 사용을 위해 필수
+using System.Collections;
 using UnityEngine;
 
 public class Tentacle : Enemy
@@ -12,12 +13,18 @@ public class Tentacle : Enemy
     private float attackWaitTime;
     private float animationLength;
 
-    // 초기화 함수: 스폰 직후 값 설정
-    public void Setup(EyeBoss owner, float damageAmount, float waitTime)
+    // ✨ [추가] 공격 시 실행할 콜백 (보스의 사운드 함수)
+    private Action onAttackCallback;
+
+    // ✨ [수정] Setup에서 Action을 받아옵니다.
+    public void Setup(EyeBoss owner, float damageAmount, float waitTime, Action onAttackCallback)
     {
         this.owner = owner;
         this.damage = damageAmount;
         this.attackWaitTime = waitTime;
+
+        // 보스가 전달해준 사운드 재생 함수 저장
+        this.onAttackCallback = onAttackCallback;
 
         if (this.owner != null)
         {
@@ -27,14 +34,10 @@ public class Tentacle : Enemy
         // 애니메이션 길이 미리 계산
         if (animator != null)
         {
-            // Animator가 활성화된 직후라 0번 레이어 정보를 못 가져올 수 있으므로 체크
             if (animator.runtimeAnimatorController != null)
             {
-                // 보통 애니메이터 초기화에 1프레임이 필요할 수 있어 안전하게 고정값 혹은 클립 검색 사용
-                // 여기서는 기존 로직을 유지하되 안전장치 추가
                 animationLength = 1.0f; // 기본값
 
-                // 실제 클립 길이 탐색 (더 정확함)
                 foreach (var clip in animator.runtimeAnimatorController.animationClips)
                 {
                     if (clip.name.Contains("Attack") || clip.name.Contains("attack"))
@@ -47,7 +50,6 @@ public class Tentacle : Enemy
         }
     }
 
-    // ✨ 보스가 설정을 마친 후 호출하여 공격 시작
     public void BeginAttack()
     {
         StartCoroutine(AttackRoutine());
@@ -67,13 +69,18 @@ public class Tentacle : Enemy
 
     private IEnumerator AttackRoutine()
     {
-        // 1. 공격 예고 대기 (설정된 시간만큼)
+        // 1. 공격 예고 대기
         yield return new WaitForSeconds(attackWaitTime);
 
         // 2. 공격 애니메이션 실행
         if (animator != null) animator.SetTrigger("attack");
 
-        // 3. 판정 시간 대기 (애니메이션 길이)
+        // ✨ [핵심] 보스에게 "나 공격했음!" 하고 알림
+        // 보스는 이 신호를 받고 중복 체크 후 소리를 한 번만 재생함.
+        // 만약 촉수가 죽어서 이 라인에 도달 못하면 자연스럽게 소리도 안 남.
+        onAttackCallback?.Invoke();
+
+        // 3. 판정 시간 대기
         yield return new WaitForSeconds(animationLength);
 
         // 4. 소멸 대기
@@ -88,10 +95,12 @@ public class Tentacle : Enemy
 
         currentHP -= damageAmount;
         StartCoroutine(HitEffect());
+        SoundEventBus.Publish(SoundID.Enemy_Hit);
 
         if (currentHP <= 0)
         {
             Instantiate(killParticle, transform.position, Quaternion.identity);
+            SoundEventBus.Publish(SoundID.Enemy_Die);
             Destroy(gameObject);
         }
     }
@@ -117,11 +126,8 @@ public class Tentacle : Enemy
         }
     }
 
-    // 보스에게 총 수명(라이프사이클 시간)을 알려줌
     public float GetTotalDuration()
     {
-        // 공격대기 + 애니메이션 + 소멸대기
-        // (BeginAttack 호출 시점부터 파괴될 때까지의 시간)
         return attackWaitTime + (animationLength > 0 ? animationLength : 1.0f) + toDestroy;
     }
 }
