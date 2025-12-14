@@ -161,6 +161,7 @@ MonoBehaviour:
   damage: 60
   exp: 10
   hitEffectDuration: 0.05
+  killParticle: {fileID: 434769822512540428, guid: e9444e26ed7ddb841be077bcdb687714, type: 3}
   moveSpeed: 1.3
   isEliteMob: 0
 --- !u!198 &5701392044541356144

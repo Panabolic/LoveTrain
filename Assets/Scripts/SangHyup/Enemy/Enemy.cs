@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float damage;
     [SerializeField] protected float exp;
     [SerializeField] protected float hitEffectDuration = 0.05f;
+    [SerializeField] protected GameObject killParticle;
 
     protected float calibratedMaxHP;
     protected float currentHP;
@@ -75,7 +76,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()
     {
-        // ✨ [수정] null 체크 추가
+/*        // ✨ [수정] null 체크 추가
         if (animator != null)
         {
             AnimationClip[] animationClips = animator.runtimeAnimatorController.animationClips;
@@ -83,7 +84,7 @@ public class Enemy : MonoBehaviour
             {
                 if (clip.name == "Die") deathToDeactive = clip.length;
             }
-        }
+        }*/
     }
 
     protected virtual void Update()
@@ -162,14 +163,6 @@ public class Enemy : MonoBehaviour
     protected virtual IEnumerator Die()
     {
         isAlive = false;
-        gameObject.layer = LayerMask.NameToLayer("DeadEnemy");
-
-        // ✨ [수정] null 체크 후 실행
-        if (sprite != null) sprite.color = Color.red;
-        if (animator != null) animator.SetTrigger("die");
-
-        SoundEventBus.Publish(SoundID.Enemy_Die);
-
         if (levelManager != null) levelManager.GainExperience(exp);
 
         Inventory inventory = levelManager?.GetComponent<Inventory>();
@@ -178,7 +171,11 @@ public class Enemy : MonoBehaviour
             inventory.ProcessKillEvent(this.gameObject);
         }
 
-        yield return new WaitForSeconds(deathToDeactive);
+        this.sprite.enabled = false;
+
+        Instantiate(killParticle, gameObject.transform.position, gameObject.transform.rotation);
+
+        yield return new WaitForSeconds(0);
     }
 
     public virtual void DespawnWithoutExp()
@@ -195,6 +192,7 @@ public class Enemy : MonoBehaviour
     {
         if (PoolManager.instance != null)
         {
+            material.SetInt("_isHit", 0);
             PoolManager.instance.UnregisterEnemy(this);
         }
     }

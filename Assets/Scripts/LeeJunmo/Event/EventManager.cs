@@ -132,6 +132,12 @@ public class EventManager : MonoBehaviour
         fullTextToSkipTo = completeSkippedText;
 
         isTyping = true;
+
+        // ✨ [추가] 전체 누적 글자 수 추적용 변수
+        int totalCharCount = 0;
+        // ✨ [추가] 중복 재생 방지용 (같은 인덱스에서 소리 두 번 나는 것 방지)
+        int lastSoundIndex = -1;
+
         foreach (string line in lines)
         {
             string trimmedLine = line.Trim();
@@ -143,16 +149,35 @@ public class EventManager : MonoBehaviour
                 (charIndex) =>
                 {
                     eventTextBox.text = fullText + trimmedLine.Substring(0, charIndex);
-                    ForceScrollToBottom(); // ✨ 스크롤 추적
+                    ForceScrollToBottom();
+
+                    // ✨ [수정] 현재 줄(charIndex) + 이전 줄까지의 합(totalCharCount) = 전체 인덱스
+                    int currentGlobalIndex = totalCharCount + charIndex;
+
+                    // 1. 인덱스가 0이 아니고
+                    // 2. 전체 기준으로 4번째 글자이며
+                    // 3. 방금 소리 낸 인덱스가 아닐 때만 재생 (중복 방지)
+                    if (currentGlobalIndex > 0 &&
+                       currentGlobalIndex % 2 == 0 &&
+                       currentGlobalIndex != lastSoundIndex)
+                    {
+                        SoundEventBus.Publish(SoundID.UI_Typing);
+                        lastSoundIndex = currentGlobalIndex; // 소리 낸 인덱스 기록
+                    }
                 },
                 charCount, duration
-            ).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => { isTyping = false; });
+            ).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => {
+                // 여기서는 isTyping을 끄지 않고 모든 줄이 끝난 뒤에 끕니다
+            });
 
-            yield return new WaitUntil(() => !isTyping);
+            yield return currentTypingTween.WaitForCompletion(); // 트윈이 끝날 때까지 대기
 
             fullText += trimmedLine + "\n";
             eventTextBox.text = fullText;
-            isTyping = true;
+
+            // ✨ [추가] 이 줄의 글자 수를 전체 누적 합계에 더함
+            totalCharCount += charCount;
+
             yield return new WaitForSecondsRealtime(0.5f);
         }
 
@@ -271,11 +296,24 @@ public class EventManager : MonoBehaviour
         fullTextToSkipTo = fullText + trimmedLine;
         isTyping = true;
 
+        // ✨ [추가] 소리 중복 재생 방지용 변수
+        int lastSoundIndex = -1;
+
         currentTypingTween = DOTween.To(
             () => 0,
             (charIndex) => {
                 eventTextBox.text = fullText + trimmedLine.Substring(0, charIndex);
                 ForceScrollToBottom();
+
+                // ✨ [추가] 타이핑 사운드 로직
+                // 1. 인덱스가 0보다 크고
+                // 2. 4번째 글자마다 (% 4 == 0)
+                // 3. 방금 소리 냈던 인덱스가 아닐 경우 (DOTween 업데이트 빈도 차이로 인한 중복 방지)
+                if (charIndex > 0 && charIndex % 2 == 0 && charIndex != lastSoundIndex)
+                {
+                    SoundEventBus.Publish(SoundID.UI_Typing);
+                    lastSoundIndex = charIndex; // 소리 낸 시점 기록
+                }
             },
             charCount, duration
         ).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => {

@@ -444,9 +444,14 @@ MonoBehaviour:
   damage: 50
   exp: 200
   hitEffectDuration: 0.05
+  killParticle: {fileID: 434769822512540428, guid: e332973906dafd84dba0fbf3def71087, type: 3}
   killEvent: {fileID: 11400000, guid: eeed221ac54d07740a2d865a3ca5282f, type: 2}
-  waitTimeBetweenPatterns: 2
+  killExplosionEffect: {fileID: 4892325194489509817, guid: 7281742e0645f8d4f9c06b37bfaaaef9, type: 3}
+  waitTimeAfterPatternEnd: 4
   EnragePatternThreshold: 0.2
-  patternWaitTime: 6
-  tentacle: {fileID: 6642445466029022954, guid: 2c07a90848346df419dcfec1e898831e, type: 3}
-  weakTentacle: {fileID: 6642445466029022954, guid: 2b08e312d5325ed4c81d7e5b62ed17aa, type: 3}
+  normalTentacleDamage: 50
+  normalAttackDelay: 3
+  enrageTentacleDamage: 100
+  enrageAttackDelay: 8
+  tentaclePrefab: {fileID: 6642445466029022954, guid: 2c07a90848346df419dcfec1e898831e, type: 3}
+  weakTentaclePrefab: {fileID: 6642445466029022954, guid: 2b08e312d5325ed4c81d7e5b62ed17aa, type: 3}

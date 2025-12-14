@@ -22,10 +22,15 @@ public class Spawner : MonoBehaviour
     public class BossSpawnSetting
     {
         public BossName bossName;
-        // public GameObject bossPrefab; // (PoolManager 사용 시 미사용 가능)
 
-        [Tooltip("이 보스가 등장할 위치")]
-        public Transform spawnPoint; // ✨ [추가] 보스별 스폰 위치
+        [Tooltip("이 보스가 처음 생성될 위치 (전투 위치 혹은 등장 시작 위치)")]
+        public Transform spawnPoint;
+
+        [Tooltip("등장 연출 후 도착할 위치 (비워두면 연출 없이 바로 패턴 시작)")]
+        public Transform arrivalPoint;
+
+        [Tooltip("이동하는 데 걸리는 시간")]
+        public float entranceDuration = 2.0f;
 
         public float spawnDelayAfterWarning = 4.0f;
         public float soundPlayDelay = 0.5f;
@@ -50,19 +55,16 @@ public class Spawner : MonoBehaviour
 
     [Tooltip("각 보스별 세부 설정 (위치, 딜레이 등)")]
     [SerializeField] private BossSpawnSetting[] bossSettings;
-    [SerializeField] private float bossSpawnInterval = 180.0f; // 3분
+    [SerializeField] private float bossSpawnInterval = 180.0f;
 
     [Header("Interval Settings")]
     [SerializeField] private float eliteMobSpawnInterval = 20.0f;
-    [SerializeField] private float firstEliteSpawnTime = 60.0f; // 50초
+    [SerializeField] private float firstEliteSpawnTime = 60.0f;
 
     [Header("Spawn Points")]
     [SerializeField] private Transform[] groundFrontPoints;
     [SerializeField] private Transform[] groundRearPoints;
     [SerializeField] private BoxCollider2D[] flyMobSpawnAreas;
-
-    // ✨ [삭제] 기존 배열 방식 제거 (BossSetting 내부 변수 사용)
-    // [SerializeField] private Transform[] bossSpawnPoints; 
 
     // --- 제어 플래그 ---
     private bool isSpawningEnabled = true;
@@ -90,7 +92,6 @@ public class Spawner : MonoBehaviour
         mobTimer = 0f;
         eliteMobTimer = eliteMobSpawnInterval;
 
-        // 첫 보스 스폰 시간 설정
         nextBossSpawnTime = bossSpawnInterval;
         nextBossIndex = 0;
 
@@ -123,7 +124,6 @@ public class Spawner : MonoBehaviour
             eliteMobTimer = 0f;
         }
 
-        // --- 보스 스폰 체크 ---
         if (gameTime >= nextBossSpawnTime)
         {
             SpawnNextBoss();
@@ -158,28 +158,14 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator BossSpawnRoutine(BossName bossName)
     {
-        // ✨ 설정 가져오기
         BossSpawnSetting setting = GetBossSetting(bossName);
         Debug.Log($"[Spawner] {GameManager.Instance.gameTime}초: 보스({bossName}) 등장 시퀀스!");
 
-        GameManager.Instance.AppearBoss(); // 시간 정지
+        GameManager.Instance.AppearBoss();
 
-        // ✨ [수정] 경고창 띄우기 (Setting에 있는 위치 사용)
         if (BossWarningLoopUI.Instance != null)
         {
-            if (setting.spawnPoint != null)
-            {
-                // 경고창은 UI라서 월드 좌표가 필요하면 변환이 필요할 수 있으나, 
-                // 기존 WarningSign 로직이 월드 좌표를 받는다면 그대로 사용
-                // (만약 BossWarningLoopUI가 전체 화면 연출이라면 위치 인자가 필요 없을 수도 있음)
-                // *기존 코드 문맥상 WarningLoopUI는 전체화면 연출이므로 위치 인자가 없는 ShowWarning() 사용*
-                BossWarningLoopUI.Instance.ShowWarning();
-            }
-            else
-            {
-                Debug.LogWarning($"[Spawner] {bossName}의 SpawnPoint가 설정되지 않았습니다!");
-                BossWarningLoopUI.Instance.ShowWarning(); // 위치 없어도 일단 띄움
-            }
+            BossWarningLoopUI.Instance.ShowWarning();
         }
 
         yield return new WaitForSeconds(setting.spawnDelayAfterWarning);
@@ -187,7 +173,7 @@ public class Spawner : MonoBehaviour
         SpawnBossObject(bossName);
     }
 
-    // ✨ [핵심 수정] Setting에서 위치를 가져와서 소환
+    // ✨ [수정] arrivalPoint 유무에 따른 분기 처리
     private void SpawnBossObject(BossName boss)
     {
         if (PoolManager.instance != null)
@@ -197,8 +183,8 @@ public class Spawner : MonoBehaviour
 
             if (bossPrefab != null)
             {
-                Vector3 spawnPos = transform.position; // 기본값
-
+                // 1. 스폰 위치 결정 (SpawnPoint가 없으면 Spawner 위치)
+                Vector3 spawnPos = transform.position;
                 if (setting.spawnPoint != null)
                 {
                     spawnPos = setting.spawnPoint.position;
@@ -208,12 +194,28 @@ public class Spawner : MonoBehaviour
                     Debug.LogError($"[Spawner] {boss}의 Spawn Point가 BossSettings에 할당되지 않았습니다!");
                 }
 
-                Instantiate(bossPrefab, spawnPos, Quaternion.identity);
+                // 2. 보스 생성 (SpawnPoint 위치에)
+                GameObject bossObj = Instantiate(bossPrefab, spawnPos, Quaternion.identity);
+
+                // 3. 등장 연출 처리
+                Boss bossScript = bossObj.GetComponent<Boss>();
+                if (bossScript != null)
+                {
+                    // ✨ arrivalPoint가 존재할 때만 연출 실행
+                    if (setting.arrivalPoint != null)
+                    {
+                        bossScript.StartEntranceRoutine(setting.arrivalPoint.position, setting.entranceDuration);
+                    }
+                    else
+                    {
+                        // arrivalPoint가 없으면 아무것도 안 함.
+                        // Boss.cs의 OnEnable에서 isEntranceActive = false로 초기화되므로
+                        // 즉시 패턴 로직이 작동함 (기존 방식)
+                    }
+                }
             }
         }
     }
-
-    // ... (나머지 스폰 로직 유지) ...
 
     private void SpawnBasicMobs()
     {
@@ -341,13 +343,11 @@ public class Spawner : MonoBehaviour
     public void SetRearSpawning(bool enabled) { isRearSpawnEnabled = enabled; }
     private void InitEnemyPhysics(GameObject enemy) { Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>(); if (rb != null) { rb.linearVelocity = Vector2.zero; rb.angularVelocity = 0f; } }
 
-    // ✨ Boss Setting 가져오는 함수 (이름으로 검색)
     private BossSpawnSetting GetBossSetting(BossName name)
     {
         foreach (var s in bossSettings)
             if (s.bossName == name) return s;
 
-        // 없으면 기본값 반환
         return new BossSpawnSetting { bossName = name, spawnDelayAfterWarning = 3.0f };
     }
 

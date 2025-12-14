@@ -67,6 +67,7 @@ public class GiantMaw : MonoBehaviour, IInstantiatedItem
                     // Train.ModifySpeed는 양수일 경우 회복으로 동작함
                     playerTrain.ModifySpeed(healAmount);
                     Debug.Log($"[GiantMaw] 냠냠! 적 처치로 {healAmount} 회복");
+                    SoundEventBus.Publish(SoundID.Item_GiantMaw2);
                 }
             }
 

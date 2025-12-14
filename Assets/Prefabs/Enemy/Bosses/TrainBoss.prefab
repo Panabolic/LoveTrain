@@ -205,7 +205,9 @@ MonoBehaviour:
   damage: 10000
   exp: 150
   hitEffectDuration: 0.05
+  killParticle: {fileID: 434769822512540428, guid: e332973906dafd84dba0fbf3def71087, type: 3}
   killEvent: {fileID: 11400000, guid: eeed221ac54d07740a2d865a3ca5282f, type: 2}
+  killExplosionEffect: {fileID: 4892325194489509817, guid: 7281742e0645f8d4f9c06b37bfaaaef9, type: 3}
   moveSpeed: 7
   p1KnockbackForce: 15
   p2HpRatio: 0.4

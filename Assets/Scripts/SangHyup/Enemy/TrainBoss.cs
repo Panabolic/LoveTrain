@@ -39,18 +39,19 @@ public class TrainBoss : Boss
     {
         base.Awake();
         rigid2D = GetComponent<Rigidbody2D>();
+        SoundEventBus.Publish(SoundID.Boss_TrainBossSpawn);
     }
 
     private void FixedUpdate()
     {
-        // 1. 보스가 죽었을 때 (왼쪽으로 퇴장)
+/*        // 1. 보스가 죽었을 때 (왼쪽으로 퇴장)
         if (!isAlive)
         {
             moveDirection = Vector2.left;
             float deathMoveSpeed = 30.0f;
             rigid2D.linearVelocity = new Vector2(moveDirection.x * deathMoveSpeed, rigid2D.linearVelocity.y);
             return;
-        }
+        }*/
 
         // 2. 방향 설정 (무조건 왼쪽)
         SetMoveDirection(targetRigid.position);
@@ -138,6 +139,8 @@ public class TrainBoss : Boss
     protected override IEnumerator Die()
     {
         yield return base.Die();
+        Instantiate(killExplosionEffect, transform.position, Quaternion.identity);
+        SoundEventBus.Publish(SoundID.Boss_Die);
         yield return new WaitForSeconds(2.0f); // 사망 연출 대기
 
         // ✨ [수정] 킬 이벤트(보상) 띄우기 전 엔딩 여부 체크

@@ -42,16 +42,22 @@ public enum SoundID
     Enemy_Hit,
     Enemy_Die,
     Boss_Roar,
-    Boss_Die
+    Boss_Die,
+    Item_GiantMaw2,
+    UI_Typing,
+    Boss_TrainBossSpawn
 }
 
 // 사운드 데이터 세팅용 클래스 (인스펙터 노출용)
 [System.Serializable]
 public class SoundData
 {
-    public SoundID id;           // 사운드 이름(Enum)
-    public AudioClip clip;       // 오디오 파일
-    [Range(0f, 1f)] public float volume = 1f; // 개별 볼륨
-    [Range(0.1f, 3f)] public float pitch = 1f; // 피치(음낮이)
-    public bool loop = false;    // 반복 여부 (BGM 등)
+    public SoundID id;
+    public AudioClip clip;
+    [Range(0f, 1f)] public float volume = 1f;
+    [Range(0.1f, 3f)] public float pitch = 1f;
+    public bool loop = false;
+
+    // ✨ [추가] 이 소리가 중요한 소리인지 여부 (체크하면 일반 SFX 풀이 꽉 차도 재생됨)
+    public bool isImportant = false;
 }

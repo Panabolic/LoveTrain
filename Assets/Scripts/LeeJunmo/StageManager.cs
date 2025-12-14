@@ -92,6 +92,8 @@ public class StageManager : MonoBehaviour
         // 1. 상태 변경 (모든 조작, 스폰, 아이템 정지)
         GameManager.Instance.ChangeState(GameState.StageTransition);
 
+        if (train.IsDying) return;
+
         Debug.Log($"[StageManager] Stage {CurrentStageIndex + 1} 클리어! 연출 시퀀스 시작.");
 
         // 현재 스테이지에 맞는 연출 설정 가져오기

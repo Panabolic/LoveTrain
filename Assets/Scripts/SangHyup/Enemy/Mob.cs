@@ -31,9 +31,6 @@ public class Mob : Enemy
     protected override void Start()
     {
         base.Start();
-
-        // 초기화
-        deathToDeactive = 3.0f; // Die 애니메이션 추가 전까진 임시로
     }
 
     private void FixedUpdate()
@@ -187,7 +184,7 @@ public class Mob : Enemy
 
         yield return base.Die(); // base.Die()가 isAlive = false 처리
 
-        yield return new WaitForSeconds(1.0f); // 1초 대기
+        SoundEventBus.Publish(SoundID.Enemy_Die);
 
         sprite.enabled = false;
         gameObject.SetActive(false);

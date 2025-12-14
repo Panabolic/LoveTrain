@@ -1,30 +1,39 @@
-using UnityEngine;
-using UnityEngine.SceneManagement; // ¾À °ü¸®¸¦ À§ÇØ ÇÊ¼ö!
+ï»¿using UnityEngine;
+using UnityEngine.SceneManagement; // ì”¬ ê´€ë¦¬ë¥¼ ìœ„í•´ í•„ìˆ˜!
 
 public class StartMenuManager : MonoBehaviour
 {
-    [Header("·ÎµåÇÒ ¾À ¼³Á¤")]
-    [Tooltip("ºôµå ¼³Á¤(Build Settings)¿¡ µî·ÏµÈ ÇÃ·¹ÀÌ ¾ÀÀÇ ÀÌ¸§À» Á¤È®È÷ ÀÔ·ÂÇÏ¼¼¿ä.")]
-    [SerializeField] private string playSceneName = "PlayScene"; // ¿©±â¿¡ ½ÇÁ¦ °ÔÀÓ ¾À ÀÌ¸§À» ÀÔ·Â
+    [Header("ë¡œë“œí•  ì”¬ ì„¤ì •")]
+    [Tooltip("ë¹Œë“œ ì„¤ì •(Build Settings)ì— ë“±ë¡ëœ í”Œë ˆì´ ì”¬ì˜ ì´ë¦„ì„ ì •í™•íˆ ì…ë ¥í•˜ì„¸ìš”.")]
+    [SerializeField] private string playSceneName = "PlayScene"; // ì—¬ê¸°ì— ì‹¤ì œ ê²Œì„ ì”¬ ì´ë¦„ì„ ì…ë ¥
 
     /// <summary>
-    /// °ÔÀÓ ½ÃÀÛ ¹öÆ°À» ´­·¶À» ¶§ È£ÃâµÉ ÇÔ¼öÀÔ´Ï´Ù.
+    /// ê²Œì„ ì‹œì‘ ë²„íŠ¼ì„ ëˆŒë €ì„ ë•Œ í˜¸ì¶œë  í•¨ìˆ˜ì…ë‹ˆë‹¤.
     /// </summary>
     public void LoadPlayScene()
     {
-        // Debug.Log($"ÇÃ·¹ÀÌ ¾À '{playSceneName}'À» ·ÎµåÇÕ´Ï´Ù...");
+        // Debug.Log($"í”Œë ˆì´ ì”¬ '{playSceneName}'ì„ ë¡œë“œí•©ë‹ˆë‹¤...");
         SceneManager.LoadScene(playSceneName);
     }
 
+    // âœ¨ [ì¶”ê°€] íƒ€ì´í‹€ í™”ë©´ì—ì„œ 'ê²Œì„ ì‹œì‘' ë²„íŠ¼ì„ ëˆ„ë¥´ë©´ í˜¸ì¶œí•  í•¨ìˆ˜
+    // ì´ í•¨ìˆ˜ê°€ í˜¸ì¶œë˜ë©´ Start ìƒíƒœê°€ ë˜ê³  -> BGMì´ êº¼ì§‘ë‹ˆë‹¤.
+    public void EnterStartState()
+    {
+        // ì”¬ ì „í™˜ì´ í•„ìš”í•˜ë‹¤ë©´ ì—¬ê¸°ì„œ SceneManager.LoadScene("MainGame") ë“±ì„ í˜¸ì¶œ
+        // ì”¬ ì „í™˜ í›„ ìƒíƒœ ë³€ê²½
+        GameManager.Instance.ChangeState(GameState.Start);
+    }
+
     /// <summary>
-    /// (º¸³Ê½º) °ÔÀÓ Á¾·á ¹öÆ°À» ¸¸µé °æ¿ì »ç¿ëÇÒ ÇÔ¼öÀÔ´Ï´Ù.
+    /// (ë³´ë„ˆìŠ¤) ê²Œì„ ì¢…ë£Œ ë²„íŠ¼ì„ ë§Œë“¤ ê²½ìš° ì‚¬ìš©í•  í•¨ìˆ˜ì…ë‹ˆë‹¤.
     /// </summary>
     public void QuitGame()
     {
-        // Debug.Log("°ÔÀÓÀ» Á¾·áÇÕ´Ï´Ù...");
+        // Debug.Log("ê²Œì„ì„ ì¢…ë£Œí•©ë‹ˆë‹¤...");
         Application.Quit();
 
-        // (¿¡µğÅÍ¿¡¼­´Â ÀÛµ¿ ¾È ÇÔ, ºôµåµÈ °ÔÀÓ¿¡¼­¸¸ ÀÛµ¿)
+        // (ì—ë””í„°ì—ì„œëŠ” ì‘ë™ ì•ˆ í•¨, ë¹Œë“œëœ ê²Œì„ì—ì„œë§Œ ì‘ë™)
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif

@@ -10,14 +10,16 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private List<SoundData> soundList;
 
     [Header("설정")]
-    [SerializeField] private int sfxPoolSize = 15; // 효과음 동시 재생 한계
-    [SerializeField] private float crossFadeDuration = 1.0f; // ✨ BGM 전환 시간
+    [SerializeField] private int sfxPoolSize = 15;        // 일반 효과음 (총알, 피격 등) 동시 재생 한계
+    [SerializeField] private int importantSfxPoolSize = 5; // ✨ 중요 효과음 (경고, 보스 등) 동시 재생 한계
+    [SerializeField] private float crossFadeDuration = 1.0f; // BGM 전환 시간
 
     // 빠른 검색을 위한 딕셔너리
     private Dictionary<SoundID, SoundData> soundMap = new Dictionary<SoundID, SoundData>();
 
     // 오디오 소스 풀링
-    private List<AudioSource> sfxSources;
+    private List<AudioSource> sfxSources;           // 일반 풀
+    private List<AudioSource> importantSfxSources;  // ✨ 중요 풀
     private AudioSource bgmSource;
 
     private float masterBgmVolume = 1f;
@@ -54,18 +56,29 @@ public class SoundManager : MonoBehaviour
         bgmSource.loop = true;
         bgmSource.playOnAwake = false;
 
-        // 3. SFX 풀 생성
+        // 3. 일반 SFX 풀 생성
         sfxSources = new List<AudioSource>();
-        GameObject sfxGroup = new GameObject("SFX_Pool");
+        GameObject sfxGroup = new GameObject("SFX_Pool_Normal");
         sfxGroup.transform.SetParent(transform);
+        CreatePool(sfxGroup.transform, sfxSources, sfxPoolSize, "SFX_Normal");
 
-        for (int i = 0; i < sfxPoolSize; i++)
+        // ✨ 4. 중요 SFX 풀 생성 (VIP 전용)
+        importantSfxSources = new List<AudioSource>();
+        GameObject importantGroup = new GameObject("SFX_Pool_Important");
+        importantGroup.transform.SetParent(transform);
+        CreatePool(importantGroup.transform, importantSfxSources, importantSfxPoolSize, "SFX_Important");
+    }
+
+    // 풀 생성 헬퍼 함수
+    private void CreatePool(Transform parent, List<AudioSource> poolList, int size, string namePrefix)
+    {
+        for (int i = 0; i < size; i++)
         {
-            GameObject go = new GameObject($"SFX_{i}");
-            go.transform.SetParent(sfxGroup.transform);
+            GameObject go = new GameObject($"{namePrefix}_{i}");
+            go.transform.SetParent(parent);
             AudioSource source = go.AddComponent<AudioSource>();
             source.playOnAwake = false;
-            sfxSources.Add(source);
+            poolList.Add(source);
         }
     }
 
@@ -83,8 +96,7 @@ public class SoundManager : MonoBehaviour
             // 1. 이벤트 구독
             GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
 
-            // ✨ [핵심 수정] 2. 게임 시작 시점의 상태를 강제로 한 번 적용!
-            // (이미 Title 상태라서 이벤트가 발생 안 했거나, 놓쳤을 경우를 대비)
+            // 2. 게임 시작 시점의 상태를 강제로 한 번 적용
             HandleGameStateChanged(GameManager.Instance.CurrentState);
         }
     }
@@ -129,18 +141,14 @@ public class SoundManager : MonoBehaviour
                 PlaySoundHandler(SoundID.BGM_GameOver, Vector3.zero);
                 break;
 
-            // ✨ [핵심] BGM을 유지해야 하는 상태들
-            // 여기에 포함된 상태가 되면, SoundManager는 아무런 명령도 내리지 않습니다.
-            // 따라서 이전에 틀어져 있던 BGM(Playing이든 Boss든)이 계속 이어집니다.
-            case GameState.Event:           // 레벨업, 보상 창
-            case GameState.Pause:           // 일시정지
-            case GameState.StageTransition: // 스테이지 이동 중
-                // 아무것도 안 함 (break) -> 기존 BGM 유지됨
+            // BGM 유지 상태
+            case GameState.Event:
+            case GameState.Pause:
+            case GameState.StageTransition:
                 break;
 
             case GameState.Ending:
-                // 엔딩 BGM이 있다면 재생, 없다면 Stop
-                // PlaySoundHandler(SoundID.BGM_Ending, Vector3.zero);
+                // 필요 시 엔딩 BGM 재생
                 break;
         }
     }
@@ -148,7 +156,7 @@ public class SoundManager : MonoBehaviour
     // 실제 사운드 재생 로직 (이벤트 핸들러)
     private void PlaySoundHandler(SoundID id, Vector3 position)
     {
-        // ✨ [추가] BGM 정지 명령 처리
+        // BGM 정지 명령 처리
         if (id == SoundID.BGM_Stop)
         {
             StopBGM();
@@ -171,28 +179,28 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    // ✨ [핵심 수정] PlayBGM 함수 (DOTween 적용)
+    // PlayBGM 함수 (DOTween 적용)
     private void PlayBGM(SoundData data)
     {
-        // 이미 같은 곡이 재생 중이면 볼륨이나 피치만 갱신하고 종료
+        // 이미 같은 곡이 재생 중이면 종료
         if (bgmSource.clip == data.clip && bgmSource.isPlaying) return;
 
         // 목표 볼륨 계산
         float targetVolume = data.volume * masterBgmVolume;
-        currentBgmClipVolume = data.volume; // 클립 고유 볼륨 기억
+        currentBgmClipVolume = data.volume;
 
-        // 처음 재생(클립 없음)이면 바로 재생
+        // 처음 재생이면 바로 재생
         if (bgmSource.clip == null)
         {
             bgmSource.clip = data.clip;
-            bgmSource.volume = 0f; // 0에서 시작
+            bgmSource.volume = 0f;
             bgmSource.pitch = data.pitch;
             bgmSource.Play();
             bgmSource.DOFade(targetVolume, crossFadeDuration).SetUpdate(true);
             return;
         }
 
-        // 1. 페이드 아웃 (기존 곡 줄이기)
+        // 1. 페이드 아웃
         bgmSource.DOFade(0f, crossFadeDuration).SetUpdate(true).OnComplete(() =>
         {
             // 2. 곡 교체 및 재생
@@ -200,38 +208,48 @@ public class SoundManager : MonoBehaviour
             bgmSource.pitch = data.pitch;
             bgmSource.Play();
 
-            // 3. 페이드 인 (새 곡 키우기)
+            // 3. 페이드 인
             bgmSource.DOFade(targetVolume, crossFadeDuration).SetUpdate(true);
         });
     }
 
-    // ✨ [추가] BGM 정지 메서드 (외부에서 직접 호출 가능)
+    // BGM 정지 메서드
     public void StopBGM()
     {
-        // 재생 중이 아니면 무시
         if (bgmSource == null || !bgmSource.isPlaying) return;
 
-        // 기존 트윈 충돌 방지
         bgmSource.DOKill();
-
-        // 부드럽게 볼륨 0으로 줄이고 정지
         bgmSource.DOFade(0f, crossFadeDuration)
-            .SetUpdate(true) // TimeScale 무시
+            .SetUpdate(true)
             .OnComplete(() =>
             {
                 bgmSource.Stop();
-                bgmSource.clip = null; // 클립 비우기 (선택사항)
+                bgmSource.clip = null;
             });
     }
 
-    // PlaySFX 함수 (기존 로직 유지)
+    // ✨ [핵심 수정] PlaySFX 함수: 중요도에 따라 다른 풀 사용
     private void PlaySFX(SoundData data, Vector3 position)
     {
-        AudioSource source = GetAvailableSFXSource();
+        AudioSource source;
+
+        // 중요 사운드인가? -> 중요 풀 사용
+        if (data.isImportant)
+        {
+            source = GetAvailableSource(importantSfxSources);
+        }
+        // 일반 사운드인가? -> 일반 풀 사용
+        else
+        {
+            source = GetAvailableSource(sfxSources);
+        }
 
         source.clip = data.clip;
         source.volume = data.volume * masterSfxVolume;
         source.pitch = data.pitch;
+
+        // 중요 사운드라면 루프 설정도 반영 (필요시)
+        source.loop = data.loop;
 
         if (position != Vector3.zero)
         {
@@ -246,14 +264,31 @@ public class SoundManager : MonoBehaviour
         source.Play();
     }
 
+    // ✨ [수정] 소스 가져오는 로직 (일반/중요 풀 공용)
+    private AudioSource GetAvailableSource(List<AudioSource> sourcePool)
+    {
+        // 1. 놀고 있는 소스 찾기
+        foreach (var source in sourcePool)
+        {
+            if (!source.isPlaying) return source;
+        }
+
+        // 2. 다 재생 중이면? 가장 오래된 것(리스트 맨 앞)을 뺏어옴
+        AudioSource recycleSource = sourcePool[0];
+        sourcePool.RemoveAt(0);
+        sourcePool.Add(recycleSource); // 맨 뒤로 보냄 (최신 사용됨 처리)
+
+        // 강제 중단 후 사용
+        recycleSource.Stop();
+        return recycleSource;
+    }
+
     // 옵션 창에서 호출할 함수들
     public void SetBGMVolume(float volume)
     {
         masterBgmVolume = volume;
         if (bgmSource != null && bgmSource.isPlaying)
         {
-            // 페이드 중일 수도 있으니 DOKill하고 즉시 적용하거나, 
-            // 현재 진행중인 트윈이 없다면 바로 적용
             bgmSource.DOKill();
             bgmSource.volume = currentBgmClipVolume * masterBgmVolume;
         }
@@ -262,19 +297,6 @@ public class SoundManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         masterSfxVolume = volume;
-    }
-
-    private AudioSource GetAvailableSFXSource()
-    {
-        foreach (var source in sfxSources)
-        {
-            if (!source.isPlaying) return source;
-        }
-
-        AudioSource recycleSource = sfxSources[0];
-        sfxSources.RemoveAt(0);
-        sfxSources.Add(recycleSource);
-        return recycleSource;
     }
 
     private void OnValidate()

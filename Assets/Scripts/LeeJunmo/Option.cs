@@ -28,8 +28,13 @@ public class Option : MonoBehaviour
             {
                 if (GameManager.Instance != null)
                 {
-                    // 옵션 창을 닫고(TimeScale 복구 등) 재시작
-                    CloseOption();
+                    // ✨ [중요] 씬을 재시작하기 전에 반드시 시간을 흐르게 만들어야 함
+                    Time.timeScale = 1.0f;
+
+                    // CloseOption()은 UI만 끄는 역할이라면 호출해도 되지만, 
+                    // 씬이 넘어가면 어차피 UI도 사라지므로 굳이 호출 안 해도 됩니다.
+                    // GameManager.Instance.ResumeGame(); // ResumeGame 안에 TimeScale=1이 있다면 이걸 호출
+
                     GameManager.Instance.RestartGame();
                 }
             });

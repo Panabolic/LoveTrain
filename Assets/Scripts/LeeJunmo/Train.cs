@@ -416,4 +416,5 @@ public class Train : MonoBehaviour
     public float GetDeathSpeed() { return deathSpeedThreshold; }
 
     public bool IsDead { get { return isDead; } }
+    public bool IsDying { get { return isDying; } }
 }

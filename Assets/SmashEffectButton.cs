@@ -51,6 +51,7 @@ public class SmashEffectButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private void Awake()
     {
         layoutGroup = GetComponent<HorizontalLayoutGroup>();
+        DOTween.PlayAll();                  // DOTween 엔진 일시정지 해제
 
         if (trainObj != null)
         {
