@@ -157,12 +157,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec27a36568152e4698effbf489181f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mob
-  hp: 80
+  hp: 190
   damage: 30
   exp: 1.5
   hitEffectDuration: 0.05
   killParticle: {fileID: 434769822512540428, guid: e9444e26ed7ddb841be077bcdb687714, type: 3}
-  moveSpeed: 2.6
+  moveSpeed: 2.4
   isEliteMob: 0
 --- !u!198 &2139980652838804398
 ParticleSystem:

@@ -199,7 +199,7 @@ MonoBehaviour:
   exp: 20
   hitEffectDuration: 0.05
   killParticle: {fileID: 434769822512540428, guid: e9444e26ed7ddb841be077bcdb687714, type: 3}
-  moveSpeed: 2
+  moveSpeed: 1.7
   isEliteMob: 1
   diveDistance: 20
 --- !u!199 &8405664684847944678

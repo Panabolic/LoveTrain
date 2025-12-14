@@ -34,14 +34,14 @@ MonoBehaviour:
   - description: "\uADF8\uB8F9 \uC124\uBA85"
     outcomes:
     - weight: 100
-      effectLogic: {fileID: 11400000, guid: 38f1bdf6884ed864c890ececaeadf1cd, type: 2}
+      effectLogic: {fileID: 11400000, guid: de7ee38087513794bad37d3c1d21b325, type: 2}
       parameters:
         intValue: 10
         intValue2: 0
-        floatValue: 2
+        floatValue: 1.5
         floatValue2: 0
         soReference: {fileID: 0}
-        prefabReference: {fileID: 4821721425770472742, guid: 1017f7e8dfc932a47ac6d98cdd0c8ac2, type: 3}
+        prefabReference: {fileID: 6071565328356542251, guid: 1f56e65633c42b9448e40b0d61c93036, type: 3}
         boolValue: 0
       outputSettings:
         includeDefaultText: 1

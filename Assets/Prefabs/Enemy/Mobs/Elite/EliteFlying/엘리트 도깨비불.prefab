@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d44acb619053149adf1869b80b20ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlyMob
-  hp: 450
+  hp: 550
   damage: 40
   exp: 20
   hitEffectDuration: 0.05

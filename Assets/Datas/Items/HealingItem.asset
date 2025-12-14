@@ -32,8 +32,8 @@ MonoBehaviour:
   killCountCondition: 320000002300000014000000
   healPercentByLevel:
   - 0.03
-  - 0.03
-  - 0.03
+  - 0.04
+  - 0.05
   countSprites:
   - {fileID: 1668229263, guid: cd620b777c4e81e4c88950e139127241, type: 3}
   - {fileID: 1216177569, guid: cd620b777c4e81e4c88950e139127241, type: 3}
