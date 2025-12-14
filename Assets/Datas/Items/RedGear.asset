@@ -23,8 +23,8 @@ MonoBehaviour:
   itemSimpleScript: "\uACF5\uACA9\uB825 \uC99D\uAC00"
   cooldownTime: 0
   DamageByLevel:
+  - 5
   - 10
   - 20
   - 30
   - 40
-  - 50

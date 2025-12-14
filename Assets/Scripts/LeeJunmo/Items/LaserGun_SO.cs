@@ -7,7 +7,7 @@ public class LaserGun_SO : Item_SO
     // ✨ [추가] 데미지 비율 설정 (기본값 0.37f 약 1/2.7)
     [Header("밸런스 설정")]
     [Tooltip("기본 총기 데미지 대비 레이저 틱당 데미지 비율 (예: 0.37 = 37%)")]
-    public float damageRatio = 0.37f;
+    public float damageRatio = 0.34f;
 
     [Header("레이저 세부 설정")]
     public float[] durationByLevel = { 1f, 3f, 5f };

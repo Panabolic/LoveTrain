@@ -29,12 +29,12 @@ MonoBehaviour:
   damageRatio: 0.37
   durationByLevel:
   - 1
-  - 2.5
-  - 3.5
+  - 2
+  - 3
   tickRateByLevel:
-  - 0.1
-  - 0.1
-  - 0.1
+  - 0.15
+  - 0.15
+  - 0.15
   cooldownByLevel:
   - 1.2
   - 1.1

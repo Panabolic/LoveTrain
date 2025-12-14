@@ -27,8 +27,8 @@ MonoBehaviour:
   cooldownTime: 0
   damageByLevel:
   - 50
-  - 70
-  - 100
+  - 65
+  - 80
   cooldownByLevel:
   - 0.6
   - 0.5

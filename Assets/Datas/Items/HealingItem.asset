@@ -26,14 +26,14 @@ MonoBehaviour:
     \uD68C\uBCF5"
   cooldownTime: 0
   maxSpeedBonusByLevel:
-  - 0
+  - 50
   - 100
-  - 200
+  - 150
   killCountCondition: 320000002300000014000000
   healPercentByLevel:
-  - 0.05
-  - 0.05
-  - 0.05
+  - 0.03
+  - 0.03
+  - 0.03
   countSprites:
   - {fileID: 1668229263, guid: cd620b777c4e81e4c88950e139127241, type: 3}
   - {fileID: 1216177569, guid: cd620b777c4e81e4c88950e139127241, type: 3}
