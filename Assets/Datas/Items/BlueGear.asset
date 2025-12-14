@@ -19,7 +19,7 @@ MonoBehaviour:
   spritesByLevel: []
   controllersByLevel: []
   MaxUpgrade: 5
-  itemScript: "\uACF5\uACA9\uC18D\uB3C4 {AttackSpeed}% \uB9CC\uD07C \uC99D\uAC00."
+  itemScript: "\uACF5\uACA9\uC18D\uB3C4 {AttackSpeed}%\uB9CC\uD07C \uC99D\uAC00."
   itemSimpleScript: "\uACF5\uACA9\uC18D\uB3C4 \uC99D\uAC00"
   cooldownTime: 0
   AttackSpeedByLevel:

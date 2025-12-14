@@ -4473,7 +4473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7821,7 +7821,7 @@ MonoBehaviour:
     flyEliteMinIndex: 0
     flyEliteMaxIndex: 6
     spawnInterval: 0.1
-  bossSequence: 0000000001000000000000000100000000000000
+  bossSequence: 0100000001000000000000000100000000000000
   bossSettings:
   - bossName: 0
     spawnPoint: {fileID: 591232702}
@@ -24554,13 +24554,13 @@ MonoBehaviour:
     isImportant: 0
   - id: 1
     clip: {fileID: 8300000, guid: e4bfed4434a05a54bb7ef431720a3ac9, type: 3}
-    volume: 0.069
+    volume: 0.109
     pitch: 1
     loop: 1
     isImportant: 0
   - id: 2
     clip: {fileID: 8300000, guid: b647f572ecffd1149b706d64808c3dca, type: 3}
-    volume: 0.068
+    volume: 0.098
     pitch: 1
     loop: 1
     isImportant: 0
