@@ -122,4 +122,12 @@ public class CreditEnemy : Enemy
         yield return null;
         Destroy(gameObject);
     }
+
+    protected override void OnDisable()
+    {
+        if (PoolManager.instance != null)
+        {
+            PoolManager.instance.UnregisterEnemy(this);
+        }
+    }
 }

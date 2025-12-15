@@ -123,7 +123,7 @@ TextureImporter:
         width: 96
         height: 86
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -145,7 +145,7 @@ TextureImporter:
         width: 108
         height: 87
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -164,10 +164,10 @@ TextureImporter:
         serializedVersion: 2
         x: 362
         y: 0
-        width: 108
+        width: 116
         height: 87
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -184,34 +184,12 @@ TextureImporter:
       name: soggoth-Sheet_3
       rect:
         serializedVersion: 2
-        x: 469
-        y: 0
-        width: 10
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 096c3177122f55d30800000000000000
-      internalID: 4419704834879637136
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: soggoth-Sheet_4
-      rect:
-        serializedVersion: 2
         x: 537
         y: 0
-        width: 102
+        width: 111
         height: 87
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -224,33 +202,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: soggoth-Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 639
-        y: 0
-        width: 10
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 69ab0adc4b4066790800000000000000
-      internalID: -7537331751767459178
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 8fed387041029f6409a47cd2476b3536
     internalID: 0
     vertices: []
     indices: 
@@ -263,8 +219,7 @@ TextureImporter:
       soggoth-Sheet_0: -4968733328248225982
       soggoth-Sheet_1: -2308323373551488136
       soggoth-Sheet_2: -1501194437873639716
-      soggoth-Sheet_3: 4419704834879637136
-      soggoth-Sheet_4: 2677084162646460521
+      soggoth-Sheet_3: 2677084162646460521
       soggoth-Sheet_5: -7537331751767459178
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

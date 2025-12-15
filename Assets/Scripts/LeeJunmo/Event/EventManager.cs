@@ -142,7 +142,7 @@ public class EventManager : MonoBehaviour
         {
             string trimmedLine = line.Trim();
             int charCount = trimmedLine.Length;
-            float duration = charCount * 0.05f;
+            float duration = charCount * 0.025f;
 
             currentTypingTween = DOTween.To(
                 () => 0,
@@ -291,7 +291,7 @@ public class EventManager : MonoBehaviour
 
         string trimmedLine = textToAnimate.Trim();
         int charCount = trimmedLine.Length;
-        float duration = charCount * 0.05f;
+        float duration = charCount * 0.025f;
 
         fullTextToSkipTo = fullText + trimmedLine;
         isTyping = true;
