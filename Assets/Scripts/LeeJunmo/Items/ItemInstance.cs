@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class ItemInstance
+public class ItemInstance : IItemCooldownView
 {
     public Item_SO itemData;
     public float currentCooldown;
@@ -9,6 +9,19 @@ public class ItemInstance
     private GameObject instantiatedObject = null; // 실체화된 오브젝트
 
     public int currentUpgrade = 1;
+
+    public bool HasCooldown
+    {
+        get
+        {
+            if (HasItemCooldown())
+            {
+                return true;
+            }
+
+            return TryGetInstantiatedCooldownView(out IItemCooldownView cooldownView) && cooldownView.HasCooldown;
+        }
+    }
 
     public ItemInstance(Item_SO data)
     {
@@ -32,6 +45,7 @@ public class ItemInstance
         // 쿨타임이 없는 아이템(패시브 등)은 무시
         float levelMaxCooldown = itemData.GetCooldownForLevel(currentUpgrade);
         if (levelMaxCooldown <= 0f) return;
+        maxCooldown = levelMaxCooldown;
 
         // 1. 수동 모드 대기 상태(float.MaxValue)가 아니라면 시간 감소
         // (float.MaxValue인 경우는 장판이 깔려있는 상태이므로 시간을 줄이지 않음)
@@ -60,9 +74,69 @@ public class ItemInstance
             {
                 // [자동 모드] (예: 심장)
                 // 즉시 다음 쿨타임 적용
+                maxCooldown = levelMaxCooldown;
                 currentCooldown = levelMaxCooldown;
             }
         }
+    }
+
+    public float GetCooldownFillAmount()
+    {
+        if (HasItemCooldown())
+        {
+            return GetItemCooldownFillAmount();
+        }
+
+        if (TryGetInstantiatedCooldownView(out IItemCooldownView cooldownView) && cooldownView.HasCooldown)
+        {
+            return cooldownView.GetCooldownFillAmount();
+        }
+
+        return 0f;
+    }
+
+    private bool HasItemCooldown()
+    {
+        if (itemData == null)
+        {
+            return false;
+        }
+
+        return itemData.GetCooldownForLevel(currentUpgrade) > 0f;
+    }
+
+    private float GetItemCooldownFillAmount()
+    {
+        float levelCooldown = itemData.GetCooldownForLevel(currentUpgrade);
+        if (levelCooldown <= 0f)
+        {
+            return 0f;
+        }
+
+        if (currentCooldown == float.MaxValue)
+        {
+            return 1f;
+        }
+
+        if (currentCooldown <= 0f)
+        {
+            return 0f;
+        }
+
+        float cooldownDuration = maxCooldown > 0f ? maxCooldown : levelCooldown;
+        return ItemCooldownFill.FromRemaining(currentCooldown, cooldownDuration);
+    }
+
+    private bool TryGetInstantiatedCooldownView(out IItemCooldownView cooldownView)
+    {
+        cooldownView = null;
+        if (instantiatedObject == null)
+        {
+            return false;
+        }
+
+        cooldownView = instantiatedObject.GetComponentInChildren<IItemCooldownView>(true);
+        return cooldownView != null;
     }
 
     // ✨ [추가됨] 외부(장판)에서 호출하여 쿨타임을 강제로 시작시키는 메서드

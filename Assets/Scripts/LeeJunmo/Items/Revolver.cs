@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Revolver : MonoBehaviour, IInstantiatedItem
+public class Revolver : MonoBehaviour, IInstantiatedItem, IItemCooldownView
 {
     private Revolver_SO itemData;
 
@@ -16,6 +16,18 @@ public class Revolver : MonoBehaviour, IInstantiatedItem
 
     private float fireTimer = 0f;
     private bool isFiring = false;
+
+    public bool HasCooldown => currentCooldown > 0f;
+
+    public float GetCooldownFillAmount()
+    {
+        if (isFiring)
+        {
+            return 1f;
+        }
+
+        return ItemCooldownFill.FromRemaining(fireTimer, currentCooldown);
+    }
 
     private void Awake()
     {

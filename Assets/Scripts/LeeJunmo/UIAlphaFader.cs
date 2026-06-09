@@ -15,15 +15,11 @@ public class UIAlphaFader : MonoBehaviour
     [SerializeField] private bool startTransparent = true;
 
     private CanvasGroup canvasGroup;
+    private bool hasInitializedCanvasGroup;
 
     private void Awake()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
-        gameObject.SetActive(true);
-        if (startTransparent)
-        {
-            canvasGroup.alpha = 0f;
-        }
+        EnsureCanvasGroup();
     }
 
     private void Start()
@@ -43,10 +39,13 @@ public class UIAlphaFader : MonoBehaviour
     /// </summary>
     public Tween FadeIn(float duration)
     {
-        // 1. (선택) 투명도가 1인 상태에서 시작하지 않도록 강제 설정할 수도 있음
-        // canvasGroup.alpha = 0f; 
+        EnsureCanvasGroup();
+        if (!gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+        }
 
-        // 2. DOTween 실행 및 반환
+        canvasGroup.DOKill();
         return canvasGroup.DOFade(1f, duration).SetUpdate(true);
     }
 
@@ -55,14 +54,42 @@ public class UIAlphaFader : MonoBehaviour
     /// </summary>
     public Tween FadeOut(float duration)
     {
-        // 1. (선택) 투명도가 0인 상태에서 시작하지 않도록 강제 설정할 수도 있음
-        // canvasGroup.alpha = 1f;
+        EnsureCanvasGroup();
+        if (!gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+        }
 
-        // 2. DOTween 실행 및 반환
+        canvasGroup.DOKill();
         return canvasGroup.DOFade(0f, duration).SetUpdate(true);
     }
 
     // (매개변수 없는 버전 - 기본값 사용)
     public void FadeIn() => FadeIn(defaultDuration);
     public void FadeOut() => FadeOut(defaultDuration);
+
+    private void EnsureCanvasGroup()
+    {
+        if (canvasGroup == null)
+        {
+            canvasGroup = GetComponent<CanvasGroup>();
+        }
+
+        if (canvasGroup == null)
+        {
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+
+        if (hasInitializedCanvasGroup)
+        {
+            return;
+        }
+
+        if (startTransparent)
+        {
+            canvasGroup.alpha = 0f;
+        }
+
+        hasInitializedCanvasGroup = true;
+    }
 }

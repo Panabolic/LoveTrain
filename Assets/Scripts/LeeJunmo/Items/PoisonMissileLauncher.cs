@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PoisonMissileLauncher : MonoBehaviour, IInstantiatedItem
+public class PoisonMissileLauncher : MonoBehaviour, IInstantiatedItem, IItemCooldownView
 {
     private PoisonMissileLauncher_SO itemData;
     // private Gun playerGun; // <-- [삭제] 총기 참조 필요 없음 (독립 스탯 사용)
@@ -27,6 +27,13 @@ public class PoisonMissileLauncher : MonoBehaviour, IInstantiatedItem
     // 내부 변수
     private float cooldownTimer = 0f;
     private int currentSpawnIndex = 0;
+
+    public bool HasCooldown => cooldown > 0f;
+
+    public float GetCooldownFillAmount()
+    {
+        return ItemCooldownFill.FromRemaining(cooldownTimer, cooldown);
+    }
 
     private void Awake()
     {

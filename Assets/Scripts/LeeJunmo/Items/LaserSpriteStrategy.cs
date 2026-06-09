@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class LaserSpriteStrategy : IWeaponStrategy
+public class LaserSpriteStrategy : IWeaponStrategy, IItemCooldownView
 {
     private Gun gun;
     private GameObject laserInstance;
@@ -16,6 +16,18 @@ public class LaserSpriteStrategy : IWeaponStrategy
     private float currentDurationTimer = 0f;
     private float currentCooldownTimer = 0f;
     private bool isFiring = false;
+
+    public bool HasCooldown => cooldownTime > 0f;
+
+    public float GetCooldownFillAmount()
+    {
+        if (isFiring)
+        {
+            return 1f;
+        }
+
+        return ItemCooldownFill.FromRemaining(currentCooldownTimer, cooldownTime);
+    }
 
     public void Initialize(Gun gunController, GunStats stats)
     {

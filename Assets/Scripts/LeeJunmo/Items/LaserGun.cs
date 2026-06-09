@@ -1,9 +1,22 @@
 ﻿using UnityEngine;
 
-public class LaserGun : MonoBehaviour, IInstantiatedItem
+public class LaserGun : MonoBehaviour, IInstantiatedItem, IItemCooldownView
 {
     private LaserGun_SO itemData;
     private Gun gunController;
+    private LaserSpriteStrategy laserStrategy;
+
+    public bool HasCooldown => laserStrategy != null && laserStrategy.HasCooldown;
+
+    public float GetCooldownFillAmount()
+    {
+        if (laserStrategy == null)
+        {
+            return 0f;
+        }
+
+        return laserStrategy.GetCooldownFillAmount();
+    }
 
     public void Initialize(LaserGun_SO data, GameObject user)
     {
@@ -40,10 +53,10 @@ public class LaserGun : MonoBehaviour, IInstantiatedItem
         gunController.ChangeBaseStats(newBaseStats);
 
         // 3. 전략 설정
-        LaserSpriteStrategy strategy = new LaserSpriteStrategy();
-        strategy.SetLaserStats(newDuration, newCooldown, newlaserScale);
+        laserStrategy = new LaserSpriteStrategy();
+        laserStrategy.SetLaserStats(newDuration, newCooldown, newlaserScale);
 
-        gunController.SetWeapon(strategy);
+        gunController.SetWeapon(laserStrategy);
 
         Debug.Log($"레이저 세팅 완료: 최종데미지 {gunController.CurrentStats.damage}");
     }

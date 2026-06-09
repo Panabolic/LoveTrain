@@ -10,6 +10,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     // [SerializeField]를 제거하고 private으로 변경
     private Image itemIcon;  // 아이템 아이콘 (첫 번째 자식)
     private Image levelIcon; // 레벨 아이콘 (두 번째 자식)
+    private Image cooldownFill;
 
     [Header("데이터 참조")]
     // [1단계]에서 만든 LevelSpriteAtlas 에셋을 여기에 연결
@@ -22,17 +23,10 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     /// </summary>
     private void Awake()
     {
-        // 1. "첫 번째 자식" (인덱스 0)에서 Image 컴포넌트를 찾습니다.
-        if (transform.childCount > 0)
-        {
-            itemIcon = transform.GetChild(0).GetComponent<Image>();
-        }
-
-        // 2. "두 번째 자식" (인덱스 1)에서 Image 컴포넌트를 찾습니다.
-        if (transform.childCount > 1)
-        {
-            levelIcon = transform.GetChild(1).GetComponent<Image>();
-        }
+        itemIcon = FindChildImage("ItemIcon") ?? GetChildImage(0);
+        levelIcon = FindChildImage("Level") ?? GetChildImage(1);
+        cooldownFill = FindChildImage("CoolDownFill") ?? GetChildImage(2);
+        SetCooldownFill(0f);
 
         // 3. (오류 방지) 혹시나 못 찾았을 경우를 대비해 경고
         if (itemIcon == null)
@@ -50,9 +44,12 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     /// </summary>
     public void UpdateSlot(ItemInstance instance)
     {
+        this.currentInstance = instance;
+
         // (안전 장치) Awake에서 아이콘을 못 찾았으면 오류 방지
         if (itemIcon == null || levelIcon == null)
         {
+            RefreshCooldownFill();
             return;
         }
 
@@ -61,10 +58,9 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             itemIcon.enabled = false;
             levelIcon.enabled = false;
+            RefreshCooldownFill();
             return;
         }
-
-        this.currentInstance = instance;
 
         // 2. '아이템 아이콘' 갱신
         itemIcon.sprite = instance.itemData.iconSprite;
@@ -93,6 +89,70 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             levelIcon.enabled = false;
         }
+
+        RefreshCooldownFill();
+    }
+
+    private void Update()
+    {
+        RefreshCooldownFill();
+    }
+
+    private Image GetChildImage(int childIndex)
+    {
+        if (transform.childCount <= childIndex)
+        {
+            return null;
+        }
+
+        return transform.GetChild(childIndex).GetComponent<Image>();
+    }
+
+    private Image FindChildImage(string childName)
+    {
+        Transform child = FindDescendant(transform, childName);
+        if (child == null)
+        {
+            return null;
+        }
+
+        return child.GetComponent<Image>();
+    }
+
+    private Transform FindDescendant(Transform root, string childName)
+    {
+        for (int i = 0; i < root.childCount; i++)
+        {
+            Transform child = root.GetChild(i);
+            if (child.name == childName)
+            {
+                return child;
+            }
+
+            Transform descendant = FindDescendant(child, childName);
+            if (descendant != null)
+            {
+                return descendant;
+            }
+        }
+
+        return null;
+    }
+
+    private void RefreshCooldownFill()
+    {
+        float fillAmount = currentInstance != null ? currentInstance.GetCooldownFillAmount() : 0f;
+        SetCooldownFill(fillAmount);
+    }
+
+    private void SetCooldownFill(float fillAmount)
+    {
+        if (cooldownFill == null)
+        {
+            return;
+        }
+
+        cooldownFill.fillAmount = Mathf.Clamp01(fillAmount);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -108,7 +168,10 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         string content = so.GetFormattedDescription(level);
 
         // [변경] Show 함수에 'transform.position' (슬롯의 위치) 추가 전달
-        TooltipSystem.Instance.Show(title, levelSprite, content, transform.position);
+        if (TooltipSystem.TryGetInstance(out TooltipSystem tooltip))
+        {
+            tooltip.Show(title, levelSprite, content, transform.position);
+        }
     }
 
     // 마우스 뗐을 때
@@ -116,6 +179,9 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         if (currentInstance == null) return;
 
-        TooltipSystem.Instance.Hide();
+        if (TooltipSystem.TryGetInstance(out TooltipSystem tooltip))
+        {
+            tooltip.Hide();
+        }
     }
 }

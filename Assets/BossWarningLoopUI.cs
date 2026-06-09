@@ -41,6 +41,7 @@ public class BossWarningLoopUI : MonoBehaviour
         if (bottomBands.Length > 0) bottomBandWidth = bottomBands[0].rect.width;
 
         SaveInitialPositions();
+        ResetWarningState();
     }
 
     private void Start()
@@ -48,7 +49,7 @@ public class BossWarningLoopUI : MonoBehaviour
         // ✨ [삭제] GameState 이벤트 리스너 제거!
         // 이제 Spawner가 직접 ShowWarning()을 호출합니다.
 
-        if (warningPanel != null) warningPanel.SetActive(false);
+        ResetWarningState();
     }
 
     private void OnDestroy()
@@ -118,11 +119,7 @@ public class BossWarningLoopUI : MonoBehaviour
 
     private void StopSequence()
     {
-        KillAllTweens();
-        if (warningPanel != null) warningPanel.SetActive(false);
-        isRunning = false;
-        isExiting = false;
-        isPaused = false;
+        ResetWarningState();
     }
 
     private void StartBandMovement()
@@ -159,8 +156,17 @@ public class BossWarningLoopUI : MonoBehaviour
 
     private void KillAllTweens()
     {
-        if (mainSequence != null) mainSequence.Kill();
-        if (movementTween != null) movementTween.Kill();
+        if (mainSequence != null)
+        {
+            mainSequence.Kill();
+            mainSequence = null;
+        }
+
+        if (movementTween != null)
+        {
+            movementTween.Kill();
+            movementTween = null;
+        }
     }
 
     private void SaveInitialPositions()
@@ -175,5 +181,20 @@ public class BossWarningLoopUI : MonoBehaviour
     {
         for (int i = 0; i < topBands.Length; i++) topBands[i].anchoredPosition = topInitialPos[i];
         for (int i = 0; i < bottomBands.Length; i++) bottomBands[i].anchoredPosition = bottomInitialPos[i];
+    }
+
+    private void ResetWarningState()
+    {
+        KillAllTweens();
+        ResetPositions();
+
+        if (warningPanel != null)
+        {
+            warningPanel.SetActive(false);
+        }
+
+        isRunning = false;
+        isExiting = false;
+        isPaused = false;
     }
 }

@@ -43,10 +43,27 @@ public class EndingManager : MonoBehaviour
     private bool isSpawningFinished = false;
 
     private List<GameObject> activeCredits = new List<GameObject>();
+    private Vector2 endingStatsInitialPosition;
+    private bool hasEndingStatsInitialPosition;
+    private Sequence endingSequence;
+    private Sequence finishSequence;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
+
+        if (endingStatsPanel != null)
+        {
+            endingStatsInitialPosition = endingStatsPanel.anchoredPosition;
+            hasEndingStatsInitialPosition = true;
+        }
+
+        ResetEndingStateForPlayStart();
+    }
+
+    private void OnDestroy()
+    {
+        KillEndingTweens();
     }
 
     private void Update()
@@ -78,15 +95,17 @@ public class EndingManager : MonoBehaviour
 
     public void StartEnding()
     {
-        Sequence seq = DOTween.Sequence();
-        seq.SetUpdate(true);
+        ResetEndingStateForPlayStart();
 
-        seq.AppendCallback(() => GameManager.Instance.ChangeState(GameState.Ending));
+        endingSequence = DOTween.Sequence();
+        endingSequence.SetUpdate(true);
 
-        if (fadePanel != null) seq.Append(fadePanel.FadeIn(1.0f)); // 암전 (Alpha 1)
-        else seq.AppendInterval(1.0f);
+        endingSequence.AppendCallback(() => GameManager.Instance.ChangeState(GameState.Ending));
 
-        seq.AppendCallback(() =>
+        if (fadePanel != null) endingSequence.Append(fadePanel.FadeIn(1.0f)); // 암전 (Alpha 1)
+        else endingSequence.AppendInterval(1.0f);
+
+        endingSequence.AppendCallback(() =>
         {
             ClearAllEntities();
 
@@ -113,11 +132,11 @@ public class EndingManager : MonoBehaviour
             if (endingStatsPanel != null) endingStatsPanel.gameObject.SetActive(true);
         });
 
-        seq.AppendInterval(0.5f);
+        endingSequence.AppendInterval(0.5f);
 
-        if (fadePanel != null) seq.Append(fadePanel.FadeOut(1.0f)); // 밝아짐 (Alpha 0)
+        if (fadePanel != null) endingSequence.Append(fadePanel.FadeOut(1.0f)); // 밝아짐 (Alpha 0)
 
-        seq.OnComplete(() =>
+        endingSequence.OnComplete(() =>
         {
             isCreditsPlaying = true;
             isSpawningFinished = false;
@@ -192,12 +211,17 @@ public class EndingManager : MonoBehaviour
     // 실제 종료 처리 (페이드 아웃 -> 씬 로드)
     private void FinishEndingSequenceInternal()
     {
-        Sequence seq = DOTween.Sequence().SetUpdate(true);
+        if (finishSequence != null && finishSequence.IsActive())
+        {
+            finishSequence.Kill();
+        }
 
-        if (fadePanel != null) seq.Append(fadePanel.FadeIn(1.5f)); // 어두워짐 (Alpha 1)
-        else seq.AppendInterval(1.5f);
+        finishSequence = DOTween.Sequence().SetUpdate(true);
 
-        seq.OnComplete(() =>
+        if (fadePanel != null) finishSequence.Append(fadePanel.FadeIn(1.5f)); // 어두워짐 (Alpha 1)
+        else finishSequence.AppendInterval(1.5f);
+
+        finishSequence.OnComplete(() =>
         {
             SceneManager.LoadScene("Start");
         });
@@ -207,5 +231,57 @@ public class EndingManager : MonoBehaviour
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Mob");
         foreach (var e in enemies) Destroy(e);
+    }
+
+    private void ResetEndingStateForPlayStart()
+    {
+        StopAllCoroutines();
+        KillEndingTweens();
+
+        isCreditsPlaying = false;
+        isEndingFinished = false;
+        isSpawningFinished = false;
+
+        for (int i = 0; i < activeCredits.Count; i++)
+        {
+            if (activeCredits[i] != null)
+            {
+                Destroy(activeCredits[i]);
+            }
+        }
+
+        activeCredits.Clear();
+
+        if (endingStatsPanel != null)
+        {
+            endingStatsPanel.DOKill();
+            if (hasEndingStatsInitialPosition)
+            {
+                endingStatsPanel.anchoredPosition = endingStatsInitialPosition;
+            }
+
+            endingStatsPanel.gameObject.SetActive(false);
+        }
+    }
+
+    private void KillEndingTweens()
+    {
+        if (endingSequence != null && endingSequence.IsActive())
+        {
+            endingSequence.Kill();
+        }
+
+        if (finishSequence != null && finishSequence.IsActive())
+        {
+            finishSequence.Kill();
+        }
+
+        if (endingStatsPanel != null)
+        {
+            endingStatsPanel.DOKill();
+        }
+
+        endingSequence = null;
+        finishSequence = null;
     }
 }

@@ -139,11 +139,10 @@ public class ItemToolTip : MonoBehaviour
         Vector3[] corners = new Vector3[4];
         _rectTransform.GetWorldCorners(corners);
 
-        float screenWidth = Screen.width;
-        float screenHeight = Screen.height;
+        Rect contentRect = FixedAspectRatioController.ContentPixelRect;
 
-        bool overflowsRight = corners[2].x > screenWidth;  // 오른쪽 경계 체크
-        bool overflowsUp = corners[2].y > screenHeight;    // 위쪽 경계 체크
+        bool overflowsRight = corners[2].x > contentRect.xMax;  // 오른쪽 경계 체크
+        bool overflowsUp = corners[2].y > contentRect.yMax;     // 위쪽 경계 체크
 
         ETipPos tipPos = ETipPos.UpRight;
 

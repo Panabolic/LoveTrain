@@ -16,26 +16,54 @@ public class TooltipSystem : MonoBehaviour
     [Tooltip("슬롯 중심으로부터의 오프셋 (필요시 조절)")]
     [SerializeField] private Vector2 offset = new Vector2(10f, -10f);
 
+    private bool isOpening;
+
     private void Awake()
     {
-        if (Instance != null && Instance != this) Destroy(gameObject);
-        else Instance = this;
+        if (!RegisterInstance())
+        {
+            return;
+        }
 
-        gameObject.SetActive(false);
+        if (!isOpening)
+        {
+            Hide();
+        }
     }
 
     // [삭제] Update() 함수 삭제 (마우스 추적 안 함)
 
+    public static bool TryGetInstance(out TooltipSystem tooltip)
+    {
+        if (Instance == null)
+        {
+            Instance = Object.FindFirstObjectByType<TooltipSystem>(FindObjectsInactive.Include);
+        }
+
+        tooltip = Instance;
+        return tooltip != null && tooltip.RegisterInstance();
+    }
+
     // [변경] targetPos(슬롯 위치)를 인자로 받음
     public void Show(string title, Sprite levelSprite, string content, Vector3 targetPos)
     {
+        if (!RegisterInstance() || !HasRequiredReferences())
+        {
+            return;
+        }
+
         if (string.IsNullOrEmpty(title) && string.IsNullOrEmpty(content))
         {
             Hide();
             return;
         }
 
-        gameObject.SetActive(true);
+        if (!gameObject.activeSelf)
+        {
+            isOpening = true;
+            gameObject.SetActive(true);
+            isOpening = false;
+        }
 
         titleText.text = title;
         contentText.text = content;
@@ -59,7 +87,33 @@ public class TooltipSystem : MonoBehaviour
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        if (gameObject.activeSelf)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    private bool RegisterInstance()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return false;
+        }
+
+        Instance = this;
+        return true;
+    }
+
+    private bool HasRequiredReferences()
+    {
+        if (titleText != null && contentText != null && levelImage != null && backgroundRect != null)
+        {
+            return true;
+        }
+
+        Debug.LogWarning("[TooltipSystem] Tooltip UI references are missing.", this);
+        return false;
     }
 
     private void SetPosition(Vector3 targetPos)
@@ -75,6 +129,7 @@ public class TooltipSystem : MonoBehaviour
 
         // corners[2] = Top-Right (우측 상단 좌표)
         // corners[0] = Bottom-Left (좌측 하단 좌표)
+        Rect contentRect = FixedAspectRatioController.ContentPixelRect;
 
         float newPivotX = 0; // 기본값 (좌)
         float newPivotY = 1; // 기본값 (상)
@@ -84,7 +139,7 @@ public class TooltipSystem : MonoBehaviour
 
         // --- 가로(Horizontal) 체크 ---
         // 툴팁의 우측 끝이 화면 너비를 넘었나요?
-        if (corners[2].x > Screen.width)
+        if (corners[2].x > contentRect.xMax)
         {
             newPivotX = 1; // Pivot을 우측(1)으로 변경 -> 왼쪽으로 그려짐
             finalOffset.x = -offset.x; // 오프셋 X 반전 (왼쪽으로 띄우기)
@@ -92,7 +147,7 @@ public class TooltipSystem : MonoBehaviour
 
         // --- 세로(Vertical) 체크 ---
         // 툴팁의 하단 끝이 화면 아래(0)로 내려갔나요?
-        if (corners[0].y < 0)
+        if (corners[0].y < contentRect.yMin)
         {
             newPivotY = 0; // Pivot을 하단(0)으로 변경 -> 위쪽으로 그려짐
             finalOffset.y = -offset.y; // 오프셋 Y 반전 (위쪽으로 띄우기)

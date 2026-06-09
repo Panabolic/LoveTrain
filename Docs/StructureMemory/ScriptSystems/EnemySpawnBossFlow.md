@@ -1,0 +1,501 @@
+---
+status: active
+authority: structure-memory
+category: enemy-spawn-boss-flow
+last_reviewed: 2026-05-18
+---
+
+# Enemy Spawn And Boss Flow
+
+## Purpose
+
+Map enemy base behavior, mob movement/death, pooling, spawn phases, boss sequence, and cleanup interactions.
+
+## Current Structure
+
+- `Enemy` is the base target/damage/death class. It stores player target references, handles HP, screen-entry gating, hit flash, kill particle timing, XP, and inventory kill hooks.
+- `EnemyDamageGate` owns base enemy alive/screen-entry damage eligibility behind `Enemy.TakeDamage(...)`.
+- `EnemyDamageState` owns base enemy HP subtraction and death-threshold state behind `Enemy.TakeDamage(...)`.
+- `EnemyDeathRewardDispatcher` owns XP reward and inventory kill-hook dispatch behind `Enemy.Die()`.
+- `EnemyDeathPresentation` owns base enemy death sprite hide, kill particle request, and zero-duration completion wait behind `Enemy.Die()`.
+- `EnemyKillParticleSpawner` owns kill particle instantiation behind `Enemy` and `Tentacle`.
+- `EnemyTargetResolver` owns player `Rigidbody2D` and `TrainLevelManager` lookup behind `Enemy`.
+- `EnemyScreenEntryChecker` owns camera/collider/sprite/point fallback screen-entry checks behind `Enemy`.
+- `EnemyLayerAssignment` owns enable-time enemy layer reset behind `Enemy` and `Boss`.
+- `EnemyEnableState` owns base enemy enable-time current HP, alive, and screen-entry reset values behind `Enemy.OnEnable()`.
+- `EnemyDisableCleanup` owns disable-time hit material cleanup and active-enemy unregister sequencing behind `Enemy.OnDisable()`.
+- `EnemyDespawnWithoutExpCompletion` owns no-reward despawn active guard and coroutine-stop/deactivate completion behind `Enemy.DespawnWithoutExp()`.
+- `EnemyHitMaterialController` owns null-safe `_isHit` material flag writes for enemy hit effects and disable cleanup.
+- `EnemyHitEffectRoutine` owns enemy hit material on/wait/off sequencing behind `Enemy.HitEffect()`.
+- `EnemySpritePresentation` owns null-safe enemy sprite visibility, color reset, and flip writes for enemy lifecycle and movement presentation.
+- `Mob` adds ground movement, train collision damage, HP scaling, kill count updates through `GameManager`, death sound, pooling deactivation, and stun/knockback.
+- `MobMovementStateResolver` owns Mob/FlyMob alive/stunned movement state selection behind `FixedUpdate()`.
+- `MobVelocityPlanner` owns ground, flying, and post-death mob velocity formulas behind `Mob` and `FlyMob`.
+- `MobDirectionPlanner` owns ground and flying mob direction selection formulas behind `Mob` and `FlyMob`.
+- `MobTrainCollisionHandler` owns normal mob train-layer collision handling, train damage, and default camera shake behind `Mob`.
+- `MobKnockbackPolicy` owns normal mob knockback force calculation behind `Mob`.
+- `MobStunRoutine` owns normal mob stun duration wait sequencing behind `Mob`.
+- `MobDeathCompletion` owns normal mob kill count reporting and death completion side effects behind `Mob`.
+- `FlyMob` extends mob movement for flying enemies.
+- `Boss` extends enemy behavior with kill event data, kill explosion references, entrance gating, and entrance movement.
+- `EnemyHpCalibration` owns shared enemy/boss HP scaling formulas for level/time/event modifiers.
+- `BossEntranceMotion` owns smooth boss entrance interpolation behind `Boss`.
+- `BossEntranceRoutine` owns boss entrance active-flag timing, movement loop, and final position assignment behind `Boss`.
+- `BossEnableState` owns boss enable-time HP/current/alive/screen-entry/entrance reset values behind `Boss`.
+- `BossKillEventRequestGate` owns boss kill-event request eligibility behind `EyeBoss` and `TrainBoss`.
+- `BossDeathCompletionRouter` owns boss death completion route selection behind `EyeBoss` and `TrainBoss`.
+- `BossDeathCompletionExecutor` owns shared boss death completion side effects behind `EyeBoss` and `TrainBoss`.
+- `BossDeathExplosionSpawner` owns boss death explosion instantiation behind `EyeBoss` and `TrainBoss`.
+- `EyeBossDeathPresentation` owns eye boss death explosion position and completion delay constants behind `EyeBoss`.
+- `EyeBossPatternStartGate` owns eye boss normal pattern start eligibility behind `EyeBoss`.
+- `EyeBossNormalPatternSelector` owns eye boss normal side/center pattern selection behind `EyeBoss`.
+- `EyeBossNormalPatternRoutine` owns eye boss normal pattern post-spawn wait sequence behind `EyeBoss`.
+- `EyeBossEnragePatternRoutine` owns eye boss enrage pattern duration-or-all-tentacles-cleared wait sequence behind `EyeBoss`.
+- `EyeBossTentacleSpawnPointCollector` owns child transform collection for eye boss tentacle spawn points.
+- `TrainBoss`, `EyeBoss`, and `Tentacle` implement boss-specific patterns and damage behavior.
+- `TrainBossCombatGate` owns train boss damage and train-collision eligibility gates behind `TrainBoss`.
+- `TrainBossMovementPolicy` owns train boss forward movement direction, velocity composition, and sprite-facing constants behind `TrainBoss`.
+- `TrainBossPhaseTransition` owns train boss phase 2 threshold checks behind `TrainBoss`.
+- `TrainBossPhaseState` owns train boss phase 2 entered-state storage behind `TrainBoss`.
+- `TrainBossPhasePresentation` owns train boss initial collider state and phase 2 animator/collider presentation behind `TrainBoss`.
+- `TrainBossKnockbackPolicy` owns train boss knockback cooldown and force selection behind `TrainBoss`.
+- `TrainBossKnockbackCooldownState` owns train boss knockback last-applied timestamp state behind `TrainBoss`.
+- `TrainBossKnockbackApplier` owns train boss knockback Rigidbody2D velocity reset and impulse application behind `TrainBoss`.
+- `TrainBossStunState` owns train boss stun active-state storage behind `TrainBoss`.
+- `TrainBossStunRoutine` owns train boss stun active-state timing and duration wait sequencing behind `TrainBoss`.
+- `TrainBossDeathPresentation` owns train boss death explosion offset and completion delay constants behind `TrainBoss`.
+- `TrainBossTrainCollisionHandler` owns train boss train-layer collision handling, boss damage application, and boss camera shake behind `TrainBoss`.
+- `EyeBossTentacleRegistry` owns spawned tentacle list register/unregister/cleanup rules behind `EyeBoss`.
+- `EyeBossAttackSoundCooldown` owns the tentacle attack sound anti-spam rule behind `EyeBoss`.
+- `EyeBossAttackSoundCooldownState` owns the tentacle attack sound last-play timestamp state behind `EyeBoss`.
+- `EyeBossTentaclePatternPlanner` owns side/center/enrage tentacle spawn and weak-point index planning behind `EyeBoss`.
+- `EyeBossTentacleAttackProfile` owns normal/enrage tentacle damage and attack-delay selection behind `EyeBoss`.
+- `EyeBossTentacleSpawner` owns tentacle prefab selection, instantiation, setup, attack start, max-duration collection, and spawn sound publishing behind `EyeBoss`.
+- `EyeBossEnrageTransition` owns forced-enrage threshold prediction and HP clamp decision behind `EyeBoss`.
+- `TentacleTrainCollisionHandler` owns player-tag collision handling and train damage forwarding behind `Tentacle`.
+- `TentacleAttackAnimationDurationResolver` owns tentacle attack animation clip duration resolution behind `Tentacle`.
+- `TentacleAttackRoutine` owns attack wait, animation trigger, attack callback, destroy delay sequence, and total duration calculation behind `Tentacle`.
+- `TentacleDamageState` owns tentacle HP subtraction and death-threshold state behind `Tentacle`.
+- `TentacleDeathCompletion` owns tentacle death particle, death sound, and object destroy side effects behind `Tentacle`.
+- `PoolManager` owns prefab pools for ground/flying/elite mobs, dynamic event-spawned mobs, boss prefab lookup, active-enemy registration, and despawn helpers.
+- `PoolActiveEnemyRegistry` owns active enemy list mutation and despawn iteration rules behind `PoolManager`.
+- `PoolEnemyDespawnFilter` owns active-enemy null and boss-retained despawn eligibility checks behind `PoolActiveEnemyRegistry`.
+- `PoolObjectProvider` owns pooled GameObject provider entry points for list initialization, indexed/dynamic pool lookup, and object reuse/create orchestration behind `PoolManager`.
+- `PoolMobPoolSet` owns indexed mob pool storage and normal/fly/elite getter routing behind `PoolManager`.
+- `PoolListFactory` owns pooled list-array allocation and per-index empty list initialization behind `PoolObjectProvider`.
+- `PoolIndexedPrefabResolver` owns indexed prefab-array bounds and pool/prefab pair resolution behind `PoolObjectProvider`.
+- `PoolDynamicPoolRegistry` owns dynamic pool prefab-name key creation and dictionary get-or-add behavior behind `PoolObjectProvider`.
+- `PoolDynamicMobProvider` owns dynamic prefab mob null guard, dynamic pool lookup, and reuse/create request flow behind `PoolManager.GetMob(...)`.
+- `PoolReusableObjectSelector` owns inactive pooled object lookup and activation behind `PoolObjectProvider`.
+- `PoolObjectFactory` owns pooled object instantiate-on-miss, prefab-name assignment, and pool append behavior behind `PoolObjectProvider`.
+- `PoolBossPrefabLookup` owns `BossName` enum-to-boss prefab array lookup behind `PoolManager.GetBoss(...)`.
+- `Spawner` owns serialized spawn phase data, elite timing, boss timing/sequence, boss warning delay, spawn points/areas, periodic event-spawn tasks, and batch spawn requests.
+- `SpawnerRuntimeStateGate` owns spawner runtime `GameState` gating behind `Spawner.Update()`.
+- `SpawnerSpawnSchedule` owns basic, elite, and boss spawn schedule due checks behind `Spawner.Update()`.
+- `SpawnerSpawnTimerState` owns basic, elite, and boss spawn timer storage, advancement, reset, and next-boss time state behind `Spawner`.
+- `SpawnerPhaseSelector` owns the current-time-to-`SpawnPhase` selection rule behind `Spawner`.
+- `SpawnerCurrentPhaseState` owns selected phase runtime ranges and spawn interval state behind `Spawner`.
+- `SpawnerBossSequenceCursor` owns boss sequence index state behind `Spawner`.
+- `SpawnerBossSequenceLog` owns boss sequence empty-sequence warning and reserved-next-boss logging behind `Spawner`.
+- `SpawnerBossSettingLookup` owns boss setting lookup and default fallback creation behind `Spawner`.
+- `SpawnerBossSpawnPlacement` owns boss spawn point fallback and arrival position resolution behind `Spawner`.
+- `SpawnerBossObjectSpawner` owns boss prefab lookup, instantiation, fallback logging, and entrance handoff behind `Spawner`.
+- `SpawnerBossStateTransition` owns boss spawn logging and `GameManager.AppearBoss()` entry behind `Spawner`.
+- `SpawnerBossWarningRoutine` owns boss warning UI show and post-warning delay sequence behind `Spawner`.
+- `SpawnerBossSpawnRoutine` owns boss spawn coroutine setting lookup, state transition, warning wait, and spawn-object request sequence behind `Spawner`.
+- `SpawnerSpawnControlState` owns spawn/rear-spawn control flag state behind `Spawner`.
+- `SpawnerEnemyPhysicsReset` owns spawned enemy `Rigidbody2D` velocity reset behind `Spawner`.
+- `SpawnerMobSpawnSetup` owns mob spawn placement, physics reset, and death callback rewiring behind `Spawner`.
+- `SpawnerMobPoolLookup` owns normal, elite, and prefab mob pool lookup selection behind `Spawner`.
+- `SpawnerMobBatchRoutine` owns mob batch spawn loop and delay sequence behind `Spawner`.
+- `SpawnerSpawnPositionSelector` owns ground/fly spawn position selection behind `Spawner`.
+- `SpawnerMobSpawnSelector` owns basic/elite mob type and current phase index selection behind `Spawner`.
+- `SpawnerPeriodicSpawnScheduler` owns periodic spawn task interval clamping, timer advancement, and timer reset behind `Spawner`.
+- `SpawnerPeriodicTaskList` owns periodic spawn task list storage, null-prefab add guard, due-spawn access, and indexed timer reset behind `Spawner`.
+
+## Key Files
+
+- `Assets/Scripts/SangHyup/Enemy/Enemy.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyDamageGate.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyDamageState.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyDeathRewardDispatcher.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyDeathPresentation.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyKillParticleSpawner.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyTargetResolver.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyScreenEntryChecker.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyLayerAssignment.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyEnableState.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyDisableCleanup.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyDespawnWithoutExpCompletion.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyHpCalibration.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyHitMaterialController.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemyHitEffectRoutine.cs`
+- `Assets/Scripts/SangHyup/Enemy/EnemySpritePresentation.cs`
+- `Assets/Scripts/SangHyup/Enemy/Mob.cs`
+- `Assets/Scripts/SangHyup/Enemy/MobMovementStateResolver.cs`
+- `Assets/Scripts/SangHyup/Enemy/MobVelocityPlanner.cs`
+- `Assets/Scripts/SangHyup/Enemy/MobDirectionPlanner.cs`
+- `Assets/Scripts/SangHyup/Enemy/MobTrainCollisionHandler.cs`
+- `Assets/Scripts/SangHyup/Enemy/MobKnockbackPolicy.cs`
+- `Assets/Scripts/SangHyup/Enemy/MobStunRoutine.cs`
+- `Assets/Scripts/SangHyup/Enemy/MobDeathCompletion.cs`
+- `Assets/Scripts/SangHyup/Enemy/Boss.cs`
+- `Assets/Scripts/SangHyup/Enemy/BossEntranceMotion.cs`
+- `Assets/Scripts/SangHyup/Enemy/BossEntranceRoutine.cs`
+- `Assets/Scripts/SangHyup/Enemy/BossEnableState.cs`
+- `Assets/Scripts/SangHyup/Enemy/BossKillEventRequestGate.cs`
+- `Assets/Scripts/SangHyup/Enemy/BossDeathCompletionRouter.cs`
+- `Assets/Scripts/SangHyup/Enemy/BossDeathCompletionExecutor.cs`
+- `Assets/Scripts/SangHyup/Enemy/BossDeathExplosionSpawner.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossDeathPresentation.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossPatternStartGate.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossNormalPatternSelector.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossNormalPatternRoutine.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossEnragePatternRoutine.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossTentacleSpawnPointCollector.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolManager.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolActiveEnemyRegistry.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolEnemyDespawnFilter.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolObjectProvider.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolMobPoolSet.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolListFactory.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolIndexedPrefabResolver.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolDynamicPoolRegistry.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolDynamicMobProvider.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolReusableObjectSelector.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolObjectFactory.cs`
+- `Assets/Scripts/SangHyup/Enemy/PoolBossPrefabLookup.cs`
+- `Assets/Scripts/SangHyup/Enemy/Spawner.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerRuntimeStateGate.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerSpawnSchedule.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerSpawnTimerState.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerPhaseSelector.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerCurrentPhaseState.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerBossSequenceCursor.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerBossSequenceLog.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerBossSettingLookup.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerBossSpawnPlacement.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerBossObjectSpawner.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerBossStateTransition.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerBossWarningRoutine.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerBossSpawnRoutine.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerSpawnControlState.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerEnemyPhysicsReset.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerMobSpawnSetup.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerMobPoolLookup.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerMobBatchRoutine.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerSpawnPositionSelector.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerMobSpawnSelector.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerPeriodicSpawnScheduler.cs`
+- `Assets/Scripts/SangHyup/Enemy/SpawnerPeriodicTaskList.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBoss.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossCombatGate.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossMovementPolicy.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossPhaseTransition.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossPhaseState.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossPhasePresentation.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossKnockbackPolicy.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossKnockbackCooldownState.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossKnockbackApplier.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossStunState.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossStunRoutine.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossDeathPresentation.cs`
+- `Assets/Scripts/SangHyup/Enemy/TrainBossTrainCollisionHandler.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBoss.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossTentacleRegistry.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossAttackSoundCooldown.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossAttackSoundCooldownState.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossTentaclePatternPlanner.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossTentacleAttackProfile.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossTentacleSpawner.cs`
+- `Assets/Scripts/SangHyup/Enemy/EyeBossEnrageTransition.cs`
+- `Assets/Scripts/SangHyup/Enemy/Tentacle.cs`
+- `Assets/Scripts/SangHyup/Enemy/TentacleTrainCollisionHandler.cs`
+- `Assets/Scripts/SangHyup/Enemy/TentacleAttackAnimationDurationResolver.cs`
+- `Assets/Scripts/SangHyup/Enemy/TentacleAttackRoutine.cs`
+- `Assets/Scripts/SangHyup/Enemy/TentacleDamageState.cs`
+- `Assets/Scripts/SangHyup/Enemy/TentacleDeathCompletion.cs`
+
+## Ownership And Lifecycle
+
+- `Spawner.Update()` keeps phase refresh and spawn execution while runtime state gating is delegated to `SpawnerRuntimeStateGate`; it still runs only during `Playing` and `Boss` states.
+- Basic mob, elite mob, and boss spawn due checks are delegated to `SpawnerSpawnSchedule`; timer storage, advancement, resets, and next-boss time mutation are delegated to `SpawnerSpawnTimerState`; `Spawner` still owns spawn calls.
+- Spawn phase selection is driven by `GameManager.Instance.gameTime` and delegated to `SpawnerPhaseSelector`; selected phase runtime range and interval values are delegated to `SpawnerCurrentPhaseState`.
+- `PoolManager` is a `DontDestroyOnLoad` singleton and exposes active enemy registration through `Enemy.OnEnable()` / `Enemy.OnDisable()`; list mutation is delegated to `PoolActiveEnemyRegistry`.
+- `PoolManager` keeps serialized prefab arrays and public indexed mob getters while private indexed mob pool storage and normal/fly/elite getter routing are delegated to `PoolMobPoolSet`.
+- `PoolManager` delegates pool array creation, indexed prefab/pool lookup, dynamic pool dictionary lookup, inactive object reuse, and instantiate-on-miss through `PoolMobPoolSet`, `PoolDynamicMobProvider`, and `PoolObjectProvider`.
+- `PoolObjectProvider.CreatePools(...)` keeps the pool list initialization entry point while list-array allocation and per-index empty list initialization are delegated to `PoolListFactory`.
+- `PoolObjectProvider.GetIndexed(...)` keeps the indexed pool entry point while prefab-array bounds and pool/prefab pair resolution are delegated to `PoolIndexedPrefabResolver`.
+- `PoolObjectProvider.GetDynamicPool(...)` keeps the dynamic pool entry point while prefab-name key creation and dictionary get-or-add behavior are delegated to `PoolDynamicPoolRegistry`.
+- `PoolManager.GetMob(GameObject)` keeps the public event/prefab-spawn entry point while dynamic prefab null guard, dynamic pool lookup, and reuse/create request flow are delegated to `PoolDynamicMobProvider`.
+- `PoolObjectProvider.GetOrCreate(...)` keeps the reuse-first entry point while instantiate-on-miss, prefab-name assignment, and pool append behavior are delegated to `PoolObjectFactory`.
+- `PoolManager.GetBoss(...)` delegates `BossName` enum-to-boss prefab array indexing to `PoolBossPrefabLookup`.
+- `Spawner.SpawnBossObject(...)` delegates boss prefab lookup, instantiation, missing-spawn-point logging, and entrance handoff to `SpawnerBossObjectSpawner`.
+- `Spawner.BossSpawnRoutine(...)` delegates boss setting lookup, state transition, warning wait, and spawn-object request order to `SpawnerBossSpawnRoutine`, which uses `SpawnerBossStateTransition` and `SpawnerBossWarningRoutine`.
+- `Spawner.SpawnNextBoss()` delegates boss sequence warning and reserved-next-boss reporting to `SpawnerBossSequenceLog`.
+- `Enemy.Awake()` keeps target fields local while delegating player object and component lookup to `EnemyTargetResolver`.
+- `Enemy.CheckScreenEntry()` keeps one-way `hasEnteredScreen` state updates while delegating camera/collider/sprite/point fallback checks to `EnemyScreenEntryChecker`.
+- `Enemy.OnEnable()` and `Boss.OnEnable()` keep lifecycle state resets while delegating `Enemy` layer assignment to `EnemyLayerAssignment`.
+- `Enemy.OnEnable()` keeps sprite presentation, layer assignment, and active-enemy registration side effects while enable-time current HP/alive/screen-entry reset values are delegated to `EnemyEnableState`.
+- `Enemy.OnDisable()` keeps the Unity lifecycle entry point while hit material cleanup and active-enemy unregister sequencing are delegated to `EnemyDisableCleanup`.
+- `Enemy.DespawnWithoutExp()` keeps the public no-reward despawn entry point and `isAlive = false` state write while active guard and coroutine-stop/deactivate completion are delegated to `EnemyDespawnWithoutExpCompletion`.
+- `Enemy.TakeDamage(...)` keeps HP subtraction, hit effect, hit sound, and death coroutine start while delegating alive/screen-entry eligibility to `EnemyDamageGate`.
+- `Enemy.TakeDamage(...)` keeps hit effect, hit sound, and death coroutine start while delegating HP subtraction and death-threshold state to `EnemyDamageState`.
+- `Enemy.Die()` keeps death state and reward dispatch ordering while delegating XP reward and inventory kill-hook dispatch to `EnemyDeathRewardDispatcher`.
+- `Enemy.Die()` delegates base death sprite hide, kill particle request, and zero-duration completion wait creation to `EnemyDeathPresentation`; `EnemyDeathPresentation` delegates actual particle instantiation to `EnemyKillParticleSpawner`.
+- `Tentacle.TakeDamage(...)` keeps death side-effect ordering while delegating kill particle instantiation to `EnemyKillParticleSpawner`.
+- `Enemy.HitEffect()` keeps the coroutine entry point while material hit on/wait/off sequencing is delegated to `EnemyHitEffectRoutine`; `Enemy.OnDisable()` still uses `EnemyHitMaterialController` for cleanup.
+- `Enemy`, `Boss`, `Mob`, `FlyMob`, and `TrainBoss` use `EnemySpritePresentation` for optional sprite visibility, reset, and flip writes while keeping movement and lifecycle decisions locally.
+- `Mob` and `FlyMob` keep `FixedUpdate`, death-slide side effects, active-move side effects, sprite flip application, and Rigidbody2D assignment while delegating movement state selection to `MobMovementStateResolver`, velocity formulas to `MobVelocityPlanner`, and direction formulas to `MobDirectionPlanner`.
+- `Mob.OnTriggerEnter2D(...)` keeps the Unity trigger entry point and death coroutine start while delegating normal mob train collision side effects to `MobTrainCollisionHandler`.
+- `Mob.Knockback(...)` keeps the public item-facing entry point, stun coroutine start, and Rigidbody2D impulse application while delegating force calculation to `MobKnockbackPolicy`.
+- `Mob.Stun()` keeps `isStunned` state writes while duration waiting is delegated to `MobStunRoutine`.
+- `Mob.Die()` keeps death coroutine ordering and base death timing while delegating kill count reporting and post-base-death completion side effects to `MobDeathCompletion`.
+- `Mob`, `Boss`, and `Tentacle` use `EnemyHpCalibration` for HP scaling formulas while keeping lifecycle and state storage locally.
+- `PoolActiveEnemyRegistry` keeps active-enemy register/unregister and reverse despawn iteration while delegating null and boss-retained despawn eligibility to `PoolEnemyDespawnFilter`.
+- `PoolManager` keeps public indexed mob getters while `PoolMobPoolSet` owns private indexed mob pool storage and normal/fly/elite getter routing. `PoolManager.GetMob(GameObject)` keeps the public dynamic prefab mob entry point while `PoolDynamicMobProvider` owns the null guard, dynamic pool lookup, and reuse/create request flow. `PoolObjectProvider` keeps pool provider entry points, indexed/dynamic lookup, reuse-first flow, and object creation orchestration while list-array allocation is delegated to `PoolListFactory`, indexed prefab resolution is delegated to `PoolIndexedPrefabResolver`, dynamic pool registry behavior is delegated to `PoolDynamicPoolRegistry`, inactive reusable lookup and activation are delegated to `PoolReusableObjectSelector`, and instantiate-on-miss behavior is delegated to `PoolObjectFactory`.
+- `Boss.EntranceMoveRoutine(...)` delegates active-flag timing, movement loop, and final position assignment to `BossEntranceRoutine`, which uses `BossEntranceMotion` for smooth interpolation.
+- `Boss.OnEnable()` keeps sprite visibility, layer assignment, and active-enemy registration side effects while enable-time state reset values are delegated to `BossEnableState`.
+- `EyeBoss.Die()` and `TrainBoss.Die()` keep boss-specific death presentation and wait timing while kill-event request eligibility is delegated to `BossKillEventRequestGate`, route selection is delegated to `BossDeathCompletionRouter`, and shared side-effect execution is delegated to `BossDeathCompletionExecutor`.
+- `EyeBoss.Die()` and `TrainBoss.Die()` keep boss-specific death timing while delegating kill explosion instantiation to `BossDeathExplosionSpawner`.
+- `EyeBoss.Die()` keeps tentacle cleanup, death explosion spawn timing, base death yielding, and boss completion execution while delegating explosion position and completion delay constants to `EyeBossDeathPresentation`.
+- `TrainBoss.Die()` keeps base death yielding, death sound publishing, and boss completion execution while delegating explosion position and completion delay constants to `TrainBossDeathPresentation`.
+- `TrainBoss.TakeDamage(...)` and `OnTriggerEnter2D(...)` keep combat and collision side effects while damage and collision eligibility gates are delegated to `TrainBossCombatGate`.
+- `TrainBoss` keeps roar sound, phase entry ordering, stun coroutine, and Rigidbody2D force application while phase state storage is delegated to `TrainBossPhaseState`, threshold checks are delegated to `TrainBossPhaseTransition`, and phase collider/animator presentation is delegated to `TrainBossPhasePresentation`.
+- `TrainBoss` keeps `FixedUpdate`, stun gating, target lookup timing, and Rigidbody2D writes while forward direction, velocity composition, and sprite-facing constants are delegated to `TrainBossMovementPolicy`.
+- `TrainBoss` keeps stun coroutine ordering while cooldown timestamp state is delegated to `TrainBossKnockbackCooldownState`, cooldown/force rules are delegated to `TrainBossKnockbackPolicy`, and velocity reset plus impulse application are delegated to `TrainBossKnockbackApplier`.
+- `TrainBoss.FixedUpdate()` keeps the Rigidbody2D movement gate while stun active-state storage is delegated to `TrainBossStunState`.
+- `TrainBoss.Stun()` keeps the coroutine entry while active-state timing and duration waiting are delegated to `TrainBossStunRoutine`.
+- `TrainBoss.OnTriggerEnter2D(...)` keeps alive-state gating and the Unity trigger entry point while delegating train collision side effects to `TrainBossTrainCollisionHandler`.
+- `EyeBoss.Update()` keeps lifecycle gating and coroutine starts while normal pattern start eligibility is delegated to `EyeBossPatternStartGate` and side/center pattern selection is delegated to `EyeBossNormalPatternSelector`.
+- `EyeBoss.RunNormalPattern(...)` keeps busy-state ownership and tentacle spawn execution while normal post-spawn wait sequencing is delegated to `EyeBossNormalPatternRoutine`.
+- `EyeBoss.EnragePatternRoutine()` keeps enrage state writes and post-pattern wait while duration-or-all-tentacles-cleared waiting is delegated to `EyeBossEnragePatternRoutine`.
+- `EyeBoss.Start()` keeps boss spawn sound publishing while child transform collection for tentacle spawn points is delegated to `EyeBossTentacleSpawnPointCollector`.
+- `EyeBoss` keeps pattern coroutine state and public tentacle APIs, while spawned tentacle list rules are delegated to `EyeBossTentacleRegistry`.
+- `EyeBoss` keeps `SoundEventBus` publishing, while the tentacle attack sound cooldown check is delegated to `EyeBossAttackSoundCooldown` and last-play timestamp state is delegated to `EyeBossAttackSoundCooldownState`.
+- `EyeBoss` keeps pattern coroutine timing, while side/center/enrage index planning is delegated to `EyeBossTentaclePatternPlanner`.
+- `EyeBoss` keeps normal/enrage attack-profile resolution, while tentacle prefab selection, instantiation, setup calls, attack start, max-duration collection, and spawn sound publishing are delegated to `EyeBossTentacleSpawner`.
+- `EyeBoss.TakeDamage(...)` keeps invincibility, HP clamp assignment, roar sound, coroutine start, and fallback base damage while delegating forced-enrage threshold prediction to `EyeBossEnrageTransition`.
+- `Tentacle.OnTriggerEnter2D(...)` keeps the Unity trigger entry point while delegating player-tag train damage forwarding to `TentacleTrainCollisionHandler`.
+- `Tentacle.Setup(...)` keeps owner/damage/wait/callback setup while delegating attack animation clip duration resolution to `TentacleAttackAnimationDurationResolver`.
+- `Tentacle.AttackRoutine()` and `GetTotalDuration()` keep the coroutine/timing entry points while delegating attack wait, animation trigger, attack callback, destroy delay sequence, and total duration calculation to `TentacleAttackRoutine`.
+- `Tentacle.TakeDamage(...)` keeps hit effect and hit sound while delegating HP subtraction/death-threshold state to `TentacleDamageState` and death particle/sound/destroy side effects to `TentacleDeathCompletion`.
+- Pooled mobs are deactivated on death; bosses are instantiated from the boss prefab list.
+- Boss appearance changes `GameManager` state to `Boss`, shows boss warning UI when available, waits, then requests boss prefab spawn through `SpawnerBossSpawnRoutine`.
+- `Spawner.BossSpawnRoutine(...)` keeps the coroutine entry point while boss spawn sequence ordering is delegated to `SpawnerBossSpawnRoutine`; boss state transition stays in `SpawnerBossStateTransition`, warning UI show/post-warning delay stays in `SpawnerBossWarningRoutine`, and object spawn execution stays in `SpawnerBossObjectSpawner`.
+- Boss sequence selection uses `SpawnerBossSequenceCursor` to advance through the serialized `bossSequence` array cyclically.
+- Boss sequence reporting uses `SpawnerBossSequenceLog` for empty sequence warnings and next-boss reservation logs.
+- Boss setting lookup uses `SpawnerBossSettingLookup` to read serialized `bossSettings` and create the existing 3.0-second fallback when no matching setting exists.
+- Boss spawn placement uses `SpawnerBossSpawnPlacement` to resolve `spawnPoint` fallback and optional `arrivalPoint` position; `SpawnerBossObjectSpawner` owns logging, `Instantiate(...)`, and entrance routine calls.
+- Spawn enable and rear-spawn enable flags use `SpawnerSpawnControlState`; `Spawner` still owns public control methods and the `StopAllCoroutines()` side effect.
+- Spawned pooled enemies use `SpawnerEnemyPhysicsReset` to clear `Rigidbody2D` velocity after placement; normal/elite/prefab pool lookup selection is delegated to `SpawnerMobPoolLookup`.
+- `Spawner.SpawnMobCommon(...)` delegates spawn placement, physics reset, and `Mob.OnDied` callback rewiring to `SpawnerMobSpawnSetup`.
+- Normal, elite, and prefab mob pool lookup selection uses `SpawnerMobPoolLookup`; `Spawner` still owns public spawn call sites and setup delegation.
+- Public `Spawner.SpawnMobBatch(...)` delegates fixed-position batch loop, pooled mob lookup, physics reset, and delay waits to `SpawnerMobBatchRoutine`.
+- Mob spawn position selection uses `SpawnerSpawnPositionSelector` to choose between flying spawn areas, ground front points, optional ground rear points, and the spawner fallback position.
+- Basic and elite mob type/index selection uses `SpawnerMobSpawnSelector`; `SpawnerMobPoolLookup` resolves the matching `PoolManager` call and `SpawnerMobSpawnSetup` places the returned enemy.
+- Current phase runtime values use `SpawnerCurrentPhaseState`; `Spawner` reads that state for basic/elite selection ranges and mob spawn interval checks.
+- Periodic event-spawn timing uses `SpawnerPeriodicSpawnScheduler`; `SpawnerPeriodicTaskList` owns task list storage, null-prefab add guard, due-spawn access, and indexed timer reset while `Spawner` still owns actual prefab spawn execution.
+- Active enemy cleanup uses `PoolActiveEnemyRegistry` for all-enemy and all-except-boss despawn iteration.
+- `GameManager.BossDied()` can call `PoolManager.DespawnAllEnemiesExceptBoss()` and route to stage transition or ending.
+- `GameKillCounter` owns normal, elite, boss, and total kill count storage behind `GameManager`.
+
+## Extension Entry Points
+
+- Add a normal or elite mob by adding its prefab to the matching `PoolManager` serialized array and configuring `Spawner.SpawnPhase` index ranges.
+- Add base enemy damage eligibility rules in `EnemyDamageGate`, while keeping HP mutation, hit effects, sound, and death coroutine start in `Enemy`.
+- Add base enemy damage math or death-threshold rules in `EnemyDamageState`, while keeping hit effects, sound, and death coroutine start in `Enemy`.
+- Add enemy XP reward, item kill hook, or death reward routing changes in `EnemyDeathRewardDispatcher`, while keeping `Enemy.Die()` lifecycle order stable.
+- Add base enemy death sprite hide, particle request ordering, or zero-duration completion wait changes in `EnemyDeathPresentation`, while keeping `Enemy.Die()` state and reward dispatch order stable.
+- Add kill particle null handling, pooling, or VFX routing in `EnemyKillParticleSpawner`, while keeping death side-effect order in `Enemy` and `Tentacle`.
+- Add player target lookup fallback, caching, or injection rules in `EnemyTargetResolver`, while keeping `Enemy` target field semantics stable.
+- Add targetable screen-entry bounds or fallback rules in `EnemyScreenEntryChecker`, while keeping `Enemy.IsTargetable` and `hasEnteredScreen` state semantics stable.
+- Add enemy layer validation or fallback rules in `EnemyLayerAssignment`, while keeping enable lifecycle state resets in `Enemy` and `Boss`.
+- Add base enemy enable reset value changes in `EnemyEnableState`, while keeping Unity side effects in `Enemy.OnEnable()`.
+- Add disable-time cleanup sequence changes in `EnemyDisableCleanup`, while keeping `Enemy.OnDisable()` as the lifecycle entry point and active list mutation behind `PoolManager`.
+- Add no-reward despawn completion changes in `EnemyDespawnWithoutExpCompletion`, while keeping `Enemy.DespawnWithoutExp()` as the public entry point and `isAlive` state write owner.
+- Add enemy hit flash timing changes in `EnemyHitEffectRoutine`, while keeping `Enemy.HitEffect()` as the coroutine entry point and material flag writes behind `EnemyHitMaterialController`.
+- Add enemy sprite visibility, reset, or flip presentation rules in `EnemySpritePresentation`, while keeping gameplay movement and lifecycle decisions in the enemy scripts.
+- Add Mob/FlyMob movement state rules in `MobMovementStateResolver`, while keeping direction selection and Rigidbody2D writes in `Mob`/`FlyMob`.
+- Add ground/fly/death mob velocity formula changes in `MobVelocityPlanner`, while keeping state checks and Rigidbody2D assignment in `Mob`/`FlyMob`.
+- Add ground/flying mob direction selection changes in `MobDirectionPlanner`, while keeping sprite flip and Rigidbody2D assignment in `Mob`/`FlyMob`.
+- Add normal mob train collision damage or default shake changes in `MobTrainCollisionHandler`, while keeping death coroutine start in `Mob`.
+- Add normal mob knockback force rules in `MobKnockbackPolicy`, while keeping stun and `Rigidbody2D.AddForce(...)` in `Mob`.
+- Add normal mob stun wait changes in `MobStunRoutine`, while keeping `isStunned` writes and coroutine start in `Mob`.
+- Add normal mob kill count, death sound, deactivation, or respawn callback rules in `MobDeathCompletion`, while keeping coroutine order in `Mob.Die()`.
+- Add spawn phase selection rules in `SpawnerPhaseSelector`, while keeping serialized `Spawner.SpawnPhase` field names stable.
+- Add selected phase runtime range or interval state changes in `SpawnerCurrentPhaseState`, while keeping serialized `Spawner.SpawnPhase` field names stable.
+- Add an event-spawned mob by using `PoolManager.GetMob(prefab)` through `Spawner` batch or periodic task APIs.
+- Add a boss by extending `Boss`, adding the prefab to `PoolManager.bosses`, extending `BossName`, and configuring `Spawner` boss sequence/settings.
+- Add boss sequence cursor behavior in `SpawnerBossSequenceCursor`, while keeping serialized `Spawner.bossSequence` data stable.
+- Add boss sequence warning or reservation log changes in `SpawnerBossSequenceLog`, while keeping `SpawnerBossSequenceCursor` focused on index state.
+- Add boss setting fallback or validation rules in `SpawnerBossSettingLookup`, while keeping serialized `Spawner.BossSpawnSetting` fields stable.
+- Add boss spawn point fallback or arrival position rules in `SpawnerBossSpawnPlacement`, while keeping boss object spawn execution in `SpawnerBossObjectSpawner`.
+- Add boss prefab lookup, instantiation, missing-spawn-point logging, or entrance handoff rules in `SpawnerBossObjectSpawner`, while keeping routine ordering in `SpawnerBossSpawnRoutine` and warning UI timing in `SpawnerBossWarningRoutine`.
+- Add boss appearance logging or `GameManager.AppearBoss()` entry rules in `SpawnerBossStateTransition`, while keeping warning timing in `SpawnerBossWarningRoutine`.
+- Add boss warning UI or post-warning delay sequencing rules in `SpawnerBossWarningRoutine`, while keeping boss state transition in `SpawnerBossStateTransition` and object spawn execution in `SpawnerBossObjectSpawner`.
+- Add boss spawn coroutine ordering changes in `SpawnerBossSpawnRoutine`, while keeping boss state entry, warning UI behavior, and object spawn execution in their focused helpers.
+- Add spawn enable or rear-spawn control rules in `SpawnerSpawnControlState`, while keeping public methods and coroutine stopping in `Spawner`.
+- Add spawned enemy velocity cleanup rules in `SpawnerEnemyPhysicsReset`, while keeping pool lookup selection in `SpawnerMobPoolLookup` and spawn execution in `Spawner`.
+- Add mob spawn placement or death callback wiring rules in `SpawnerMobSpawnSetup`, while keeping pool lookup selection in `SpawnerMobPoolLookup`.
+- Add normal, elite, or prefab mob pool lookup selection rules in `SpawnerMobPoolLookup`, while keeping public spawn call sites in `Spawner`.
+- Add batch spawn loop, delay, or fixed-position reuse rules in `SpawnerMobBatchRoutine`, while keeping public `Spawner.SpawnMobBatch(...)` stable.
+- Add spawn position weighting or safety rules in `SpawnerSpawnPositionSelector`, while keeping serialized spawn point/area fields stable.
+- Add basic/elite spawn weighting or guarantee rules in `SpawnerMobSpawnSelector`, while keeping selected phase runtime values in `SpawnerCurrentPhaseState`.
+- Add basic, elite, or boss spawn schedule due-check rules in `SpawnerSpawnSchedule`, while keeping timer state in `SpawnerSpawnTimerState` and spawn execution in `Spawner`.
+- Add basic, elite, or boss spawn timer storage, advancement, reset, or next-boss time mutation changes in `SpawnerSpawnTimerState`, while keeping spawn execution in `Spawner`.
+- Add periodic spawn interval, cancellation, or stacking rules in `SpawnerPeriodicSpawnScheduler`, while keeping `Spawner.AddPeriodicSpawnTask(...)` stable.
+- Add periodic spawn task list storage, null-prefab add guard, due-spawn access, or indexed timer reset changes in `SpawnerPeriodicTaskList`, while keeping actual prefab spawn execution in `Spawner`.
+- Add active enemy registry consistency or iteration rules in `PoolActiveEnemyRegistry`, while keeping `PoolManager.activeEnemies` and public methods stable.
+- Add active-enemy null or boss-retained despawn eligibility changes in `PoolEnemyDespawnFilter`, while keeping list iteration in `PoolActiveEnemyRegistry`.
+- Add pool prewarm, capacity, inactive cleanup, or instantiate policy in `PoolObjectProvider`, while keeping `PoolManager` public getters stable.
+- Add indexed mob pool storage shape or normal/fly/elite getter routing changes in `PoolMobPoolSet`, while keeping `PoolManager` public indexed getter methods stable.
+- Add pool list-array allocation or per-index initialization rules in `PoolListFactory`, while keeping `PoolObjectProvider.CreatePools(...)` stable.
+- Add indexed prefab bounds or pool/prefab pair selection rules in `PoolIndexedPrefabResolver`, while keeping `PoolObjectProvider.GetIndexed(...)` stable.
+- Add dynamic pool key, get-or-add, or dictionary lookup rules in `PoolDynamicPoolRegistry`, while keeping `PoolObjectProvider.GetDynamicPool(...)` stable.
+- Add dynamic prefab mob null handling, dynamic pool lookup, or reuse/create request flow in `PoolDynamicMobProvider`, while keeping `PoolManager.GetMob(GameObject)` stable.
+- Add inactive pooled-object lookup or activation changes in `PoolReusableObjectSelector`, while keeping instantiate-on-miss behavior in `PoolObjectProvider`.
+- Add pooled object instantiate-on-miss, naming, parent, or pool append changes in `PoolObjectFactory`, while keeping reuse selection in `PoolReusableObjectSelector`.
+- Add boss enum/prefab order validation in `PoolBossPrefabLookup`, while keeping `PoolManager.GetBoss(...)` stable.
+- Add spawner runtime state rules in `SpawnerRuntimeStateGate`, while keeping phase refresh and spawn execution in `Spawner`.
+- Add HP scaling or event debuff formula changes in `EnemyHpCalibration`, while keeping serialized enemy stats stable.
+- Add boss entrance sequence timing, final-position, or active-flag changes in `BossEntranceRoutine`, while keeping `Boss.StartEntranceRoutine(...)` stable.
+- Add boss entrance easing/interpolation changes in `BossEntranceMotion`, while keeping the sequence owner in `BossEntranceRoutine`.
+- Add boss enable-time reset value changes in `BossEnableState`, while keeping Unity side effects in `Boss.OnEnable()`.
+- Add boss kill-event request eligibility rules in `BossKillEventRequestGate`, while keeping shared side-effect execution in `BossDeathCompletionExecutor`.
+- Add boss death completion route rules in `BossDeathCompletionRouter`, while keeping shared side-effect execution in `BossDeathCompletionExecutor`.
+- Add shared boss kill reward, transition, fallback, or destroy side-effect rules in `BossDeathCompletionExecutor`, while keeping boss-specific death presentation timing in `EyeBoss` and `TrainBoss`.
+- Add boss death explosion null handling, pooling, or VFX routing in `BossDeathExplosionSpawner`, while keeping timing and offsets in `EyeBoss` and `TrainBoss`.
+- Add eye boss death explosion position or completion delay changes in `EyeBossDeathPresentation`, while keeping boss completion execution in `BossDeathCompletionExecutor`.
+- Add train boss death explosion offset or completion delay changes in `TrainBossDeathPresentation`, while keeping boss completion execution in `BossDeathCompletionExecutor`.
+- Add eye boss normal-pattern start gating changes in `EyeBossPatternStartGate`, while keeping pattern selection and coroutine starts in `EyeBoss`.
+- Add eye boss normal side/center weighting or sequencing changes in `EyeBossNormalPatternSelector`, while keeping coroutine starts in `EyeBoss`.
+- Add eye boss normal pattern post-spawn wait changes in `EyeBossNormalPatternRoutine`, while keeping busy-state ownership in `EyeBoss`.
+- Add eye boss enrage pattern duration-or-clear wait changes in `EyeBossEnragePatternRoutine`, while keeping enrage state writes in `EyeBoss`.
+- Add eye boss tentacle spawn point authoring validation or child-filter rules in `EyeBossTentacleSpawnPointCollector`, while keeping `EyeBoss.Start()` and serialized prefab references stable.
+- Add train boss damage or collision eligibility rules in `TrainBossCombatGate`, while keeping damage, phase, knockback, and collision side effects in `TrainBoss`.
+- Add train boss forward movement or sprite-facing rules in `TrainBossMovementPolicy`, while keeping stun gating and Rigidbody2D assignment in `TrainBoss`.
+- Add train boss phase threshold changes in `TrainBossPhaseTransition`, while keeping serialized phase/collider fields stable.
+- Add train boss phase state storage/reset changes in `TrainBossPhaseState`, while keeping serialized phase/collider fields stable.
+- Add train boss phase collider or animator presentation changes in `TrainBossPhasePresentation`, while keeping serialized collider fields and phase entry ordering in `TrainBoss`.
+- Add train boss knockback last-applied timestamp or reservation state changes in `TrainBossKnockbackCooldownState`, while keeping condition math in `TrainBossKnockbackPolicy`.
+- Add train boss knockback timing condition or force selection changes in `TrainBossKnockbackPolicy`, while keeping timestamp state in `TrainBossKnockbackCooldownState` and Rigidbody2D application in `TrainBossKnockbackApplier`.
+- Add train boss knockback velocity reset or impulse application changes in `TrainBossKnockbackApplier`, while keeping stun coroutine ordering in `TrainBoss`.
+- Add train boss stun active-state storage/reset changes in `TrainBossStunState`, while keeping movement gating in `TrainBoss`.
+- Add train boss stun active-state timing or wait changes in `TrainBossStunRoutine`, while keeping coroutine restart order in `TrainBoss`.
+- Add train boss collision damage or boss shake changes in `TrainBossTrainCollisionHandler`, while keeping alive-state gating in `TrainBoss`.
+- Add eye boss spawned tentacle registry or cleanup rules in `EyeBossTentacleRegistry`, while keeping `EyeBoss.RegisterTentacle(...)` and `UnregisterTentacle(...)` stable.
+- Add eye boss tentacle attack sound cooldown interval rules in `EyeBossAttackSoundCooldown` and timestamp reset/state changes in `EyeBossAttackSoundCooldownState`, while keeping `SoundEventBus` publishing in `EyeBoss`.
+- Add eye boss side/center/enrage pattern layout rules in `EyeBossTentaclePatternPlanner`, while keeping tentacle spawn execution in `EyeBossTentacleSpawner`.
+- Add eye boss tentacle damage/delay profile rules in `EyeBossTentacleAttackProfile`, while keeping tentacle spawn execution in `EyeBossTentacleSpawner`.
+- Add eye boss tentacle spawn pooling, prefab fallback, setup wiring, duration collection, or spawn sound routing in `EyeBossTentacleSpawner`, while keeping pattern timing in `EyeBoss`.
+- Add eye boss enrage threshold, HP clamp, or damage prediction rules in `EyeBossEnrageTransition`, while keeping side effects in `EyeBoss`.
+- Add eye-boss tentacle collision damage rules in `TentacleTrainCollisionHandler`, while keeping attack coroutine timing and owner registration in `Tentacle`.
+- Add eye-boss tentacle attack clip naming or fallback duration rules in `TentacleAttackAnimationDurationResolver`, while keeping coroutine timing in `Tentacle`.
+- Add eye-boss tentacle attack wait, callback, animation trigger, destroy-delay sequencing, or total duration calculation in `TentacleAttackRoutine`, while keeping `Tentacle.BeginAttack()` and `GetTotalDuration()` stable.
+- Add eye-boss tentacle damage math or death-threshold rules in `TentacleDamageState`, while keeping hit presentation in `Tentacle` and death completion in `TentacleDeathCompletion`.
+- Add eye-boss tentacle death particle, death sound, or destroy side-effect changes in `TentacleDeathCompletion`, while keeping hit effect and hit sound in `Tentacle`.
+- Add boss entrance behavior through `Spawner.BossSpawnSetting` spawn/arrival transforms and entrance duration.
+
+## Known Pitfalls
+
+- Enemy presentation components can be optional; hit material writes should stay behind `EnemyHitMaterialController`.
+- Base enemy damage requires the enemy to be alive and to have entered the screen; eligibility changes should stay behind `EnemyDamageGate`.
+- Base enemy damage state preserves `currentHP - damageAmount` and `CurrentHp <= 0`; damage math changes should stay behind `EnemyDamageState`.
+- Enemy targetability opens after screen entry; collider bounds, sprite bounds, and point fallback checks should stay behind `EnemyScreenEntryChecker`.
+- Enemy layer reset still uses `LayerMask.NameToLayer("Enemy")`; layer-name validation or fallback should stay behind `EnemyLayerAssignment`.
+- `EnemyEnableState` preserves previous base enemy enable reset values: current HP equals calibrated max HP, alive is true, and screen-entry is false.
+- `EnemyDisableCleanup` preserves previous disable cleanup order: when `PoolManager` exists, reset hit material first, then unregister the enemy from the active list.
+- `EnemyDespawnWithoutExpCompletion` preserves previous no-reward despawn semantics: skip inactive hierarchy objects, set `isAlive = false` in `Enemy`, stop all coroutines, then deactivate the GameObject.
+- Enemy target component lookup still depends on the `Player` tag; lookup changes should stay behind `EnemyTargetResolver`.
+- Enemy death reward order is XP first, inventory kill hooks second; reward changes should stay behind `EnemyDeathRewardDispatcher`.
+- `EnemyDeathPresentation` preserves previous base death presentation order: hide sprite, instantiate the configured kill particle at enemy transform position/rotation, then yield a zero-duration wait.
+- `EnemyKillParticleSpawner` preserves current kill particle behavior: instantiate the configured `killParticle` at the caller-provided position and rotation.
+- Enemy sprite presentation components can be optional; visibility, color reset, and flip writes should stay behind `EnemySpritePresentation`.
+- `EnemyHitEffectRoutine` preserves previous hit flash semantics: set `_isHit` true, wait `hitEffectDuration`, then set `_isHit` false, with a null-material guard.
+- `MobMovementStateResolver` preserves the previous movement-state branching: stunned mobs do not update movement, alive unstunned mobs move, and dead unstunned mobs use death slide.
+- `MobVelocityPlanner` preserves the previous post-death slide speed of 30.0f to the left, ground mobs preserving current y velocity, and flying mobs using normalized direction times `moveSpeed`.
+- `MobDirectionPlanner` preserves the previous ground direction rule of right/left/zero by x delta and the flying rule of horizontal movement outside `diveDistance`, normalized dive direction inside it.
+- `MobTrainCollisionHandler` preserves previous normal mob collision semantics: any `Train` layer trigger starts mob death, but damage and default camera shake happen only when a `Train` component is found.
+- `MobKnockbackPolicy` preserves the previous normal mob knockback force rule of `direction.normalized * power`; zero direction still produces zero force.
+- `MobStunRoutine` preserves previous normal mob stun wait semantics: `Mob.Stun()` sets `isStunned` true, waits `stunDuration`, then sets `isStunned` false.
+- `MobDeathCompletion` preserves previous normal mob death completion order: report kill before base death, then publish death sound, hide sprite, deactivate GameObject, and invoke `OnDied`.
+- `Boss.CalculateCalibratedHP()` depends on `levelManager` from base `Enemy.Awake()` and `PoolManager.instance.eventDebuff`.
+- `PoolBossPrefabLookup` preserves the previous boss prefab lookup: `PoolManager.GetBoss(BossName)` returns `bosses[(int)boss]`, so enum/prefab order must stay aligned.
+- `Spawner.SetSpawning(false)` stops all coroutines, which can also interrupt boss or batch routines owned by the same component.
+- `SpawnerRuntimeStateGate` preserves the previous spawner runtime state rule: spawns are processed during `Playing` and `Boss` only.
+- `SpawnerSpawnSchedule` preserves the previous spawn due rules: elite timers start only after `firstEliteSpawnTime`, timers are due at `>= interval`, and boss spawns are due at `gameTime >= nextBossSpawnTime`.
+- `SpawnerSpawnTimerState` preserves previous timer state semantics: mob timer resets to 0 on start and after basic spawn, elite timer starts at `eliteMobSpawnInterval` and only advances after `firstEliteSpawnTime`, and next boss time starts at `bossSpawnInterval` then advances by that same interval after a boss spawn is requested.
+- `SpawnerPhaseSelector` selects the latest phase whose `startTime` is less than or equal to current game time; phase array order and start times matter.
+- `SpawnerCurrentPhaseState` preserves previous current phase state semantics: selected phase index ranges and spawn interval overwrite the prior runtime values only when a phase is selected; default spawn interval remains 1.0 seconds before the first successful selection.
+- `SpawnerBossSequenceCursor` cycles through `bossSequence`; empty sequences still warn and skip spawning.
+- `SpawnerBossSequenceLog` preserves previous sequence report text: empty sequence warns and successful selection logs the reserved next index and boss name.
+- `SpawnerBossSettingLookup` preserves the previous lookup behavior, including the 3.0-second fallback delay for missing boss settings.
+- `SpawnerBossSpawnPlacement` preserves the previous boss placement semantics: missing `spawnPoint` falls back to the spawner transform position, and missing `arrivalPoint` skips entrance movement.
+- `SpawnerBossObjectSpawner` preserves previous boss spawn side effects: skip when `PoolManager.instance` or boss prefab is null, log the same missing spawn-point error, instantiate with identity rotation, and call `Boss.StartEntranceRoutine(...)` only when a `Boss` component and arrival point exist.
+- `SpawnerBossStateTransition` preserves previous boss state transition order: log the boss appearance using `GameManager.Instance.gameTime`, then call `GameManager.Instance.AppearBoss()`.
+- `SpawnerBossWarningRoutine` preserves previous boss warning semantics: call `BossWarningLoopUI.Instance.ShowWarning()` only when the instance exists, then wait for `spawnDelayAfterWarning`.
+- `SpawnerBossSpawnRoutine` preserves previous boss spawn coroutine order: resolve the boss setting, enter boss state, wait through warning routine using `spawnDelayAfterWarning`, then request object spawn for the same boss name.
+- `SpawnerSpawnControlState` preserves previous control defaults and side-effect decision: spawning and rear spawning reset enabled, and disabling spawning requests `StopAllCoroutines()`.
+- `SpawnerEnemyPhysicsReset` preserves the previous spawned enemy physics reset: if a `Rigidbody2D` exists, clear `linearVelocity` and `angularVelocity`; enemies without `Rigidbody2D` are still allowed.
+- `SpawnerMobSpawnSetup` preserves previous mob spawn setup semantics: ignore null enemy, assign a selected spawn position, reset physics, then remove and re-add `RespawnMob` through `Mob.OnDied` when a `Mob` component exists.
+- `SpawnerMobPoolLookup` preserves previous pool lookup semantics: basic mobs choose ground/fly pool by `isFly`, elite mobs choose ground/fly elite pool by `isFly`, and prefab spawns call `PoolManager.instance.GetMob(prefab)`.
+- `SpawnerMobBatchRoutine` preserves previous batch spawn semantics: choose one spawn position before the loop, request `PoolManager.instance.GetMob(prefab)` for each count, place and physics-reset non-null enemies, then wait `delay` after each iteration.
+- `SpawnerSpawnPositionSelector` preserves the previous fly-first/ground-only branch behavior; flying mobs with no configured area fall back to the spawner position, not ground points.
+- `SpawnerMobSpawnSelector` preserves the previous random thresholds: basic mobs use `< 0.5f` for ground, elite mobs use `> 0.5f` for flying.
+- `SpawnerPeriodicSpawnScheduler` preserves the previous minimum periodic interval of 0.1 seconds and resets each task timer only after spawning is requested.
+- `SpawnerPeriodicTaskList` preserves previous periodic task list semantics: null prefabs are ignored on add, tasks advance in list order, due tasks expose prefab/fly state to `Spawner`, and timer reset happens after spawn is requested.
+- `PoolActiveEnemyRegistry` preserves the previous list semantics: duplicate prevention on register, remove-if-present on unregister, and reverse iteration for despawn.
+- `PoolEnemyDespawnFilter` preserves previous despawn filter semantics: all-enemy cleanup skips null entries, and boss-retained cleanup skips null entries plus enemies with a `Boss` component.
+- `PoolMobPoolSet` preserves previous indexed mob pool semantics: initialize normal, fly, ground-elite, and fly-elite pool arrays from the same serialized prefab arrays and route public getters through `PoolObjectProvider.GetIndexed(...)`.
+- `PoolListFactory` preserves previous pool list initialization semantics: allocate a `List<GameObject>[]` with `prefabs.Length` entries and assign a new empty `List<GameObject>` to each index.
+- `PoolIndexedPrefabResolver` preserves previous indexed pool semantics: return false when the index is outside the prefab array range, otherwise pair `pools[index]` with `prefabs[index]`.
+- `PoolDynamicPoolRegistry` preserves previous dynamic pool semantics: use `prefab.name` as the key, create a new pool list only when the key is missing, and return `dynamicPools[key]`.
+- `PoolDynamicMobProvider` preserves previous dynamic prefab mob semantics: null prefab returns null; otherwise request the prefab-name dynamic pool and reuse/create under `PoolManager.transform`.
+- `PoolReusableObjectSelector` preserves previous reusable object semantics: find the first non-null inactive object, set it active, and return it.
+- `PoolObjectFactory` preserves previous instantiate-on-miss semantics: instantiate the prefab under the provided parent, set the created object's name to `prefab.name`, append it to the same pool, and return it.
+- `PoolObjectProvider` preserves the previous pool semantics: indexed prefab getters return null when the index is out of prefab-array range, dynamic pools are keyed by `prefab.name`, and missing reusable objects instantiate under `PoolManager.transform`, rename to `prefab.name`, and append to the same pool list.
+- `EnemyHpCalibration` preserves the previous boss formula, minute-based mob/tentacle scaling, event debuff multiplier, and elite multiplier application.
+- `BossEntranceMotion` preserves the previous `Mathf.SmoothStep(0f, 1f, elapsed / duration)` plus `Vector3.Lerp(...)` interpolation.
+- `BossEntranceRoutine` preserves the previous entrance sequence: set entrance active before the loop, update position each frame, snap to target, then clear entrance active.
+- `BossEnableState` preserves previous boss enable reset values: current HP equals calibrated max HP, alive is true, screen-entry is false, and entrance-active is false.
+- `BossKillEventRequestGate` preserves previous boss kill-event request semantics: request only when a kill event exists, `GameManager` exists, and the game is not at ending time.
+- `BossDeathCompletionRouter` preserves previous boss death completion routing: run the `GameManager` route when `GameManager.Instance` exists, otherwise use `StageManager` fallback.
+- `BossDeathCompletionExecutor` preserves previous shared boss completion order: request kill event when allowed, run the selected completion route, then destroy the boss GameObject.
+- `BossDeathExplosionSpawner` preserves current boss death explosion behavior: instantiate the configured `killExplosionEffect` at the caller-provided position with identity rotation.
+- `EyeBossDeathPresentation` preserves previous eye boss death presentation constants: explosion position is `transform.position` and completion waits 2.0 seconds after `base.Die()` returns.
+- `TrainBossDeathPresentation` preserves previous train boss death presentation constants: explosion position is `transform.position + (-5f, 2f)` and completion waits 2.0 seconds after `SoundID.Boss_Die`.
+- `EyeBossPatternStartGate` preserves previous normal pattern start semantics: start only when alive, not busy, not ready for enrage pattern, and not in entrance motion.
+- `EyeBossNormalPatternSelector` preserves previous normal pattern selection semantics: `Random.Range(0, 2) == 0` starts side pattern, otherwise center pattern.
+- `EyeBossNormalPatternRoutine` preserves previous normal pattern wait sequencing: wait for spawned tentacle duration first, then wait for `waitTimeAfterPatternEnd`.
+- `EyeBossEnragePatternRoutine` preserves previous enrage wait semantics: advance with `Time.deltaTime` until duration expires or all spawned tentacles are gone, then keep the same early-exit log message.
+- `EyeBossTentacleSpawnPointCollector` preserves previous spawn point collection semantics: read `root.childCount`, allocate the same-length array, and copy `root.GetChild(i)` in child index order.
+- `TrainBossCombatGate` preserves previous combat gate semantics: damage is accepted only when alive and after screen entry; train collision handling runs only while alive.
+- `TrainBossMovementPolicy` preserves the previous forward movement semantics: always move left, compose x velocity as `moveDirection.x * moveSpeed`, preserve current y velocity, and keep `flipX` false.
+- `TrainBossPhaseTransition` preserves the previous phase 2 condition: not already phase 2 and `currentHP <= calibratedMaxHP * p2HpRatio`.
+- `TrainBossPhaseState` preserves previous phase state semantics: start in phase 1, mark phase 2 after roar sound, and expose the current phase state for knockback force selection.
+- `TrainBossPhasePresentation` preserves previous phase presentation semantics: initial phase 1 collider enabled and phase 2 collider disabled, then phase 2 entry triggers `phase2`, disables phase 1 collider, enables phase 2 collider, and logs the same message after phase 2 state is marked.
+- `TrainBossKnockbackPolicy` preserves the previous knockback condition and rightward force selection: `Time.time >= lastKnockbackTime + knockbackCooldown`, phase 1 force before phase 2, phase 2 force after transition.
+- `TrainBossKnockbackCooldownState` preserves the previous last-knockback timestamp state: initial value `-999f`, check before knockback, and timestamp update after knockback starts.
+- `TrainBossKnockbackApplier` preserves previous knockback physics application: clear `Rigidbody2D.linearVelocity` to zero, then call `AddForce(force, ForceMode2D.Impulse)`.
+- `TrainBossStunState` preserves previous stun state semantics: default not stunned, then expose the current stun state for movement gating.
+- `TrainBossStunRoutine` preserves previous stun timing semantics: set stunned true, wait `stunDuration`, then set stunned false.
+- `TrainBossTrainCollisionHandler` preserves previous train boss collision semantics: train-layer collision attempts boss damage through `Train.TakeDamage(damage, true)`, and boss-specific camera shake runs only when a `Train` component is found.
+- `TentacleTrainCollisionHandler` preserves previous tentacle collision semantics: only `Player` tag collisions attempt `Train.TakeDamage(damage)`, and no damage is applied when the collided object has no `Train` component.
+- `TentacleAttackAnimationDurationResolver` preserves previous duration semantics: no animator or no runtime controller keeps the existing `animationLength`, a controller with no attack-named clip uses 1.0 seconds, and the first `Attack`/`attack` clip wins.
+- `TentacleAttackRoutine` preserves previous attack sequence and total-duration formula: wait for warning delay, trigger `attack` when an animator exists, invoke the attack callback, wait for animation length, wait for destroy delay, then destroy the tentacle object; total duration still uses a 1.0-second animation fallback when `animationLength <= 0`.
+- `TentacleDamageState` preserves previous damage semantics: subtract incoming damage from `currentHP`, then treat `CurrentHp <= 0` as dead; `Tentacle` still publishes hit sound locally.
+- `TentacleDeathCompletion` preserves previous tentacle death completion order: spawn the configured kill particle at the tentacle position, publish `SoundID.Enemy_Die`, then destroy the tentacle GameObject.
+- `EyeBossTentacleRegistry` preserves previous spawned tentacle semantics: duplicate prevention on register, remove-if-present on unregister, reverse destroy iteration on cleanup, and `Count > 0` active check.
+- `EyeBossAttackSoundCooldown` preserves the previous `Time.time - lastPlayTime > 0.1f` rule.
+- `EyeBossAttackSoundCooldownState` preserves the previous initial attack sound timestamp of `-10f` and the mark-after-publish order.
+- `EyeBossTentaclePatternPlanner` preserves previous pattern index rules: side picks left/right group 0-3 or 4-7, center uses 2-5, enrage uses all spawn points with a three-index weak cluster from `Random.Range(1, 7)`.
+- `EyeBossTentacleAttackProfile` preserves previous profile selection semantics: normal patterns use `normalTentacleDamage` and `normalAttackDelay`, while enrage patterns use `enrageTentacleDamage` and `enrageAttackDelay`.
+- `EyeBossTentacleSpawner` preserves previous tentacle spawn execution semantics: skip invalid indices, choose weak/normal prefab by weak set, skip null prefabs, instantiate at spawn point with identity rotation, call `Tentacle.Setup(...)`, start attack, collect max duration, and always publish `SoundID.Boss_TentacleSpawn`.
+- `EyeBossEnrageTransition` preserves previous enrage trigger semantics: predict `currentHP - damageAmount`, clamp to `calibratedMaxHP * EnragePatternThreshold`, and force enrage only when not already enraged, not already ready, and predicted HP is at or below the threshold.
+- Boss death is not isolated to boss scripts; it affects `GameManager`, `PoolManager`, `StageManager`, ending flow, UI, and audio.
+- Kill counter state should stay behind `GameManager`/`GameKillCounter`; enemy scripts should keep using `GameManager.AddKillCount(...)` or `AddBossKillCount()`.
+
+## Promotion Candidate
+
+This map can become a future enemy/boss architecture document after spawn authoring, boss reward behavior, and pooled enemy lifecycle rules stabilize.

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class GiantMaw : MonoBehaviour, IInstantiatedItem
+public class GiantMaw : MonoBehaviour, IInstantiatedItem, IItemCooldownView
 {
     private GiantMaw_SO itemData;
     private Train playerTrain;
@@ -16,6 +16,18 @@ public class GiantMaw : MonoBehaviour, IInstantiatedItem
     private float   knockbackPower      = 15.0f;
 
     private bool    isAvailable = true;
+
+    public bool HasCooldown => cooldown > 0f;
+
+    public float GetCooldownFillAmount()
+    {
+        if (isAvailable)
+        {
+            return 0f;
+        }
+
+        return ItemCooldownFill.FromRemaining(currentCoolTime, cooldown);
+    }
 
     private void Awake()
     {

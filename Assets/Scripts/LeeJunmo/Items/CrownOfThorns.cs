@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CrownOfThorns : MonoBehaviour, IInstantiatedItem
+public class CrownOfThorns : MonoBehaviour, IInstantiatedItem, IItemCooldownView
 {
     private CrownOfThorns_SO itemData;
     private Animator animator;
@@ -19,6 +19,13 @@ public class CrownOfThorns : MonoBehaviour, IInstantiatedItem
 
     // 내부 변수
     private float cooldownTimer = 0f;
+
+    public bool HasCooldown => cooldown > 0f;
+
+    public float GetCooldownFillAmount()
+    {
+        return ItemCooldownFill.FromRemaining(cooldownTimer, cooldown);
+    }
 
     private void Awake()
     {

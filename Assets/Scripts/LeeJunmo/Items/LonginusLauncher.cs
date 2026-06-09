@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class LonginusLauncher : MonoBehaviour, IInstantiatedItem
+public class LonginusLauncher : MonoBehaviour, IInstantiatedItem, IItemCooldownView
 {
     private LonginusLauncher_SO itemData;
 
@@ -22,6 +22,18 @@ public class LonginusLauncher : MonoBehaviour, IInstantiatedItem
 
     private LonginusPathData activePathData;
     private Camera mainCamera;
+
+    public bool HasCooldown => cooldown > 0f;
+
+    public float GetCooldownFillAmount()
+    {
+        if (!isReady && cooldownTimer <= 0f)
+        {
+            return 1f;
+        }
+
+        return ItemCooldownFill.FromRemaining(cooldownTimer, cooldown);
+    }
 
     // ✨ [신규] 애니메이션 시작 시점의 타겟 위치 저장용
     private Vector3 lastKnownTargetPos;

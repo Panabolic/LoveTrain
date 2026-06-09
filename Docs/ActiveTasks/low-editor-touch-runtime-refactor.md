@@ -1,0 +1,1033 @@
+---
+status: active
+authority: active-task
+category: refactor
+task_id: low-editor-touch-runtime-refactor
+last_reviewed: 2026-06-07
+---
+
+# Low-Editor-Touch Runtime Refactor
+
+This file is the active task scope that was previously stored in `Docs/CurrentTask.md`.
+Use it with `Docs/TaskIndex.md` and `Docs/README.md`; `Docs/CurrentTask.md` is now only a deprecated compatibility notice.
+
+## Goal
+
+Continue low-editor-touch refactoring by separating runtime state rules without changing scenes, prefabs, Inspector wiring, ScriptableObjects, asmdefs, or generated Unity project files.
+
+## Requested Work
+
+- Continue refactoring toward stronger responsibility separation for release maintenance.
+- Keep changes low-risk and behavior-preserving.
+- Avoid scene, prefab, Inspector wiring, ScriptableObject asset, asmdef, and generated Unity project file edits.
+- Update project memory for structural changes.
+
+## Scope Notes
+
+- Existing public APIs and serialized/public fields are preserved unless a later task explicitly approves migration.
+- Pure C# state objects are preferred before MonoBehaviour, prefab, scene, or asset changes.
+- Source/static checks are the first verification layer.
+
+## Done Criteria
+
+- Item cooldown timer rules are owned by `ItemCooldownState`.
+- Item visual upgrade fallback is owned by `ItemVisualUpgradeApplier`.
+- Inventory lookup and max/upgradable item query rules are owned by `InventoryItemQuery`.
+- Inventory item tick, kill hook, and hit hook dispatch loops are owned by `InventoryItemRuntimeDispatcher`.
+- Inventory item acquisition and upgrade execution are owned by `InventoryItemAcquirer`.
+- Level-up item availability filtering and random choice selection are owned by `LevelUpChoiceSelector`.
+- Level-up choice new/upgrade display state is owned by `LevelUpChoiceDisplayState`.
+- Train XP totals, level thresholds, display progress, and level advancement state are owned by `TrainLevelProgression`.
+- Game UI queue pending/processing state and event-resume state are owned by `GameUiQueueController`.
+- Game kill counters are owned by `GameKillCounter`.
+- Item runtime `GameState` gating is owned by `ItemRuntimeGameStatePolicy`.
+- Global runtime time scale and physics simulation mode writes are owned by `GameSimulationController`.
+- Runtime pause-read checks are owned by `GameSimulationController.IsPaused`.
+- Spawner runtime `GameState` gating is owned by `SpawnerRuntimeStateGate`.
+- Spawner basic, elite, and boss spawn schedule due checks are owned by `SpawnerSpawnSchedule`.
+- Spawner basic, elite, and boss spawn timer storage, advancement, reset, and next-boss time state are owned by `SpawnerSpawnTimerState`.
+- Spawn phase selection is owned by `SpawnerPhaseSelector`.
+- Current spawn phase runtime ranges and spawn interval state are owned by `SpawnerCurrentPhaseState`.
+- Boss sequence cursor state is owned by `SpawnerBossSequenceCursor`.
+- Boss sequence empty-sequence warning and reserved-next-boss logging are owned by `SpawnerBossSequenceLog`.
+- Boss setting lookup and default fallback creation are owned by `SpawnerBossSettingLookup`.
+- Boss spawn point fallback and arrival position resolution are owned by `SpawnerBossSpawnPlacement`.
+- Boss object prefab lookup, instantiation, and entrance handoff are owned by `SpawnerBossObjectSpawner`.
+- Boss spawn state-transition logging and `GameManager.AppearBoss()` entry are owned by `SpawnerBossStateTransition`.
+- Boss warning UI show and post-warning delay sequence is owned by `SpawnerBossWarningRoutine`.
+- Boss spawn coroutine setting lookup, state-transition, warning wait, and spawn-object request sequence is owned by `SpawnerBossSpawnRoutine`.
+- Spawner public spawn/rear-spawn control flags and disable-coroutine decision are owned by `SpawnerSpawnControlState`.
+- Spawned enemy `Rigidbody2D` velocity reset is owned by `SpawnerEnemyPhysicsReset`.
+- Mob spawn placement, physics reset, and death callback wiring are owned by `SpawnerMobSpawnSetup`.
+- Normal, elite, and prefab mob pool lookup selection is owned by `SpawnerMobPoolLookup`.
+- Mob batch spawn loop and delay sequence is owned by `SpawnerMobBatchRoutine`.
+- Spawn position selection is owned by `SpawnerSpawnPositionSelector`.
+- Basic and elite mob spawn type/index selection is owned by `SpawnerMobSpawnSelector`.
+- Periodic spawn task interval clamping and timer advancement are owned by `SpawnerPeriodicSpawnScheduler`.
+- Periodic spawn task list storage, null-prefab add guard, due-spawn access, and timer reset by index are owned by `SpawnerPeriodicTaskList`.
+- Base enemy damage eligibility is owned by `EnemyDamageGate`.
+- Base enemy HP subtraction and death-threshold state is owned by `EnemyDamageState`.
+- Enemy death XP reward and inventory kill-hook dispatch are owned by `EnemyDeathRewardDispatcher`.
+- Base enemy death sprite hide, kill particle request, and zero-duration completion wait are owned by `EnemyDeathPresentation`.
+- Enemy kill particle instantiation is owned by `EnemyKillParticleSpawner`.
+- Enemy player target component lookup is owned by `EnemyTargetResolver`.
+- Enemy screen-entry targetable checks are owned by `EnemyScreenEntryChecker`.
+- Enemy layer reset on enable is owned by `EnemyLayerAssignment`.
+- Base enemy enable-time current HP, alive, and screen-entry reset values are owned by `EnemyEnableState`.
+- Enemy disable-time hit material cleanup and active enemy unregister sequence is owned by `EnemyDisableCleanup`.
+- Enemy no-reward despawn active guard and coroutine-stop/deactivate completion are owned by `EnemyDespawnWithoutExpCompletion`.
+- Enemy hit material flag writes are owned by `EnemyHitMaterialController`.
+- Enemy hit effect material on/wait/off sequence is owned by `EnemyHitEffectRoutine`.
+- Enemy sprite visibility, color reset, and flip writes are owned by `EnemySpritePresentation`.
+- Mob/FlyMob movement state selection is owned by `MobMovementStateResolver`.
+- Mob ground/fly/death velocity formulas are owned by `MobVelocityPlanner`.
+- Mob ground and fly direction selection formulas are owned by `MobDirectionPlanner`.
+- Mob train collision layer check, train damage, and default camera shake are owned by `MobTrainCollisionHandler`.
+- Mob knockback force calculation is owned by `MobKnockbackPolicy`.
+- Normal mob stun duration wait sequence is owned by `MobStunRoutine`.
+- Mob kill count reporting and death completion side effects are owned by `MobDeathCompletion`.
+- Active enemy register/unregister/despawn iteration rules are owned by `PoolActiveEnemyRegistry`.
+- Active enemy no-null and boss-retained despawn filters are owned by `PoolEnemyDespawnFilter`.
+- Pooled object provider entry points for list initialization, indexed/dynamic pool lookup, and reuse/create orchestration are owned by `PoolObjectProvider`.
+- Indexed mob pool storage and normal/fly/elite getter routing are owned by `PoolMobPoolSet`.
+- Pooled object list-array allocation and per-index empty list initialization are owned by `PoolListFactory`.
+- Indexed pool prefab-array bounds and pool/prefab pair resolution are owned by `PoolIndexedPrefabResolver`.
+- Dynamic pool dictionary key creation and get-or-create retrieval are owned by `PoolDynamicPoolRegistry`.
+- Dynamic prefab mob null guard, dynamic pool lookup, and reuse/create request flow are owned by `PoolDynamicMobProvider`.
+- Pooled object inactive reusable lookup and activation are owned by `PoolReusableObjectSelector`.
+- Pooled object instantiate-on-miss, prefab-name assignment, and pool append behavior are owned by `PoolObjectFactory`.
+- Boss prefab enum-to-array lookup is owned by `PoolBossPrefabLookup`.
+- Enemy and boss HP calibration formulas are owned by `EnemyHpCalibration`.
+- Boss entrance interpolation is owned by `BossEntranceMotion`.
+- Boss entrance coroutine flag timing, movement loop, and final position assignment are owned by `BossEntranceRoutine`.
+- Boss enable-time HP/current/alive/screen-entry/entrance reset state is owned by `BossEnableState`.
+- Boss kill-event request eligibility is owned by `BossKillEventRequestGate`.
+- Boss death completion route selection is owned by `BossDeathCompletionRouter`.
+- Boss death completion side-effect execution is owned by `BossDeathCompletionExecutor`.
+- Boss death explosion instantiation is owned by `BossDeathExplosionSpawner`.
+- Eye boss death explosion position and completion delay constants are owned by `EyeBossDeathPresentation`.
+- Eye boss normal pattern start eligibility is owned by `EyeBossPatternStartGate`.
+- Eye boss normal side/center pattern selection is owned by `EyeBossNormalPatternSelector`.
+- Eye boss normal pattern post-spawn wait sequence is owned by `EyeBossNormalPatternRoutine`.
+- Eye boss enrage pattern duration-or-clear wait sequence is owned by `EyeBossEnragePatternRoutine`.
+- Eye boss tentacle spawn point child-transform collection is owned by `EyeBossTentacleSpawnPointCollector`.
+- Eye boss tentacle list registration, unregistration, active check, and cleanup iteration are owned by `EyeBossTentacleRegistry`.
+- Eye boss tentacle attack sound cooldown rule is owned by `EyeBossAttackSoundCooldown`.
+- Eye boss tentacle attack sound last-play timestamp state is owned by `EyeBossAttackSoundCooldownState`.
+- Eye boss side/center/enrage tentacle pattern index planning is owned by `EyeBossTentaclePatternPlanner`.
+- Eye boss tentacle normal/enrage attack damage and delay profile selection is owned by `EyeBossTentacleAttackProfile`.
+- Eye boss tentacle prefab selection, instantiation, setup, attack start, max-duration collection, and spawn sound publishing are owned by `EyeBossTentacleSpawner`.
+- Eye boss enrage threshold prediction and forced-enrage HP clamp decision are owned by `EyeBossEnrageTransition`.
+- Train boss train collision layer check, boss damage application, and boss camera shake are owned by `TrainBossTrainCollisionHandler`.
+- Tentacle player-tag collision check and train damage forwarding are owned by `TentacleTrainCollisionHandler`.
+- Tentacle attack animation duration resolution is owned by `TentacleAttackAnimationDurationResolver`.
+- Tentacle attack wait, animation trigger, attack callback, destroy delay sequence, and total duration calculation are owned by `TentacleAttackRoutine`.
+- Tentacle HP subtraction and death-threshold state are owned by `TentacleDamageState`.
+- Tentacle death particle, death sound, and object destroy side effects are owned by `TentacleDeathCompletion`.
+- Train boss damage and train-collision eligibility gates are owned by `TrainBossCombatGate`.
+- Train boss forward movement direction, velocity composition, and sprite-facing rule are owned by `TrainBossMovementPolicy`.
+- Train boss phase 2 transition threshold is owned by `TrainBossPhaseTransition`.
+- Train boss phase 2 entered-state storage is owned by `TrainBossPhaseState`.
+- Train boss phase collider and animator presentation is owned by `TrainBossPhasePresentation`.
+- Train boss knockback cooldown and force selection rules are owned by `TrainBossKnockbackPolicy`.
+- Train boss knockback last-applied timestamp state is owned by `TrainBossKnockbackCooldownState`.
+- Train boss knockback velocity reset and impulse application are owned by `TrainBossKnockbackApplier`.
+- Train boss stun active-state storage is owned by `TrainBossStunState`.
+- Train boss stun active-state timing and duration wait sequence are owned by `TrainBossStunRoutine`.
+- Train boss death explosion position offset and completion delay constants are owned by `TrainBossDeathPresentation`.
+- `ItemInstance` keeps its public fields and methods while delegating cooldown countdown, manual wait, and restart state.
+- `ItemInstance` delegates Animator/SpriteRenderer fallback upgrade application when an instantiated item does not implement `IInstantiatedItem`.
+- `Inventory` keeps its public methods and serialized/public item list while delegating query-only logic.
+- `Inventory` keeps its public methods and serialized/public item list while delegating runtime item dispatch loops.
+- `Inventory` keeps its public methods and serialized/public item list while delegating acquisition and upgrade execution.
+- `LevelUpUIManager` keeps its serialized UI references and public entry points while delegating choice selection rules.
+- `LevelUpChoiceUI` keeps its serialized UI references and public `DisplayChoice(...)` signature while delegating display-state calculation.
+- `TrainLevelManager` keeps its public properties, events, and level-up UI queue request while delegating XP progression state.
+- `GameManager` keeps `RegisterUIQueue(...)`, `CloseUI()`, game-state changes, and time/physics freeze side effects while delegating UI queue bookkeeping.
+- `GameManager` keeps kill-count public properties and add methods while delegating counter storage and increments.
+- `ItemInstance` and instantiated item behaviours keep their update behavior while delegating item runtime state checks.
+- `GameManager`, `SceneLoader`, and `Option` keep their public entry points while delegating global simulation pause/resume writes.
+- Runtime scripts keep their pause-sensitive early returns while delegating `Time.timeScale == 0` checks to `GameSimulationController.IsPaused`.
+- `Spawner` keeps `Update()`, phase refresh, and spawn execution while delegating runtime state gating.
+- `Spawner` keeps `Update()` and spawn execution while delegating basic, elite, and boss spawn schedule due checks.
+- `Spawner` keeps `Update()`, phase refresh, and spawn execution while delegating basic, elite, and boss spawn timer state mutation and resets.
+- `Spawner` keeps its serialized phase data and spawn execution while delegating phase selection.
+- `Spawner` keeps its serialized phase data, phase refresh entry point, and spawn execution while delegating current phase runtime range and interval state.
+- `Spawner` keeps its serialized boss sequence data and boss spawn execution while delegating boss sequence cursor state.
+- `Spawner` keeps boss sequence selection and spawn execution while delegating empty-sequence warning and reserved-next-boss logging to `SpawnerBossSequenceLog`.
+- `Spawner` keeps its serialized boss settings data and boss spawn execution while delegating boss setting lookup.
+- `Spawner` keeps boss object spawn call sites while delegating prefab lookup, `Instantiate(...)`, fallback logging, and entrance handoff to `SpawnerBossObjectSpawner`.
+- Boss appearance logging and `GameManager.AppearBoss()` stay behind `SpawnerBossStateTransition`.
+- Boss warning UI show and post-warning wait sequence stay behind `SpawnerBossWarningRoutine`.
+- `Spawner` keeps the `StartCoroutine(...)` entry point and boss object spawn call site while delegating boss spawn coroutine sequencing.
+- `Spawner` keeps public spawn control methods and `StopAllCoroutines()` side effects while delegating spawn/rear-spawn flag state.
+- `Spawner` keeps spawned enemy call sites and setup pipeline while delegating spawned enemy physics velocity reset.
+- `Spawner` keeps public mob spawn entry points while delegating normal, elite, and prefab mob pool lookup selection to `SpawnerMobPoolLookup`.
+- `Spawner` keeps mob spawn call sites while delegating spawn placement, physics reset, and `Mob.OnDied` callback rewiring to `SpawnerMobSpawnSetup`.
+- `Spawner` keeps public batch spawn API while delegating batch spawn loop, fixed batch position, pooled mob lookup, physics reset, and delay wait sequence.
+- `Spawner` keeps its serialized spawn point/area data and spawn execution while delegating spawn position selection.
+- `Spawner` keeps pool execution while delegating current phase runtime range/interval state and basic/elite mob type/index selection.
+- `Spawner` keeps its public periodic spawn API and spawn execution while delegating periodic task timer rules.
+- `Spawner` keeps its public periodic spawn API and actual prefab spawn execution while delegating periodic task list storage, add guard, due-spawn access, and timer reset by index.
+- `Enemy` keeps HP subtraction, hit effect, sound, death coroutine start, and public `TakeDamage(...)` while delegating alive/screen-entry damage eligibility.
+- `Enemy` keeps public `TakeDamage(...)`, hit effect, sound, and death coroutine start while delegating HP subtraction and death-threshold state.
+- `Enemy` keeps its death lifecycle and presentation flow while delegating XP reward and inventory kill-hook dispatch.
+- `Enemy` keeps death state and reward dispatch while delegating base death presentation side effects and completion wait creation.
+- `Enemy` keeps its target fields and lifecycle while delegating player `Rigidbody2D` and `TrainLevelManager` lookup.
+- `Enemy` keeps its lifecycle and targetable state while delegating camera/collider/sprite screen-entry checks.
+- `Enemy` and `Boss` keep their enable lifecycle while delegating enemy layer reset.
+- `Enemy` keeps enable lifecycle side effects while delegating enable-time current HP/alive/screen-entry reset values.
+- `Enemy` keeps `OnDisable()` as the Unity lifecycle entry point while delegating hit material cleanup and active-enemy unregister sequencing.
+- `Enemy` keeps public `DespawnWithoutExp()` and `isAlive` state write while delegating active guard and coroutine-stop/deactivate completion.
+- `Enemy` keeps its public/serialized fields and lifecycle methods while delegating hit material flag writes.
+- `Enemy` keeps `HitEffect()` as the coroutine entry point while delegating hit material on/wait/off sequencing.
+- `Enemy`, `Boss`, `Mob`, `FlyMob`, and `TrainBoss` keep lifecycle, movement, and combat behavior while delegating optional sprite presentation writes.
+- `Mob` and `FlyMob` keep `FixedUpdate`, death-slide side effects, active movement side effects, direction selection, and Rigidbody2D assignment while delegating movement state selection.
+- `Mob` and `FlyMob` keep `FixedUpdate`, stun/death state checks, sprite flip application, and Rigidbody2D assignment while delegating direction and velocity formulas.
+- `Mob` keeps `OnTriggerEnter2D(...)` and death coroutine start while delegating train collision damage and camera shake handling.
+- `Mob` keeps public `Knockback(...)`, stun coroutine start, and Rigidbody2D force application while delegating knockback force calculation.
+- `Mob` keeps public `Knockback(...)`, stun state writes, coroutine start, and Rigidbody2D impulse while delegating stun duration wait to `MobStunRoutine`.
+- `PoolManager` keeps its public `activeEnemies` list and public methods while delegating active enemy registry/despawn loops.
+- `PoolActiveEnemyRegistry` keeps reverse despawn iteration while delegating no-null and boss-retained despawn filters.
+- `PoolManager` keeps its serialized prefab arrays and public getter methods while delegating pool list initialization, indexed/dynamic lookup, and object reuse/create rules.
+- `PoolManager` keeps serialized prefab arrays and public indexed mob getter methods while delegating indexed mob pool storage and normal/fly/elite getter routing.
+- `PoolManager` keeps public `GetMob(GameObject)` while delegating dynamic prefab mob null guard, dynamic pool lookup, and reuse/create request flow.
+- `PoolObjectProvider` keeps the pool list initialization entry point while delegating list-array allocation and per-index empty list initialization.
+- `PoolObjectProvider` keeps the indexed pool lookup entry point while delegating prefab-array bounds and pool/prefab pair resolution.
+- `PoolObjectProvider` keeps the dynamic pool lookup entry point while delegating prefab-name key creation and dictionary get-or-add behavior.
+- `PoolObjectProvider` keeps instantiate-on-miss, naming, and pool add behavior while delegating inactive reusable lookup and activation.
+- `PoolObjectProvider` keeps the reuse-first entry point while delegating instantiate-on-miss, prefab-name assignment, and pool append behavior.
+- `PoolManager` keeps its serialized boss prefab array and public `GetBoss(...)` while delegating enum-to-array boss prefab lookup.
+- `Boss`, `Mob`, and `Tentacle` keep their lifecycle and serialized fields while delegating HP calibration formulas.
+- `Boss` keeps `StartEntranceRoutine(...)` as the public entrance entry point while delegating entrance coroutine sequence and position interpolation.
+- `Boss` keeps enable lifecycle side effects while delegating enable-time state reset values to `BossEnableState`.
+- `EyeBoss` and `TrainBoss` keep boss-specific death presentation and wait timing while delegating kill-event request eligibility.
+- `EyeBoss` and `TrainBoss` keep boss-specific death presentation and wait timing while delegating completion route selection and shared side-effect execution.
+- `EyeBoss` keeps tentacle cleanup, death explosion spawn timing, base death yielding, and completion execution while delegating death explosion position and completion delay constants to `EyeBossDeathPresentation`.
+- `TrainBoss` keeps death coroutine ordering, boss death sound publishing, and completion execution while delegating death explosion position and completion delay constants to `TrainBossDeathPresentation`.
+- `EyeBoss` keeps its serialized pattern fields, public tentacle methods, and pattern coroutines while delegating tentacle registry list rules.
+- `EyeBoss` keeps `Update()` lifecycle and pattern coroutine starts while delegating normal side/center pattern selection to `EyeBossNormalPatternSelector`.
+- `EyeBoss` keeps normal pattern busy state and tentacle spawn execution while delegating normal post-spawn wait sequence to `EyeBossNormalPatternRoutine`.
+- `EyeBoss` keeps enrage state changes and post-pattern wait while delegating duration-or-all-tentacles-cleared waiting to `EyeBossEnragePatternRoutine`.
+- `EyeBoss` keeps `Start()` lifecycle and boss spawn sound publishing while delegating child transform collection to `EyeBossTentacleSpawnPointCollector`.
+- `EyeBoss` keeps sound publishing while delegating tentacle attack sound cooldown timestamp state and checks.
+- `EyeBoss` keeps pattern coroutines while delegating pattern spawn/weak index planning.
+- `EyeBoss` keeps normal/enrage profile resolution while delegating tentacle prefab selection, instantiation, setup, attack start, duration collection, and spawn sound publishing to `EyeBossTentacleSpawner`.
+- `EyeBoss` keeps invincibility, sound publishing, and enrage coroutine side effects while delegating enrage threshold decision state.
+- `TrainBoss` keeps `OnTriggerEnter2D(...)` and alive-state gating while delegating train collision damage and camera shake handling.
+- `Tentacle` keeps `OnTriggerEnter2D(...)` as the Unity trigger entry point while delegating player-tag train damage forwarding.
+- `Tentacle` keeps setup, attack coroutine timing, animation trigger, and owner registration while delegating attack animation duration resolution.
+- `Tentacle` keeps `BeginAttack()`, `AttackRoutine()`, and `GetTotalDuration()` as lifecycle/timing entry points while delegating attack wait, animation trigger, callback, destroy delay sequence, and total duration calculation.
+- `Tentacle` keeps hit effect and hit sound while delegating HP subtraction/death-threshold state and death completion side effects.
+- `TrainBoss` keeps damage, phase, knockback, and collision side effects while delegating combat eligibility gates.
+- `TrainBoss` keeps `FixedUpdate`, target lookup timing, and Rigidbody2D assignment while delegating stun state storage and forward movement formulas.
+- `TrainBoss` keeps serialized phase/collider/knockback fields, collider switching, and stun coroutine while delegating phase transition, knockback rule checks, and knockback Rigidbody2D application.
+- `TrainBoss` keeps stun coroutine restart order while delegating knockback cooldown timestamp state, stun active-state storage, and stun active-state timing.
+- Existing item cooldown behavior remains equivalent for auto and manual cooldown items.
+- Static/source checks and diff whitespace checks are run.
+- Unity compile is not claimed unless actually run.
+
+## Verification Plan
+
+- `rg -n "\\.currentCooldown|\\.maxCooldown|currentCooldown\\s*=|maxCooldown\\s*=|StartCooldownManual\\(" Assets\\Scripts -g "*.cs"`
+- `rg -n "ApplyVisualUpgrade|ItemVisualUpgradeApplier|controllersByLevel|spritesByLevel|IInstantiatedItem" Assets\\Scripts -g "*.cs"`
+- `rg -n "FindItem\\(|GetUpgradableItems\\(|IsItemMaxed\\(|InventoryItemQuery" Assets\\Scripts -g "*.cs"`
+- `rg -n "ProcessKillEvent\\(|ProcessHitEvent\\(|InventoryItemRuntimeDispatcher|OnKillEnemy\\(|OnDealDamage\\(|\\.Tick\\(Time\\.deltaTime" Assets\\Scripts -g "*.cs"`
+- `rg -n "AcquireItem\\(|UpgradeItemInstance\\(|InventoryItemAcquirer|new ItemInstance\\(|HandleEquip\\(|UpgradeLevel\\(\\)" Assets\\Scripts -g "*.cs"`
+- `rg -n "LevelUpChoiceSelector|ShowLevelUpChoices\\(|availableItems|OrderBy|ElementAtOrDefault|GetChoiceOrNull" Assets\\Scripts\\LeeJunmo\\LevelUp -g "*.cs"`
+- `rg -n "LevelUpChoiceDisplayState|DisplayChoice\\(|existingInstance|currentLevel|nextLevel|IsNextLevelMax" Assets\\Scripts\\LeeJunmo\\LevelUp -g "*.cs"`
+- `rg -n "TrainLevelProgression|CurrentLevel =>|TotalExperience =>|ExperienceForCurrentLevel =>|ExperienceToNextLevel =>|CurrentLevelProgress|CalculateRequiredDeltaXP|GainExperience\\(|OnLevelUp|RegisterUIQueue" Assets\\Scripts\\LeeJunmo\\LevelUp -g "*.cs"`
+- `rg -n "GameUiQueueController|RegisterUIQueue\\(|ProcessNextUI\\(|CloseUI\\(|TryBeginNext|TryFinishProcessing|MarkStageTransitionAfterCurrentEvent|uiRequestQueue|isUIProcessing|stateBeforeEvent" Assets\\Scripts\\LeeJunmo -g "*.cs"`
+- `rg -n "GameKillCounter|NormalKillCount|EliteKillCount|BossKillCount|TotalKillCount|AddKillCount\\(|AddBossKillCount\\(" Assets\\Scripts -g "*.cs"`
+- `rg -n "ItemRuntimeGameStatePolicy|CanRunItem|CurrentState != GameState.Playing|CurrentState != GameState.Boss|CurrentState != GameState.Ending" Assets\\Scripts\\LeeJunmo\\Items -g "*.cs"`
+- `rg -n "GameSimulationController|Time\\.timeScale =|Physics2D\\.simulationMode =|SimulationMode2D" Assets\\Scripts\\LeeJunmo -g "*.cs"`
+- `rg -n "SpawnerRuntimeStateGate|CanRunSpawner|GameState\\.Playing|GameState\\.Boss|CurrentState != GameState\\.Playing|CurrentState != GameState\\.Boss|Update\\(" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerRuntimeStateGate.cs`
+- `rg -n "SpawnerSpawnSchedule|ShouldAdvanceEliteTimer|IsTimerDue|ShouldSpawnBoss|AdvanceNextBossSpawnTime|SpawnBasicMobs|SpawnEliteMob|SpawnNextBoss" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerSpawnSchedule.cs`
+- `rg -n "SpawnerSpawnTimerState|spawnTimers|Advance\\(|ResetMobTimer\\(|ResetEliteTimer\\(|AdvanceNextBossSpawnTime\\(|mobTimer|eliteMobTimer|nextBossSpawnTime" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerSpawnTimerState.cs`
+- `rg -n "SpawnerPhaseSelector|TrySelectPhase|UpdatePhase\\(" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "SpawnerCurrentPhaseState|currentPhase|Apply\\(|GroundMinIndex|GroundEliteMinIndex|SpawnInterval" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerCurrentPhaseState.cs`
+- `rg -n "SpawnerBossSequenceCursor|TryGetNext|bossSequenceCursor|nextBossIndex|bossSequence" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "SpawnerBossSequenceLog|WarnMissingSequence|LogReservedNextBoss|Debug\\.LogWarning|BossSequence|nextBossIndex" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSequenceLog.cs`
+- `rg -n "SpawnerBossSettingLookup|FindOrCreateFallback|GetBossSetting\\(|BossSpawnSetting|spawnDelayAfterWarning" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "SpawnerBossSpawnPlacement|ResolveSpawnPosition|IsUsingFallbackSpawnPoint|TryResolveArrivalPosition|SpawnBossObject|StartEntranceRoutine|Instantiate\\(" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSpawnPlacement.cs`
+- `rg -n "SpawnerBossObjectSpawner|Spawn\\(|SpawnBossObject|GetBoss\\(|ResolveSpawnPosition|IsUsingFallbackSpawnPoint|Instantiate\\(|TryResolveArrivalPosition|StartEntranceRoutine" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossObjectSpawner.cs`
+- `rg -n "SpawnerBossStateTransition|Enter\\(|BossSpawnRoutine|AppearBoss\\(|GameManager\\.Instance\\.gameTime|\\\\uCD08|\\\\uBCF4\\\\uC2A4" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossStateTransition.cs`
+- `rg -n "SpawnerBossWarningRoutine|ShowAndWait|BossSpawnRoutine|AppearBoss\\(|BossWarningLoopUI|ShowWarning\\(|spawnDelayAfterWarning|SpawnBossObject" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossWarningRoutine.cs`
+- `rg -n "SpawnerBossSpawnRoutine|Run\\(|BossSpawnRoutine|GetBossSetting|SpawnerBossStateTransition|SpawnerBossWarningRoutine|SpawnBossObject" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSpawnRoutine.cs`
+- `rg -n "SpawnerSpawnControlState|IsSpawningEnabled|IsRearSpawnEnabled|SetSpawning\\(|SetRearSpawning\\(|StopAllCoroutines|HandlePeriodicTasks|GetSpawnPosition" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerSpawnControlState.cs`
+- `rg -n "SpawnerEnemyPhysicsReset|Reset\\(|linearVelocity|angularVelocity|SpawnMobCommon|SpawnerMobBatchRoutine|GetComponent<Rigidbody2D>|InitEnemyPhysics" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerEnemyPhysicsReset.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobBatchRoutine.cs`
+- `rg -n "SpawnerMobSpawnSetup|Apply\\(|SpawnMobCommon|GetSpawnPosition|SpawnerEnemyPhysicsReset\\.Reset|GetComponent<Mob>|OnDied|RespawnMob" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobSpawnSetup.cs`
+- `rg -n "SpawnerMobPoolLookup|GetBasic|GetElite|GetFromPrefab|SpawnMobInternal|SpawnMobFromPrefab|GetGroundMob|GetFlyMob|GetGroundEliteMob|GetFlyEliteMob|GetMob\\(prefab\\)" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobPoolLookup.cs`
+- `rg -n "SpawnerMobBatchRoutine|SpawnMobBatch\\(|GetSpawnPosition|GetMob\\(prefab\\)|SpawnerEnemyPhysicsReset\\.Reset|WaitForSeconds\\(delay\\)" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobBatchRoutine.cs`
+- `rg -n "SpawnerSpawnPositionSelector|Select\\(|GetSpawnPosition\\(|groundFrontPoints|groundRearPoints|flyMobSpawnAreas|isRearSpawnEnabled" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "SpawnerMobSpawnSelector|SelectBasic|SelectElite|SpawnBasicMobs\\(|SpawnEliteMob\\(|GetFlyEliteMob|GetGroundEliteMob" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "SpawnerPeriodicSpawnScheduler|CreateTask|Advance\\(|ResetTimer|HandlePeriodicTasks\\(|AddPeriodicSpawnTask\\(|PeriodicSpawnTask" Assets\\Scripts -g "*.cs"`
+- `rg -n "SpawnerPeriodicTaskList|TryGetDueSpawn\\(|ResetTimer\\(|Add\\(|Clear\\(|periodicSpawnTasks|AddPeriodicSpawnTask\\(|HandlePeriodicTasks\\(" Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerPeriodicTaskList.cs`
+- `rg -n "EnemyDamageGate|CanTakeDamage|TakeDamage\\(|currentHP -=|SoundID\\.Enemy_Hit|StartCoroutine\\(Die" Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDamageGate.cs`
+- `rg -n "EnemyDamageState|Apply\\(|CurrentHp|IsDead|TakeDamage\\(|currentHP|SoundID\\.Enemy_Hit|StartCoroutine\\(Die" Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDamageState.cs`
+- `rg -n "EnemyDeathRewardDispatcher|Dispatch\\(|GainExperience\\(|ProcessKillEvent\\(" Assets\\Scripts\\SangHyup\\Enemy Assets\\Scripts\\LeeJunmo -g "*.cs"`
+- `rg -n "EnemyDeathPresentation|Apply\\(|CreateCompletionWait\\(|SetVisible|EnemyKillParticleSpawner|WaitForSeconds\\(0|Die\\(" Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDeathPresentation.cs`
+- `rg -n "EnemyKillParticleSpawner|Spawn\\(|killParticle|Instantiate\\(killParticle" Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyKillParticleSpawner.cs`
+- `rg -n "EnemyTargetResolver|Resolve\\(|FindWithTag\\(\"Player\"\\)|targetRigid|levelManager" Assets\\Scripts\\SangHyup\\Enemy Assets\\Scripts\\LeeJunmo\\CreditEnemy.cs -g "*.cs"`
+- `rg -n "EnemyScreenEntryChecker|IsEntered|CheckScreenEntry\\(|WorldToViewportPoint|orthographicSize|Intersects\\(" Assets\\Scripts\\SangHyup\\Enemy Assets\\Scripts\\LeeJunmo\\CreditEnemy.cs -g "*.cs"`
+- `rg -n "EnemyLayerAssignment|Apply\\(|LayerMask\\.NameToLayer\\(\\\"Enemy\\\"\\)|gameObject\\.layer" Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\Boss.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyLayerAssignment.cs`
+- `rg -n "EnemyEnableState|Create\\(|CurrentHp|IsAlive|HasEnteredScreen|OnEnable\\(|CalculateCalibratedHP\\(" Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyEnableState.cs`
+- `rg -n "EnemyDisableCleanup|Run\\(|OnDisable\\(|SetHit\\(|UnregisterEnemy\\(" Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDisableCleanup.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolManager.cs`
+- `rg -n "EnemyDespawnWithoutExpCompletion|CanRun\\(|Complete\\(|DespawnWithoutExp\\(|StopAllCoroutines\\(|SetActive\\(false\\)|isAlive = false" Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDespawnWithoutExpCompletion.cs`
+- `rg -n "EnemyHitMaterialController|SetHit\\(|material\\.SetInt|HitEffect\\(|OnDisable\\(" Assets\\Scripts\\SangHyup\\Enemy Assets\\Scripts\\LeeJunmo -g "*.cs"`
+- `rg -n "EnemyHitEffectRoutine|Run\\(|HitEffect\\(|hitEffectDuration|WaitForSeconds\\(|EnemyHitMaterialController\\.SetHit" Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyHitEffectRoutine.cs`
+- `rg -n "EnemySpritePresentation|ResetForEnable|SetVisible|SetFlipX|sprite\\.enabled|sprite\\.flipX|sprite\\.color" Assets\\Scripts\\SangHyup\\Enemy Assets\\Scripts\\LeeJunmo\\CreditEnemy.cs -g "*.cs"`
+- `rg -n "MobMovementStateResolver|MobMovementState|Resolve\\(|DeathSlide|ActiveMove|FixedUpdate\\(|isAlive|isStunned" Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\FlyMob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobMovementStateResolver.cs`
+- `rg -n "MobVelocityPlanner|CreateDeathVelocity|CreateGroundVelocity|CreateFlyVelocity|deathMoveSpeed|linearVelocity\\s*=|FixedUpdate\\(" Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\FlyMob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobVelocityPlanner.cs`
+- `rg -n "MobDirectionPlanner|CreateGroundDirection|CreateFlyDirection|SetMoveDirection\\(|moveDirection\\s*=|diveDistance|Mathf\\.Abs" Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\FlyMob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobDirectionPlanner.cs`
+- `rg -n "MobTrainCollisionHandler|TryHandle\\(|OnTriggerEnter2D\\(|NameToLayer|TakeDamage\\(damage\\)|ShakeCamera\\(" Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobTrainCollisionHandler.cs`
+- `rg -n "MobKnockbackPolicy|CreateForce\\(|Knockback\\(|direction\\.normalized|AddForce\\(|ForceMode2D\\.Impulse|StartCoroutine\\(Stun\\(" Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobKnockbackPolicy.cs`
+- `rg -n "MobStunRoutine|Wait\\(|Stun\\(|stunDuration|isStunned|StartCoroutine\\(Stun\\(|WaitForSeconds\\(" Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobStunRoutine.cs`
+- `rg -n "MobDeathCompletion|ReportKill|Complete\\(|AddKillCount|Enemy_Die|SetActive\\(false\\)|OnDied" Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobDeathCompletion.cs`
+- `rg -n "PoolActiveEnemyRegistry|RegisterEnemy\\(|UnregisterEnemy\\(|DespawnAllEnemies\\(|DespawnAllEnemiesExceptBoss\\(|activeEnemies" Assets\\Scripts -g "*.cs"`
+- `rg -n "PoolEnemyDespawnFilter|CanDespawn\\(|CanDespawnWhenBossesRemain\\(|GetComponent<Boss>\\(\\)|DespawnAll|DespawnWithoutExp\\(" Assets\\Scripts\\SangHyup\\Enemy\\PoolActiveEnemyRegistry.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolEnemyDespawnFilter.cs`
+- `rg -n "PoolObjectProvider|CreatePools|GetDynamicPool|GetIndexed|GetOrCreate|InitializePools|GetFromPool|GetFromPoolList|dynamicPools" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "PoolMobPoolSet|new PoolMobPoolSet|GetGroundMob\\(|GetFlyMob\\(|GetGroundEliteMob\\(|GetFlyEliteMob\\(|PoolObjectProvider\\.GetIndexed|CreatePools\\(" Assets\\Scripts\\SangHyup\\Enemy\\PoolManager.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolMobPoolSet.cs`
+- `rg -n "PoolListFactory|CreateForPrefabs\\(|CreatePools\\(|new List<GameObject>\\[prefabs\\.Length\\]|pools\\[i\\] = new List<GameObject>" Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolListFactory.cs`
+- `rg -n "PoolIndexedPrefabResolver|TryResolve\\(|GetIndexed\\(|index < 0|index >= prefabs\\.Length|pool = pools\\[index\\]|prefab = prefabs\\[index\\]" Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolIndexedPrefabResolver.cs`
+- `rg -n "PoolReusableObjectSelector|FindAndActivate\\(|activeSelf|SetActive\\(true\\)|GetOrCreate\\(" Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolReusableObjectSelector.cs`
+- `rg -n "PoolObjectFactory|CreateAndAdd\\(|GetOrCreate\\(|Instantiate\\(|created\\.name|pool\\.Add|return created" Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectFactory.cs`
+- `rg -n "PoolDynamicPoolRegistry|GetOrCreate\\(|GetDynamicPool\\(|prefab\\.name|ContainsKey|dynamicPools\\.Add|return dynamicPools\\[" Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolDynamicPoolRegistry.cs`
+- `rg -n "PoolDynamicMobProvider|Get\\(|GetMob\\(|prefab == null|GetDynamicPool\\(|GetOrCreate\\(" Assets\\Scripts\\SangHyup\\Enemy\\PoolManager.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolDynamicMobProvider.cs`
+- `rg -n "PoolBossPrefabLookup|GetBoss\\(|bosses\\[\\(int\\)boss\\]|BossName" Assets\\Scripts\\SangHyup\\Enemy\\PoolManager.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolBossPrefabLookup.cs`
+- `rg -n "EnemyHpCalibration|CalculateBossHp|CalculateTimedHp|CalculateCalibratedHP\\(|eventDebuff|hpIncrease" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "BossEntranceRoutine|BossEntranceMotion|EvaluatePosition|EntranceMoveRoutine|StartEntranceRoutine|SmoothStep|Vector3\\.Lerp|SetEntranceActive" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "BossEnableState|Create\\(|CalibratedMaxHp|CurrentHp|IsAlive|HasEnteredScreen|IsEntranceActive|OnEnable\\(" Assets\\Scripts\\SangHyup\\Enemy\\Boss.cs Assets\\Scripts\\SangHyup\\Enemy\\BossEnableState.cs`
+- `rg -n "BossKillEventRequestGate|ShouldRequest|killEvent|IsTimeForEnding|RequestEvent\\(|AddBossKillCount|BossDied|StartStageTransitionSequence" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\BossKillEventRequestGate.cs`
+- `rg -n "BossDeathCompletionRouter|BossDeathCompletionRoute|Resolve\\(|AddBossKillCount|BossDied|StartStageTransitionSequence|completionRoute" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\BossDeathCompletionRouter.cs`
+- `rg -n "BossDeathCompletionExecutor|Complete\\(|ShouldRequest|Resolve\\(|RequestEvent\\(killEvent\\)|AddBossKillCount|BossDied|StartStageTransitionSequence|Destroy\\(gameObject\\)" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\BossDeathCompletionExecutor.cs`
+- `rg -n "BossDeathExplosionSpawner|Spawn\\(|killExplosionEffect|Instantiate\\(killExplosionEffect|explosionEffectPivot" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\BossDeathExplosionSpawner.cs`
+- `rg -n "EyeBossDeathPresentation|GetExplosionPosition|CompletionDelaySeconds|BossDeathExplosionSpawner|WaitForSeconds|ClearAllTentacles|BossDeathCompletionExecutor" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossDeathPresentation.cs`
+- `rg -n "EyeBossPatternStartGate|CanStartNormalPattern|Update\\(|isAlive|isBusy|enragePatternReady|isEntranceActive|StartCoroutine\\(SideAttackPattern|StartCoroutine\\(CenterAttackPattern" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossPatternStartGate.cs`
+- `rg -n "EyeBossNormalPatternSelector|EyeBossNormalPattern|Select\\(|Random\\.Range\\(0, 2\\)|SideAttackPattern|CenterAttackPattern" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossNormalPatternSelector.cs`
+- `rg -n "EyeBossNormalPatternRoutine|WaitForCompletion|RunNormalPattern|SideAttackPattern|CenterAttackPattern|waitTimeAfterPatternEnd|WaitForSeconds\\(" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossNormalPatternRoutine.cs`
+- `rg -n "EyeBossEnragePatternRoutine|WaitForCompletion|EnragePatternRoutine|EyeBossTentacleRegistry\\.HasAny|Time\\.deltaTime|모든 촉수가 파괴" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossEnragePatternRoutine.cs`
+- `rg -n "EyeBossTentacleSpawnPointCollector|CollectChildren|transform\\.childCount|transform\\.GetChild|tentacleSpawnPoints =" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentacleSpawnPointCollector.cs`
+- `rg -n "EyeBossTentacleRegistry|HasAny|Register\\(|Unregister\\(|ClearAll\\(|spawnedTentacles|RegisterTentacle\\(|UnregisterTentacle\\(" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "EyeBossAttackSoundCooldown|EyeBossAttackSoundCooldownState|CanPlay|MarkPlayed|TryPlayAttackSound|lastPlayTime|Boss_TentacleAttack" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "EyeBossTentaclePatternPlanner|EyeBossTentaclePatternPlan|CreateSide|CreateCenter|CreateEnrage|SideAttackPattern|CenterAttackPattern|EnragePatternRoutine" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "EyeBossTentacleAttackProfile|Resolve\\(|Damage|AttackDelay|normalTentacleDamage|normalAttackDelay|enrageTentacleDamage|enrageAttackDelay|Setup\\(this" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentacleAttackProfile.cs`
+- `rg -n "EyeBossTentacleSpawner|SpawnAndGetMaxDuration|Instantiate\\(prefab|GetComponent<Tentacle>|BeginAttack\\(|GetTotalDuration\\(|Boss_TentacleSpawn|SpawnTentaclesAndGetDuration" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentacleSpawner.cs`
+- `rg -n "EyeBossEnrageTransition|Evaluate\\(|ShouldForceEnrage|ThresholdHp|predictedHp|thresholdHp|EnragePatternThreshold|ForceEnrageRoutine" Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossEnrageTransition.cs`
+- `rg -n "TrainBossTrainCollisionHandler|TryHandle\\(|OnTriggerEnter2D\\(|NameToLayer|TakeDamage\\(damage, true\\)|ShakeCamera\\(0\\.3f" Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossTrainCollisionHandler.cs`
+- `rg -n "TentacleTrainCollisionHandler|Handle\\(|OnTriggerEnter2D\\(|CompareTag|GetComponent<Train>|TakeDamage\\(damage\\)" Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleTrainCollisionHandler.cs`
+- `rg -n "TentacleAttackAnimationDurationResolver|Resolve\\(|animationLength|runtimeAnimatorController|animationClips|DefaultAttackAnimationLength|GetTotalDuration\\(" Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleAttackAnimationDurationResolver.cs`
+- `rg -n "TentacleAttackRoutine|Run\\(|CalculateTotalDuration|GetTotalDuration\\(|SetTrigger\\(\"attack\"\\)|onAttackCallback|Destroy\\(tentacleObject|DefaultTotalAnimationLength|animationLength > 0" Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleAttackRoutine.cs`
+- `rg -n "TentacleDamageState|Apply\\(|CurrentHp|IsDead|TakeDamage\\(|currentHP|SoundID\\.Enemy_Hit|SoundID\\.Enemy_Die|Instantiate\\(killParticle" Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleDamageState.cs`
+- `rg -n "TentacleDeathCompletion|Complete\\(|EnemyKillParticleSpawner|Enemy_Die|Destroy\\(|TakeDamage\\(|damageState\\.IsDead" Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleDeathCompletion.cs`
+- `rg -n "TrainBossCombatGate|CanTakeDamage|CanHandleTrainCollision|TakeDamage\\(|OnTriggerEnter2D\\(|hasEnteredScreen|isAlive" Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossCombatGate.cs`
+- `rg -n "TrainBossMovementPolicy|CreateMoveDirection|CreateVelocity|ShouldFlipX|FixedUpdate\\(|SetMoveDirection\\(|linearVelocity|Vector2\\.left|SetFlipX" Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossMovementPolicy.cs`
+- `rg -n "TrainBossPhaseTransition|TrainBossPhaseState|ShouldEnterPhase2|MarkPhase2Entered|IsPhase2|TrainBossKnockbackPolicy|TrainBossKnockbackCooldownState|CanApply|MarkApplied|CreateForce|CheckPhase\\(|Knockback\\(" Assets\\Scripts\\SangHyup\\Enemy -g "*.cs"`
+- `rg -n "TrainBossKnockbackApplier|Apply\\(|linearVelocity = Vector2\\.zero|AddForce\\(|ForceMode2D\\.Impulse|Knockback\\(" Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossKnockbackApplier.cs`
+- `rg -n "TrainBossStunState|TrainBossStunRoutine|Run\\(|SetStunned|IsStunned|Stun\\(|stunDuration|isStunned|StopCoroutine|StartCoroutine|WaitForSeconds\\(" Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossStunRoutine.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossStunState.cs`
+- `rg -n "TrainBossDeathPresentation|GetExplosionPosition|CompletionDelaySeconds|ExplosionOffset|Boss_Die|WaitForSeconds|BossDeathExplosionSpawner" Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossDeathPresentation.cs`
+- `rg -n "TrainBossPhasePresentation|ApplyInitialColliders|ApplyPhase2|phase1Collider|phase2Collider|SetTrigger\\(\\\"phase2\\\"\\)|Entered Phase 2" Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossPhasePresentation.cs`
+- `rg -n "ItemCooldownState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "ItemVisualUpgradeApplier\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "InventoryItemQuery\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "InventoryItemRuntimeDispatcher\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "InventoryItemAcquirer\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "LevelUpChoiceSelector\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "LevelUpChoiceDisplayState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainLevelProgression\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "GameUiQueueController\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "GameKillCounter\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "ItemRuntimeGameStatePolicy\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "GameSimulationController\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerRuntimeStateGate\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerSpawnSchedule\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerSpawnTimerState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerPhaseSelector\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerCurrentPhaseState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerBossSequenceCursor\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerBossSequenceLog\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerBossSettingLookup\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerBossSpawnPlacement\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerBossObjectSpawner\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerBossStateTransition\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerBossWarningRoutine\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerBossSpawnRoutine\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerSpawnControlState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerEnemyPhysicsReset\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerMobSpawnSetup\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerMobPoolLookup\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerMobBatchRoutine\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerSpawnPositionSelector\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerMobSpawnSelector\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerPeriodicSpawnScheduler\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "SpawnerPeriodicTaskList\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyDamageGate\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyDamageState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyDeathRewardDispatcher\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyDeathPresentation\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyKillParticleSpawner\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyTargetResolver\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyScreenEntryChecker\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyLayerAssignment\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyEnableState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyDisableCleanup\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyDespawnWithoutExpCompletion\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyHitMaterialController\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyHitEffectRoutine\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemySpritePresentation\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "MobMovementStateResolver\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "MobVelocityPlanner\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "MobDirectionPlanner\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "MobTrainCollisionHandler\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "MobKnockbackPolicy\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "MobStunRoutine\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "MobDeathCompletion\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "PoolActiveEnemyRegistry\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "PoolEnemyDespawnFilter\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "PoolObjectProvider\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "PoolMobPoolSet\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "PoolListFactory\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "PoolIndexedPrefabResolver\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "PoolReusableObjectSelector\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "PoolObjectFactory\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "PoolDynamicPoolRegistry\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "PoolDynamicMobProvider\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "PoolBossPrefabLookup\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EnemyHpCalibration\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "BossEntranceMotion\\.cs|BossEntranceRoutine\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "BossEnableState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "BossKillEventRequestGate\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "BossDeathCompletionRouter\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "BossDeathCompletionExecutor\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "BossDeathExplosionSpawner\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossDeathPresentation\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossPatternStartGate\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossNormalPatternSelector\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossNormalPatternRoutine\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossEnragePatternRoutine\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossTentacleSpawnPointCollector\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossTentacleRegistry\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossAttackSoundCooldown\\.cs|EyeBossAttackSoundCooldownState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossTentaclePatternPlanner\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossTentacleAttackProfile\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossTentacleSpawner\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "EyeBossEnrageTransition\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainBossTrainCollisionHandler\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TentacleTrainCollisionHandler\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TentacleAttackAnimationDurationResolver\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TentacleAttackRoutine\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TentacleDamageState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TentacleDeathCompletion\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainBossCombatGate\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainBossMovementPolicy\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainBossPhaseTransition\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainBossPhaseState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainBossPhasePresentation\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainBossKnockbackPolicy\\.cs|TrainBossKnockbackCooldownState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainBossKnockbackApplier\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainBossStunRoutine\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainBossStunState\\.cs" .\\Assembly-CSharp.csproj`
+- `rg -n "TrainBossDeathPresentation\\.cs" .\\Assembly-CSharp.csproj`
+- `git diff --check -- Assets\\Scripts\\LeeJunmo\\Items\\ItemInstance.cs Assets\\Scripts\\LeeJunmo\\Items\\ItemCooldownState.cs Assets\\Scripts\\LeeJunmo\\Items\\ItemCooldownState.cs.meta Assets\\Scripts\\LeeJunmo\\Items\\ItemVisualUpgradeApplier.cs Assets\\Scripts\\LeeJunmo\\Items\\ItemVisualUpgradeApplier.cs.meta Assets\\Scripts\\LeeJunmo\\Inventory\\Inventory.cs Assets\\Scripts\\LeeJunmo\\Inventory\\InventoryItemQuery.cs Assets\\Scripts\\LeeJunmo\\Inventory\\InventoryItemQuery.cs.meta Assets\\Scripts\\LeeJunmo\\Inventory\\InventoryItemRuntimeDispatcher.cs Assets\\Scripts\\LeeJunmo\\Inventory\\InventoryItemRuntimeDispatcher.cs.meta Assets\\Scripts\\LeeJunmo\\Inventory\\InventoryItemAcquirer.cs Assets\\Scripts\\LeeJunmo\\Inventory\\InventoryItemAcquirer.cs.meta Assets\\Scripts\\LeeJunmo\\LevelUp\\LevelUpManager.cs Assets\\Scripts\\LeeJunmo\\LevelUp\\LevelUpChoiceSelector.cs Assets\\Scripts\\LeeJunmo\\LevelUp\\LevelUpChoiceSelector.cs.meta Assets\\Scripts\\LeeJunmo\\LevelUp\\LevelUpChoiceUI.cs Assets\\Scripts\\LeeJunmo\\LevelUp\\LevelUpChoiceDisplayState.cs Assets\\Scripts\\LeeJunmo\\LevelUp\\LevelUpChoiceDisplayState.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\LeeJunmo\\LevelUp\\TrainLevelManager.cs Assets\\Scripts\\LeeJunmo\\LevelUp\\TrainLevelProgression.cs Assets\\Scripts\\LeeJunmo\\LevelUp\\TrainLevelProgression.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\LeeJunmo\\GameManager.cs Assets\\Scripts\\LeeJunmo\\GameUiQueueController.cs Assets\\Scripts\\LeeJunmo\\GameUiQueueController.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\LeeJunmo\\GameManager.cs Assets\\Scripts\\LeeJunmo\\GameKillCounter.cs Assets\\Scripts\\LeeJunmo\\GameKillCounter.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\LeeJunmo\\Items\\ItemInstance.cs Assets\\Scripts\\LeeJunmo\\Items\\PoisonMissileLauncher.cs Assets\\Scripts\\LeeJunmo\\Items\\RearGun.cs Assets\\Scripts\\LeeJunmo\\Items\\Revolver.cs Assets\\Scripts\\LeeJunmo\\Items\\ItemRuntimeGameStatePolicy.cs Assets\\Scripts\\LeeJunmo\\Items\\ItemRuntimeGameStatePolicy.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\LeeJunmo\\GameManager.cs Assets\\Scripts\\LeeJunmo\\SceneLoader.cs Assets\\Scripts\\LeeJunmo\\Option.cs Assets\\Scripts\\LeeJunmo\\GameSimulationController.cs Assets\\Scripts\\LeeJunmo\\GameSimulationController.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerRuntimeStateGate.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerRuntimeStateGate.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerSpawnSchedule.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerSpawnSchedule.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerSpawnTimerState.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerSpawnTimerState.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerPhaseSelector.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerPhaseSelector.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerCurrentPhaseState.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerCurrentPhaseState.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSequenceCursor.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSequenceCursor.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSequenceLog.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSequenceLog.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSettingLookup.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSettingLookup.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSpawnPlacement.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSpawnPlacement.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossObjectSpawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossObjectSpawner.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossStateTransition.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossStateTransition.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossWarningRoutine.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossWarningRoutine.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSpawnRoutine.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerBossSpawnRoutine.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerSpawnControlState.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerSpawnControlState.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerEnemyPhysicsReset.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerEnemyPhysicsReset.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobSpawnSetup.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobSpawnSetup.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobPoolLookup.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobPoolLookup.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobBatchRoutine.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobBatchRoutine.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerSpawnPositionSelector.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerSpawnPositionSelector.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobSpawnSelector.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerMobSpawnSelector.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerPeriodicSpawnScheduler.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerPeriodicSpawnScheduler.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerPeriodicTaskList.cs Assets\\Scripts\\SangHyup\\Enemy\\SpawnerPeriodicTaskList.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDamageGate.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDamageGate.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDamageState.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDamageState.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDeathRewardDispatcher.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDeathRewardDispatcher.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDeathPresentation.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDeathPresentation.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyKillParticleSpawner.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyKillParticleSpawner.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyTargetResolver.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyTargetResolver.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyScreenEntryChecker.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyScreenEntryChecker.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\Boss.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyLayerAssignment.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyLayerAssignment.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyEnableState.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyEnableState.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDespawnWithoutExpCompletion.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDespawnWithoutExpCompletion.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\PoolActiveEnemyRegistry.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolEnemyDespawnFilter.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolEnemyDespawnFilter.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\PoolManager.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolMobPoolSet.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolMobPoolSet.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolReusableObjectSelector.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolReusableObjectSelector.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolListFactory.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolListFactory.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolIndexedPrefabResolver.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolIndexedPrefabResolver.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectFactory.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectFactory.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolDynamicPoolRegistry.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolDynamicPoolRegistry.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\PoolManager.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolDynamicMobProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolDynamicMobProvider.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDisableCleanup.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyDisableCleanup.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyHitMaterialController.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyHitMaterialController.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyHitEffectRoutine.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyHitEffectRoutine.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs Assets\\Scripts\\SangHyup\\Enemy\\Boss.cs Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\FlyMob.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemySpritePresentation.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemySpritePresentation.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\FlyMob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobMovementStateResolver.cs Assets\\Scripts\\SangHyup\\Enemy\\MobMovementStateResolver.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\FlyMob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobVelocityPlanner.cs Assets\\Scripts\\SangHyup\\Enemy\\MobVelocityPlanner.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\FlyMob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobDirectionPlanner.cs Assets\\Scripts\\SangHyup\\Enemy\\MobDirectionPlanner.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobTrainCollisionHandler.cs Assets\\Scripts\\SangHyup\\Enemy\\MobTrainCollisionHandler.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobKnockbackPolicy.cs Assets\\Scripts\\SangHyup\\Enemy\\MobKnockbackPolicy.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobStunRoutine.cs Assets\\Scripts\\SangHyup\\Enemy\\MobStunRoutine.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\MobDeathCompletion.cs Assets\\Scripts\\SangHyup\\Enemy\\MobDeathCompletion.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\PoolManager.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolActiveEnemyRegistry.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolActiveEnemyRegistry.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\PoolManager.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolObjectProvider.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\PoolManager.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolBossPrefabLookup.cs Assets\\Scripts\\SangHyup\\Enemy\\PoolBossPrefabLookup.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Boss.cs Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyHpCalibration.cs Assets\\Scripts\\SangHyup\\Enemy\\EnemyHpCalibration.cs.meta Assets\\Scripts\\SangHyup\\Enemy\\BossEntranceMotion.cs Assets\\Scripts\\SangHyup\\Enemy\\BossEntranceMotion.cs.meta Assets\\Scripts\\SangHyup\\Enemy\\BossEntranceRoutine.cs Assets\\Scripts\\SangHyup\\Enemy\\BossEntranceRoutine.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Boss.cs Assets\\Scripts\\SangHyup\\Enemy\\BossEnableState.cs Assets\\Scripts\\SangHyup\\Enemy\\BossEnableState.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\BossKillEventRequestGate.cs Assets\\Scripts\\SangHyup\\Enemy\\BossKillEventRequestGate.cs.meta Assets\\Scripts\\SangHyup\\Enemy\\BossDeathCompletionRouter.cs Assets\\Scripts\\SangHyup\\Enemy\\BossDeathCompletionRouter.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\BossDeathCompletionExecutor.cs Assets\\Scripts\\SangHyup\\Enemy\\BossDeathCompletionExecutor.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\BossDeathExplosionSpawner.cs Assets\\Scripts\\SangHyup\\Enemy\\BossDeathExplosionSpawner.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossDeathPresentation.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossDeathPresentation.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossPatternStartGate.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossPatternStartGate.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossNormalPatternSelector.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossNormalPatternSelector.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossNormalPatternRoutine.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossNormalPatternRoutine.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossEnragePatternRoutine.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossEnragePatternRoutine.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentacleSpawnPointCollector.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentacleSpawnPointCollector.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentacleRegistry.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentacleRegistry.cs.meta Assets\\Scripts\\SangHyup\\Enemy\\EyeBossAttackSoundCooldown.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossAttackSoundCooldown.cs.meta Assets\\Scripts\\SangHyup\\Enemy\\EyeBossAttackSoundCooldownState.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossAttackSoundCooldownState.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentaclePatternPlanner.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentaclePatternPlanner.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentacleAttackProfile.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentacleAttackProfile.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentacleSpawner.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossTentacleSpawner.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossEnrageTransition.cs Assets\\Scripts\\SangHyup\\Enemy\\EyeBossEnrageTransition.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossTrainCollisionHandler.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossTrainCollisionHandler.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleTrainCollisionHandler.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleTrainCollisionHandler.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleAttackAnimationDurationResolver.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleAttackAnimationDurationResolver.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleAttackRoutine.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleAttackRoutine.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleDamageState.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleDamageState.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleDeathCompletion.cs Assets\\Scripts\\SangHyup\\Enemy\\TentacleDeathCompletion.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossCombatGate.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossCombatGate.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossMovementPolicy.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossMovementPolicy.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossPhaseTransition.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossPhaseTransition.cs.meta Assets\\Scripts\\SangHyup\\Enemy\\TrainBossPhaseState.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossPhaseState.cs.meta Assets\\Scripts\\SangHyup\\Enemy\\TrainBossKnockbackPolicy.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossKnockbackPolicy.cs.meta Assets\\Scripts\\SangHyup\\Enemy\\TrainBossKnockbackCooldownState.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossKnockbackCooldownState.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossPhasePresentation.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossPhasePresentation.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossKnockbackApplier.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossKnockbackApplier.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossStunRoutine.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossStunRoutine.cs.meta Assets\\Scripts\\SangHyup\\Enemy\\TrainBossStunState.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossStunState.cs.meta Docs`
+- `git diff --check -- Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossDeathPresentation.cs Assets\\Scripts\\SangHyup\\Enemy\\TrainBossDeathPresentation.cs.meta Docs`
+- `git diff --check -- Docs`
+
+## Outcome
+
+- Added `ItemCooldownState` as the runtime item cooldown timer state owner.
+- Added `ItemVisualUpgradeApplier` as the fallback instantiated-item visual upgrade helper.
+- Added `InventoryItemQuery` as the inventory lookup/query helper.
+- Added `InventoryItemRuntimeDispatcher` as the inventory item tick and hook dispatch helper.
+- Added `InventoryItemAcquirer` as the inventory item acquisition and upgrade execution helper.
+- Added `LevelUpChoiceSelector` as the level-up item availability and random choice helper.
+- Added `LevelUpChoiceDisplayState` as the level-up choice new/upgrade display-state value.
+- Added `TrainLevelProgression` as the XP total, level threshold, display progress, and level advancement state owner.
+- Added `GameUiQueueController` as the UI request queue pending/processing and event-resume state owner.
+- Added `GameKillCounter` as the normal, elite, boss, and total kill count state owner.
+- Added `ItemRuntimeGameStatePolicy` as the item runtime `GameState` gate owner.
+- Added `GameSimulationController` as the global time scale and physics simulation mode writer.
+- Added `SpawnerRuntimeStateGate` as the spawner runtime `GameState` gate owner.
+- Added `SpawnerSpawnSchedule` as the basic, elite, and boss spawn schedule due-check owner.
+- Added `SpawnerSpawnTimerState` as the basic, elite, and boss spawn timer state owner.
+- Added `SpawnerPhaseSelector` as the spawn phase selection rule owner.
+- Added `SpawnerCurrentPhaseState` as the selected spawn phase runtime range and interval state owner.
+- Added `SpawnerBossSequenceCursor` as the boss sequence index state owner.
+- Added `SpawnerBossSequenceLog` as the boss sequence empty-sequence warning and reserved-next-boss logging owner.
+- Added `SpawnerBossSettingLookup` as the boss setting lookup and default fallback creation owner.
+- Added `SpawnerBossSpawnPlacement` as the boss spawn point fallback and arrival position resolution owner.
+- Added `SpawnerBossObjectSpawner` as the boss prefab lookup, instantiation, fallback logging, and entrance handoff owner.
+- Added `SpawnerBossStateTransition` as the boss spawn state-transition logging and `GameManager.AppearBoss()` owner.
+- Added `SpawnerBossWarningRoutine` as the boss warning UI show and post-warning delay sequence owner.
+- Added `SpawnerBossSpawnRoutine` as the boss spawn coroutine sequence owner.
+- Added `SpawnerSpawnControlState` as the spawn/rear-spawn control flag owner.
+- Added `SpawnerEnemyPhysicsReset` as the spawned enemy `Rigidbody2D` velocity reset owner.
+- Added `SpawnerMobSpawnSetup` as the mob spawn placement, physics reset, and death callback wiring owner.
+- Added `SpawnerMobPoolLookup` as the normal, elite, and prefab mob pool lookup selection owner.
+- Added `SpawnerMobBatchRoutine` as the mob batch spawn loop and delay sequence owner.
+- Added `SpawnerSpawnPositionSelector` as the spawn point/area position selection owner.
+- Added `SpawnerMobSpawnSelector` as the basic/elite mob type and index selection owner.
+- Added `SpawnerPeriodicSpawnScheduler` as the periodic spawn task interval and timer rule owner.
+- Added `SpawnerPeriodicTaskList` as the periodic spawn task list storage, add guard, due-spawn access, and indexed timer reset owner.
+- Added `EnemyDamageGate` as the base enemy damage eligibility owner.
+- Added `EnemyDamageState` as the base enemy HP subtraction and death-threshold state owner.
+- Added `EnemyDeathRewardDispatcher` as the enemy death XP reward and inventory kill-hook dispatch owner.
+- Added `EnemyDeathPresentation` as the base enemy death sprite hide, kill particle request, and completion wait owner.
+- Added `EnemyKillParticleSpawner` as the enemy kill particle instantiation owner.
+- Added `EnemyTargetResolver` as the enemy player `Rigidbody2D` and `TrainLevelManager` lookup owner.
+- Added `EnemyScreenEntryChecker` as the enemy screen-entry targetable check owner.
+- Added `EnemyLayerAssignment` as the enemy layer reset owner behind `Enemy` and `Boss`.
+- Added `EnemyEnableState` as the base enemy enable-time current HP, alive, and screen-entry reset value owner.
+- Added `EnemyDisableCleanup` as the enemy disable-time hit material cleanup and active-enemy unregister sequence owner.
+- Added `EnemyDespawnWithoutExpCompletion` as the enemy no-reward despawn active guard and completion owner.
+- Added `EnemyHitMaterialController` as the enemy hit material flag writer.
+- Added `EnemyHitEffectRoutine` as the enemy hit material on/wait/off sequence owner.
+- Added `EnemySpritePresentation` as the null-safe enemy sprite visibility, color reset, and flip writer.
+- Added `MobMovementStateResolver` as the Mob/FlyMob movement state selection owner.
+- Added `MobVelocityPlanner` as the mob/flying-mob/death movement velocity formula owner.
+- Added `MobDirectionPlanner` as the ground and flying mob direction selection formula owner.
+- Added `MobTrainCollisionHandler` as the mob train collision layer check, train damage, and default camera shake owner.
+- Added `MobKnockbackPolicy` as the normal mob knockback force calculation owner.
+- Added `MobStunRoutine` as the normal mob stun duration wait sequence owner.
+- Added `MobDeathCompletion` as the normal mob kill count reporting and death completion side-effect owner.
+- Added `PoolActiveEnemyRegistry` as the active enemy registry and despawn iteration owner.
+- Added `PoolEnemyDespawnFilter` as the active-enemy null and boss-retained despawn filter owner.
+- Added `PoolObjectProvider` as the pooled object provider entry-point owner for list initialization, indexed/dynamic pool lookup, and reuse/create orchestration.
+- Added `PoolMobPoolSet` as the indexed mob pool storage and normal/fly/elite getter routing owner behind `PoolManager`.
+- Added `PoolListFactory` as the pooled object list-array allocation and per-index empty list initialization owner behind `PoolObjectProvider`.
+- Added `PoolIndexedPrefabResolver` as the indexed prefab-array bounds and pool/prefab pair resolution owner behind `PoolObjectProvider`.
+- Added `PoolDynamicPoolRegistry` as the dynamic pool prefab-name key and dictionary get-or-create owner behind `PoolObjectProvider`.
+- Added `PoolDynamicMobProvider` as the dynamic prefab mob null guard, dynamic pool lookup, and reuse/create request flow owner behind `PoolManager.GetMob(GameObject)`.
+- Added `PoolReusableObjectSelector` as the pooled object inactive reusable lookup and activation owner.
+- Added `PoolObjectFactory` as the pooled object instantiate-on-miss, prefab-name assignment, and pool append owner behind `PoolObjectProvider`.
+- Added `PoolBossPrefabLookup` as the boss prefab enum-to-array lookup owner behind `PoolManager`.
+- Added `EnemyHpCalibration` as the enemy and boss HP calibration formula owner.
+- Added `BossEntranceMotion` as the boss entrance interpolation owner.
+- Added `BossEntranceRoutine` as the boss entrance coroutine flag timing, movement loop, and final position assignment owner.
+- Added `BossEnableState` as the boss enable-time HP/current/alive/screen-entry/entrance reset state owner.
+- Added `BossKillEventRequestGate` as the boss kill-event request eligibility owner.
+- Added `BossDeathCompletionRouter` as the boss death completion route selection owner.
+- Added `BossDeathCompletionExecutor` as the shared boss death completion side-effect executor.
+- Added `BossDeathExplosionSpawner` as the boss death explosion instantiation owner.
+- Added `EyeBossDeathPresentation` as the eye boss death explosion position and completion delay owner.
+- Added `EyeBossPatternStartGate` as the eye boss normal pattern start eligibility owner.
+- Added `EyeBossNormalPatternSelector` as the eye boss normal side/center pattern selection owner.
+- Added `EyeBossNormalPatternRoutine` as the eye boss normal pattern post-spawn wait sequence owner.
+- Added `EyeBossEnragePatternRoutine` as the eye boss enrage pattern duration-or-clear wait sequence owner.
+- Added `EyeBossTentacleSpawnPointCollector` as the eye boss tentacle child-transform collection owner.
+- Added `EyeBossTentacleRegistry` as the eye boss tentacle list registration, cleanup, and active-check owner.
+- Added `EyeBossAttackSoundCooldown` as the eye boss tentacle attack sound cooldown rule owner.
+- Added `EyeBossAttackSoundCooldownState` as the eye boss tentacle attack sound last-play timestamp state owner.
+- Added `EyeBossTentaclePatternPlanner` as the eye boss side/center/enrage tentacle pattern index planning owner.
+- Added `EyeBossTentacleAttackProfile` as the eye boss tentacle normal/enrage attack damage and delay profile selection owner.
+- Added `EyeBossTentacleSpawner` as the eye boss tentacle prefab selection, instantiation, setup, attack start, duration collection, and spawn sound publishing owner.
+- Added `EyeBossEnrageTransition` as the eye boss enrage threshold prediction and forced-enrage HP clamp decision owner.
+- Added `TrainBossTrainCollisionHandler` as the train boss train collision layer check, boss damage, and boss camera shake owner.
+- Added `TentacleTrainCollisionHandler` as the tentacle player-tag collision check and train damage forwarding owner.
+- Added `TentacleAttackAnimationDurationResolver` as the tentacle attack animation duration resolution owner.
+- Added `TentacleAttackRoutine` as the tentacle attack wait, animation trigger, attack callback, destroy delay sequence, and total duration calculation owner.
+- Added `TentacleDamageState` as the tentacle HP subtraction and death-threshold state owner.
+- Added `TentacleDeathCompletion` as the tentacle death particle, death sound, and object destroy side-effect owner.
+- Added `TrainBossCombatGate` as the train boss damage and train-collision eligibility gate owner.
+- Added `TrainBossMovementPolicy` as the train boss forward movement direction, velocity composition, and sprite-facing rule owner.
+- Added `TrainBossPhaseTransition` as the train boss phase 2 threshold rule owner.
+- Added `TrainBossPhaseState` as the train boss phase 2 entered-state storage owner.
+- Added `TrainBossPhasePresentation` as the train boss initial collider and phase 2 animator/collider presentation owner.
+- Added `TrainBossKnockbackPolicy` as the train boss knockback cooldown and force selection rule owner.
+- Added `TrainBossKnockbackCooldownState` as the train boss knockback last-applied timestamp state owner.
+- Added `TrainBossKnockbackApplier` as the train boss knockback velocity reset and impulse application owner.
+- Added `TrainBossStunState` as the train boss stun active-state storage owner.
+- Added `TrainBossStunRoutine` as the train boss stun active-state timing and duration wait sequence owner.
+- Added `TrainBossDeathPresentation` as the train boss death explosion offset and completion delay owner.
+- Updated `ItemInstance` to keep public cooldown fields as compatibility mirrors while delegating cooldown countdown, manual wait, and restart behavior to `ItemCooldownState`.
+- Updated `ItemInstance` to delegate fallback Animator/SpriteRenderer visual replacement to `ItemVisualUpgradeApplier`.
+- Updated `Inventory` to keep existing public methods while delegating `FindItem`, `GetUpgradableItems`, and `IsItemMaxed` query logic.
+- Updated `Inventory` to keep existing public methods while delegating item tick, kill hook, and hit hook dispatch loops.
+- Updated `Inventory` to keep existing public methods while delegating `AcquireItem(...)` and `UpgradeItemInstance(...)` execution.
+- Updated `LevelUpUIManager` to keep UI wiring and public entry points while delegating item choice selection to `LevelUpChoiceSelector`.
+- Updated `LevelUpChoiceUI` to keep UI wiring and public `DisplayChoice(...)` while delegating new/upgrade display-state calculation.
+- Updated `TrainLevelManager` to keep public properties, events, and `GameManager.RegisterUIQueue(...)` level-up UI requests while delegating progression state to `TrainLevelProgression`.
+- Updated `GameManager` to keep public UI queue entry points, game-state changes, and time/physics freeze side effects while delegating queue bookkeeping to `GameUiQueueController`.
+- Updated `GameManager` to keep kill count public properties and add methods while delegating counter state to `GameKillCounter`.
+- Updated `ItemInstance`, `PoisonMissileLauncher`, `RearGun`, and `Revolver` to keep update behavior while delegating item runtime state checks to `ItemRuntimeGameStatePolicy`.
+- Updated `GameManager`, `SceneLoader`, and `Option` to keep public entry points while delegating global simulation pause/resume writes to `GameSimulationController`.
+- Updated `Spawner` to keep phase refresh and spawn execution while delegating runtime state gating to `SpawnerRuntimeStateGate`.
+- Updated `Spawner` to keep spawn execution while delegating basic, elite, and boss schedule due checks to `SpawnerSpawnSchedule`.
+- Updated `Spawner` to keep phase refresh and spawn execution while delegating basic, elite, and boss timer storage, advancement, and reset state to `SpawnerSpawnTimerState`.
+- Updated `Spawner` to keep serialized phase data and spawn execution while delegating current-time phase selection to `SpawnerPhaseSelector`.
+- Updated `Spawner` to keep serialized phase data, phase refresh entry point, and spawn execution while delegating current phase runtime range and interval state to `SpawnerCurrentPhaseState`.
+- Updated `Spawner` to keep serialized boss sequence data and boss spawn execution while delegating sequence cursor state to `SpawnerBossSequenceCursor`.
+- Updated `Spawner` to keep boss sequence selection and spawn execution while delegating sequence warning/reservation logging to `SpawnerBossSequenceLog`.
+- Updated `Spawner` to keep serialized boss settings data and boss spawn execution while delegating boss setting lookup to `SpawnerBossSettingLookup`.
+- Updated `Spawner` to keep boss object spawn call sites while delegating prefab lookup, instantiation, fallback logging, and entrance handoff to `SpawnerBossObjectSpawner`.
+- Updated boss spawn flow to keep boss appearance logging and `GameManager.AppearBoss()` behind `SpawnerBossStateTransition`.
+- Updated boss spawn flow to keep warning UI show and post-warning wait sequence behind `SpawnerBossWarningRoutine`.
+- Updated `Spawner` to keep `StartCoroutine(...)` entry and boss object spawn call site while delegating setting lookup, state-transition, warning wait, and spawn-object request order to `SpawnerBossSpawnRoutine`.
+- Updated `Spawner` to keep public spawn control methods and `StopAllCoroutines()` side effects while delegating spawn/rear-spawn flag state to `SpawnerSpawnControlState`.
+- Updated `Spawner` to keep spawned enemy call sites and setup pipeline while delegating spawned enemy physics reset to `SpawnerEnemyPhysicsReset`.
+- Updated `Spawner` to keep public mob spawn entry points while delegating normal, elite, and prefab mob pool lookup selection to `SpawnerMobPoolLookup`.
+- Updated `Spawner` to keep mob spawn call sites while delegating spawn placement, physics reset, and `Mob.OnDied` callback rewiring to `SpawnerMobSpawnSetup`.
+- Updated `Spawner` to keep public `SpawnMobBatch(...)` while delegating batch spawn loop, fixed batch position, pooled mob lookup, physics reset, and delay wait sequence to `SpawnerMobBatchRoutine`.
+- Updated `Spawner` to keep serialized spawn point/area data and spawn execution while delegating position selection to `SpawnerSpawnPositionSelector`.
+- Updated `Spawner` to keep spawn execution while delegating current phase runtime values to `SpawnerCurrentPhaseState` and basic/elite mob type/index selection to `SpawnerMobSpawnSelector`.
+- Updated `Spawner` to keep public periodic spawn task API and spawn execution while delegating interval clamping, timer advancement, and timer reset to `SpawnerPeriodicSpawnScheduler`.
+- Updated `Spawner` to keep public periodic spawn API and actual prefab spawn execution while delegating periodic task list storage, null-prefab add guard, due-spawn access, and indexed timer reset to `SpawnerPeriodicTaskList`.
+- Updated `Enemy` to keep HP subtraction, hit effect, sound, and death coroutine start while delegating damage eligibility to `EnemyDamageGate`.
+- Updated `Enemy` to keep hit effect, sound, and death coroutine start while delegating HP subtraction and death-threshold state to `EnemyDamageState`.
+- Updated `Enemy` to keep death lifecycle and presentation flow while delegating XP reward and inventory kill-hook dispatch to `EnemyDeathRewardDispatcher`.
+- Updated `Enemy` to keep death state and reward dispatch while delegating base death presentation side effects and zero-duration wait creation to `EnemyDeathPresentation`.
+- Updated `Enemy` and `Tentacle` to keep death side-effect ordering while delegating kill particle instantiation to `EnemyKillParticleSpawner`.
+- Updated `Enemy` to keep target fields and lifecycle while delegating player component lookup to `EnemyTargetResolver`.
+- Updated `Enemy` to keep targetable state storage while delegating camera/collider/sprite screen-entry checks to `EnemyScreenEntryChecker`.
+- Updated `Enemy` and `Boss` to keep enable lifecycle while delegating enemy layer reset to `EnemyLayerAssignment`.
+- Updated `Enemy` to keep enable lifecycle side effects while delegating current HP, alive, and screen-entry reset values to `EnemyEnableState`.
+- Updated `Enemy` to keep `OnDisable()` as the lifecycle entry point while delegating hit material cleanup and active-enemy unregister sequencing to `EnemyDisableCleanup`.
+- Updated `Enemy` to keep public `DespawnWithoutExp()` and `isAlive` write while delegating active guard and coroutine-stop/deactivate completion to `EnemyDespawnWithoutExpCompletion`.
+- Updated `Enemy` to keep lifecycle and combat behavior while delegating hit material flag writes through `EnemyHitMaterialController`.
+- Updated `Enemy` to keep `HitEffect()` as the coroutine entry point while delegating hit material on/wait/off sequencing to `EnemyHitEffectRoutine`.
+- Updated `Enemy`, `Boss`, `Mob`, `FlyMob`, and `TrainBoss` to keep lifecycle, movement, and combat behavior while delegating optional sprite presentation writes through `EnemySpritePresentation`.
+- Updated `Mob` and `FlyMob` to keep death-slide and active-move side effects while delegating alive/stunned movement state selection to `MobMovementStateResolver`.
+- Updated `Mob` and `FlyMob` to keep movement state checks, sprite flip application, and Rigidbody2D assignment while delegating velocity formulas to `MobVelocityPlanner`.
+- Updated `Mob` and `FlyMob` to keep `SetMoveDirection(...)` as their movement entry point while delegating ground/flying direction formulas to `MobDirectionPlanner`.
+- Updated `Mob` to keep trigger entry and death coroutine start while delegating train collision handling to `MobTrainCollisionHandler`.
+- Updated `Mob` to keep public knockback entry, stun coroutine, and Rigidbody2D impulse application while delegating force calculation to `MobKnockbackPolicy`.
+- Updated `Mob` to keep public knockback, stun coroutine state writes, and Rigidbody2D impulse application while delegating stun duration waiting to `MobStunRoutine`.
+- Updated `Mob` to keep death coroutine ordering and base death yielding while delegating kill count reporting and death completion side effects to `MobDeathCompletion`.
+- Updated `PoolManager` to keep public `activeEnemies` and public methods while delegating register, unregister, and despawn loops to `PoolActiveEnemyRegistry`.
+- Updated `PoolActiveEnemyRegistry` to keep reverse despawn iteration while delegating null and boss-retained despawn filters to `PoolEnemyDespawnFilter`.
+- Updated `PoolManager` to keep serialized prefab arrays and public getter methods while delegating pool initialization, indexed/dynamic lookup, and GameObject reuse/create rules to `PoolObjectProvider`.
+- Updated `PoolManager` to keep public indexed mob getters while delegating private indexed mob pool storage and normal/fly/elite getter routing to `PoolMobPoolSet`.
+- Updated `PoolObjectProvider` to keep the pool list initialization entry point while delegating list-array allocation and per-index empty list initialization to `PoolListFactory`.
+- Updated `PoolObjectProvider` to keep the indexed pool lookup entry point while delegating prefab-array bounds and pool/prefab pair resolution to `PoolIndexedPrefabResolver`.
+- Updated `PoolObjectProvider` to keep the public dynamic pool lookup entry point while delegating prefab-name key creation and dynamic-pool dictionary get-or-add behavior to `PoolDynamicPoolRegistry`.
+- Updated `PoolManager` to keep public `GetMob(GameObject)` while delegating dynamic prefab mob null guard, dynamic pool lookup, and reuse/create request flow to `PoolDynamicMobProvider`.
+- Updated `PoolObjectProvider` to keep instantiate-on-miss, naming, and pool add behavior while delegating inactive reusable lookup and activation to `PoolReusableObjectSelector`.
+- Updated `PoolObjectProvider` to keep the reuse-first entry point while delegating instantiate-on-miss, prefab-name assignment, and pool append behavior to `PoolObjectFactory`.
+- Updated `PoolManager` to keep public `GetBoss(...)` while delegating `BossName` enum-to-boss prefab array indexing to `PoolBossPrefabLookup`.
+- Updated `Boss`, `Mob`, and `Tentacle` to keep lifecycle and serialized fields while delegating HP calibration formulas to `EnemyHpCalibration`.
+- Updated `Boss` to keep `StartEntranceRoutine(...)` as the public entry while delegating entrance coroutine sequencing to `BossEntranceRoutine` and interpolation to `BossEntranceMotion`.
+- Updated `Boss` to keep enable lifecycle side effects while delegating enable-time state reset values to `BossEnableState`.
+- Updated `EyeBoss` and `TrainBoss` to keep boss-specific death presentation and wait timing while delegating kill-event request eligibility to `BossKillEventRequestGate`.
+- Updated `EyeBoss` and `TrainBoss` to keep boss-specific death presentation and wait timing while delegating completion route selection to `BossDeathCompletionRouter`.
+- Updated `EyeBoss` and `TrainBoss` to keep boss-specific death presentation and wait timing while delegating shared completion side effects to `BossDeathCompletionExecutor`.
+- Updated `EyeBoss` and `TrainBoss` to keep boss-specific death timing while delegating kill explosion instantiation to `BossDeathExplosionSpawner`.
+- Updated `EyeBoss` to keep tentacle cleanup, explosion spawn timing, base death yielding, and completion execution while delegating death explosion position and wait duration constants to `EyeBossDeathPresentation`.
+- Updated `EyeBoss` to keep `Update()` lifecycle and coroutine starts while delegating normal pattern start eligibility to `EyeBossPatternStartGate`.
+- Updated `EyeBoss` to keep `Update()` lifecycle and pattern coroutine starts while delegating normal side/center pattern selection to `EyeBossNormalPatternSelector`.
+- Updated `EyeBoss` to keep normal pattern busy state and tentacle spawn execution while delegating post-spawn wait sequence to `EyeBossNormalPatternRoutine`.
+- Updated `EyeBoss` to keep enrage state changes and post-pattern wait while delegating duration-or-all-tentacles-cleared waiting to `EyeBossEnragePatternRoutine`.
+- Updated `EyeBoss` to keep `Start()` lifecycle and boss spawn sound publishing while delegating child transform collection to `EyeBossTentacleSpawnPointCollector`.
+- Updated `EyeBoss` to keep serialized pattern fields, public tentacle methods, and pattern coroutines while delegating tentacle list rules to `EyeBossTentacleRegistry`.
+- Updated `EyeBoss` to keep sound publishing while delegating tentacle attack sound timestamp state to `EyeBossAttackSoundCooldownState` and cooldown checks to `EyeBossAttackSoundCooldown`.
+- Updated `EyeBoss` to keep pattern coroutine flow while delegating spawn/weak index planning to `EyeBossTentaclePatternPlanner`.
+- Updated `EyeBoss` to keep normal/enrage profile resolution while delegating damage and delay value selection to `EyeBossTentacleAttackProfile`.
+- Updated `EyeBoss` to keep pattern coroutine timing and attack profile resolution while delegating tentacle spawn execution to `EyeBossTentacleSpawner`.
+- Updated `EyeBoss` to keep invincibility, roar sound, and force-enrage coroutine side effects while delegating enrage threshold decision state to `EyeBossEnrageTransition`.
+- Updated `TrainBoss` to keep trigger entry and alive-state gating while delegating train collision handling to `TrainBossTrainCollisionHandler`.
+- Updated `Tentacle` to keep trigger entry while delegating player-tag train damage forwarding to `TentacleTrainCollisionHandler`.
+- Updated `Tentacle` to keep setup and attack coroutine flow while delegating attack animation duration resolution to `TentacleAttackAnimationDurationResolver`.
+- Updated `Tentacle` to keep `BeginAttack()`, `AttackRoutine()`, and `GetTotalDuration()` entry points while delegating attack wait, animation trigger, attack callback, destroy delay sequence, and total duration calculation to `TentacleAttackRoutine`.
+- Updated `Tentacle` to keep hit effect and hit sound while delegating HP subtraction/death-threshold state to `TentacleDamageState` and death completion side effects to `TentacleDeathCompletion`.
+- Updated `TrainBoss` to keep damage, phase transition, knockback, and collision side effects while delegating damage and collision eligibility gates to `TrainBossCombatGate`.
+- Updated `TrainBoss` to keep `FixedUpdate`, stun gating, and Rigidbody2D writes while delegating forward movement direction, velocity composition, and sprite-facing constants to `TrainBossMovementPolicy`.
+- Updated `TrainBoss` to keep serialized phase/collider/knockback fields, collider switching, and stun coroutine while delegating phase transition, knockback rules, and Rigidbody2D knockback application.
+- Updated `TrainBoss` to keep roar sound and phase entry ordering while delegating phase 2 entered-state storage to `TrainBossPhaseState` and initial/phase 2 collider/animator presentation to `TrainBossPhasePresentation`.
+- Updated `TrainBoss` to keep stun coroutine ordering while delegating knockback timestamp state to `TrainBossKnockbackCooldownState` and Rigidbody2D velocity reset/impulse application to `TrainBossKnockbackApplier`.
+- Updated `TrainBoss` to keep stun coroutine restart order while delegating stun active-state storage to `TrainBossStunState` and timing/duration waiting to `TrainBossStunRoutine`.
+- Updated `TrainBoss` to keep death coroutine ordering, `SoundID.Boss_Die` publishing, and completion execution while delegating death explosion position and wait duration constants to `TrainBossDeathPresentation`.
+- Added a Unity `.meta` file for the new pure C# script.
+- Updated structure memory, decision log, refactor log, and session log.
+
+## Verification
+
+- Cooldown field usage search showed no external writes to `ItemInstance.currentCooldown` or `ItemInstance.maxCooldown`; only `StartCooldownManual(...)` is called externally by `BloodyZone`.
+- Source ownership search showed `ItemInstance` delegates cooldown state through `ItemCooldownState`.
+- Visual upgrade ownership search showed the generic fallback path delegates to `ItemVisualUpgradeApplier`; item-specific behaviours still implement `IInstantiatedItem`.
+- Inventory query ownership search showed public `Inventory` methods delegate query-only work to `InventoryItemQuery`.
+- Inventory runtime dispatch search showed public `Inventory` methods delegate tick, kill hook, and hit hook loops to `InventoryItemRuntimeDispatcher`.
+- Inventory acquisition ownership search showed public `Inventory` methods delegate acquisition and upgrade execution to `InventoryItemAcquirer`.
+- Level-up selection ownership search showed `LevelUpUIManager.ShowLevelUpChoices()` delegates availability filtering and random choice selection to `LevelUpChoiceSelector`.
+- Level-up display ownership search showed `LevelUpChoiceUI.DisplayChoice(...)` delegates new/upgrade level state calculation to `LevelUpChoiceDisplayState`.
+- Train level ownership search showed `TrainLevelManager` delegates XP totals, progress, threshold calculation, and level advancement to `TrainLevelProgression`.
+- Game UI queue ownership search showed `GameManager` delegates pending queue, processing flag, and event resume state to `GameUiQueueController`.
+- Kill counter ownership search showed `GameManager` delegates normal, elite, boss, and total kill counts to `GameKillCounter` while external callers still use `GameManager`.
+- Item runtime state ownership search showed item runtime scripts delegate `Playing`, `Boss`, and `Ending` gating to `ItemRuntimeGameStatePolicy`.
+- Simulation ownership search showed global time scale and physics simulation mode writes in `Assets/Scripts/LeeJunmo` are routed through `GameSimulationController`.
+- Spawner runtime state ownership search showed `Spawner.Update()` delegates `Playing` and `Boss` state gating to `SpawnerRuntimeStateGate`.
+- Spawner spawn schedule ownership search showed `Spawner.Update()` delegates basic, elite, and boss due checks to `SpawnerSpawnSchedule`.
+- Spawner spawn timer state ownership search showed `Spawner.Update()` delegates basic, elite, and boss timer storage, advancement, resets, and next-boss time mutation to `SpawnerSpawnTimerState`.
+- Spawn phase ownership search showed `Spawner.UpdatePhase(...)` delegates current-time phase selection to `SpawnerPhaseSelector`.
+- Current phase state ownership search showed `Spawner.UpdatePhase(...)`, `SpawnBasicMobs()`, `SpawnEliteMob()`, and mob timer checks delegate selected phase range and spawn interval state to `SpawnerCurrentPhaseState`.
+- Boss sequence ownership search showed `Spawner.SpawnNextBoss()` delegates sequence index state to `SpawnerBossSequenceCursor`.
+- Boss sequence logging ownership search showed `Spawner.SpawnNextBoss()` delegates empty-sequence warning and reserved-next-boss logging to `SpawnerBossSequenceLog`.
+- Boss setting ownership search showed `Spawner.GetBossSetting(...)` delegates lookup and default fallback creation to `SpawnerBossSettingLookup`.
+- Boss spawn placement ownership search showed `Spawner.SpawnBossObject(...)` delegates spawn point fallback and arrival position resolution to `SpawnerBossSpawnPlacement`.
+- Boss object spawn ownership search showed `Spawner.SpawnBossObject(...)` delegates prefab lookup, instantiation, fallback logging, and entrance handoff to `SpawnerBossObjectSpawner`.
+- Boss state-transition ownership search showed `Spawner.BossSpawnRoutine(...)` delegates boss appearance logging and `GameManager.AppearBoss()` to `SpawnerBossStateTransition`.
+- Boss warning routine ownership search showed `Spawner.BossSpawnRoutine(...)` delegates warning UI show and post-warning delay to `SpawnerBossWarningRoutine`.
+- Boss spawn routine ownership search showed `Spawner.BossSpawnRoutine(...)` delegates setting lookup, state-transition, warning wait, and spawn-object request order to `SpawnerBossSpawnRoutine`.
+- Spawner control-state ownership search showed `Spawner.SetSpawning(...)`, `SetRearSpawning(...)`, periodic task gating, and rear spawn position input delegate flag state to `SpawnerSpawnControlState`.
+- Spawned enemy physics reset ownership search showed normal, elite, event, and batch spawn paths delegate `Rigidbody2D` velocity reset to `SpawnerEnemyPhysicsReset`.
+- Mob spawn setup ownership search showed `Spawner.SpawnMobCommon(...)` delegates spawn placement, physics reset, and `Mob.OnDied` callback rewiring to `SpawnerMobSpawnSetup`.
+- Mob pool lookup ownership search showed `Spawner.SpawnEliteMob()`, `SpawnMobInternal(...)`, and `SpawnMobFromPrefab(...)` delegate normal, elite, and prefab pool lookup to `SpawnerMobPoolLookup`.
+- Mob batch routine ownership search showed public `Spawner.SpawnMobBatch(...)` delegates fixed-position batch loop, pooled mob lookup, physics reset, and delay waits to `SpawnerMobBatchRoutine`.
+- Spawn position ownership search showed `Spawner.GetSpawnPosition(...)` delegates ground/fly position selection to `SpawnerSpawnPositionSelector`.
+- Mob spawn selection ownership search showed `Spawner.SpawnBasicMobs()` and `Spawner.SpawnEliteMob()` delegate type/index selection to `SpawnerMobSpawnSelector`.
+- Periodic spawn ownership search showed `Spawner.HandlePeriodicTasks()` and `Spawner.AddPeriodicSpawnTask(...)` delegate timer and interval rules to `SpawnerPeriodicSpawnScheduler`.
+- Periodic task list ownership search showed `Spawner` delegates periodic task list storage, null-prefab add guard, due-spawn access, and indexed timer reset to `SpawnerPeriodicTaskList`.
+- Enemy damage eligibility ownership search showed `Enemy.TakeDamage(...)` delegates alive/screen-entry checks to `EnemyDamageGate` while keeping damage side effects local.
+- Enemy damage state ownership search showed `Enemy.TakeDamage(...)` delegates HP subtraction and death-threshold state to `EnemyDamageState` while keeping hit/death side effects local.
+- Enemy death reward ownership search showed `Enemy.Die()` delegates XP reward and inventory kill-hook dispatch to `EnemyDeathRewardDispatcher`.
+- Enemy death presentation ownership search showed `Enemy.Die()` delegates sprite hide, kill particle request, and zero-duration completion wait creation to `EnemyDeathPresentation`.
+- Enemy kill particle ownership search showed `Enemy.Die()` and `Tentacle.TakeDamage(...)` delegate kill particle instantiation to `EnemyKillParticleSpawner`.
+- Enemy target lookup ownership search showed `Enemy.Awake()` delegates player `Rigidbody2D` and `TrainLevelManager` lookup to `EnemyTargetResolver`.
+- Enemy screen-entry ownership search showed `Enemy.CheckScreenEntry()` delegates camera/collider/sprite visibility checks to `EnemyScreenEntryChecker`.
+- Enemy layer ownership search showed `Enemy.OnEnable()` and `Boss.OnEnable()` delegate `Enemy` layer reset to `EnemyLayerAssignment`.
+- Enemy enable-state ownership search showed `Enemy.OnEnable()` delegates current HP, alive, and screen-entry reset values to `EnemyEnableState`.
+- Enemy disable cleanup ownership search showed `Enemy.OnDisable()` delegates hit material cleanup and active-enemy unregister sequencing to `EnemyDisableCleanup`.
+- Enemy no-reward despawn ownership search showed `Enemy.DespawnWithoutExp()` keeps `isAlive = false` and delegates active guard plus coroutine-stop/deactivate completion to `EnemyDespawnWithoutExpCompletion`.
+- Enemy hit material ownership search showed `Enemy.HitEffect()` and `Enemy.OnDisable()` delegate `_isHit` writes to `EnemyHitMaterialController`.
+- Enemy hit effect routine ownership search showed `Enemy.HitEffect()` delegates material hit on/wait/off sequencing to `EnemyHitEffectRoutine`.
+- Enemy sprite presentation ownership search showed enemy sprite visibility, reset, and flip writes route through `EnemySpritePresentation`, with only guarded `Enemy.Awake()` original color capture and helper internals writing sprite fields directly.
+- Mob movement state ownership search showed `Mob.FixedUpdate()` and `FlyMob.FixedUpdate()` delegate alive/stunned movement state selection to `MobMovementStateResolver`.
+- Mob velocity ownership search showed `Mob` and `FlyMob` delegate death, ground, and fly velocity formulas to `MobVelocityPlanner`.
+- Mob direction ownership search showed `Mob` and `FlyMob` delegate ground and flying direction formulas to `MobDirectionPlanner`.
+- Mob train collision ownership search showed `Mob.OnTriggerEnter2D(...)` delegates train layer check, damage, and default camera shake to `MobTrainCollisionHandler`.
+- Mob knockback ownership search showed `Mob.Knockback(...)` delegates force calculation to `MobKnockbackPolicy` while keeping stun and impulse application locally.
+- Mob stun routine ownership search showed `Mob.Stun()` delegates duration waiting to `MobStunRoutine` while keeping `isStunned` writes locally.
+- Mob death completion ownership search showed `Mob.Die()` delegates kill count reporting and post-base-death completion side effects to `MobDeathCompletion`.
+- Active enemy ownership search showed `PoolManager.RegisterEnemy(...)`, `UnregisterEnemy(...)`, and despawn methods delegate list mutation/iteration to `PoolActiveEnemyRegistry`.
+- Active enemy despawn filter ownership search showed `PoolActiveEnemyRegistry` delegates null skip and boss-retained despawn eligibility to `PoolEnemyDespawnFilter`.
+- Pooled object ownership search showed `PoolManager` delegates pool list creation, indexed/dynamic pool lookup, and reusable object creation to `PoolObjectProvider`.
+- Indexed mob pool set ownership search showed `PoolManager` delegates private normal/fly/elite pool storage and public indexed getter routing to `PoolMobPoolSet`.
+- Pool list factory ownership search showed `PoolObjectProvider.CreatePools(...)` delegates list-array allocation and per-index empty list initialization to `PoolListFactory`.
+- Indexed prefab resolver ownership search showed `PoolObjectProvider.GetIndexed(...)` delegates prefab-array bounds and pool/prefab pair resolution to `PoolIndexedPrefabResolver`.
+- Dynamic pool registry ownership search showed `PoolObjectProvider.GetDynamicPool(...)` delegates prefab-name key creation and dictionary get-or-add behavior to `PoolDynamicPoolRegistry`.
+- Dynamic prefab mob provider ownership search showed `PoolManager.GetMob(GameObject)` delegates null guard, dynamic pool lookup, and reuse/create request flow to `PoolDynamicMobProvider`.
+- Pooled object reusable selection ownership search showed `PoolObjectProvider.GetOrCreate(...)` delegates inactive reusable lookup and activation to `PoolReusableObjectSelector`.
+- Pooled object factory ownership search showed `PoolObjectProvider.GetOrCreate(...)` delegates instantiate-on-miss, prefab-name assignment, and pool append behavior to `PoolObjectFactory`.
+- Boss prefab lookup ownership search showed `PoolManager.GetBoss(...)` delegates `BossName` enum-to-array lookup to `PoolBossPrefabLookup`.
+- HP calibration ownership search showed `Boss`, `Mob`, and `Tentacle` delegate HP formulas to `EnemyHpCalibration`.
+- Boss entrance ownership search showed `Boss.EntranceMoveRoutine(...)` delegates flag timing, movement loop, final position assignment, and interpolation through `BossEntranceRoutine` and `BossEntranceMotion`.
+- Boss enable state ownership search showed `Boss.OnEnable()` delegates HP/current/alive/screen-entry/entrance reset values to `BossEnableState`.
+- Boss kill-event request ownership search showed boss completion flow delegates kill-event request eligibility to `BossKillEventRequestGate`.
+- Boss death completion route ownership search showed boss completion flow delegates route selection to `BossDeathCompletionRouter`.
+- Boss death completion execution ownership search showed `EyeBoss.Die()` and `TrainBoss.Die()` delegate common completion side effects to `BossDeathCompletionExecutor`.
+- Boss death explosion ownership search showed `EyeBoss.Die()` and `TrainBoss.Die()` delegate kill explosion instantiation to `BossDeathExplosionSpawner`.
+- Eye boss death presentation ownership search showed `EyeBoss.Die()` delegates explosion position and completion delay constants to `EyeBossDeathPresentation`.
+- Eye boss pattern start ownership search showed `EyeBoss.Update()` delegates normal pattern start eligibility to `EyeBossPatternStartGate`.
+- Eye boss normal pattern selection ownership search showed `EyeBoss.Update()` delegates side/center pattern selection to `EyeBossNormalPatternSelector`.
+- Eye boss normal pattern routine ownership search showed `EyeBoss.RunNormalPattern(...)` delegates post-spawn wait sequence to `EyeBossNormalPatternRoutine`.
+- Eye boss enrage pattern routine ownership search showed `EyeBoss.EnragePatternRoutine()` delegates duration-or-all-tentacles-cleared waiting to `EyeBossEnragePatternRoutine`.
+- Eye boss tentacle spawn point ownership search showed `EyeBoss.Start()` delegates child transform collection to `EyeBossTentacleSpawnPointCollector`.
+- Eye boss tentacle registry ownership search showed `EyeBoss` delegates tentacle list active check, register, unregister, and cleanup to `EyeBossTentacleRegistry`.
+- Eye boss attack sound ownership search showed `EyeBoss.TryPlayAttackSound()` delegates timestamp state to `EyeBossAttackSoundCooldownState` and cooldown checks to `EyeBossAttackSoundCooldown`.
+- Eye boss pattern planning ownership search showed side, center, and enrage pattern routines delegate spawn/weak index planning to `EyeBossTentaclePatternPlanner`.
+- Eye boss tentacle attack profile ownership search showed `EyeBoss.SpawnTentaclesAndGetDuration(...)` delegates normal/enrage damage and delay selection to `EyeBossTentacleAttackProfile`.
+- Eye boss tentacle spawn ownership search showed `EyeBoss.SpawnTentaclesAndGetDuration(...)` delegates prefab selection, instantiation, setup, attack start, duration collection, and spawn sound publishing to `EyeBossTentacleSpawner`.
+- Eye boss enrage transition ownership search showed `EyeBoss.TakeDamage(...)` delegates threshold prediction and forced-enrage HP clamp decision to `EyeBossEnrageTransition`.
+- Train boss train collision ownership search showed `TrainBoss.OnTriggerEnter2D(...)` delegates train layer check, boss damage, and boss camera shake to `TrainBossTrainCollisionHandler`.
+- Tentacle train collision ownership search showed `Tentacle.OnTriggerEnter2D(...)` delegates player-tag train damage forwarding to `TentacleTrainCollisionHandler`.
+- Tentacle attack duration ownership search showed `Tentacle.Setup(...)` delegates attack clip duration resolution to `TentacleAttackAnimationDurationResolver`.
+- Tentacle attack routine ownership search showed `Tentacle.AttackRoutine()` and `GetTotalDuration()` delegate wait, trigger, callback, destroy sequence, and total duration calculation to `TentacleAttackRoutine`.
+- Tentacle damage state ownership search showed `Tentacle.TakeDamage(...)` delegates HP subtraction and death-threshold state to `TentacleDamageState`.
+- Tentacle death completion ownership search showed `Tentacle.TakeDamage(...)` delegates kill particle, death sound, and destroy side effects to `TentacleDeathCompletion`.
+- Train boss combat gate ownership search showed `TrainBoss.TakeDamage(...)` and `OnTriggerEnter2D(...)` delegate eligibility checks to `TrainBossCombatGate`.
+- Train boss movement ownership search showed `TrainBoss.FixedUpdate()` and `SetMoveDirection(...)` delegate forward direction, velocity composition, and sprite-facing constants to `TrainBossMovementPolicy`.
+- Train boss rule ownership search showed `TrainBoss.CheckPhase()` delegates phase 2 threshold checks and phase 2 entered-state storage through `TrainBossPhaseState`/`TrainBossPhaseTransition`, `TrainBoss.TakeDamage()` delegates last-applied timestamp state to `TrainBossKnockbackCooldownState`, and `TrainBoss.TakeDamage()`/`Knockback()` delegate cooldown checks and force selection to `TrainBossKnockbackPolicy`.
+- Train boss phase presentation ownership search showed `TrainBoss.Awake()` and `CheckPhase()` delegate initial collider setup and phase 2 animator/collider presentation to `TrainBossPhasePresentation`.
+- Train boss knockback application ownership search showed `TrainBoss.Knockback()` delegates velocity reset and impulse application to `TrainBossKnockbackApplier`.
+- Train boss stun ownership search showed `TrainBoss.FixedUpdate()` reads stun state through `TrainBossStunState`, while `TrainBoss.Stun()` delegates stun active-state timing and duration waiting to `TrainBossStunRoutine`.
+- Train boss death presentation ownership search showed `TrainBoss.Die()` delegates explosion position and completion delay constants to `TrainBossDeathPresentation`.
+- Generated `Assembly-CSharp.csproj` does not yet list `ItemCooldownState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `ItemVisualUpgradeApplier.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `InventoryItemQuery.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `InventoryItemRuntimeDispatcher.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `InventoryItemAcquirer.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `LevelUpChoiceSelector.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `LevelUpChoiceDisplayState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainLevelProgression.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `GameUiQueueController.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `GameKillCounter.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `ItemRuntimeGameStatePolicy.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `GameSimulationController.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerRuntimeStateGate.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerSpawnSchedule.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerSpawnTimerState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerPhaseSelector.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerCurrentPhaseState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerBossSequenceCursor.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerBossSequenceLog.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerBossSettingLookup.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerBossSpawnPlacement.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerBossObjectSpawner.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerBossStateTransition.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerBossWarningRoutine.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerBossSpawnRoutine.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerSpawnControlState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerEnemyPhysicsReset.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerMobSpawnSetup.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerMobPoolLookup.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerMobBatchRoutine.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerSpawnPositionSelector.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerMobSpawnSelector.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerPeriodicSpawnScheduler.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `SpawnerPeriodicTaskList.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyDamageGate.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyDamageState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyDeathRewardDispatcher.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyDeathPresentation.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyKillParticleSpawner.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyTargetResolver.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyScreenEntryChecker.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyLayerAssignment.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyEnableState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyDisableCleanup.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyDespawnWithoutExpCompletion.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyHitMaterialController.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyHitEffectRoutine.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemySpritePresentation.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `MobMovementStateResolver.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `MobVelocityPlanner.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `MobDirectionPlanner.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `MobTrainCollisionHandler.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `MobKnockbackPolicy.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `MobStunRoutine.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `MobDeathCompletion.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `PoolActiveEnemyRegistry.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `PoolEnemyDespawnFilter.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `PoolObjectProvider.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `PoolMobPoolSet.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `PoolListFactory.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `PoolIndexedPrefabResolver.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `PoolReusableObjectSelector.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `PoolObjectFactory.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `PoolDynamicPoolRegistry.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `PoolDynamicMobProvider.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `PoolBossPrefabLookup.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EnemyHpCalibration.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `BossEntranceMotion.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `BossEntranceRoutine.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `BossEnableState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `BossKillEventRequestGate.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `BossDeathCompletionRouter.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `BossDeathCompletionExecutor.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `BossDeathExplosionSpawner.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossDeathPresentation.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossPatternStartGate.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossNormalPatternSelector.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossNormalPatternRoutine.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossEnragePatternRoutine.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossTentacleSpawnPointCollector.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossTentacleRegistry.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossAttackSoundCooldown.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossAttackSoundCooldownState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossTentaclePatternPlanner.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossTentacleAttackProfile.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossTentacleSpawner.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `EyeBossEnrageTransition.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossTrainCollisionHandler.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TentacleTrainCollisionHandler.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TentacleAttackAnimationDurationResolver.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TentacleAttackRoutine.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TentacleDamageState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TentacleDeathCompletion.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossCombatGate.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossMovementPolicy.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossPhaseTransition.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossPhaseState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossPhasePresentation.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossKnockbackPolicy.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossKnockbackCooldownState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossKnockbackApplier.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossStunRoutine.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossStunState.cs`; Unity project files were not manually regenerated.
+- Generated `Assembly-CSharp.csproj` does not yet list `TrainBossDeathPresentation.cs`; Unity project files were not manually regenerated.
+- Code and docs diff whitespace check passed with Git's CRLF warnings for edited C# files, including `Spawner.cs` in the latest step.
+- Mob stun wait code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `Mob.cs`.
+- Tentacle death completion code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `Tentacle.cs`.
+- Enemy hit effect routine code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `Enemy.cs`.
+- Enemy death presentation code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `Enemy.cs`.
+- Enemy enable-state code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `Enemy.cs`.
+- Enemy disable cleanup code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `Enemy.cs`.
+- Enemy no-reward despawn code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `Enemy.cs`.
+- Pool enemy despawn filter code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `PoolActiveEnemyRegistry.cs`.
+- Pool mob pool set code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `PoolManager.cs`.
+- Pool reusable object selector code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `PoolObjectProvider.cs`.
+- Pool list factory code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff.
+- Pool indexed prefab resolver code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff.
+- Pool object factory code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff.
+- Pool dynamic pool registry code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff.
+- Pool dynamic mob provider code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff.
+- Spawner periodic task list code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `Spawner.cs`.
+- Spawner spawn timer state code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `Spawner.cs`.
+- Spawner current phase state code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `Spawner.cs`.
+- Spawner boss spawn routine code/docs trailing-whitespace checks passed; `git diff --check` passed on the tracked diff with Git's CRLF warning for `Spawner.cs`.
+
+## Remaining Risks
+
+- Unity compile was not run in this continuation task because Unity Editor processes are currently open.
+- Generated `.csproj` files may remain stale until Unity refreshes project files.
+- Manual cooldown items such as Bloody Bible need play validation before deeper item flow refactors.
+- Spawner runtime `GameState` gating needs Unity compile and play validation.
+- Spawner basic/elite/boss spawn schedule due checks need Unity compile and play validation.
+- Spawner basic/elite/boss spawn timer storage, advancement, reset, and next-boss time mutation need Unity compile and play validation.
+- Current spawn phase runtime range and spawn interval state need Unity compile and play validation.
+- Boss spawn point fallback and arrival position resolution need Unity compile and play validation.
+- Boss prefab lookup, instantiation, fallback logging, and entrance handoff need Unity compile and play validation.
+- Boss spawn state-transition logging and `GameManager.AppearBoss()` ordering need Unity compile and play validation.
+- Boss warning UI show and post-warning delay sequence need Unity compile and play validation.
+- Boss spawn coroutine setting lookup, state-transition, warning wait, and spawn-object request order need Unity compile and play validation.
+- Spawner public spawn/rear-spawn control and coroutine-stop behavior need Unity compile and play validation.
+- Spawned enemy velocity reset on pooled spawn and batch spawn needs Unity compile and play validation.
+- Mob spawn placement, physics reset, and `Mob.OnDied` callback rewiring need Unity compile and play validation.
+- Normal, elite, and prefab mob pool lookup selection needs Unity compile and play validation.
+- Mob batch spawn loop, fixed batch position reuse, physics reset, and delay waits need Unity compile and play validation.
+- Periodic spawn task list storage, null-prefab add guard, due-spawn access, and indexed timer reset need Unity compile and play validation.
+- Enemy death XP reward and inventory kill-hook dispatch need Unity compile and play validation.
+- Base enemy death sprite hide, kill particle request, and zero-duration completion wait need Unity compile and play validation.
+- Enemy kill particle instantiation on base enemy and tentacle death needs Unity compile and play validation.
+- Enemy player target lookup needs Unity compile and play validation.
+- Enemy targetable screen-entry checks need Unity compile and play validation.
+- Enemy layer reset on enable needs Unity compile and play validation.
+- Base enemy enable-time current HP, alive, and screen-entry reset values need Unity compile and play validation.
+- Enemy disable-time hit material cleanup and active-enemy unregister sequence needs Unity compile and play validation.
+- Enemy disable cleanup for sprite/material-less enemies needs Unity compile and play validation.
+- Enemy no-reward despawn active guard, coroutine stop, GameObject deactivation, and unregister-on-disable flow need Unity compile and play validation.
+- Enemy hit effect material on/wait/off sequence needs Unity compile and play validation.
+- Enemy optional sprite presentation flows need Unity compile and play validation.
+- Mob/FlyMob movement state selection needs Unity compile and play validation.
+- Mob/FlyMob velocity formulas and death slide behavior need Unity compile and play validation.
+- Mob/FlyMob ground/flying direction selection and sprite flip behavior need Unity compile and play validation.
+- Mob train collision damage, default camera shake, and post-collision death behavior need Unity compile and play validation.
+- Mob knockback force, stun timing, and impulse behavior need Unity compile and play validation.
+- Normal mob stun duration wait needs Unity compile and play validation.
+- Mob kill count, death sound, deactivation, and `OnDied` respawn callback order need Unity compile and play validation.
+- Active enemy cleanup/despawn flows need Unity compile and play validation.
+- Active enemy boss-retained despawn filter needs Unity compile and play validation.
+- Indexed mob pool storage, initialization timing, and normal/fly/elite getter routing need Unity compile and play validation.
+- Pool reuse/create flows need Unity compile and play validation.
+- Pool list-array allocation and per-index empty list initialization need Unity compile and play validation.
+- Indexed pool invalid-index null behavior and pool/prefab pair resolution need Unity compile and play validation.
+- Dynamic pool prefab-name key and dictionary get-or-add behavior need Unity compile and play validation.
+- Dynamic prefab mob null guard, dynamic pool lookup, and reuse/create request flow need Unity compile and play validation.
+- Pooled object inactive reusable lookup and activation need Unity compile and play validation.
+- Pooled object instantiate-on-miss, prefab-name assignment, and pool append behavior need Unity compile and play validation.
+- Boss enum-to-prefab array lookup needs Unity compile and play validation.
+- Base enemy damage eligibility needs Unity compile and play validation.
+- Base enemy HP subtraction and death-threshold state needs Unity compile and play validation.
+- Enemy/boss HP calibration, boss entrance motion, and boss entrance routine sequencing need Unity compile and play validation.
+- Boss enable-time HP/current/alive/screen-entry/entrance reset state needs Unity compile and play validation.
+- Boss kill-event request eligibility, boss death completion route selection, and boss-death completion ordering need Unity compile and play validation.
+- Shared boss death completion side-effect execution for EyeBoss and TrainBoss needs Unity compile and play validation.
+- Boss kill explosion position and timing for EyeBoss and TrainBoss need Unity compile and play validation.
+- Eye boss death explosion position, base death wait order, completion wait duration, and boss completion order need Unity compile and play validation.
+- Eye boss normal pattern start gating needs Unity compile and play validation.
+- Eye boss normal side/center pattern selection needs Unity compile and play validation.
+- Eye boss normal pattern busy state, spawn duration wait, and post-pattern wait sequence need Unity compile and play validation.
+- Eye boss enrage pattern duration wait, all-tentacles-cleared early exit, invincibility reset, and post-pattern wait sequence need Unity compile and play validation.
+- Eye boss tentacle child-transform spawn point collection needs Unity compile and play validation.
+- Eye boss tentacle registry cleanup, attack sound cooldown timestamp state, and attack sound cooldown need Unity compile and play validation.
+- Eye boss pattern index planning needs Unity compile and play validation.
+- Eye boss tentacle attack damage/delay profile selection needs Unity compile and play validation.
+- Eye boss tentacle spawn execution, duration collection, and spawn sound publishing need Unity compile and play validation.
+- Eye boss enrage threshold HP clamp, invincibility gate, roar sound, and forced pattern start need Unity compile and play validation.
+- Train boss collision damage, boss camera shake, and alive-state collision gating need Unity compile and play validation.
+- Tentacle player-tag collision damage forwarding needs Unity compile and play validation.
+- Tentacle attack animation duration fallback and attack/despawn timing need Unity compile and play validation.
+- Tentacle attack wait, animation trigger, attack callback, destroy delay sequence, and total duration calculation need Unity compile and play validation.
+- Tentacle damage, hit effect, death sound, kill particle, and destroy flow need Unity compile and play validation.
+- Tentacle death particle, death sound, and destroy flow need Unity compile and play validation.
+- Train boss damage eligibility and dead-state collision gating need Unity compile and play validation.
+- Train boss forward movement, y-velocity preservation, and sprite-facing behavior need Unity compile and play validation.
+- Train boss phase 2 transition, phase state storage, knockback timestamp state, and knockback timing/force need Unity compile and play validation.
+- Train boss initial/phase 2 collider switching and phase 2 animator trigger need Unity compile and play validation.
+- Train boss knockback velocity reset and impulse application need Unity compile and play validation.
+- Train boss stun active-state storage, timing, duration wait, movement pause, and coroutine restart order need Unity compile and play validation.
+- Train boss death explosion offset, death sound timing, wait duration, and boss completion order need Unity compile and play validation.

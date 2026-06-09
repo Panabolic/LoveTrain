@@ -16,6 +16,7 @@ public class GunRotator : MonoBehaviour
 
         // 1. 마우스 위치 가져오기 (World Point)
         Vector3 mousePos = Mouse.current.position.ReadValue();
+        mousePos = FixedAspectRatioController.ClampScreenPointToContent(mousePos);
         mousePos.z = 0; // 2D 게임이므로 Z값 0 고정
         Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
         worldMousePos.z = 0;

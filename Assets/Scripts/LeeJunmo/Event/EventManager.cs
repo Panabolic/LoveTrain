@@ -47,22 +47,36 @@ public class EventManager : MonoBehaviour
     private bool hasSelectionBeenMade = false;
     private bool justSelected = false;
     private bool isAnimatingPanel = false;
+    private Tween unscaledUpdateTween;
 
     private void Awake()
     {
         Instance = this;
-        eventBoardRect.anchoredPosition = offScreenHiddenPosition;
-        eventUIPanel.SetActive(false);
 
         if (eventSelections != null)
         {
             selectionButtons.AddRange(eventSelections.GetComponentsInChildren<Button>(true));
         }
 
-        DOTween.To(() => 0f, x => { }, 1f, 1f)
+        ResetEventUIState();
+
+        unscaledUpdateTween = DOTween.To(() => 0f, x => { }, 1f, 1f)
             .SetLoops(-1)
             .SetUpdate(true)
             .OnUpdate(UnscaledUpdate);
+    }
+
+    private void OnDestroy()
+    {
+        if (currentTypingTween != null && currentTypingTween.IsActive())
+        {
+            currentTypingTween.Kill();
+        }
+
+        if (unscaledUpdateTween != null && unscaledUpdateTween.IsActive())
+        {
+            unscaledUpdateTween.Kill();
+        }
     }
 
     // ✨ [수정] 외부에서 이벤트를 요청할 때 사용 (큐에 등록)
@@ -77,13 +91,8 @@ public class EventManager : MonoBehaviour
     {
         if (isAnimatingPanel) return;
 
+        ResetEventRuntimeFlags();
         SoundEventBus.Publish(SoundID.UI_Event);
-        isTextFullyDisplayed = false;
-        hasSelectionBeenMade = false;
-        isShowingResultText = false;
-        isTyping = false;
-        fullTextToSkipTo = "";
-        justSelected = false;
 
         // GameManager에서 이미 시간을 멈췄으므로 여기서 Time.timeScale 조작 안 함
 
@@ -364,6 +373,42 @@ public class EventManager : MonoBehaviour
         {
             if (button.gameObject.activeInHierarchy) button.interactable = true;
         }
+    }
+
+    private void ResetEventRuntimeFlags()
+    {
+        if (currentTypingTween != null && currentTypingTween.IsActive())
+        {
+            currentTypingTween.Kill();
+        }
+
+        currentTypingTween = null;
+        isTyping = false;
+        fullTextToSkipTo = "";
+        isShowingResultText = false;
+        isPanelOnScreen = false;
+        isTextFullyDisplayed = false;
+        hasSelectionBeenMade = false;
+        justSelected = false;
+        isAnimatingPanel = false;
+    }
+
+    private void ResetEventUIState()
+    {
+        StopAllCoroutines();
+        ResetEventRuntimeFlags();
+        currentEvent = null;
+
+        if (eventBoardRect != null)
+        {
+            eventBoardRect.anchoredPosition = offScreenHiddenPosition;
+        }
+
+        if (eventTitleBox != null) eventTitleBox.text = "";
+        if (eventTextBox != null) eventTextBox.text = "";
+        if (eventTextScrollRect != null) eventTextScrollRect.verticalNormalizedPosition = 1f;
+        if (eventSelections != null) eventSelections.SetActive(false);
+        if (eventUIPanel != null) eventUIPanel.SetActive(false);
     }
 
     #region --- 애니메이션 함수 ---
