@@ -17,6 +17,7 @@ MonoBehaviour:
   - description: 
     outcomes:
     - weight: 0
+      textId: none
       effectLogic: {fileID: 0}
       parameters:
         intValue: 0

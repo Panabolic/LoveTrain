@@ -50,8 +50,8 @@ public class LevelUpChoiceUI : MonoBehaviour
 
         // 1. 공통 정보 갱신 (아이콘, 이름, 설명)
         itemIcon.sprite = itemSO.iconSprite;
-        itemNameText.text = itemSO.itemName;
-        itemDescriptionText.text = itemSO.itemSimpleScript;
+        itemNameText.text = itemSO.LocalizedName;
+        itemDescriptionText.text = itemSO.LocalizedSimpleDescription;
 
         // 2. 이 아이템을 이미 가졌는지 확인
         ItemInstance existingInstance = playerInventory.FindItem(itemSO);

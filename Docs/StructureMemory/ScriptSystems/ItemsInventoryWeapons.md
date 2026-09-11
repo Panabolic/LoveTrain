@@ -65,6 +65,10 @@ Map item data, inventory state, equip/upgrade hooks, cooldown execution, weapon 
 - Level-up UI opens through `LevelUpUIManager.ShowLevelUpChoices()`, which delegates offer filtering and random selection to `LevelUpChoiceSelector` before binding slots.
 - `LevelUpChoiceUI.DisplayChoice(...)` still binds serialized UI elements directly, but delegates new/upgrade state calculation to `LevelUpChoiceDisplayState`.
 
+## English text lookup
+
+See [Localization](./Localization.md) for the keyed CSV workflow. Item_SO resolves localized names and descriptions; GetFormattedDescription replaces existing stat variables after translation. Level-up choices and inventory tooltips use these accessors.
+
 ## Extension Entry Points
 
 - Add a new passive or active item by deriving from `Item_SO`, adding a `CreateAssetMenu`, and implementing only the needed hooks.

@@ -45,6 +45,8 @@ public enum EditorEffectType
 [System.Serializable]
 public class TempOutcomeData
 {
+    public string specialTextKey;
+    public string textId;
     public float weight = 10f;
     public EditorEffectType effectType;
 
@@ -73,6 +75,10 @@ public class TempRollGroupData
 [System.Serializable]
 public class TempSelectionData
 {
+    public string textId;
+    public GameEventSO sourceLogic;
+    public string selectionTextKey;
+    public string selectionUnderTextKey;
     public string selectionText = "선택지 내용";
     public string selectionUnderText = "선택지 하단 설명";
     public List<TempRollGroupData> rollGroups = new List<TempRollGroupData>();
@@ -183,6 +189,10 @@ public class EventMakerWindow : EditorWindow
             foreach (var sel in source.Selections)
             {
                 TempSelectionData tempSel = new TempSelectionData();
+                tempSel.textId = sel.textId;
+                tempSel.sourceLogic = sel.eventToTrigger;
+                tempSel.selectionTextKey = sel.selectionTextKey;
+                tempSel.selectionUnderTextKey = sel.selectionUnderTextKey;
                 tempSel.selectionText = sel.selectionText;
                 tempSel.selectionUnderText = sel.selectionUnderText;
 
@@ -198,6 +208,7 @@ public class EventMakerWindow : EditorWindow
                         foreach (var outcome in group.outcomes)
                         {
                             TempOutcomeData tempOut = new TempOutcomeData();
+                            tempOut.textId = outcome.textId;
                             tempOut.weight = outcome.weight;
 
                             // EffectSO -> EditorEffectType 역추적
@@ -225,6 +236,7 @@ public class EventMakerWindow : EditorWindow
                             // 텍스트 설정 복원
                             if (outcome.outputSettings != null)
                             {
+                                tempOut.specialTextKey = outcome.outputSettings.specialTextKey;
                                 tempOut.resultDescription = outcome.outputSettings.specialText;
                                 tempOut.includeDefaultText = outcome.outputSettings.includeDefaultText;
                                 tempOut.outputOrder = outcome.outputSettings.order;
@@ -269,7 +281,7 @@ public class EventMakerWindow : EditorWindow
 
         // 2. 메인 이벤트 SO 생성 또는 로드
         string mainEventPath = $"{folderPath}/{eventTitle}.asset";
-        SO_Event mainEvent = AssetDatabase.LoadAssetAtPath<SO_Event>(mainEventPath);
+        SO_Event mainEvent = sourceEventAsset != null ? sourceEventAsset : AssetDatabase.LoadAssetAtPath<SO_Event>(mainEventPath);
 
         if (mainEvent == null)
         {
@@ -291,11 +303,11 @@ public class EventMakerWindow : EditorWindow
             string logicName = $"{eventTitle}_Sel{selIndex}_Logic";
             string logicPath = $"{folderPath}/{logicName}.asset";
 
-            GameEventSO gameEvent = AssetDatabase.LoadAssetAtPath<GameEventSO>(logicPath);
+            GameEventSO gameEvent = selData.sourceLogic;
             if (gameEvent == null)
             {
                 gameEvent = CreateInstance<GameEventSO>();
-                AssetDatabase.CreateAsset(gameEvent, logicPath);
+                AssetDatabase.CreateAsset(gameEvent, AssetDatabase.GenerateUniqueAssetPath(logicPath));
             }
 
             // 로직 데이터 갱신
@@ -312,6 +324,7 @@ public class EventMakerWindow : EditorWindow
                 foreach (var outData in groupData.outcomes)
                 {
                     WeightedEventOutcome outcome = new WeightedEventOutcome();
+                    outcome.textId = outData.textId;
                     outcome.weight = outData.weight;
 
                     if (outData.effectType != EditorEffectType.None)
@@ -327,6 +340,7 @@ public class EventMakerWindow : EditorWindow
                     outcome.parameters.prefabReference = outData.param_Prefab;
 
                     outcome.outputSettings = new EventResultOutput();
+                    outcome.outputSettings.specialTextKey = outData.specialTextKey;
                     outcome.outputSettings.specialText = outData.resultDescription;
                     outcome.outputSettings.order = outData.outputOrder;
                     outcome.outputSettings.includeDefaultText = outData.includeDefaultText;
@@ -341,6 +355,9 @@ public class EventMakerWindow : EditorWindow
 
             // 4. 메인 이벤트에 연결
             SO_Event.Selection newSelection = new SO_Event.Selection();
+            newSelection.textId = selData.textId;
+            newSelection.selectionTextKey = selData.selectionTextKey;
+            newSelection.selectionUnderTextKey = selData.selectionUnderTextKey;
             newSelection.selectionText = selData.selectionText;
             newSelection.selectionUnderText = selData.selectionUnderText;
             newSelection.eventToTrigger = gameEvent; // 연결
@@ -349,10 +366,14 @@ public class EventMakerWindow : EditorWindow
             selIndex++;
         }
 
+        // 번역 키는 문구 수정이나 선택지 재정렬 후에도 유지합니다.
+        LocalizationEditorTools.EnsureEventKeys(mainEvent);
+        sourceEventAsset = mainEvent;
         // 저장 및 리프레시
         EditorUtility.SetDirty(mainEvent);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
+        LoadEventData(mainEvent);
 
         // 선택 해제 후 재선택 (인스펙터 갱신용)
         Selection.activeObject = null;
@@ -381,6 +402,8 @@ public class EventMakerWindow : EditorWindow
         if (GUILayout.Button("삭제", GUILayout.Width(50))) { selections.RemoveAt(index); return; }
         EditorGUILayout.EndHorizontal();
 
+        EditorGUILayout.LabelField("선택지 포맷 ID", selection.textId ?? "저장 시 생성");
+        EditorGUILayout.HelpBox("설명/버튼: {결과ID.count}, {결과ID.chance}, {결과ID.item}, {결과ID.value}\n이벤트 본문: {선택지ID.결과ID.count}\nID는 저장·순서 변경 후에도 유지됩니다. CSV 내보내기 후 같은 변수를 en에 보존하세요.", MessageType.Info);
         selection.selectionText = EditorGUILayout.TextField("버튼 텍스트", selection.selectionText);
         selection.selectionUnderText = EditorGUILayout.TextField("하단 설명", selection.selectionUnderText);
         EditorGUILayout.Space();
@@ -419,6 +442,7 @@ public class EventMakerWindow : EditorWindow
         if (GUILayout.Button("x", GUILayout.Width(20))) { list.RemoveAt(index); return; }
         EditorGUILayout.EndHorizontal();
 
+        EditorGUILayout.LabelField("포맷 ID", outcome.textId ?? "저장 시 생성");
         outcome.weight = EditorGUILayout.FloatField("가중치 (Weight)", outcome.weight);
 
         EditorGUILayout.BeginVertical("box");

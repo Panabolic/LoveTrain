@@ -17,6 +17,7 @@ MonoBehaviour:
   - description: 
     outcomes:
     - weight: 100
+      textId: reward
       effectLogic: {fileID: 11400000, guid: 377f9e1bf16fe764aab37ffeedd5065c, type: 2}
       parameters:
         intValue: 0

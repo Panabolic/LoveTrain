@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Revolver
   m_EditorClassIdentifier: Assembly-CSharp::Revolver_SO
   itemName: "\uAC74\uC2AC\uB808\uC774\uBE0C"
+  itemNameKey: item.revolver.name
   instantiatedPrefab: {fileID: 44012710606727125, guid: 2ea7fb7ee56a17c49a4bcee38e7de9ed, type: 3}
   attachmentSocketName: TrainF
   iconSprite: {fileID: 21300000, guid: 4bb90330556c4d04d9eb5048ac360c23, type: 3}
@@ -21,8 +22,10 @@ MonoBehaviour:
   MaxUpgrade: 3
   itemScript: "{CoolTime}\uCD08 \uB9C8\uB2E4 {Damage}\uC758 \uCD1D\uC54C\uC744 \uC804\uBC29\uC73C\uB85C
     {BulletNum}\uBC1C \uBC1C\uC0AC."
+  itemDescriptionKey: item.revolver.description
   itemSimpleScript: "\uC77C\uC815\uC2DC\uAC04\uB9C8\uB2E4 \uC804\uBC29\uC5D0 \uCD1D\uC54C
     \uBC1C\uC0AC"
+  itemSimpleDescriptionKey: item.revolver.summary
   cooldownTime: 0
   damageByLevel: 500000006e000000a0000000
   bulletNumByLevel: 010000000100000003000000

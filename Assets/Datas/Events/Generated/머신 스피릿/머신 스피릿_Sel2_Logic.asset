@@ -17,6 +17,7 @@ MonoBehaviour:
   - description: "\uADF8\uB8F9 \uC124\uBA85"
     outcomes:
     - weight: 60
+      textId: upgrade
       effectLogic: {fileID: 11400000, guid: dc38b42b9fc31534388537c1ac5ff5e8, type: 2}
       parameters:
         intValue: 2
@@ -31,6 +32,7 @@ MonoBehaviour:
         specialText: 
         order: 0
     - weight: 40
+      textId: none
       effectLogic: {fileID: 0}
       parameters:
         intValue: 3
@@ -44,4 +46,5 @@ MonoBehaviour:
         includeDefaultText: 1
         specialText: "\uC544\uC774\uCFE0 \uB80C\uCE58\uAC00 \uBBF8\uB044\uB7EC\uC84C\uB124\n\uB2E4\uC74C\uC5D4
           \uC798\uB420\uAC70\uC57C"
+        specialTextKey: outcome.3cc221346e70ac1468a485ae5b90baa9.text_2
         order: 0

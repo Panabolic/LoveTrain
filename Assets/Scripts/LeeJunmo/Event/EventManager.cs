@@ -110,7 +110,7 @@ public class EventManager : MonoBehaviour
         // GameManager에서 이미 시간을 멈췄으므로 여기서 Time.timeScale 조작 안 함
 
         currentEvent = e;
-        if (eventTitleBox != null) eventTitleBox.text = e.EventTitle;
+        if (eventTitleBox != null) eventTitleBox.text = EventTextFormatter.LocalizeEvent(e.titleKey, e.EventTitle, e);
         if (eventTextBox != null) eventTextBox.text = "";
 
         // 스크롤 초기화
@@ -123,7 +123,7 @@ public class EventManager : MonoBehaviour
 
         AnimatePanelOnScreen(() =>
         {
-            StartCoroutine(TypeText(e.EventText ?? string.Empty));
+            StartCoroutine(TypeText(EventTextFormatter.LocalizeEvent(e.textKey, e.EventText, e)));
         });
     }
 
@@ -375,8 +375,8 @@ public class EventManager : MonoBehaviour
                 TextMeshProUGUI[] texts = selectionUIObject.GetComponentsInChildren<TextMeshProUGUI>();
                 if (texts.Length >= 2)
                 {
-                    texts[0].text = currentEvent.Selections[i].selectionText;
-                    texts[1].text = currentEvent.Selections[i].selectionUnderText;
+                    texts[0].text = EventTextFormatter.Localize(currentEvent.Selections[i].selectionTextKey, currentEvent.Selections[i].selectionText, currentEvent.Selections[i].eventToTrigger);
+                    texts[1].text = EventTextFormatter.Localize(currentEvent.Selections[i].selectionUnderTextKey, currentEvent.Selections[i].selectionUnderText, currentEvent.Selections[i].eventToTrigger);
                 }
                 if (button != null) button.interactable = false;
             }

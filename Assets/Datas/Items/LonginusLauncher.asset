@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LonginusLauncher
   m_EditorClassIdentifier: Assembly-CSharp::LonginusLauncher_SO
   itemName: "\uB871\uAE30\uB204\uC2A4\uC758 \uCC3D"
+  itemNameKey: item.longinus_launcher.name
   instantiatedPrefab: {fileID: 7351221115637119521, guid: 2f7d484e6bb18d747b8cb5767a4ed399, type: 3}
   attachmentSocketName: TrainR
   iconSprite: {fileID: -319647040704276135, guid: eb3c20b57b5cccb46b7ba8b7d221098a, type: 3}
@@ -21,8 +22,10 @@ MonoBehaviour:
   MaxUpgrade: 6
   itemScript: "{Damage}\uB370\uBBF8\uC9C0\uC758 \uAC70\uB300\uD55C \uCC3D\uC744 {Cooldown}\uCD08
     \uB9C8\uB2E4 \uBC1C\uC0AC."
+  itemDescriptionKey: item.longinus_launcher.description
   itemSimpleScript: "\uC77C\uC815\uC2DC\uAC04\uB9C8\uB2E4 \uB9F5\uC744 \uB6AB\uACE0
     \uC9C0\uB098\uAC00\uB294 \uCC3D \uC18C\uD658"
+  itemSimpleDescriptionKey: item.longinus_launcher.summary
   cooldownTime: 0
   damageByLevel:
   - 200

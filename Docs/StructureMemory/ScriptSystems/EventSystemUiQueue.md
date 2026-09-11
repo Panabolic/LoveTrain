@@ -45,6 +45,10 @@ Map random event data, weighted outcome execution, event effects, popup presenta
 - `GameUiQueueController` should stay pure queue state and should not call UI, `Time`, `Physics2D`, singletons, or scene transitions.
 - `EventManager` closes the panel and calls `GameManager.CloseUI()` when the event is complete.
 
+## English text lookup
+
+See [Localization](./Localization.md) for the keyed CSV workflow. EventManager resolves the event and choice keys before display. GameEventSO resolves specialTextKey while effect scripts resolve result templates. Event Maker preserves serialized keys and stable choice/outcome text IDs during edits. EventTextFormatter expands data tokens after localization: choice/result text uses {reward.count}; title/body uses {choice_1.reward.count}. Probabilities come from the outcome’s own roll group. CSV import/build validation rejects stale or invalid templates.
+
 ## Extension Entry Points
 
 - Add new event content by authoring an `SO_Event` and linking choices to `GameEventSO` assets.

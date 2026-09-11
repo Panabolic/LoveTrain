@@ -46,7 +46,7 @@ public class SimpleSpeedUI : MonoBehaviour
                 Debug.Log(carAnim.GetFloat("moveSpeed"));
             }
             // 연결이 안 되었을 때 오류 메시지 표시
-            speedText.text = "Controller 없음";
+            speedText.text = EnglishLocalization.Get("ui.controller_missing", "Controller 없음");
         }
     }
 }

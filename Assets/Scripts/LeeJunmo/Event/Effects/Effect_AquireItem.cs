@@ -31,7 +31,7 @@ public class Effect_AcquireItem : GameEffectSO
         // 4. (기존 아이템) 이미 최대 레벨이면 즉시 종료
         if (!isNewItem && oldLevel >= itemToGive.MaxUpgrade)
         {
-            return $"<{itemToGive.itemName}>(이)가 이미 최대 레벨(MAX)입니다.";
+            return EnglishLocalization.Format("result.item_max", "<{0}>(이)가 이미 최대 레벨(MAX)입니다.", itemToGive.LocalizedName);
         }
 
         // 5. 로직 실행 (N번 반복)
@@ -61,17 +61,17 @@ public class Effect_AcquireItem : GameEffectSO
         {
             if (acquireCount > 1) // "NEW → N"
             {
-                return $"<{itemToGive.itemName}>(이)가 (NEW → {levelText})로 업그레이드되었습니다.";
+                return EnglishLocalization.Format("result.new_item_upgrade", "<{0}>(이)가 (NEW → {1})로 업그레이드되었습니다.", itemToGive.LocalizedName, levelText);
             }
             else // "NEW" (acquireCount가 1이었음)
             {
-                return $"새로운 아이템 <{itemToGive.itemName}>(을)를 획득했습니다.";
+                return EnglishLocalization.Format("result.item_acquired", "새로운 아이템 <{0}>(을)를 획득했습니다.", itemToGive.LocalizedName);
             }
         }
         else // (oldLevel이 1 이상이었음)
         {
             // "Lv.N → Lv.M"
-            return $"<{itemToGive.itemName}>(이)가 (Lv.{oldLevel} → {levelText})로 업그레이드되었습니다.";
+            return EnglishLocalization.Format("result.item_upgraded", "<{0}>(이)가 (Lv.{1} → {2})로 업그레이드되었습니다.", itemToGive.LocalizedName, oldLevel, levelText);
         }
     }
 
@@ -85,6 +85,6 @@ public class Effect_AcquireItem : GameEffectSO
         if (acquireCount <= 0) acquireCount = 1;
 
         // (ItemDatabase를 찾는 로직이 필요 - 예: Resources.Load 또는 싱글톤)
-        return "랜덤 아이템 획득 로직 실행 (ItemDatabase 필요)";
+        return EnglishLocalization.Get("result.error.random_acquire", "랜덤 아이템 획득 로직 실행 (ItemDatabase 필요)");
     }
 }

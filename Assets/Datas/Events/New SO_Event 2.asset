@@ -13,13 +13,21 @@ MonoBehaviour:
   m_Name: New SO_Event 2
   m_EditorClassIdentifier: Assembly-CSharp::SO_Event
   EventTitle: "\uC774\uBCA4\uD2B83"
+  titleKey: event.legacy_watch.title
   EventText: "\uC67C\uCABD \uC8FC\uBA38\uB2C8\uC5D0 \uB4E4\uC5B4\uC788\uB358 \uC2DC\uACC4\uAC00
     \uBE44\uBA85\uC18C\uB9AC\uB97C \uC9C0\uB974\uBA70 \uC5C4\uCCAD\uB098\uAC8C \uC6B8\uB9AC\uAE30
     \uC2DC\uC791\uD588\uB2E4."
+  textKey: event.legacy_watch.body
   Selections:
   - selectionText: "\uC2DC\uACC4\uB97C \uBD80\uC21C\uB2E4"
-    selectionUnderText: "\uC2E0\uC559\uD0DC\uADF8\uC758 \uC544\uC774\uD15C \uD68D\uB4DD"
+    textId: choice_1
+    selectionTextKey: event.legacy_watch.choice_1.text
+    selectionUnderText: "신앙태그의 아이템 획득"
+    selectionUnderTextKey: event.legacy_watch.choice_1.hint
     eventToTrigger: {fileID: 11400000, guid: 41ff1bb57d9662e4fa36560402979a7e, type: 2}
   - selectionText: "\uC2DC\uACC4\uB97C \uBD84\uD574\uD574\uBCF8\uB2E4"
-    selectionUnderText: "\uD0DC\uADF8\uC758 \uC544\uC774\uD15C \uD68D\uB4DD"
+    textId: choice_2
+    selectionTextKey: event.legacy_watch.choice_2.text
+    selectionUnderText: "태그의 아이템 획득"
+    selectionUnderTextKey: event.legacy_watch.choice_2.hint
     eventToTrigger: {fileID: 11400000, guid: 41ff1bb57d9662e4fa36560402979a7e, type: 2}

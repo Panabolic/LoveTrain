@@ -6,6 +6,12 @@ public class Item_SO : ScriptableObject
 {
     [Header("아이템 이름")]
     public string itemName;
+    public string itemNameKey;
+    public string itemDescriptionKey;
+    public string itemSimpleDescriptionKey;
+
+    public string LocalizedName => EnglishLocalization.Get(itemNameKey, itemName);
+    public string LocalizedSimpleDescription => EnglishLocalization.Get(itemSimpleDescriptionKey, itemSimpleScript);
     [Header("부착 오브젝트 설정")]
     [Tooltip("장착 시 씬에 생성될 프리팹 (시각 전용 또는 로직 포함)")]
     public GameObject instantiatedPrefab;
@@ -151,7 +157,7 @@ public class Item_SO : ScriptableObject
     /// </summary>
     public string GetFormattedDescription(int level)
     {
-        string desc = itemScript;
+        string desc = EnglishLocalization.Get(itemDescriptionKey, itemScript);
         if (string.IsNullOrEmpty(desc)) return "";
 
         var replacements = GetStatReplacements(level);

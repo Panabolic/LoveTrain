@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BeatingHeart
   m_EditorClassIdentifier: Assembly-CSharp::BeatingHeart_SO
   itemName: "\uBC15\uB3D9\uD558\uB294 \uC2EC\uC7A5"
+  itemNameKey: item.beating_heart.name
   instantiatedPrefab: {fileID: 6396234687511217714, guid: 1ee2d5a0671d48b4c987f894fb0d58a6, type: 3}
   attachmentSocketName: TrainF
   iconSprite: {fileID: 21300000, guid: 9037a89b5692d764abb929519d1de682, type: 3}
@@ -21,7 +22,9 @@ MonoBehaviour:
   MaxUpgrade: 3
   itemScript: "{CoolTime}\uCD08 \uB9C8\uB2E4 \uD654\uBA74 \uC804\uCCB4\uC5D0 {Damage}
     \uB370\uBBF8\uC9C0."
+  itemDescriptionKey: item.beating_heart.description
   itemSimpleScript: "\uC77C\uC815\uC2DC\uAC04\uB9C8\uB2E4 \uB9F5 \uC804\uCCB4 \uB370\uBBF8\uC9C0"
+  itemSimpleDescriptionKey: item.beating_heart.summary
   cooldownTime: 15
   damageByLevel: 500000006e000000a0000000
   cooldownByLevel:

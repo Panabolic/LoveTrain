@@ -17,10 +17,10 @@ public class Effect_UpgradeRandomItemNTimes : GameEffectSO
         if (upgradeAmount <= 0) upgradeAmount = 1; // [중요] 0으로 설정하면 1로 보정
 
         Inventory inventory = target.GetComponent<Inventory>();
-        if (inventory == null) return "오류: Inventory를 찾을 수 없습니다.";
+        if (inventory == null) return EnglishLocalization.Get("result.error.inventory_missing", "오류: Inventory를 찾을 수 없습니다.");
 
         List<ItemInstance> upgradableItems = inventory.GetUpgradableItems();
-        if (upgradableItems.Count == 0) return "업그레이드할 아이템이 없습니다.";
+        if (upgradableItems.Count == 0) return EnglishLocalization.Get("result.no_upgrades", "업그레이드할 아이템이 없습니다.");
 
         System.Random rng = new System.Random();
         List<ItemInstance> itemsToUpgrade = upgradableItems.OrderBy(x => rng.Next()).Take(itemCount).ToList();
@@ -39,9 +39,9 @@ public class Effect_UpgradeRandomItemNTimes : GameEffectSO
             }
 
             string levelText = (instance.currentUpgrade >= instance.itemData.MaxUpgrade) ? "MAX" : $"Lv.{instance.currentUpgrade}";
-            results.Add($"<{instance.itemData.itemName}> (Lv.{oldLevel} → {levelText})");
+            results.Add($"<{instance.itemData.LocalizedName}> (Lv.{oldLevel} → {levelText})");
         }
 
-        return $"아이템 {upgradeAmount}회 업그레이드:\n- " + string.Join("\n- ", results);
+        return EnglishLocalization.Format("result.upgrade_count", "아이템 {0}회 업그레이드:\n- ", upgradeAmount) + string.Join("\n- ", results);
     }
 }

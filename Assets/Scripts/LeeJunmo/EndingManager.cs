@@ -37,6 +37,14 @@ public class EndingManager : MonoBehaviour
     [SerializeField] private Transform[] creditSpawnPoints;
     [SerializeField] private float creditSpawnInterval = 1.5f;
     [SerializeField] private List<string> developerNames;
+    [SerializeField] private List<LocalizedCreditEntry> localizedCredits;
+
+    [System.Serializable]
+    public struct LocalizedCreditEntry
+    {
+        public string creditKey;
+        public string sourceText;
+    }
 
     private bool isCreditsPlaying = false;
     private bool isEndingFinished = false;
@@ -162,16 +170,16 @@ public class EndingManager : MonoBehaviour
 
     private IEnumerator SpawnCreditsRoutine()
     {
-        if (developerNames == null)
-        {
-            isSpawningFinished = true;
-            yield break;
-        }
+        bool useLocalizedCredits = localizedCredits != null && localizedCredits.Count > 0;
+        int count = useLocalizedCredits ? localizedCredits.Count : (developerNames?.Count ?? 0);
 
-        foreach (string creditText in developerNames)
+        for (int i = 0; i < count; i++)
         {
             if (isEndingFinished) yield break;
 
+            string creditText = useLocalizedCredits
+                ? EnglishLocalization.Get(localizedCredits[i].creditKey, localizedCredits[i].sourceText)
+                : developerNames[i];
             SpawnCreditObject(creditText);
             yield return new WaitForSecondsRealtime(creditSpawnInterval);
         }

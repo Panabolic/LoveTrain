@@ -86,6 +86,10 @@ When implementation or architecture documents conflict, follow this order:
 - [Core Runtime And Game Flow](./StructureMemory/ScriptSystems/CoreRuntimeGameFlow.md)
 - [Script System Map](./StructureMemory/ScriptSystemMap.md)
 
+### Localization, Translation CSV, English UI
+
+- [English Localization](./StructureMemory/ScriptSystems/Localization.md)
+
 ## Documentation Update Policy
 
 - Small local fixes usually need only a dated session log.

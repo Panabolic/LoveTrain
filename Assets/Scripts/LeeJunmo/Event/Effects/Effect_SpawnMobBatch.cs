@@ -10,7 +10,7 @@ public class Effect_SpawnMobBatch : GameEffectSO
         float delay = parameters.floatValue;            // 딜레이
         bool isFly = parameters.boolValue;              // 공중 여부
 
-        if (prefab == null) return "오류: 몬스터 프리팹이 없습니다.";
+        if (prefab == null) return EnglishLocalization.Get("result.error.monster_missing", "오류: 몬스터 프리팹이 없습니다.");
         if (count <= 0) count = 1;
         if (delay <= 0.05f) delay = 0.2f;
 
@@ -21,9 +21,9 @@ public class Effect_SpawnMobBatch : GameEffectSO
         {
             spawner.SpawnMobBatch(prefab, count, delay, isFly);
 
-            string typeText = isFly ? "공중" : "지상";
-            return $"{typeText} 몬스터 출현! ({prefab.name} x{count})";
+            string typeText = isFly ? EnglishLocalization.Get("result.type.flying", "공중") : EnglishLocalization.Get("result.type.ground", "지상");
+            return EnglishLocalization.Format("result.monsters_spawned", "{0} 몬스터 출현! ({1} x{2})", typeText, prefab.name, count);
         }
-        return "Spawner 오류";
+        return EnglishLocalization.Get("result.error.spawner", "Spawner 오류");
     }
 }

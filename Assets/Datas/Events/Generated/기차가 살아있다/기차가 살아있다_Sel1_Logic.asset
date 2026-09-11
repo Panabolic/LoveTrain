@@ -18,6 +18,7 @@ MonoBehaviour:
   - description: "\uADF8\uB8F9 \uC124\uBA85"
     outcomes:
     - weight: 100
+      textId: reward
       effectLogic: {fileID: 11400000, guid: 065521c2a5f3f674d887812e41b680a0, type: 2}
       parameters:
         intValue: 2

@@ -15,7 +15,7 @@ public class Effect_AcquireRandomItem : GameEffectSO
         if (acquireCount <= 0) acquireCount = 1;
 
         Inventory inventory = target.GetComponent<Inventory>();
-        if (inventory == null || itemDatabase == null) return "오류: Inventory 또는 ItemDatabase가 없습니다.";
+        if (inventory == null || itemDatabase == null) return EnglishLocalization.Get("result.error.item_database_missing", "오류: Inventory 또는 ItemDatabase가 없습니다.");
 
         // 1. '획득 가능한' 아이템 풀을 필터링 (최대 레벨 아이템 제외)
         List<Item_SO> availablePool = new List<Item_SO>();
@@ -29,7 +29,7 @@ public class Effect_AcquireRandomItem : GameEffectSO
 
         if (availablePool.Count == 0)
         {
-            return "획득할 수 있는 새로운 아이템이 없습니다.";
+            return EnglishLocalization.Get("result.no_new_items", "획득할 수 있는 새로운 아이템이 없습니다.");
         }
 
         // 2. 풀에서 N개 뽑기
@@ -45,22 +45,22 @@ public class Effect_AcquireRandomItem : GameEffectSO
 
             if (isNew)
             {
-                results.Add($"<{item.itemName}> [NEW!]");
+                results.Add($"<{item.LocalizedName}> [NEW!]");
             }
             else
             {
                 if (inventory.FindItem(item).currentUpgrade == inventory.FindItem(item).itemData.MaxUpgrade)
                 {
-                    results.Add($"<{item.itemName}> [레벨 {inventory.FindItem(item).currentUpgrade - 1} -> MAX]");
+                    results.Add(EnglishLocalization.Format("result.item_to_max", "<{0}> [레벨 {1} -> MAX]", item.LocalizedName, inventory.FindItem(item).currentUpgrade - 1));
                 }
                 else
                 {
-                    results.Add($"<{item.itemName}> [레벨 {inventory.FindItem(item).currentUpgrade - 1} -> {inventory.FindItem(item).currentUpgrade}]");
+                    results.Add(EnglishLocalization.Format("result.item_level_change", "<{0}> [레벨 {1} -> {2}]", item.LocalizedName, inventory.FindItem(item).currentUpgrade - 1, inventory.FindItem(item).currentUpgrade));
                 }
             }
                 
         } 
 
-        return $"랜덤 아이템 획득:\n- " + string.Join("\n- ", results);
+        return EnglishLocalization.Get("result.random_items", "랜덤 아이템 획득:\n- ") + string.Join("\n- ", results);
     }
 }

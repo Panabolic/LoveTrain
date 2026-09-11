@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LaserGun
   m_EditorClassIdentifier: Assembly-CSharp::LaserGun_SO
   itemName: BF-12000
+  itemNameKey: item.laser_gun.name
   instantiatedPrefab: {fileID: 7912622153395854844, guid: 67a79294b5c50064b906a9dabedb0869, type: 3}
   attachmentSocketName: 
   iconSprite: {fileID: -1575477752133039954, guid: 768d5566dccb58142ae66d941b63cd80, type: 3}
@@ -23,8 +24,10 @@ MonoBehaviour:
     \uBC1C\uC0AC\uB85C \uBCC0\uACBD. \uB808\uC774\uC800\uB294 {Duration}\uCD08 \uB9CC\uD07C
     \uC9C0\uC18D \uAC00\uB2A5\uD558\uBA70 {Cooldown}\uCD08 \uB3D9\uC548 \uC900\uBE44\uAC00
     \uD544\uC694."
+  itemDescriptionKey: item.laser_gun.description
   itemSimpleScript: "\uAE30\uBCF8\uCD1D\uAE30\uAC00 \uAD00\uD1B5\uACF5\uACA9\uC744
     \uD558\uB294 \uB808\uC774\uC800 \uD3EC\uB85C \uBCC0\uACBD"
+  itemSimpleDescriptionKey: item.laser_gun.summary
   cooldownTime: 0
   damageRatio: 0.37
   durationByLevel:

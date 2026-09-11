@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: "\uBE4C\uC5B4\uBA39\uC744 \uACF5\uBB34\uC6D0"
   m_EditorClassIdentifier: Assembly-CSharp::SO_Event
   EventTitle: "\uBE4C\uC5B4\uBA39\uC744 \uACF5\uBB34\uC6D0"
+  titleKey: event.bureaucrat.title
   EventText: "\uC5ED\uC744 \uD1B5\uACFC\uD558\uB824\uB358 \uC911 \uC815\uBCF5\uC744
     \uC785\uC740 \uD574\uACE8 \uBAA8\uC591\uC758 \uC624\uD1A0\uB9C8\uD1A4\uC774 \uCC28\uB2E8\uAE30\uB97C
     \uB0B4\uB9AC\uACE0 \uC55E\uC744 \uB9C9\uC544\uC120\uB2E4.\r\n\r\n\"\uC090\uBE45.
@@ -23,14 +24,19 @@ MonoBehaviour:
     \uB4F1 \uB4A4\uB85C \uC218\uB9CE\uC740 \uBB34\uC784\uC2B9\uCC28\uC790\uB4E4\uC758
     \uC2DC\uCCB4\uAC00 \uC0B0\uC744 \uC774\uB8E8\uACE0 \uC788\uB2E4. \uC5B4\uCA50\uB2F4.
     \uD2F0\uCF13 \uAC19\uC740 \uAC8C \uC788\uC744 \uB9AC \uC5C6\uC796\uC544?"
+  textKey: event.bureaucrat.body
   Selections:
   - selectionText: "\uC0AC\uD68C\uBD09\uC0AC? \uD574\uCDA9 \uBC15\uBA78\uC774\uB77C\uBA74
       \uC790\uC2E0\uC788\uC9C0"
-    selectionUnderText: "\uC801 HP 10% \uC99D\uAC00, \uB79C\uB364 \uC544\uC774\uD15C
-      [1]\uAC1C [2]\uC5C5\uADF8\uB808\uC774\uB4DC"
+    textId: choice_1
+    selectionTextKey: event.bureaucrat.choice_1.text
+    selectionUnderText: "적 HP {enemy_hp.amount}% 증가, 랜덤 아이템 [{upgrade.count}]개 [{upgrade.levels}]업그레이드"
+    selectionUnderTextKey: event.bureaucrat.choice_1.hint
     eventToTrigger: {fileID: 11400000, guid: fcdbb6fb3c347c14abef7cad8f9ecb28, type: 2}
   - selectionText: "\uB0B4\uAC00 \uBC14\uB85C \uBA85\uC608 \uC5ED\uC7A5\uC774\uB2E4!
       \uBB38 \uC5F4\uC5B4!"
-    selectionUnderText: "30%\uB85C \uC18D\uB3C4 100\uD68C\uBCF5, 70%\uB85C \uC18D\uB3C4
-      50\uAC10\uC18C"
+    textId: choice_2
+    selectionTextKey: event.bureaucrat.choice_2.text
+    selectionUnderText: "{speed_gain.chance}%로 속도 {speed_gain.amount}회복, {speed_loss.chance}%로 속도 {speed_loss.amount}감소"
+    selectionUnderTextKey: event.bureaucrat.choice_2.hint
     eventToTrigger: {fileID: 11400000, guid: 7acbc0979cad7264b889d27491021da8, type: 2}

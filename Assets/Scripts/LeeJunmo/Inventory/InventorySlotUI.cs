@@ -163,7 +163,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         int level = currentInstance.currentUpgrade;
 
         // ... (제목, 레벨 스프라이트, 설명 가져오는 로직은 그대로) ...
-        string title = so.itemName;
+        string title = so.LocalizedName;
         Sprite levelSprite = (level >= so.MaxUpgrade) ? levelAtlas.maxLevelSprite : levelAtlas.GetSpriteForLevel(level);
         string content = so.GetFormattedDescription(level);
 

@@ -17,6 +17,7 @@ MonoBehaviour:
   - description: "\uADF8\uB8F9 \uC124\uBA85"
     outcomes:
     - weight: 30
+      textId: reward
       effectLogic: {fileID: 11400000, guid: 9cf51f2e02078004faae119b8e260b10, type: 2}
       parameters:
         intValue: 1
@@ -29,8 +30,10 @@ MonoBehaviour:
       outputSettings:
         includeDefaultText: 1
         specialText: "\uC774 \uB610\uD55C \uC2E0\uC758 \uB73B\uC774\uACA0\uC9C0\uC694"
+        specialTextKey: outcome.0acf3a32b5329d04c91d2b91898d21e8.text_1
         order: 1
     - weight: 70
+      textId: speed_loss
       effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
       parameters:
         intValue: 0
@@ -43,4 +46,5 @@ MonoBehaviour:
       outputSettings:
         includeDefaultText: 1
         specialText: "\uC774 \uBD88\uACBD\uD55C \uC790\uAC00!!!!!!!!!"
+        specialTextKey: outcome.0acf3a32b5329d04c91d2b91898d21e8.text_2
         order: 1

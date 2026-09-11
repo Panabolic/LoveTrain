@@ -23,6 +23,12 @@ public class Option : MonoBehaviour
     [SerializeField] private Button windowResolutionNextButton;
     [SerializeField] private TextMeshProUGUI windowResolutionValueText;
 
+    [Header("Language")]
+    [SerializeField] private Button languagePreviousButton;
+    [SerializeField] private Button languageNextButton;
+    [SerializeField] private TextMeshProUGUI languageValueText;
+    private Text languageLegacyValueText;
+
     [Header("Function Buttons")]
     public Button restartButton;
     public Button quitButton;
@@ -39,6 +45,8 @@ public class Option : MonoBehaviour
         "Fullscreen",
         "Borderless"
     };
+
+    private static readonly string[] screenModeKeys = { "ui.screen.windowed", "ui.screen.fullscreen", "ui.screen.borderless" };
 
     private readonly List<ScreenResolutionOption> windowResolutionOptions = new List<ScreenResolutionOption>();
     private int screenModeIndex;
@@ -65,6 +73,7 @@ public class Option : MonoBehaviour
         InitializeButtons();
         InitializeSliders();
         InitializeScreenControls();
+        InitializeLanguageControls();
         InitializeTitleOpenButton();
 
         HideOptionPanel();
@@ -72,6 +81,9 @@ public class Option : MonoBehaviour
 
     private void OnDestroy()
     {
+        EnglishLocalization.LanguageChanged -= RefreshLanguageControls;
+        if (languagePreviousButton != null) languagePreviousButton.onClick.RemoveListener(ToggleLanguage);
+        if (languageNextButton != null) languageNextButton.onClick.RemoveListener(ToggleLanguage);
         if (BGMSlider != null) BGMSlider.onValueChanged.RemoveListener(UpdateBGMVolume);
         if (SFXSlider != null) SFXSlider.onValueChanged.RemoveListener(UpdateSFXVolume);
 
@@ -114,6 +126,7 @@ public class Option : MonoBehaviour
         {
             GameManager.Instance.PauseGame();
             RefreshScreenControlValues();
+            RefreshLanguageControls();
             if (optionPanel != null) optionPanel.SetActive(true);
         }
     }
@@ -268,6 +281,39 @@ public class Option : MonoBehaviour
         return null;
     }
 
+    private void InitializeLanguageControls()
+    {
+        EnglishLocalization.LanguageChanged -= RefreshLanguageControls;
+        EnglishLocalization.LanguageChanged += RefreshLanguageControls;
+        if (optionPanel == null) return;
+        if (languagePreviousButton == null) languagePreviousButton = FindButtonInOptionPanel("LanguagePrevButton");
+        if (languageNextButton == null) languageNextButton = FindButtonInOptionPanel("LanguageNextButton");
+        if (languageValueText == null) languageValueText = FindTMPTextInOptionPanel("LanguageValueText");
+        if (languageValueText == null)
+            foreach (Text label in optionPanel.GetComponentsInChildren<Text>(true))
+                if (label.name == "LanguageValueText") languageLegacyValueText = label;
+        if (languagePreviousButton != null)
+        {
+            languagePreviousButton.onClick.RemoveListener(ToggleLanguage);
+            languagePreviousButton.onClick.AddListener(ToggleLanguage);
+        }
+        if (languageNextButton != null)
+        {
+            languageNextButton.onClick.RemoveListener(ToggleLanguage);
+            languageNextButton.onClick.AddListener(ToggleLanguage);
+        }
+        RefreshLanguageControls();
+    }
+
+    private void ToggleLanguage() => EnglishLocalization.SetLanguage(!EnglishLocalization.IsEnglish);
+
+    private void RefreshLanguageControls()
+    {
+        SetTMPValueText(languageValueText, EnglishLocalization.IsEnglish ? "English" : "한국어");
+        if (languageLegacyValueText != null) languageLegacyValueText.text = EnglishLocalization.IsEnglish ? "English" : "한국어";
+        RefreshScreenModeValue();
+    }
+
     private void InitializeScreenControls()
     {
         if (optionPanel == null)
@@ -401,7 +447,7 @@ public class Option : MonoBehaviour
     private void RefreshScreenModeValue()
     {
         screenModeIndex = Mathf.Clamp(screenModeIndex, 0, screenModeLabels.Length - 1);
-        SetScreenModeValueText(screenModeLabels[screenModeIndex]);
+        SetScreenModeValueText(EnglishLocalization.Get(screenModeKeys[screenModeIndex], screenModeLabels[screenModeIndex]));
     }
 
     private void RefreshWindowResolutionValue()

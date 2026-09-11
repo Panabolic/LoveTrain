@@ -16,5 +16,6 @@ MonoBehaviour:
   EventText: 
   Selections:
   - selectionText: 
+    textId: choice_1
     selectionUnderText: 
     eventToTrigger: {fileID: 0}

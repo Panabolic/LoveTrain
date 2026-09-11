@@ -17,6 +17,7 @@ MonoBehaviour:
   - description: "\uADF8\uB8F9 \uC124\uBA85"
     outcomes:
     - weight: 50
+      textId: upgrade
       effectLogic: {fileID: 11400000, guid: dc38b42b9fc31534388537c1ac5ff5e8, type: 2}
       parameters:
         intValue: 2
@@ -31,6 +32,7 @@ MonoBehaviour:
         specialText: 
         order: 0
     - weight: 50
+      textId: speed_loss
       effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
       parameters:
         intValue: 0

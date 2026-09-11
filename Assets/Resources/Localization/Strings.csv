@@ -1,0 +1,340 @@
+﻿"Key","ko","en","Context"
+"credits.art","그래픽","Art","Ending credits (personal names retained)"
+"credits.artists","김찬우","김찬우","Ending credits (personal names retained)"
+"credits.planners","이주영, 이상현","이주영, 이상현","Ending credits (personal names retained)"
+"credits.planning","기획","Planning","Ending credits (personal names retained)"
+"credits.programmers","이상협, 이준모","이상협, 이준모","Ending credits (personal names retained)"
+"credits.programming","프로그래밍","Programming","Ending credits (personal names retained)"
+"event.angel_stall.body","승강장 구석에서 고소한 기름 냄새가 진동한다. 머리에 기계 후광을 단 노점상이 '방금 잡은 신선한 천사 날개 튀김'을 팔고 있다.
+
+""자, 잡숴봐! 성수로 반죽해서 아주 바삭해! 먹으면 천국 간다니까?""
+
+튀김기 옆에는 정체불명의 깃털들이 수북이 쌓여 있고, 노점상의 눈빛은 광기로 번들거린다. 배가 고프긴 한데... 이거 정말 먹어도 되는 걸까요?","The smell of hot oil wafts from a corner of the platform. A street vendor wearing a mechanical halo sells ""freshly caught, deep-fried angel wings.""
+
+""Come on, try some! Holy-water batter makes them extra crispy! One bite and you're in heaven!""
+
+Unidentifiable feathers pile up beside the fryer, and madness gleams in the vendor's eyes. You are hungry... but is this really safe to eat?","천사표 노점 / EventText"
+"event.angel_stall.choice_1.hint","{speed_gain.chance}%로 기차의 속도 {speed_gain.amount}회복, {speed_loss.chance}%로 기차의 속도 {speed_loss.amount}감소","{speed_gain.chance}% chance to restore {speed_gain.amount} speed; {speed_loss.chance}% chance to lose {speed_loss.amount} speed.","천사표 노점 / selectionUnderText"
+"event.angel_stall.choice_1.text","맛있어 보인다. 일단 사서 기차에게 먹인다","Looks tasty. Buy some and feed the train.","천사표 노점 / selectionText"
+"event.angel_stall.choice_2.hint","보유 아이템 [{upgrade.count}]개 [{upgrade.levels}]업그레이드, 특수 몬스터 출현","Upgrade [{upgrade.count}] owned item by [{upgrade.levels}] levels. A special monster appears.","천사표 노점 / selectionUnderText"
+"event.angel_stall.choice_2.text","튀김기 안에서 빛나는 부품을 훔친다","Steal the shiny part inside the fryer.","천사표 노점 / selectionText"
+"event.angel_stall.title","천사표 노점","Angel Wings To Go","천사표 노점 / EventTitle"
+"event.bureaucrat.body","역을 통과하려던 중 정복을 입은 해골 모양의 오토마톤이 차단기를 내리고 앞을 막아선다.
+
+""삐빅. 정기 승차권 확인 불가. 부정 승차입니다. 벌금을 납부하거나, '사회봉사'로 대체하십시오. 현재 우리 역은 해충 박멸 기간입니다.""
+
+녀석의 등 뒤로 수많은 무임승차자들의 시체가 산을 이루고 있다. 어쩐담. 티켓 같은 게 있을 리 없잖아?","As you try to pass through the station, a skeletal automaton in uniform lowers the barrier and blocks your way.
+
+""Beep. Valid season ticket not detected. Fare evasion confirmed. Pay the fine or perform community service. This station is currently conducting pest control.""
+
+A mountain of fare dodgers' corpses lies behind it. Now what? It is not as if you have a ticket.","빌어먹을 공무원 / EventText"
+"event.bureaucrat.choice_1.hint","적 HP {enemy_hp.amount}% 증가, 랜덤 아이템 [{upgrade.count}]개 [{upgrade.levels}]업그레이드","Enemy HP +{enemy_hp.amount}%. Upgrade [{upgrade.count}] random item by [{upgrade.levels}] levels.","빌어먹을 공무원 / selectionUnderText"
+"event.bureaucrat.choice_1.text","사회봉사? 해충 박멸이라면 자신있지","Community service? Pest control is my specialty.","빌어먹을 공무원 / selectionText"
+"event.bureaucrat.choice_2.hint","{speed_gain.chance}%로 속도 {speed_gain.amount}회복, {speed_loss.chance}%로 속도 {speed_loss.amount}감소","{speed_gain.chance}% chance to restore {speed_gain.amount} speed; {speed_loss.chance}% chance to lose {speed_loss.amount} speed.","빌어먹을 공무원 / selectionUnderText"
+"event.bureaucrat.choice_2.text","내가 바로 명예 역장이다! 문 열어!","I am the honorary stationmaster! Open up!","빌어먹을 공무원 / selectionText"
+"event.bureaucrat.title","빌어먹을 공무원","Damn Bureaucrats","빌어먹을 공무원 / EventTitle"
+"event.cheap_deals.body","""거기 당신! 한번 둘러보세요 어디가도 이 가격보다 싸지 않답니다?""","""Hey, you! Take a look! You won't find a better price anywhere!""","쌉나다 싸요 / EventText"
+"event.cheap_deals.choice_1.hint","{reward.item} 획득","Gain {reward.item}.","쌉나다 싸요 / selectionUnderText"
+"event.cheap_deals.choice_1.text","수상하게 꿈틀대는 부속을 산다","Buy the suspiciously writhing part.","쌉나다 싸요 / selectionText"
+"event.cheap_deals.choice_2.hint","{reward.chance}%로 랜덤 아이템 [{reward.count}]개 획득","{reward.chance}% chance to gain [{reward.count}] random items.","쌉나다 싸요 / selectionUnderText"
+"event.cheap_deals.choice_2.text","""내가 어떻게 여기까지 왔는데"" REWARD를 요구한다","""After all I went through!"" Demand a REWARD.","쌉나다 싸요 / selectionText"
+"event.cheap_deals.choice_3.hint","아무일도 없었다","Nothing happens.","쌉나다 싸요 / selectionUnderText"
+"event.cheap_deals.choice_3.text","""뭔 이상한 사람이 다있네"" 그냥 지나친다","""What a weirdo."" Walk past.","쌉나다 싸요 / selectionText"
+"event.cheap_deals.title","쌉나다 싸요","Cheap! Dirt Cheap!","쌉나다 싸요 / EventTitle"
+"event.legacy_bites_the_dust.body","절벽에 부딪혀 죽는 제비가 있다고 하더군… 그 제비는 다른 제비보다 더없이 능숙하게 먹이를 포획하곤 하지만…. 공중제비를 트는 각도와 그 위험 한계를 부모 제비에게서 배운 적이 없기에 그만 무모한 각도로 날고 말았지. 하지만 그 부모는 가르쳐주지 않은 것이 아니라 그 부모의 부모에게서 배우지 않았기 때문에 가르쳐줄 수가 없었던 거다. 그 일족 중에는 단명하는 자가 많지만 왜 툭하면 사고를 당하는 것인지 깨닫지조차 못해.
+
+죠타로는 단명했지.","They say some swallows die crashing into cliffs. Those swallows catch prey more skillfully than any others. But they never learned the safe angles and limits of a turn from their parents, so they flew at a reckless angle. Their parents had not refused to teach them. They could not teach what their own parents had never taught them. Many in that lineage die young, without ever realizing why they meet with so many accidents.
+
+Jotaro died young.","킬러 퀸 '제3의 폭탄' BITES THE DUST / EventText"
+"event.legacy_bites_the_dust.choice_1.hint","장수풍뎅이","Rhinoceros beetle","킬러 퀸 '제3의 폭탄' BITES THE DUST / selectionUnderText"
+"event.legacy_bites_the_dust.choice_1.text","나선계단","Spiral staircase","킬러 퀸 '제3의 폭탄' BITES THE DUST / selectionText"
+"event.legacy_bites_the_dust.choice_2.hint","장수풍뎅이","Rhinoceros beetle","킬러 퀸 '제3의 폭탄' BITES THE DUST / selectionUnderText"
+"event.legacy_bites_the_dust.choice_2.text","무화과 타르트","Fig tart","킬러 퀸 '제3의 폭탄' BITES THE DUST / selectionText"
+"event.legacy_bites_the_dust.choice_3.hint","특이점","Singularity","킬러 퀸 '제3의 폭탄' BITES THE DUST / selectionUnderText"
+"event.legacy_bites_the_dust.choice_3.text","장수풍뎅이","Rhinoceros beetle","킬러 퀸 '제3의 폭탄' BITES THE DUST / selectionText"
+"event.legacy_bites_the_dust.title","킬러 퀸 '제3의 폭탄' BITES THE DUST","Killer Queen: Third Bomb, BITES THE DUST","킬러 퀸 '제3의 폭탄' BITES THE DUST / EventTitle"
+"event.legacy_book.body","기차안에서 신기한 물건을 찾았다. 
+대체 어떻게 기차에 들어왔는지 모르겠지만 깊게 생각할 시간은 없는듯 하다","You find a strange object aboard the train.
+You have no idea how it got here, but there seems to be no time to think about it.","이벤트2 / EventText"
+"event.legacy_book.choice_1.hint","살점태그의 아이템 획득","Gain a Flesh-tagged item.","이벤트2 / selectionUnderText"
+"event.legacy_book.choice_1.text","책을 열어본다.","Open the book.","이벤트2 / selectionText"
+"event.legacy_book.choice_2.hint","신앙태그의 아이템 획득","Gain a Faith-tagged item.","이벤트2 / selectionUnderText"
+"event.legacy_book.choice_2.text","책을 버린다.","Throw the book away.","이벤트2 / selectionText"
+"event.legacy_book.title","이벤트2","Event 2","이벤트2 / EventTitle"
+"event.legacy_first.body","하늘이 어두워지고 곳곳에서 몬스터가 튀어나오기 시작했다.
+이 정체모를 기차는 어떻게 움직이고 있는지 모르겠다.
+머리속이 울린다. 누구와 손잡을 것인가..","The sky darkens, and monsters begin appearing everywhere.
+You do not know what keeps this mysterious train moving.
+Your head rings. Whose hand will you take?","이벤트1 / EventText"
+"event.legacy_first.choice_1.hint","이교도 태그의 아이템 획득","Gain a Heretic-tagged item.","이벤트1 / selectionUnderText"
+"event.legacy_first.choice_1.text","악마를 믿기","Trust the devil.","이벤트1 / selectionText"
+"event.legacy_first.choice_2.hint","성경 태그의 아이템 획득","Gain a Bible-tagged item.","이벤트1 / selectionUnderText"
+"event.legacy_first.choice_2.text","천사를 믿기","Trust the angel.","이벤트1 / selectionText"
+"event.legacy_first.choice_3.hint","과학 태그의 아이템 획득","Gain a Science-tagged item.","이벤트1 / selectionUnderText"
+"event.legacy_first.choice_3.text","누구도 믿지 않기","Trust no one.","이벤트1 / selectionText"
+"event.legacy_first.title","이벤트1","Event 1","이벤트1 / EventTitle"
+"event.legacy_king_crimson.body","킹 크림슨. 시간을 0.5초 날려버렸다. 그 시간 속에서 이 세상에 속한 것은 모조리 지워지며 남는 것은 0.5초 뒤의 '결과'뿐이다. 탄환이 네게 명중한다는 '결과'만이 남는다.","King Crimson. I erased half a second. Everything in this world is erased within that time, leaving only the result half a second later. Only the result of the bullet striking you remains.","킹 크림슨 / EventText"
+"event.legacy_king_crimson.choice_1.hint","'제왕'은 나 디아볼로다! 여전히! 변함없이!","I, Diavolo, am the emperor! Always! Forever!","킹 크림슨 / selectionUnderText"
+"event.legacy_king_crimson.choice_1.text","뭔지는 모르겠지만 받아라─!","No idea what that means, but take this!","킹 크림슨 / selectionText"
+"event.legacy_king_crimson.title","킹 크림슨","King Crimson","킹 크림슨 / EventTitle"
+"event.legacy_the_world.body","""호오... 맞서겠다는 거냐? 도망치지 않고 나 DIO에게 다가오겠다는 거냐... 모처럼 네 조부 죠셉이 나의 「세계더 월드」의 정체를 시험 종료 벨이 울리기 직전까지 문제를 풀고 있는 수험생 같은 필사적인 심정으로 가르쳐줬는데…""","""Oh? You're approaching me? Instead of running away, you're coming right to me, DIO? Your grandfather Joseph went to such desperate lengths to tell you the secret of my World, like a student scrambling to finish an exam before the bell...""","더 월드! 시간이여 멈추어라! / EventText"
+"event.legacy_the_world.choice_1.hint","""WRYYYYYYYYYY!""","""WRYYYYYYYYYY!""","더 월드! 시간이여 멈추어라! / selectionUnderText"
+"event.legacy_the_world.choice_1.text","죽어라, 카쿄인!","Die, Kakyoin!","더 월드! 시간이여 멈추어라! / selectionText"
+"event.legacy_the_world.choice_2.hint","""무다무다무다무다!""","""Useless, useless, useless, useless!""","더 월드! 시간이여 멈추어라! / selectionUnderText"
+"event.legacy_the_world.choice_2.text","이미 늦었어! 탈출 불가능이다!","Too late! There is no escape!","더 월드! 시간이여 멈추어라! / selectionText"
+"event.legacy_the_world.title","더 월드! 시간이여 멈추어라!","The World! Stop Time!","더 월드! 시간이여 멈추어라! / EventTitle"
+"event.legacy_watch.body","왼쪽 주머니에 들어있던 시계가 비명소리를 지르며 엄청나게 울리기 시작했다.","The watch in your left pocket starts ringing furiously, shrieking like a scream.","이벤트3 / EventText"
+"event.legacy_watch.choice_1.hint","신앙태그의 아이템 획득","Gain a Faith-tagged item.","이벤트3 / selectionUnderText"
+"event.legacy_watch.choice_1.text","시계를 부순다","Smash the watch.","이벤트3 / selectionText"
+"event.legacy_watch.choice_2.hint","태그의 아이템 획득","Gain a tagged item.","이벤트3 / selectionUnderText"
+"event.legacy_watch.choice_2.text","시계를 분해해본다","Take the watch apart.","이벤트3 / selectionText"
+"event.legacy_watch.title","이벤트3","Event 3","이벤트3 / EventTitle"
+"event.living_train_boss.body","요란한 폭발음과 함께 거대한몬스터가 사라지자 기차에서 방송음이 들려온다.
+
+ “아아, 한군데도 멀쩡한 곳이 없네. 거 좀 살살 다루쇼”
+
+ ”아니 근데 저것들 진짜 쓸만해 보이는데 빠르게 딱 하나만 주워갑시다.”","As the giant monster vanishes with a deafening explosion, a voice comes over the train's speakers.
+
+""Ow... Not a single part of me is in one piece. Take it easy, will you?""
+
+""Still, that stuff looks useful. Let's grab something and get moving.""","기차가 살아있다?! / EventText"
+"event.living_train_boss.choice_1.hint","랜덤 아이템 [{reward.count}]개 획득","Gain [{reward.count}] random items.","기차가 살아있다?! / selectionUnderText"
+"event.living_train_boss.choice_1.text","""저기 저 번쩍거리는거 하나 챙겨""","""Grab that shiny thing over there.""","기차가 살아있다?! / selectionText"
+"event.living_train_boss.choice_2.hint","보유한 아이템 [{upgrade.count}]개 [{upgrade.levels}]업그레이드","Upgrade [{upgrade.count}] owned items by [{upgrade.levels}] levels.","기차가 살아있다?! / selectionUnderText"
+"event.living_train_boss.choice_2.text","""거기 나사나 꽉 조여 뭔 새거야""","""Forget new parts. Tighten those screws.""","기차가 살아있다?! / selectionText"
+"event.living_train_boss.choice_3.hint","속도 {speed_gain.amount}회복","Restore {speed_gain.amount} speed.","기차가 살아있다?! / selectionUnderText"
+"event.living_train_boss.choice_3.text","""퍼지기 일보 직전이야, 기름칠이나 해!""","""We are about to break down. Oil the gears!""","기차가 살아있다?! / selectionText"
+"event.living_train_boss.title","기차가 살아있다?!","The Train Is Alive?!","기차가 살아있다?! / EventTitle"
+"event.living_train.body","요란한 폭발음과 함께 거대한몬스터가 사라지자 기차에서 방송음이 들려온다.
+
+ “아아, 한군데도 멀쩡한 곳이 없네. 거 좀 살살 다루쇼”
+
+ ”아니 근데 저것들 진짜 쓸만해 보이는데 빠르게 딱 하나만 주워갑시다.”","As the giant monster vanishes with a deafening explosion, a voice comes over the train's speakers.
+
+""Ow... Not a single part of me is in one piece. Take it easy, will you?""
+
+""Still, that stuff looks useful. Let's grab something and get moving.""","기차가 살아있다!? / EventText"
+"event.living_train.choice_1.hint","랜덤 아이템 [{reward.count}]개 획득","Gain [{reward.count}] random items.","기차가 살아있다!? / selectionUnderText"
+"event.living_train.choice_1.text","""저기 저 번쩍거리는거 하나 챙겨""","""Grab that shiny thing over there.""","기차가 살아있다!? / selectionText"
+"event.living_train.choice_2.hint","보유한 아이템 [{upgrade.count}]개 [{upgrade.levels}]업그레이드","Upgrade [{upgrade.count}] owned items by [{upgrade.levels}] level.","기차가 살아있다!? / selectionUnderText"
+"event.living_train.choice_2.text","""거기 나사나 꽉 조여 뭔 새거야""","""Forget new parts. Tighten those screws.""","기차가 살아있다!? / selectionText"
+"event.living_train.choice_3.hint","속도 {speed_gain.amount}회복","Restore {speed_gain.amount} speed.","기차가 살아있다!? / selectionUnderText"
+"event.living_train.choice_3.text","""퍼지기 일보 직전이야, 기름칠이나 해!""","""We are about to break down. Oil the gears!""","기차가 살아있다!? / selectionText"
+"event.living_train.title","기차가 살아있다!?","The Train Is Alive!?","기차가 살아있다!? / EventTitle"
+"event.love_train.body","역을 지나자마자 선로를 가로막고 있는 거대한 분홍색 점액질 괴물과 마주쳤다. 괴물은 수많은 눈을 깜빡이며 당신의 기차를 그윽하게 바라본다. 기차의 매끄러운 강철 바디와 뜨거운 엔진 열기에 반한 것 같다.
+
+""(수줍게 꿈틀거리며 죽은 생선의 머리를 꽃다발처럼 내민다) 꾸르륵… 뀨?""
+
+기차의 기적 소리로 대답해줘야 할 것 같다. 어떻게 할까?","Just past the station, a huge pink slime monster blocks the tracks. It blinks its countless eyes and gazes longingly at your train. The sleek steel body and hot engine seem to have stolen its heart.
+
+It wriggles shyly, offering dead fish heads like a bouquet. ""Gurgle... coo?""
+
+Perhaps you should answer with the train whistle. What will you do?","러브 트레인 / EventText"
+"event.love_train.choice_1.hint","속도 {speed_gain.amount}증가, 적 HP {enemy_hp.amount}% 증가","Speed +{speed_gain.amount}. Enemy HP +{enemy_hp.amount}%.","러브 트레인 / selectionUnderText"
+"event.love_train.choice_1.text","뜨거운 증기를 뿜어 유혹에 응해준다","Return its affection with a blast of steam.","러브 트레인 / selectionText"
+"event.love_train.choice_2.hint","{spawn.chance}%로 특수 몬스터 등장 {speed_gain.chance}%로 속도 {speed_gain.amount}증가","{spawn.chance}% chance for a special monster to appear; {speed_gain.chance}% chance for speed +{speed_gain.amount}.","러브 트레인 / selectionUnderText"
+"event.love_train.choice_2.text","""내 스타일 아냐"" 매몰차게 거절한다","""Not my type."" Reject it coldly.","러브 트레인 / selectionText"
+"event.love_train.choice_3.hint","{enemy_hp.chance}%로 적 HP {enemy_hp.amount}%증가, {reward.chance}%로 랜덤 아이템 [{reward.count}]개 획득","{enemy_hp.chance}% chance for enemy HP +{enemy_hp.amount}%; {reward.chance}% chance to gain [{reward.count}] random items.","러브 트레인 / selectionUnderText"
+"event.love_train.choice_3.text","""넌 나에게 뭘 줄수있지?"" 선물을 요구한다","""What can you offer me?"" Demand a gift.","러브 트레인 / selectionText"
+"event.love_train.title","러브 트레인","Love Train","러브 트레인 / EventTitle"
+"event.machine_spirit.body","""야! 기계는 두들겨 패서 정신을 차리게 해야지! 그게 '머신 스피릿'이야!""
+
+""무식한 소리! 정밀하게 나사를 조여야지, 그러다 다 부서진다고!""
+
+기차의 자칭 천재 정비공 김씨와 박씨가 산더미 같은 고철을 두고 논쟁 중이다 김씨는 튜닝은 '한방'이라며 거대한 망치를 들고 있고, 박씨는 '안전제일'이라며 정밀 드라이버를 들고 있다. 둘 중 한 명에게 기차 정비를 맡겨야 할 듯 하다.","""Hey! You have to knock some sense into a machine! That's the machine spirit!""
+
+""Nonsense! Tighten the screws properly. You'll smash it to pieces!""
+
+Kim and Park, the train's self-proclaimed genius mechanics, argue over a mountain of scrap. Kim holds a massive hammer, insisting that one good hit is all it takes. Park clutches a precision screwdriver and insists on safety first. You will have to trust one of them with the repairs.","머신 스피릿 / EventText"
+"event.machine_spirit.choice_1.hint","{upgrade.chance}% 확률로 보유 아이템 [{upgrade.count}]개 최대로 업그레이드","{upgrade.chance}% chance to upgrade [{upgrade.count}] owned items to MAX.","머신 스피릿 / selectionUnderText"
+"event.machine_spirit.choice_1.text","김씨에게 맡긴다","Leave it to Kim.","머신 스피릿 / selectionText"
+"event.machine_spirit.choice_2.hint","{upgrade.chance}% 확률로 보유 아이템 [{upgrade.count}]개 [{upgrade.levels}]만큼 업그레이드","{upgrade.chance}% chance to upgrade [{upgrade.count}] owned items by [{upgrade.levels}] level.","머신 스피릿 / selectionUnderText"
+"event.machine_spirit.choice_2.text","박씨에게 맡긴다","Leave it to Park.","머신 스피릿 / selectionText"
+"event.machine_spirit.choice_3.hint","보유 아이템 [{upgrade.count}]개 [{upgrade.levels}]만큼 업그레이드","Upgrade [{upgrade.count}] owned item by [{upgrade.levels}] level.","머신 스피릿 / selectionUnderText"
+"event.machine_spirit.choice_3.text","차라리 내가 직접한다","Do it yourself.","머신 스피릿 / selectionText"
+"event.machine_spirit.title","머신 스피릿","Machine Spirit","머신 스피릿 / EventTitle"
+"event.paranoia.body","붉게 물든 성경을 들고 급박하게 기차로 뛰어오는 사람을 발견했다.
+
+""제발 살려주세요. 이상한 게 쫓아와요""
+
+분명 아무것도 없는데 무엇에 쫓기는 걸까?","You spot someone clutching a blood-red Bible and running desperately toward the train.
+
+""Please, save me! Something strange is chasing me!""
+
+There is clearly nothing there. What could be pursuing them?","피해망상 / EventText"
+"event.paranoia.choice_1.hint","{speed_gain.chance}%로 속도 {speed_gain.amount}증가, {speed_loss.chance}%로 속도 {speed_loss.amount}감소 ","{speed_gain.chance}% chance for speed +{speed_gain.amount}; {speed_loss.chance}% chance for speed -{speed_loss.amount}.","피해망상 / selectionUnderText"
+"event.paranoia.choice_1.text","기차를 살짝 늦춰 태우려고 노력한다","Slow down a little and try to let them aboard.","피해망상 / selectionText"
+"event.paranoia.choice_2.hint","{reward.chance}%로 아이템 : ""{reward.item}"" 획득, {speed_loss.chance}%로 속도 {speed_loss.amount}감소","{reward.chance}% chance to gain ""{reward.item}""; {speed_loss.chance}% chance to lose {speed_loss.amount} speed.","피해망상 / selectionUnderText"
+"event.paranoia.choice_2.text","알아서 타라고 한다","Tell them to get aboard on their own.","피해망상 / selectionText"
+"event.paranoia.title","피해망상","Paranoia","피해망상 / EventTitle"
+"event.steel_savior.body","안개가 자욱한 화물역에 도착하자, 철가면을 쓰고 로브를 두른 사람들이 선로로 몰려든다. 그들은 기차가 내뿜는 매연을 깊이 들이마시며 황홀한 표정을 짓는다.
+
+""오오! 예언이 실현되었다! 강철의 뱀, 위대한 '칙칙폭폭' 님께서 강림하셨다! 저희의 비천한 살점을 연료로 써 주시옵소서!""
+
+그들은 기차 바퀴에 폐유를 바르고, 선로에 누우며 기차 바퀴에 갈리기를 간청한다.","As you arrive at a fogbound freight station, people in iron masks and robes swarm onto the tracks. They breathe in the train's exhaust, their faces filled with rapture.
+
+""Oh! The prophecy is fulfilled! The serpent of steel, the great Choo-Choo, has descended! We beg you to burn our humble flesh as fuel!""
+
+They smear waste oil on the wheels and lie across the tracks, pleading to be ground beneath them.","강철의 구세주 / EventText"
+"event.steel_savior.choice_1.hint","아이템 : ""{reward.item}"" 획득","Gain item: ""{reward.item}""","강철의 구세주 / selectionUnderText"
+"event.steel_savior.choice_1.text","그들의 소원대로 해준다","Grant their wish.","강철의 구세주 / selectionText"
+"event.steel_savior.choice_2.hint","랜덤 아이템 [{reward.count}]개 획득, 특수 몬스터 출현","Gain [{reward.count}] random items. A special monster appears.","강철의 구세주 / selectionUnderText"
+"event.steel_savior.choice_2.text","이단이다! 약탈 -아니 정화하라!","Heretics! Plunder... I mean, purify them!","강철의 구세주 / selectionText"
+"event.steel_savior.title","강철의 구세주","Savior of Steel","강철의 구세주 / EventTitle"
+"event.test_all_items.body","이벤트 본문 텍스트","Event body text.","테스트용 아이템 전부 획득 / EventText"
+"event.test_all_items.choice_1.hint","ㅋㅋ","LOL","테스트용 아이템 전부 획득 / selectionUnderText"
+"event.test_all_items.choice_1.text","다내놔","Give me everything.","테스트용 아이템 전부 획득 / selectionText"
+"event.test_all_items.title","테스트용 아이템 전부 획득","Get All Items (Test)","테스트용 아이템 전부 획득 / EventTitle"
+"event.train_family.body","하늘이 어두워지고 곳곳에서 몬스터들이 튀어나온다. 이 정체모를 기차를 움직여야 모두가 살수 있다. 선로전환기를 작동시킴과 동시에 머리속이 울린다. 무언가 달콤한 속삭임이 들려온다.","The sky darkens, and monsters spring out everywhere. This mysterious train must move if anyone is to survive. As you throw the track switch, your head rings. Something whispers sweetly inside it.","기차가 우리 가족이 되었다?? / EventText"
+"event.train_family.choice_1.hint","아이템 : ""{reward.item}"" 획득","Gain item: ""{reward.item}""","기차가 우리 가족이 되었다?? / selectionUnderText"
+"event.train_family.choice_1.text","""우린 이제 함께야""","""We are together now.""","기차가 우리 가족이 되었다?? / selectionText"
+"event.train_family.choice_2.hint","아이템 : ""{reward.item}"" 획득","Gain item: ""{reward.item}""","기차가 우리 가족이 되었다?? / selectionUnderText"
+"event.train_family.choice_2.text","""닥치고 레버나 당겨 형씨""","""Shut up and pull the lever, pal.""","기차가 우리 가족이 되었다?? / selectionText"
+"event.train_family.choice_3.hint","아이템 : ""{reward.item}"" 획득","Gain item: ""{reward.item}""","기차가 우리 가족이 되었다?? / selectionUnderText"
+"event.train_family.choice_3.text","""이 길 끝에 구원이 있기를""","""May salvation await at the end of these tracks.""","기차가 우리 가족이 되었다?? / selectionText"
+"event.train_family.title","기차가 우리 가족이 되었다??","The Train Is Family Now??","기차가 우리 가족이 되었다?? / EventTitle"
+"event.uninvited_guest.body","역에 도착하자 차단기가 내려오고 돌로된 골렘이 앞을 막아선다.
+
+""이 역은 초대받은 손님만 지나가실 수 있습니다. 초대증을 보여주십시오""
+
+역 뒤편에서 매케한 연기와 함께 비명이 들린다. 여기를 빠져나가지 못한다면 나도 같은꼴이 되는게 아닐까?","As you reach the station, the barrier drops and a stone golem blocks your path.
+
+""Only invited guests may pass through this station. Please present your invitation.""
+
+Acrid smoke and screams rise from behind the station. If you cannot get out of here, will you end up like them?","초대받지 못한 손님 / EventText"
+"event.uninvited_guest.choice_1.hint","{speed_gain.chance}%로 속도 {speed_gain.amount}회복, {speed_loss.chance}%로 속도 {speed_loss.amount}감소","{speed_gain.chance}% chance to restore {speed_gain.amount} speed; {speed_loss.chance}% chance to lose {speed_loss.amount} speed.","초대받지 못한 손님 / selectionUnderText"
+"event.uninvited_guest.choice_1.text","조금 구겨졌지만 여기 초대장입니다","It is a little crumpled, but here is my invitation.","초대받지 못한 손님 / selectionText"
+"event.uninvited_guest.choice_2.hint","{upgrade.chance}%로 보유 아이템 [{upgrade.count}]개 [{upgrade.levels}]업그레이드, {speed_loss.chance}%로 속도 {speed_loss.amount}감소","{upgrade.chance}% chance to upgrade [{upgrade.count}] owned items by [{upgrade.levels}] level; {speed_loss.chance}% chance to lose {speed_loss.amount} speed.","초대받지 못한 손님 / selectionUnderText"
+"event.uninvited_guest.choice_2.text","아. 착불 택배 배달왔습니다.","Ah, I have a cash-on-delivery package.","초대받지 못한 손님 / selectionText"
+"event.uninvited_guest.title","초대받지 못한 손님","Uninvited Guest","초대받지 못한 손님 / EventTitle"
+"event.vending_machine.body","거대한 자판기 앞에 한 사람이 와보라고 손짓한다.
+
+""당신의 운을 시험해 보세요. 기회는 단 한번입니다""","Someone standing beside a giant vending machine beckons you over.
+
+""Try your luck. You only get one chance.""","거대한 자판기 / EventText"
+"event.vending_machine.choice_1.hint","{reward.chance}%로 아이템 [{reward.count}]개 획득","{reward.chance}% chance to gain [{reward.count}] items.","거대한 자판기 / selectionUnderText"
+"event.vending_machine.choice_1.text","동전을 투입구에 넣는다","Insert a coin.","거대한 자판기 / selectionText"
+"event.vending_machine.choice_2.hint","{reward.chance}%로 아이템[{reward.count}]개 획득, {enemy_hp.chance}%로 적 HP {enemy_hp.amount}%증가","{reward.chance}% chance to gain [{reward.count}] item; {enemy_hp.chance}% chance for enemy HP +{enemy_hp.amount}%.","거대한 자판기 / selectionUnderText"
+"event.vending_machine.choice_2.text","자판기를 발로 걷어찬다","Kick the vending machine.","거대한 자판기 / selectionText"
+"event.vending_machine.title","거대한 자판기","Giant Vending Machine","거대한 자판기 / EventTitle"
+"item.beating_heart.description","{CoolTime}초 마다 화면 전체에 {Damage} 데미지.","Deals {Damage} damage across the screen every {CoolTime} seconds.","박동하는 심장 / itemScript"
+"item.beating_heart.name","박동하는 심장","Beating Heart","박동하는 심장 / itemName"
+"item.beating_heart.summary","일정시간마다 맵 전체 데미지","Periodically damages all enemies on the map.","박동하는 심장 / itemSimpleScript"
+"item.bloody_bible.description","{Cooldown}초 마다 공격속도를 {Buff} 증가시키는 장판을 {Duration}초 동안 생성.","Creates a zone every {Cooldown} seconds that increases attack speed by {Buff} for {Duration} seconds.","피 묻은 성경 / itemScript"
+"item.bloody_bible.name","피 묻은 성경","Bloodstained Bible","피 묻은 성경 / itemName"
+"item.bloody_bible.summary","일정시간마다 공격속도 버프 장판 생성","Periodically creates an attack speed buff zone.","피 묻은 성경 / itemSimpleScript"
+"item.blue_gear.description","공격속도 {AttackSpeed}%만큼 증가.","Increases attack speed by {AttackSpeed}%.","푸른 톱니바퀴 / itemScript"
+"item.blue_gear.name","푸른 톱니바퀴","Blue Gear","푸른 톱니바퀴 / itemName"
+"item.blue_gear.summary","공격속도 증가","Increases attack speed.","푸른 톱니바퀴 / itemSimpleScript"
+"item.crown_of_thorns.description","{Damage}데미지의 번개를 {Cooldown}초 마다 {Count}번 내리친다.","Calls down {Count} lightning strikes dealing {Damage} damage every {Cooldown} seconds.","가시 면류관 / itemScript"
+"item.crown_of_thorns.name","가시 면류관","Crown of Thorns","가시 면류관 / itemName"
+"item.crown_of_thorns.summary","일정시간마다 무작위로 공격하는 번개가 떨어짐","Periodically strikes random targets with lightning.","가시 면류관 / itemSimpleScript"
+"item.giant_maw.description","아가리에 몬스터 충돌 시 {Damage}데미지를 주고 넉백 부여, 충돌 데미지로 처치 시 속도를 {Heal}만큼 회복, {CoolTime}초 마다 발동 가능.","On contact, deals {Damage} damage and knocks enemies back. Contact kills restore {Heal} speed. Can activate every {CoolTime} seconds.","거대한 아가리 / itemScript"
+"item.giant_maw.name","거대한 아가리","Giant Maw","거대한 아가리 / itemName"
+"item.giant_maw.summary","전방에 있는 몬스터를 잡아먹고 속도 회복","Devours enemies ahead to restore speed.","거대한 아가리 / itemSimpleScript"
+"item.healing_item.description","{SpeedBonus}만큼 최대 속도 증가, 몬스터 {KillReq}마리 처치시 최대 속도의 {HealAmt}만큼 회복.","Increases maximum speed by {SpeedBonus}. Every {KillReq} enemies defeated, restores {HealAmt} of maximum speed.","심전도계 / itemScript"
+"item.healing_item.name","심전도계","Heart Monitor","심전도계 / itemName"
+"item.healing_item.summary","몬스터를 처치하면 속도 회복","Defeat enemies to restore speed.","심전도계 / itemSimpleScript"
+"item.laser_gun.description","공격을 다단히트의 레이저 발사로 변경. 레이저는 {Duration}초 만큼 지속 가능하며 {Cooldown}초 동안 준비가 필요.","Replaces your attack with a laser that hits repeatedly. Fires for {Duration} seconds, then needs {Cooldown} seconds to recharge.","BF-12000 / itemScript"
+"item.laser_gun.name","BF-12000","BF-12000","BF-12000 / itemName"
+"item.laser_gun.summary","기본총기가 관통공격을 하는 레이저 포로 변경","Replaces the main gun with a piercing laser cannon.","BF-12000 / itemSimpleScript"
+"item.longinus_launcher.description","{Damage}데미지의 거대한 창을 {Cooldown}초 마다 발사.","Launches a giant spear dealing {Damage} damage every {Cooldown} seconds.","롱기누스의 창 / itemScript"
+"item.longinus_launcher.name","롱기누스의 창","Spear of Longinus","롱기누스의 창 / itemName"
+"item.longinus_launcher.summary","일정시간마다 맵을 뚫고 지나가는 창 소환","Periodically summons a spear that pierces through the map.","롱기누스의 창 / itemSimpleScript"
+"item.magic_bullet.description","탄환이 적에 적중 시 {Bounce}번 튕긴다. 투사체는 튕길 때 마다 데미지가 35%씩 감소.","Bullets bounce {Bounce} times after hitting an enemy. Each bounce reduces projectile damage by 35%.","마탄 / itemScript"
+"item.magic_bullet.name","마탄","Magic Bullet","마탄 / itemName"
+"item.magic_bullet.summary","몬스터에게 튕기는 총알","Bullets ricochet between enemies.","마탄 / itemSimpleScript"
+"item.poison_missile_launcher.description","{Cooldown}초 마다 {Damage}데미지를 지속적으로 주는 독가스를 생성하는 미사일 발사.","Fires a missile every {Cooldown} seconds that creates poison gas, dealing {Damage} damage repeatedly.","독미사일 / itemScript"
+"item.poison_missile_launcher.name","독미사일","Poison Missile","독미사일 / itemName"
+"item.poison_missile_launcher.summary","독구름을 생성하는 미사일 발사","Fires missiles that create poison clouds.","독미사일 / itemSimpleScript"
+"item.rear_gun.description","플레이어가 공격할 때 {Damage}데미지의 총알 {Count}개를 {Cooldown}초 마다 발사하는 후방 총기 부착.","Adds a rear gun that fires {Count} bullets dealing {Damage} damage every {Cooldown} seconds while you attack.","살점총 / itemScript"
+"item.rear_gun.name","살점총","Flesh Gun","살점총 / itemName"
+"item.rear_gun.summary","조준선 반대로 발사되는 총 추가","Adds a gun that fires opposite your aim.","살점총 / itemSimpleScript"
+"item.red_gear.description","총기 공격력 {Damage}%만큼 증가.","Increases gun damage by {Damage}%.","붉은 톱니바퀴 / itemScript"
+"item.red_gear.name","붉은 톱니바퀴","Red Gear","붉은 톱니바퀴 / itemName"
+"item.red_gear.summary","공격력 증가","Increases attack damage.","붉은 톱니바퀴 / itemSimpleScript"
+"item.revolver.description","{CoolTime}초 마다 {Damage}의 총알을 전방으로 {BulletNum}발 발사.","Fires {BulletNum} bullets forward, each dealing {Damage} damage, every {CoolTime} seconds.","건슬레이브 / itemScript"
+"item.revolver.name","건슬레이브","Gunslave","건슬레이브 / itemName"
+"item.revolver.summary","일정시간마다 전방에 총알 발사","Periodically fires bullets forward.","건슬레이브 / itemSimpleScript"
+"outcome.0acf3a32b5329d04c91d2b91898d21e8.text_1","이 또한 신의 뜻이겠지요","This, too, must be the will of God.","피해망상_Sel2 / specialText"
+"outcome.0acf3a32b5329d04c91d2b91898d21e8.text_2","이 불경한 자가!!!!!!!!!","You blasphemer!!!!!!!!!","피해망상_Sel2 / specialText"
+"outcome.3cc221346e70ac1468a485ae5b90baa9.text_2","아이쿠 렌치가 미끄러졌네
+다음엔 잘될거야","Oops, the wrench slipped.
+It will work next time.","머신 스피릿_Sel2_Logic / specialText"
+"outcome.448d3a5a618f5dd4eb4d1dc3af95763b.text_2","아이쿠 렌치가 미끄러졌네
+다음엔 잘될거야","Oops, the wrench slipped.
+It will work next time.","머신 스피릿_Sel2 / specialText"
+"outcome.6f548ffd1bc84f547909c0ffc47b7445.text_1","""축하드립니다 당첨이시네요""","""Congratulations! You won!""","거대한 자판기_Sel1_Logic / specialText"
+"outcome.6f548ffd1bc84f547909c0ffc47b7445.text_2","""아쉽게도 꽝이네요""","""Sorry. Better luck next time.""","거대한 자판기_Sel1_Logic / specialText"
+"outcome.7d4add2a74a075c418c5295e8e3c087c.text_2","아이쿠 망치가 미끄러졌네
+다음엔 잘될거야","Oops, the hammer slipped.
+It will work next time.","머신 스피릿_Sel1_Logic / specialText"
+"outcome.9a6e9a55bd42c14468d317dd8ccf9069.text_1","이 또한 신의 뜻이겠지요","This, too, must be the will of God.","피해망상_Sel2_Logic / specialText"
+"outcome.9a6e9a55bd42c14468d317dd8ccf9069.text_2","이 불경한 자가!!!!!!!!!","You blasphemer!!!!!!!!!","피해망상_Sel2_Logic / specialText"
+"outcome.b37493c2b9288574aac71c9011d6939e.text_1","음 바로 이 TASTE야!!","Mmm, now THAT is the TASTE!!","쌉나다 싸요_Sel2 / specialText"
+"outcome.b37493c2b9288574aac71c9011d6939e.text_2","당장 나가서 MONSTER를 잡아! YOu FucK`en Slow meAtTBall !!","Get out there and kill some MONSTERS! You fucking slow MEATBALL!!","쌉나다 싸요_Sel2 / specialText"
+"outcome.b7ba4b5e87ebc634096346e7bb04ee87.text_1","감사합니다. 살려주셨으니 소소하지만 이거라도..","Thank you for saving me. It is not much, but please take this...","피해망상_Sel1_Logic / specialText"
+"outcome.b7ba4b5e87ebc634096346e7bb04ee87.text_2","어디가!!!! #@$%@#@#$%!#$","Where are you going!!!! #@$%@#@#$%!#$","피해망상_Sel1_Logic / specialText"
+"outcome.c8cac2a1c9e6fda4c8ee67d41ac67006.text_1","""축하드립니다 당첨이시네요""","""Congratulations! You won!""","거대한 자판기_Sel1 / specialText"
+"outcome.c8cac2a1c9e6fda4c8ee67d41ac67006.text_2","""아쉽게도 꽝이네요""","""Sorry. Better luck next time.""","거대한 자판기_Sel1 / specialText"
+"outcome.d4f2d59cf10a48f40b730684da17bf5b.text_2","ㅋㅋ","LOL","테스트용 아이템 전부 획득_Sel1_Logic / specialText"
+"outcome.e106927c8aa613745aa2132677b09c1d.text_1","감사합니다. 살려주셨으니 소소하지만 이거라도..","Thank you for saving me. It is not much, but please take this...","피해망상_Sel1 / specialText"
+"outcome.e106927c8aa613745aa2132677b09c1d.text_2","어디가!!!! #@$%@#@#$%!#$","Where are you going!!!! #@$%@#@#$%!#$","피해망상_Sel1 / specialText"
+"outcome.edc5b7f9e897bdb438960bea3f0e6ab0.text_2","아이쿠 망치가 미끄러졌네
+다음엔 잘될거야","Oops, the hammer slipped.
+It will work next time.","머신 스피릿_Sel1 / specialText"
+"result.enemy_hp","적들의 체력이 강화되었습니다! (+{0}%)","Enemy HP increased! (+{0}%)","Event result"
+"result.error.inventory_missing","오류: Inventory를 찾을 수 없습니다.","Error: Inventory was not found.","Event result"
+"result.error.item_database_missing","오류: Inventory 또는 ItemDatabase가 없습니다.","Error: Inventory or ItemDatabase is missing.","Event result"
+"result.error.item_missing","오류: 획득할 아이템(soReference)이 지정되지 않았습니다.","Error: No item was assigned.","Event result"
+"result.error.monster_missing","오류: 몬스터 프리팹이 없습니다.","Error: Monster prefab is missing.","Event result"
+"result.error.pool_missing","오류: PoolManager를 찾을 수 없습니다.","Error: PoolManager was not found.","Event result"
+"result.error.random_acquire","랜덤 아이템 획득 로직 실행 (ItemDatabase 필요)","Random item acquisition requires an ItemDatabase.","Event result"
+"result.error.spawner","Spawner 오류","Spawner error","Event result"
+"result.item_acquired","새로운 아이템 <{0}>(을)를 획득했습니다.","Acquired a new item: <{0}>.","Event result"
+"result.item_level_change","<{0}> [레벨 {1} -> {2}]","<{0}> [Lv.{1} -> {2}]","Event result"
+"result.item_max","<{0}>(이)가 이미 최대 레벨(MAX)입니다.","<{0}> is already at MAX level.","Event result"
+"result.item_to_max","<{0}> [레벨 {1} -> MAX]","<{0}> [Lv.{1} -> MAX]","Event result"
+"result.item_upgraded","<{0}>(이)가 (Lv.{1} → {2})로 업그레이드되었습니다.","<{0}> upgraded (Lv.{1} → {2}).","Event result"
+"result.monsters_spawned","{0} 몬스터 출현! ({1} x{2})","{0} monsters appeared! ({1} x{2})","Event result"
+"result.new_item_upgrade","<{0}>(이)가 (NEW → {1})로 업그레이드되었습니다.","<{0}> upgraded (NEW → {1}).","Event result"
+"result.no_new_items","획득할 수 있는 새로운 아이템이 없습니다.","No new items are available.","Event result"
+"result.no_upgrades","업그레이드할 아이템이 없습니다.","No items are available to upgrade.","Event result"
+"result.periodic_monsters","이제부터 {0}초마다 {1}에서 {2}이(가) 나타납니다!","Every {0} seconds, {2} will appear from the {1}!","Event result"
+"result.random_items","랜덤 아이템 획득:
+- ","Random items acquired:
+- ","Event result"
+"result.speed_loss","기차의 속도가 {0}만큼 감소했습니다.","Lost {0} train speed.","Event result"
+"result.speed_recover","기차의 속도를 {0}만큼 회복했습니다.","Restored {0} train speed.","Event result"
+"result.type.flying","공중","Flying","Event result"
+"result.type.ground","지상","Ground","Event result"
+"result.type.sky","하늘","Sky","Event result"
+"result.upgrade_count","아이템 {0}회 업그레이드:
+- ","Items upgraded by {0} levels:
+- ","Event result"
+"result.upgrade_max","아이템 최대 레벨 업그레이드:
+- ","Items upgraded to MAX level:
+- ","Event result"
+"ui.bgm","BGM","BGM","Fixed UI label"
+"ui.boss","보스","Boss","Fixed UI label"
+"ui.close","닫기","Close","Fixed UI label"
+"ui.controller_missing","Controller 없음","No controller","Speed HUD fallback"
+"ui.credits","제작진","Credits","Fixed UI label"
+"ui.elite","엘리트","Elite","Fixed UI label"
+"ui.language","언어","Language","Option language selector"
+"ui.level_up","레벨 업!","Level Up!","Fixed UI label"
+"ui.normal","일반","Normal","Fixed UI label"
+"ui.quit","게임 종료","Quit Game","Fixed UI label"
+"ui.resolution","해상도","Resolution","Fixed UI label"
+"ui.return_title","Space를 눌러 타이틀로 이동","Press Space to return to the title","Fixed UI label"
+"ui.screen.borderless","테두리 없는 창","Borderless","Screen mode setting"
+"ui.screen.fullscreen","전체 화면","Fullscreen","Screen mode setting"
+"ui.screen.fullscreen_label","Full Screen","Full Screen","Fixed UI label"
+"ui.screen.label","화면","Screen","Fixed UI label"
+"ui.screen.mode","화면 모드","Screen Mode","Fixed UI label"
+"ui.screen.windowed","창 모드","Windowed","Screen mode setting"
+"ui.sfx","SFX","SFX","Fixed UI label"
+"ui.survived","우리는 살아남았다. 물론 내일도, 그 다음날도, 다음날도","We survived. Tomorrow, the day after, and every day to come.","Fixed UI label"
+"ui.toggle_window","Space를 통해 창을 여닫을 수 있습니다.","Press Space to open or close this window.","Fixed UI label"
+"ui.total","총합","Total","Fixed UI label"
+"ui.victory","승리","Victory","Fixed UI label"

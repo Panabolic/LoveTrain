@@ -11,9 +11,9 @@ public class Effect_IncreaseEnemyHealthBuff : GameEffectSO
         if (PoolManager.instance != null)
         {
             PoolManager.instance.eventDebuff += amount;
-            return $"적들의 체력이 강화되었습니다! (+{amount}%)";
+            return EnglishLocalization.Format("result.enemy_hp", "적들의 체력이 강화되었습니다! (+{0}%)", amount);
         }
 
-        return "오류: PoolManager를 찾을 수 없습니다.";
+        return EnglishLocalization.Get("result.error.pool_missing", "오류: PoolManager를 찾을 수 없습니다.");
     }
 }

@@ -16,9 +16,9 @@ public class Effect_ModifySpeed : GameEffectSO
         train.ModifySpeed(speedChange);
 
         if (speedChange > 0)
-            return $"기차의 속도를 {speedChange}만큼 회복했습니다.";
+            return EnglishLocalization.Format("result.speed_recover", "기차의 속도를 {0}만큼 회복했습니다.", speedChange);
         else if (speedChange < 0)
-            return $"기차의 속도가 {Mathf.Abs(speedChange)}만큼 감소했습니다.";
+            return EnglishLocalization.Format("result.speed_loss", "기차의 속도가 {0}만큼 감소했습니다.", Mathf.Abs(speedChange));
         return null;
     }
 }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: HealingItem
   m_EditorClassIdentifier: Assembly-CSharp::HealingItem_SO
   itemName: "\uC2EC\uC804\uB3C4\uACC4"
+  itemNameKey: item.healing_item.name
   instantiatedPrefab: {fileID: 3427004941830098591, guid: a883f5acab4238c47ae22f81c6cf69cc, type: 3}
   attachmentSocketName: TrainR
   iconSprite: {fileID: 21300000, guid: 3c9861a4c3b325b4da91adf53149df37, type: 3}
@@ -22,8 +23,10 @@ MonoBehaviour:
   itemScript: "{SpeedBonus}\uB9CC\uD07C \uCD5C\uB300 \uC18D\uB3C4 \uC99D\uAC00, \uBAAC\uC2A4\uD130
     {KillReq}\uB9C8\uB9AC \uCC98\uCE58\uC2DC \uCD5C\uB300 \uC18D\uB3C4\uC758 {HealAmt}\uB9CC\uD07C
     \uD68C\uBCF5."
+  itemDescriptionKey: item.healing_item.description
   itemSimpleScript: "\uBAAC\uC2A4\uD130\uB97C \uCC98\uCE58\uD558\uBA74 \uC18D\uB3C4
     \uD68C\uBCF5"
+  itemSimpleDescriptionKey: item.healing_item.summary
   cooldownTime: 0
   maxSpeedBonusByLevel:
   - 50

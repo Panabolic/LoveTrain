@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: New SO_Event 3
   m_EditorClassIdentifier: Assembly-CSharp::SO_Event
   EventTitle: "\uD0AC\uB7EC \uD038 '\uC81C3\uC758 \uD3ED\uD0C4' BITES THE DUST"
+  titleKey: event.legacy_bites_the_dust.title
   EventText: "\uC808\uBCBD\uC5D0 \uBD80\uB52A\uD600 \uC8FD\uB294 \uC81C\uBE44\uAC00
     \uC788\uB2E4\uACE0 \uD558\uB354\uAD70\u2026 \uADF8 \uC81C\uBE44\uB294 \uB2E4\uB978
     \uC81C\uBE44\uBCF4\uB2E4 \uB354\uC5C6\uC774 \uB2A5\uC219\uD558\uAC8C \uBA39\uC774\uB97C
@@ -27,16 +28,26 @@ MonoBehaviour:
     \uC790\uAC00 \uB9CE\uC9C0\uB9CC \uC65C \uD22D\uD558\uBA74 \uC0AC\uACE0\uB97C
     \uB2F9\uD558\uB294 \uAC83\uC778\uC9C0 \uAE68\uB2EB\uC9C0\uC870\uCC28 \uBABB\uD574.\n\n\uC8E0\uD0C0\uB85C\uB294
     \uB2E8\uBA85\uD588\uC9C0."
+  textKey: event.legacy_bites_the_dust.body
   Selections:
   - selectionText: "\uB098\uC120\uACC4\uB2E8"
+    textId: choice_1
+    selectionTextKey: event.legacy_bites_the_dust.choice_1.text
     selectionUnderText: "\uC7A5\uC218\uD48D\uB385\uC774"
+    selectionUnderTextKey: event.legacy_bites_the_dust.choice_1.hint
     selectionEndText: "\uD3D0\uD5C8\uB3C4\uC2DC"
     addSpeed: 0
   - selectionText: "\uBB34\uD654\uACFC \uD0C0\uB974\uD2B8"
+    textId: choice_2
+    selectionTextKey: event.legacy_bites_the_dust.choice_2.text
     selectionUnderText: "\uC7A5\uC218\uD48D\uB385\uC774"
+    selectionUnderTextKey: event.legacy_bites_the_dust.choice_2.hint
     selectionEndText: "\uB3CC\uB85C\uB85C\uC0AC\uC758 \uAE38\n"
     addSpeed: 0
   - selectionText: "\uC7A5\uC218\uD48D\uB385\uC774"
+    textId: choice_3
+    selectionTextKey: event.legacy_bites_the_dust.choice_3.text
     selectionUnderText: "\uD2B9\uC774\uC810"
+    selectionUnderTextKey: event.legacy_bites_the_dust.choice_3.hint
     selectionEndText: "\uC870\uD1A0"
     addSpeed: 0

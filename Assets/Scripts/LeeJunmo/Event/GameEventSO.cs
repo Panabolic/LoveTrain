@@ -61,7 +61,7 @@ public class GameEventSO : ScriptableObject
                 }
 
                 var outputSettings = chosenOutcome.outputSettings;
-                string specialText = outputSettings.specialText;
+                string specialText = EventTextFormatter.Localize(outputSettings.specialTextKey, outputSettings.specialText, this);
 
                 // 3b. 텍스트 조합 (로직이 없어도 특수 텍스트는 출력 가능)
                 if (outputSettings.order == EventResultOutput.OutputOrder.DefaultFirst)

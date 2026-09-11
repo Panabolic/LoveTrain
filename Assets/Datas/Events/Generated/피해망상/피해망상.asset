@@ -13,18 +13,24 @@ MonoBehaviour:
   m_Name: "\uD53C\uD574\uB9DD\uC0C1"
   m_EditorClassIdentifier: Assembly-CSharp::SO_Event
   EventTitle: "\uD53C\uD574\uB9DD\uC0C1"
+  titleKey: event.paranoia.title
   EventText: "\uBD89\uAC8C \uBB3C\uB4E0 \uC131\uACBD\uC744 \uB4E4\uACE0 \uAE09\uBC15\uD558\uAC8C
     \uAE30\uCC28\uB85C \uB6F0\uC5B4\uC624\uB294 \uC0AC\uB78C\uC744 \uBC1C\uACAC\uD588\uB2E4.\n\n\"\uC81C\uBC1C
     \uC0B4\uB824\uC8FC\uC138\uC694. \uC774\uC0C1\uD55C \uAC8C \uCAD3\uC544\uC640\uC694\"\n\n\uBD84\uBA85
     \uC544\uBB34\uAC83\uB3C4 \uC5C6\uB294\uB370 \uBB34\uC5C7\uC5D0 \uCAD3\uAE30\uB294
     \uAC78\uAE4C?"
+  textKey: event.paranoia.body
   Selections:
   - selectionText: "\uAE30\uCC28\uB97C \uC0B4\uC9DD \uB2A6\uCDB0 \uD0DC\uC6B0\uB824\uACE0
       \uB178\uB825\uD55C\uB2E4"
-    selectionUnderText: "50%\uB85C \uC18D\uB3C4 50\uC99D\uAC00, 50%\uB85C \uC18D\uB3C4
-      50\uAC10\uC18C "
+    textId: choice_1
+    selectionTextKey: event.paranoia.choice_1.text
+    selectionUnderText: "{speed_gain.chance}%로 속도 {speed_gain.amount}증가, {speed_loss.chance}%로 속도 {speed_loss.amount}감소 "
+    selectionUnderTextKey: event.paranoia.choice_1.hint
     eventToTrigger: {fileID: 11400000, guid: b7ba4b5e87ebc634096346e7bb04ee87, type: 2}
   - selectionText: "\uC54C\uC544\uC11C \uD0C0\uB77C\uACE0 \uD55C\uB2E4"
-    selectionUnderText: "40%\uB85C \uC544\uC774\uD15C : \"\uD53C \uBB3B\uC740 \uC131\uACBD\"
-      \uD68D\uB4DD, 70%\uB85C \uC18D\uB3C4 70\uAC10\uC18C"
+    textId: choice_2
+    selectionTextKey: event.paranoia.choice_2.text
+    selectionUnderText: "{reward.chance}%로 아이템 : \"{reward.item}\" 획득, {speed_loss.chance}%로 속도 {speed_loss.amount}감소"
+    selectionUnderTextKey: event.paranoia.choice_2.hint
     eventToTrigger: {fileID: 11400000, guid: 9a6e9a55bd42c14468d317dd8ccf9069, type: 2}

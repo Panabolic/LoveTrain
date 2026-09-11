@@ -18,6 +18,7 @@ MonoBehaviour:
   - description: "\uADF8\uB8F9 \uC124\uBA85"
     outcomes:
     - weight: 50
+      textId: speed_gain
       effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
       parameters:
         intValue: 1
@@ -31,8 +32,10 @@ MonoBehaviour:
         includeDefaultText: 1
         specialText: "\uAC10\uC0AC\uD569\uB2C8\uB2E4. \uC0B4\uB824\uC8FC\uC168\uC73C\uB2C8
           \uC18C\uC18C\uD558\uC9C0\uB9CC \uC774\uAC70\uB77C\uB3C4.."
+        specialTextKey: outcome.b7ba4b5e87ebc634096346e7bb04ee87.text_1
         order: 1
     - weight: 50
+      textId: speed_loss
       effectLogic: {fileID: 11400000, guid: e101d3c84acaac54491d2eabae0570e2, type: 2}
       parameters:
         intValue: 0
@@ -45,4 +48,5 @@ MonoBehaviour:
       outputSettings:
         includeDefaultText: 1
         specialText: "\uC5B4\uB514\uAC00!!!! #@$%@#@#$%!#$"
+        specialTextKey: outcome.b7ba4b5e87ebc634096346e7bb04ee87.text_2
         order: 1

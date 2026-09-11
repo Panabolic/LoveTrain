@@ -11,10 +11,10 @@ public class Effect_AcquireSpecificItem : GameEffectSO
 
         // 2. (기본값 설정)
         if (acquireCount <= 0) acquireCount = 1;
-        if (itemToGive == null) return "오류: 획득할 아이템(soReference)이 지정되지 않았습니다.";
+        if (itemToGive == null) return EnglishLocalization.Get("result.error.item_missing", "오류: 획득할 아이템(soReference)이 지정되지 않았습니다.");
 
         Inventory inventory = target.GetComponent<Inventory>();
-        if (inventory == null) return "오류: Inventory를 찾을 수 없습니다.";
+        if (inventory == null) return EnglishLocalization.Get("result.error.inventory_missing", "오류: Inventory를 찾을 수 없습니다.");
 
         // 3. 로직 실행 '전'의 상태를 저장
         ItemInstance instance = inventory.FindItem(itemToGive);
@@ -24,7 +24,7 @@ public class Effect_AcquireSpecificItem : GameEffectSO
         // 4. (기존 아이템) 이미 최대 레벨이면 즉시 종료
         if (!isNewItem && oldLevel >= itemToGive.MaxUpgrade)
         {
-            return $"<{itemToGive.itemName}>(이)가 이미 최대 레벨(MAX)입니다.";
+            return EnglishLocalization.Format("result.item_max", "<{0}>(이)가 이미 최대 레벨(MAX)입니다.", itemToGive.LocalizedName);
         }
 
         // 5. 로직 실행 (N번 반복)
@@ -49,13 +49,13 @@ public class Effect_AcquireSpecificItem : GameEffectSO
         if (isNewItem)
         {
             if (acquireCount > 1) // "NEW → N"
-                return $"<{itemToGive.itemName}>(이)가 (NEW → {levelText})로 업그레이드되었습니다.";
+                return EnglishLocalization.Format("result.new_item_upgrade", "<{0}>(이)가 (NEW → {1})로 업그레이드되었습니다.", itemToGive.LocalizedName, levelText);
             else // "NEW" (acquireCount가 1이었음)
-                return $"새로운 아이템 <{itemToGive.itemName}>(을)를 획득했습니다.";
+                return EnglishLocalization.Format("result.item_acquired", "새로운 아이템 <{0}>(을)를 획득했습니다.", itemToGive.LocalizedName);
         }
         else // "Lv.N → Lv.M"
         {
-            return $"<{itemToGive.itemName}>(이)가 (Lv.{oldLevel} → {levelText})로 업그레이드되었습니다.";
+            return EnglishLocalization.Format("result.item_upgraded", "<{0}>(이)가 (Lv.{1} → {2})로 업그레이드되었습니다.", itemToGive.LocalizedName, oldLevel, levelText);
         }
     }
 }

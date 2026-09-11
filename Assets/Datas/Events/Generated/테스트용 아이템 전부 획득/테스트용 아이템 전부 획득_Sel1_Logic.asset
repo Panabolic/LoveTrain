@@ -17,6 +17,7 @@ MonoBehaviour:
   - description: "\uADF8\uB8F9 \uC124\uBA85"
     outcomes:
     - weight: 100
+      textId: reward
       effectLogic: {fileID: 11400000, guid: 065521c2a5f3f674d887812e41b680a0, type: 2}
       parameters:
         intValue: 50
@@ -33,6 +34,7 @@ MonoBehaviour:
   - description: "\uADF8\uB8F9 \uC124\uBA85"
     outcomes:
     - weight: 100
+      textId: upgrade
       effectLogic: {fileID: 11400000, guid: c284d06578ed4d248b2ac6a1551fc1e1, type: 2}
       parameters:
         intValue: 15
@@ -45,4 +47,5 @@ MonoBehaviour:
       outputSettings:
         includeDefaultText: 1
         specialText: "\u314B\u314B"
+        specialTextKey: outcome.d4f2d59cf10a48f40b730684da17bf5b.text_2
         order: 0

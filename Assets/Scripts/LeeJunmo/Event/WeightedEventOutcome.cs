@@ -6,6 +6,9 @@ public class WeightedEventOutcome
     [Tooltip("이 결과가 선택될 '가중치' (확률 %와 동일)")]
     public float weight = 10f;
 
+    [Tooltip("Stable template identifier, e.g. reward in {reward.count}. Keep it when reordering outcomes.")]
+    public string textId;
+
     // --- [핵심 수정] ---
     [Tooltip("실행할 '로직' (GameEffectSO 템플릿 에셋)")]
     public GameEffectSO effectLogic;

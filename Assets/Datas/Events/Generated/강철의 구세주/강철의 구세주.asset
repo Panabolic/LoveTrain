@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: "\uAC15\uCCA0\uC758 \uAD6C\uC138\uC8FC"
   m_EditorClassIdentifier: Assembly-CSharp::SO_Event
   EventTitle: "\uAC15\uCCA0\uC758 \uAD6C\uC138\uC8FC"
+  titleKey: event.steel_savior.title
   EventText: "\uC548\uAC1C\uAC00 \uC790\uC6B1\uD55C \uD654\uBB3C\uC5ED\uC5D0 \uB3C4\uCC29\uD558\uC790,
     \uCCA0\uAC00\uBA74\uC744 \uC4F0\uACE0 \uB85C\uBE0C\uB97C \uB450\uB978 \uC0AC\uB78C\uB4E4\uC774
     \uC120\uB85C\uB85C \uBAB0\uB824\uB4E0\uB2E4. \uADF8\uB4E4\uC740 \uAE30\uCC28\uAC00
@@ -24,12 +25,17 @@ MonoBehaviour:
     \uC8FC\uC2DC\uC635\uC18C\uC11C!\"\r\n\r\n\uADF8\uB4E4\uC740 \uAE30\uCC28 \uBC14\uD034\uC5D0
     \uD3D0\uC720\uB97C \uBC14\uB974\uACE0, \uC120\uB85C\uC5D0 \uB204\uC6B0\uBA70
     \uAE30\uCC28 \uBC14\uD034\uC5D0 \uAC08\uB9AC\uAE30\uB97C \uAC04\uCCAD\uD55C\uB2E4."
+  textKey: event.steel_savior.body
   Selections:
   - selectionText: "\uADF8\uB4E4\uC758 \uC18C\uC6D0\uB300\uB85C \uD574\uC900\uB2E4"
-    selectionUnderText: "\uC544\uC774\uD15C : \"\uAC70\uB300\uD55C \uC544\uAC00\uB9AC\"
-      \uD68D\uB4DD"
+    textId: choice_1
+    selectionTextKey: event.steel_savior.choice_1.text
+    selectionUnderText: "아이템 : \"{reward.item}\" 획득"
+    selectionUnderTextKey: event.steel_savior.choice_1.hint
     eventToTrigger: {fileID: 11400000, guid: d5cdf1e3ad8167c4b946824c712e2eff, type: 2}
   - selectionText: "\uC774\uB2E8\uC774\uB2E4! \uC57D\uD0C8 -\uC544\uB2C8 \uC815\uD654\uD558\uB77C!"
-    selectionUnderText: "\uB79C\uB364 \uC544\uC774\uD15C [2]\uAC1C \uD68D\uB4DD,
-      \uD2B9\uC218 \uBAAC\uC2A4\uD130 \uCD9C\uD604"
+    textId: choice_2
+    selectionTextKey: event.steel_savior.choice_2.text
+    selectionUnderText: "랜덤 아이템 [{reward.count}]개 획득, 특수 몬스터 출현"
+    selectionUnderTextKey: event.steel_savior.choice_2.hint
     eventToTrigger: {fileID: 11400000, guid: 37f3fa87437e5994db1cfe38bf10b405, type: 2}

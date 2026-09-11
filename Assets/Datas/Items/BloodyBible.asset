@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BloodyBible
   m_EditorClassIdentifier: Assembly-CSharp::BloodyBible_SO
   itemName: "\uD53C \uBB3B\uC740 \uC131\uACBD"
+  itemNameKey: item.bloody_bible.name
   instantiatedPrefab: {fileID: 8784218837775428088, guid: 6e843e8257f28544eb0fbd2106be2b97, type: 3}
   attachmentSocketName: TrainF
   iconSprite: {fileID: -1403542765748039057, guid: 34458ade272b39b4e81c77101fea1ea7, type: 3}
@@ -22,8 +23,10 @@ MonoBehaviour:
   itemScript: "{Cooldown}\uCD08 \uB9C8\uB2E4 \uACF5\uACA9\uC18D\uB3C4\uB97C {Buff}
     \uC99D\uAC00\uC2DC\uD0A4\uB294 \uC7A5\uD310\uC744 {Duration}\uCD08 \uB3D9\uC548
     \uC0DD\uC131."
+  itemDescriptionKey: item.bloody_bible.description
   itemSimpleScript: "\uC77C\uC815\uC2DC\uAC04\uB9C8\uB2E4 \uACF5\uACA9\uC18D\uB3C4
     \uBC84\uD504 \uC7A5\uD310 \uC0DD\uC131"
+  itemSimpleDescriptionKey: item.bloody_bible.summary
   cooldownTime: 0
   durationByLevel:
   - 5

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RearGun
   m_EditorClassIdentifier: Assembly-CSharp::RearGun_SO
   itemName: "\uC0B4\uC810\uCD1D"
+  itemNameKey: item.rear_gun.name
   instantiatedPrefab: {fileID: 6808372918253276991, guid: c5ea79ba711158a47a3a02b3d94e7b53, type: 3}
   attachmentSocketName: GunPivot
   iconSprite: {fileID: 21300000, guid: dc44ebd758938ea46b8860def797f512, type: 3}
@@ -22,8 +23,10 @@ MonoBehaviour:
   itemScript: "\uD50C\uB808\uC774\uC5B4\uAC00 \uACF5\uACA9\uD560 \uB54C {Damage}\uB370\uBBF8\uC9C0\uC758
     \uCD1D\uC54C {Count}\uAC1C\uB97C {Cooldown}\uCD08 \uB9C8\uB2E4 \uBC1C\uC0AC\uD558\uB294
     \uD6C4\uBC29 \uCD1D\uAE30 \uBD80\uCC29."
+  itemDescriptionKey: item.rear_gun.description
   itemSimpleScript: "\uC870\uC900\uC120 \uBC18\uB300\uB85C \uBC1C\uC0AC\uB418\uB294
     \uCD1D \uCD94\uAC00"
+  itemSimpleDescriptionKey: item.rear_gun.summary
   cooldownTime: 0
   damageByLevel:
   - 50

@@ -10,7 +10,7 @@ public class Effect_SpawnMobPeriodically : GameEffectSO
         bool isFly = parameters.boolValue;              // 공중 여부
         // duration 미사용 (영구 지속)
 
-        if (prefab == null) return "오류: 몬스터 프리팹이 없습니다.";
+        if (prefab == null) return EnglishLocalization.Get("result.error.monster_missing", "오류: 몬스터 프리팹이 없습니다.");
         if (interval <= 0.1f) interval = 1.0f;
 
         Spawner spawner = Spawner.Instance;
@@ -21,9 +21,9 @@ public class Effect_SpawnMobPeriodically : GameEffectSO
             // 영구 스폰 리스트에 추가
             spawner.AddPeriodicSpawnTask(prefab, interval, isFly);
 
-            string typeText = isFly ? "하늘" : "지상";
-            return $"이제부터 {interval}초마다 {typeText}에서 {prefab.name}이(가) 나타납니다!";
+            string typeText = isFly ? EnglishLocalization.Get("result.type.sky", "하늘") : EnglishLocalization.Get("result.type.ground", "지상");
+            return EnglishLocalization.Format("result.periodic_monsters", "이제부터 {0}초마다 {1}에서 {2}이(가) 나타납니다!", interval, typeText, prefab.name);
         }
-        return "Spawner 오류";
+        return EnglishLocalization.Get("result.error.spawner", "Spawner 오류");
     }
 }

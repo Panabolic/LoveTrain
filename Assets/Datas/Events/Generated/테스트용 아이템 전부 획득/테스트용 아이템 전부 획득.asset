@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: "\uD14C\uC2A4\uD2B8\uC6A9 \uC544\uC774\uD15C \uC804\uBD80 \uD68D\uB4DD"
   m_EditorClassIdentifier: Assembly-CSharp::SO_Event
   EventTitle: "\uD14C\uC2A4\uD2B8\uC6A9 \uC544\uC774\uD15C \uC804\uBD80 \uD68D\uB4DD"
+  titleKey: event.test_all_items.title
   EventText: "\uC774\uBCA4\uD2B8 \uBCF8\uBB38 \uD14D\uC2A4\uD2B8"
+  textKey: event.test_all_items.body
   Selections:
   - selectionText: "\uB2E4\uB0B4\uB194"
-    selectionUnderText: "\u314B\u314B"
+    textId: choice_1
+    selectionTextKey: event.test_all_items.choice_1.text
+    selectionUnderText: "ㅋㅋ"
+    selectionUnderTextKey: event.test_all_items.choice_1.hint
     eventToTrigger: {fileID: 11400000, guid: d4f2d59cf10a48f40b730684da17bf5b, type: 2}
