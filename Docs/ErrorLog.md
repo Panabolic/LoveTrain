@@ -2,7 +2,7 @@
 status: active
 authority: project-log
 category: error-log
-last_reviewed: 2026-05-18
+last_reviewed: 2026-07-23
 ---
 
 # Error Log
@@ -34,10 +34,10 @@ Cause:
 Optional sprite handling was added in some setup paths, but later death, enable, and movement presentation writes did not consistently use a null-safe helper.
 
 Fix:
-Route enemy sprite visibility, color reset, and flip writes through `EnemySpritePresentation`, which no-ops when the sprite is null.
+Guard optional sprite visibility and flip writes at their lifecycle and movement call sites. Death and pooling completion must not depend on a SpriteRenderer being present.
 
 Prevention:
-Any enemy code that changes optional `SpriteRenderer` presentation must use `EnemySpritePresentation` instead of direct `sprite` writes. Keep gameplay movement/damage state separate from optional visual component writes.
+Any enemy code that changes an optional `SpriteRenderer` must use a local null guard or an already-established null-safe presentation boundary. Keep gameplay movement and cleanup separate from optional visual writes.
 
 ## 2026-05-18 - Enemy OnDisable Material Null Trap
 
@@ -48,7 +48,21 @@ Cause:
 The hit effect path had a null guard, while the disable cleanup path did not. This can throw during pooling, destruction, or special enemy cleanup and can prevent `PoolManager.UnregisterEnemy(...)` from running.
 
 Fix:
-Route hit material flag writes through `EnemyHitMaterialController.SetHit(...)`, which no-ops when the material is null. Keep the disable-time cleanup sequence behind `EnemyDisableCleanup`.
+Guard the optional material reset in `Enemy.OnDisable()` and keep `PoolManager.UnregisterEnemy(...)` reachable regardless of material presence.
 
 Prevention:
-Any Unity lifecycle cleanup that touches optional renderer/material/collider components must use the same null-safe helper path as runtime effects. Keep `Enemy.OnDisable()` cleanup sequencing behind `EnemyDisableCleanup` so active-enemy unregister logic remains reachable even when optional presentation components are missing.
+Any Unity lifecycle cleanup that touches optional renderer, material, or collider components must guard those accesses without returning before required unregister or state cleanup work.
+
+## 2026-07-23 - Queued UI And Ending Boundary Null Trap
+
+Context:
+Event and level-up UI callbacks execute after being queued, while ending input and credit spawning depend on optional runtime devices and authored collections.
+
+Cause:
+The delayed callbacks dereferenced singleton, UI, selection, and item references without revalidating them. Ending code directly accessed `Keyboard.current` and assumed credit lists and spawn points were present.
+
+Fix:
+Reject invalid event requests before queueing, close an already-started queued UI through the existing `CloseUI()` path when required data is missing, validate level-up singleton and item inputs at callback time, and guard ending input and credit data access.
+
+Prevention:
+Validate delayed-callback dependencies when the callback runs, validate indexes before mutating UI state, and treat input devices and authored collections as optional at runtime. Do not add a global catch that hides failures or changes normal queue ordering.

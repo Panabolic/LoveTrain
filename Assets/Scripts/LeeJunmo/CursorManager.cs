@@ -1,7 +1,6 @@
-﻿using UnityEngine;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
-using System.Runtime.InteropServices; // DllImport 사용
 
 public class CursorManager : MonoBehaviour
 {
@@ -9,132 +8,153 @@ public class CursorManager : MonoBehaviour
     [SerializeField] private Texture2D cursorTexture;
     [SerializeField] private Vector2 hotSpot = Vector2.zero;
 
-    private CursorLockMode currentLockMode = CursorLockMode.None;
-    private bool osLocked = false;
+    [Header("포커스 안정화")]
+    [SerializeField] private bool confineOnStart = true;
+    [SerializeField] private float focusReconfineDelay = 0.25f;
 
-    // --- Windows API 정의 (윈도우에서만 컴파일되도록 처리) ---
-#if UNITY_STANDALONE_WIN
-    [StructLayout(LayoutKind.Sequential)]
-    public struct RECT
-    {
-        public int left;
-        public int top;
-        public int right;
-        public int bottom;
-    }
-
-    [DllImport("user32.dll")]
-    private static extern bool ClipCursor(ref RECT rect);
-
-    [DllImport("user32.dll")]
-    private static extern bool ClipCursor(IntPtr rect);
-
-    // ✨ [추가] 현재 활성화된 윈도우(게임창)의 ID를 가져옴
-    [DllImport("user32.dll")]
-    private static extern IntPtr GetActiveWindow();
-
-    // ✨ [추가] 해당 윈도우의 실제 모니터 좌표를 가져옴
-    [DllImport("user32.dll")]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-#endif
-    // -------------------------------------------------------
+    private CursorLockMode requestedLockMode = CursorLockMode.None;
+    private Coroutine focusReconfineCoroutine;
 
     void Start()
     {
         if (cursorTexture != null)
+        {
             Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto);
+        }
 
-        ConfineCursor();
+        if (confineOnStart)
+        {
+            ConfineCursor();
+        }
+        else
+        {
+            FreeCursor();
+        }
     }
 
     void Update()
     {
-        // 입력 시스템 체크
         if (Keyboard.current == null || Mouse.current == null) return;
 
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            if (currentLockMode != CursorLockMode.None)
+            if (requestedLockMode != CursorLockMode.None)
+            {
                 FreeCursor();
+            }
         }
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (currentLockMode != CursorLockMode.Confined)
+            if (requestedLockMode != CursorLockMode.Confined && Application.isFocused)
+            {
                 ConfineCursor();
-        }
-
-        // ✨ [보완] 창 모드에서 창을 드래그해서 옮기거나 크기를 바꿀 때를 대비해
-        // 갇힌 상태라면 지속적으로 영역을 갱신해주는 것이 안전합니다.
-        if (osLocked)
-        {
-            // LockOSCursor(); // 너무 자주 호출하면 성능에 영향이 있을 수 있으니 필요시 주석 해제
+            }
         }
     }
 
     void ConfineCursor()
     {
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
-        currentLockMode = CursorLockMode.Confined;
-
-        LockOSCursor();
+        requestedLockMode = CursorLockMode.Confined;
+        ApplyCursorLock(CursorLockMode.Confined, "requested");
     }
 
     void FreeCursor()
     {
-        Cursor.lockState = CursorLockMode.None;
+        requestedLockMode = CursorLockMode.None;
+        StopFocusReconfine();
+        ApplyCursorLock(CursorLockMode.None, "requested");
+    }
+
+    private void ApplyCursorLock(CursorLockMode lockMode, string reason)
+    {
+        Cursor.lockState = lockMode;
         Cursor.visible = true;
-        currentLockMode = CursorLockMode.None;
 
-        UnlockOSCursor();
-    }
-
-    void LockOSCursor()
-    {
-#if UNITY_STANDALONE_WIN
-        // 1. 현재 게임 창의 핸들(ID)을 가져옴
-        IntPtr hwnd = GetActiveWindow();
-
-        // 2. 그 창의 실제 스크린 좌표(RECT)를 가져옴
-        RECT rect;
-        if (GetWindowRect(hwnd, out rect))
-        {
-            // 3. 해당 좌표로 커서를 가둠
-            ClipCursor(ref rect);
-            osLocked = true;
-            Debug.Log($"Cursor LOCKED to System Rect: L{rect.left} T{rect.top} R{rect.right} B{rect.bottom}");
-        }
-        else
-        {
-            Debug.LogError("Failed to get window rect!");
-        }
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        Debug.Log($"Cursor lock state set to {lockMode}. Reason: {reason}. Focused: {Application.isFocused}");
 #endif
     }
 
-    void UnlockOSCursor()
+    private void ReleaseCursorForFocusChange(string reason)
     {
-#if UNITY_STANDALONE_WIN
-        // NULL(IntPtr.Zero)을 보내면 잠금 해제됨
-        ClipCursor(IntPtr.Zero);
-        osLocked = false;
-        Debug.Log("Cursor UNLOCKED from System");
-#endif
+        StopFocusReconfine();
+        ApplyCursorLock(CursorLockMode.None, reason);
     }
 
-    // 알트탭(Alt+Tab) 등으로 포커스를 잃었다가 돌아왔을 때 다시 잠금
+    private void ScheduleFocusReconfine()
+    {
+        StopFocusReconfine();
+        focusReconfineCoroutine = StartCoroutine(ReconfineAfterFocusDelay());
+    }
+
+    private IEnumerator ReconfineAfterFocusDelay()
+    {
+        float delay = Mathf.Max(0f, focusReconfineDelay);
+        if (delay > 0f)
+        {
+            yield return new WaitForSecondsRealtime(delay);
+        }
+
+        focusReconfineCoroutine = null;
+        if (requestedLockMode == CursorLockMode.Confined && Application.isFocused)
+        {
+            ApplyCursorLock(CursorLockMode.Confined, "focus restored");
+        }
+    }
+
+    private void StopFocusReconfine()
+    {
+        if (focusReconfineCoroutine == null)
+        {
+            return;
+        }
+
+        StopCoroutine(focusReconfineCoroutine);
+        focusReconfineCoroutine = null;
+    }
+
     void OnApplicationFocus(bool focus)
     {
         if (focus)
         {
-            if (currentLockMode == CursorLockMode.Confined)
-                LockOSCursor();
+            if (requestedLockMode == CursorLockMode.Confined)
+            {
+                ScheduleFocusReconfine();
+            }
         }
         else
         {
-            // 게임이 백그라운드로 가면 무조건 OS 잠금 해제 (안 그러면 윈도우 못 씀)
-            UnlockOSCursor();
+            ReleaseCursorForFocusChange("focus lost");
         }
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            ReleaseCursorForFocusChange("application paused");
+        }
+        else if (requestedLockMode == CursorLockMode.Confined)
+        {
+            ScheduleFocusReconfine();
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        requestedLockMode = CursorLockMode.None;
+        ReleaseCursorForFocusChange("application quit");
+    }
+
+    private void OnDestroy()
+    {
+        if (requestedLockMode == CursorLockMode.None && focusReconfineCoroutine == null)
+        {
+            return;
+        }
+
+        requestedLockMode = CursorLockMode.None;
+        ReleaseCursorForFocusChange("destroyed");
     }
 }

@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGameData()
     {
+        Option.SetOptionInputBlocked(false);
         InitSystemSettings(); // ✨ 데이터 초기화 할 때 시스템 설정도 같이 복구
 
         gameTime = 0f;
@@ -162,7 +163,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        if (CurrentState == GameState.Playing || CurrentState == GameState.Boss || CurrentState == GameState.Start)
+        if (CurrentState == GameState.Title || CurrentState == GameState.Playing || CurrentState == GameState.Boss || CurrentState == GameState.Start)
         {
             stateBeforePause = CurrentState;
             SoundEventBus.Publish(SoundID.UI_Option);

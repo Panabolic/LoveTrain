@@ -54,6 +54,8 @@ public class TrainBoss : Boss
 
     private void FixedUpdate()
     {
+        if (rigid2D == null || targetRigid == null) return;
+
         // 2. 방향 설정 (무조건 왼쪽)
         SetMoveDirection(targetRigid.position);
 
@@ -68,7 +70,7 @@ public class TrainBoss : Boss
     {
         // 플레이어 위치와 상관없이 무조건 왼쪽으로 이동
         moveDirection = Vector2.left;
-        sprite.flipX = false;
+        if (sprite != null) sprite.flipX = false;
     }
 
     public override void TakeDamage(float damageAmount)
@@ -97,7 +99,7 @@ public class TrainBoss : Boss
             SoundEventBus.Publish(SoundID.Boss_Roar);
         }
         isPhase2 = true;
-        animator.SetTrigger("phase2");
+        if (animator != null) animator.SetTrigger("phase2");
 
         // ✨ [추가] 콜라이더 교체
         if (phase1Collider != null) phase1Collider.enabled = false;
@@ -108,6 +110,8 @@ public class TrainBoss : Boss
 
     private void Knockback()
     {
+        if (rigid2D == null) return;
+
         // 고정된 힘(Force) 사용
         float currentKnockbackForce = isPhase2 ? p2KnockbackForce : p1KnockbackForce;
 
@@ -153,13 +157,18 @@ public class TrainBoss : Boss
         yield return base.Die();
         Vector2 explosionEffectPivot = new Vector2(-5f, 2f);
 
-        Instantiate(killExplosionEffect, transform.position + (Vector3)explosionEffectPivot, Quaternion.identity);
+        if (killExplosionEffect != null)
+        {
+            Instantiate(killExplosionEffect, transform.position + (Vector3)explosionEffectPivot, Quaternion.identity);
+        }
         SoundEventBus.Publish(SoundID.Boss_Die);
         yield return new WaitForSeconds(2.0f); // 사망 연출 대기
 
         if (killEvent != null)
         {
-            if (GameManager.Instance != null && !GameManager.Instance.IsTimeForEnding)
+            if (GameManager.Instance != null &&
+                EventManager.Instance != null &&
+                !GameManager.Instance.IsTimeForEnding)
             {
                 EventManager.Instance.RequestEvent(killEvent);
             }
@@ -172,7 +181,10 @@ public class TrainBoss : Boss
         }
         else
         {
-            StageManager.Instance.StartStageTransitionSequence();
+            if (StageManager.Instance != null)
+            {
+                StageManager.Instance.StartStageTransitionSequence();
+            }
         }
 
         Destroy(gameObject);

@@ -82,6 +82,8 @@ public class EventManager : MonoBehaviour
     // ✨ [수정] 외부에서 이벤트를 요청할 때 사용 (큐에 등록)
     public void RequestEvent(SO_Event e)
     {
+        if (e == null || GameManager.Instance == null) return;
+
         SoundEventBus.Publish(SoundID.UI_Event);
         GameManager.Instance.RegisterUIQueue(() => ProcessEvent(e));
     }
@@ -90,6 +92,17 @@ public class EventManager : MonoBehaviour
     private void ProcessEvent(SO_Event e)
     {
         if (isAnimatingPanel) return;
+        if (e == null ||
+            e.Selections == null ||
+            e.Selections.Count == 0 ||
+            eventBoardRect == null ||
+            eventUIPanel == null ||
+            eventSelections == null ||
+            eventTextBox == null)
+        {
+            CloseInvalidQueuedEvent();
+            return;
+        }
 
         ResetEventRuntimeFlags();
         SoundEventBus.Publish(SoundID.UI_Event);
@@ -110,13 +123,14 @@ public class EventManager : MonoBehaviour
 
         AnimatePanelOnScreen(() =>
         {
-            StartCoroutine(TypeText(e.EventText));
+            StartCoroutine(TypeText(e.EventText ?? string.Empty));
         });
     }
 
     public void RandomEventStart()
     {
-        if (isAnimatingPanel) return;
+        if (isAnimatingPanel || eventDatabase == null) return;
+
         SO_Event e = eventDatabase.GetRandomEvent();
         if (e != null) RequestEvent(e); // 큐 등록 함수 호출
     }
@@ -246,6 +260,12 @@ public class EventManager : MonoBehaviour
     public void SelectionChoice(int selectionIndex)
     {
         if (isAnimatingPanel || currentEvent == null || hasSelectionBeenMade) return;
+        if (currentEvent.Selections == null ||
+            selectionIndex < 0 ||
+            selectionIndex >= currentEvent.Selections.Count)
+        {
+            return;
+        }
 
         justSelected = true;
         hasSelectionBeenMade = true;
@@ -371,7 +391,17 @@ public class EventManager : MonoBehaviour
     {
         foreach (Button button in selectionButtons)
         {
+            if (button == null) continue;
             if (button.gameObject.activeInHierarchy) button.interactable = true;
+        }
+    }
+
+    private void CloseInvalidQueuedEvent()
+    {
+        ResetEventUIState();
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.CloseUI();
         }
     }
 

@@ -100,7 +100,8 @@ public class SmashEffectButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (!canClick) return;
         if (isClicked) return;
         isClicked = true;
-        anotherButton.canClick = false;
+        Option.SetOptionInputBlocked(true);
+        if (anotherButton != null) anotherButton.canClick = false;
         foreach (var img in letterImages) img.color = normalColor;
 
         // 1. 레이아웃 해제 (글자들이 개별적으로 움직이도록)

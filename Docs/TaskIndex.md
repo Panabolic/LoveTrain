@@ -13,6 +13,7 @@ This file is a router/dashboard for LoveTrain task documents. It is not active s
 
 | Task | Mode | Scope Source | Notes |
 | --- | --- | --- | --- |
+| Release license cleanup | Implementation / Verification | [ActiveTasks/release-license-cleanup.md](./ActiveTasks/release-license-cleanup.md) | Maintain release notices, TMP default cleanup, and verified-unused graphics removal; audio evidence remains planner-owned. |
 | Low-editor-touch runtime refactor | Implementation / Verification handoff | [ActiveTasks/low-editor-touch-runtime-refactor.md](./ActiveTasks/low-editor-touch-runtime-refactor.md) | Continue only when source/static checks and Unity compile/play validation constraints are clear. |
 
 ## Proposed

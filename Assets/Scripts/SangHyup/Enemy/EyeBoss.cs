@@ -175,6 +175,8 @@ public class EyeBoss : Boss
     private float SpawnTentaclesAndGetDuration(List<int> spawnIndices, List<int> weakPointIndices, bool isEnrage)
     {
         float maxDuration = 0f;
+        if (tentacleSpawnPoints == null) return maxDuration;
+
         HashSet<int> weakSet = new HashSet<int>(weakPointIndices);
 
         float currentDamage = isEnrage ? enrageTentacleDamage : normalTentacleDamage;
@@ -189,7 +191,10 @@ public class EyeBoss : Boss
 
             if (prefab == null) continue;
 
-            GameObject obj = Instantiate(prefab, tentacleSpawnPoints[index].position, Quaternion.identity);
+            Transform spawnPoint = tentacleSpawnPoints[index];
+            if (spawnPoint == null) continue;
+
+            GameObject obj = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
             Tentacle tScript = obj.GetComponent<Tentacle>();
 
             if (tScript != null)
@@ -227,6 +232,7 @@ public class EyeBoss : Boss
 
     public void RegisterTentacle(GameObject tentacle)
     {
+        if (tentacle == null) return;
         if (!spawnedTentacles.Contains(tentacle)) spawnedTentacles.Add(tentacle);
     }
 
@@ -239,13 +245,19 @@ public class EyeBoss : Boss
     {
         ClearAllTentacles();
 
-        Instantiate(killExplosionEffect, transform.position, Quaternion.identity);
+        if (killExplosionEffect != null)
+        {
+            Instantiate(killExplosionEffect, transform.position, Quaternion.identity);
+        }
 
         yield return base.Die();
 
         yield return new WaitForSeconds(2.0f);
 
-        if (killEvent != null && GameManager.Instance != null && !GameManager.Instance.IsTimeForEnding)
+        if (killEvent != null &&
+            GameManager.Instance != null &&
+            EventManager.Instance != null &&
+            !GameManager.Instance.IsTimeForEnding)
         {
             EventManager.Instance.RequestEvent(killEvent);
         }
@@ -257,7 +269,10 @@ public class EyeBoss : Boss
         }
         else
         {
-            StageManager.Instance.StartStageTransitionSequence();
+            if (StageManager.Instance != null)
+            {
+                StageManager.Instance.StartStageTransitionSequence();
+            }
         }
 
         Destroy(gameObject);

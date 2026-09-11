@@ -12,6 +12,8 @@ public class Option : MonoBehaviour
     [Header("Volume Sliders (0 ~ 100)")]
     public Slider BGMSlider;
     public Slider SFXSlider;
+    [SerializeField] private TextMeshProUGUI bgmVolumeValueText;
+    [SerializeField] private TextMeshProUGUI sfxVolumeValueText;
 
     [Header("Screen Settings")]
     [SerializeField] private Button screenModePreviousButton;
@@ -20,11 +22,16 @@ public class Option : MonoBehaviour
     [SerializeField] private Button windowResolutionPreviousButton;
     [SerializeField] private Button windowResolutionNextButton;
     [SerializeField] private TextMeshProUGUI windowResolutionValueText;
-    [SerializeField] private bool createMissingScreenControls = true;
 
     [Header("Function Buttons")]
     public Button restartButton;
     public Button quitButton;
+    [SerializeField] private Button closeButton;
+
+    [Header("Title Access")]
+    [SerializeField] private Button titleOpenButton;
+
+    private static bool optionInputBlocked;
 
     private static readonly string[] screenModeLabels =
     {
@@ -37,6 +44,13 @@ public class Option : MonoBehaviour
     private int screenModeIndex;
     private int windowResolutionIndex;
 
+    public static bool IsOptionInputBlocked => optionInputBlocked;
+
+    public static void SetOptionInputBlocked(bool blocked)
+    {
+        optionInputBlocked = blocked;
+    }
+
     private void Awake()
     {
         HideOptionPanel();
@@ -44,12 +58,14 @@ public class Option : MonoBehaviour
 
     void Start()
     {
+        SetOptionInputBlocked(false);
         HideOptionPanel();
         ScreenDisplaySettings.ApplySavedPreferences();
 
         InitializeButtons();
         InitializeSliders();
         InitializeScreenControls();
+        InitializeTitleOpenButton();
 
         HideOptionPanel();
     }
@@ -63,6 +79,8 @@ public class Option : MonoBehaviour
         if (screenModeNextButton != null) screenModeNextButton.onClick.RemoveListener(SelectNextScreenMode);
         if (windowResolutionPreviousButton != null) windowResolutionPreviousButton.onClick.RemoveListener(SelectPreviousWindowResolution);
         if (windowResolutionNextButton != null) windowResolutionNextButton.onClick.RemoveListener(SelectNextWindowResolution);
+        if (titleOpenButton != null) titleOpenButton.onClick.RemoveListener(ToggleOptionPanel);
+        if (closeButton != null) closeButton.onClick.RemoveListener(CloseOption);
     }
 
     void Update()
@@ -71,6 +89,8 @@ public class Option : MonoBehaviour
         {
             ToggleOptionPanel();
         }
+
+        RefreshTitleOpenButtonVisibility();
     }
 
     public void ToggleOptionPanel()
@@ -79,16 +99,31 @@ public class Option : MonoBehaviour
 
         GameState currentState = GameManager.Instance.CurrentState;
 
-        if (currentState == GameState.Playing || currentState == GameState.Boss || currentState == GameState.Start)
+        if (currentState == GameState.Pause)
+        {
+            CloseOption();
+            return;
+        }
+
+        if (optionInputBlocked)
+        {
+            return;
+        }
+
+        if (CanOpenOptionFromState(currentState))
         {
             GameManager.Instance.PauseGame();
             RefreshScreenControlValues();
             if (optionPanel != null) optionPanel.SetActive(true);
         }
-        else if (currentState == GameState.Pause)
-        {
-            CloseOption();
-        }
+    }
+
+    private bool CanOpenOptionFromState(GameState state)
+    {
+        return state == GameState.Title
+            || state == GameState.Playing
+            || state == GameState.Boss
+            || state == GameState.Start;
     }
 
     public void CloseOption()
@@ -110,6 +145,8 @@ public class Option : MonoBehaviour
 
     private void InitializeButtons()
     {
+        InitializeCloseButton();
+
         if (restartButton != null)
         {
             restartButton.onClick.RemoveAllListeners();
@@ -123,7 +160,7 @@ public class Option : MonoBehaviour
             });
         }
 
-        if (quitButton != null)
+        if (quitButton != null && quitButton != closeButton)
         {
             quitButton.onClick.RemoveAllListeners();
             quitButton.onClick.AddListener(() =>
@@ -133,10 +170,26 @@ public class Option : MonoBehaviour
         }
     }
 
+    private void InitializeCloseButton()
+    {
+        if (closeButton == null && optionPanel != null)
+        {
+            closeButton = FindButtonInOptionPanel("CloseButton");
+        }
+
+        if (closeButton == null)
+        {
+            return;
+        }
+
+        closeButton.onClick.RemoveListener(CloseOption);
+        closeButton.onClick.AddListener(CloseOption);
+    }
+
     private void InitializeSliders()
     {
-        if (BGMSlider != null) { BGMSlider.minValue = 0; BGMSlider.maxValue = 100; }
-        if (SFXSlider != null) { SFXSlider.minValue = 0; SFXSlider.maxValue = 100; }
+        ConfigureVolumeSlider(BGMSlider);
+        ConfigureVolumeSlider(SFXSlider);
 
         if (SoundManager.Instance != null)
         {
@@ -149,8 +202,70 @@ public class Option : MonoBehaviour
             if (SFXSlider != null) SFXSlider.value = 100;
         }
 
+        RefreshVolumeValueTexts();
+
         if (BGMSlider != null) BGMSlider.onValueChanged.AddListener(UpdateBGMVolume);
         if (SFXSlider != null) SFXSlider.onValueChanged.AddListener(UpdateSFXVolume);
+    }
+
+    private void ConfigureVolumeSlider(Slider slider)
+    {
+        if (slider == null)
+        {
+            return;
+        }
+
+        slider.minValue = 0f;
+        slider.maxValue = 100f;
+    }
+
+    private void InitializeTitleOpenButton()
+    {
+        if (titleOpenButton == null)
+        {
+            titleOpenButton = FindButtonInCanvas("TitleOptionButton");
+        }
+
+        if (titleOpenButton == null)
+        {
+            return;
+        }
+
+        titleOpenButton.onClick.RemoveListener(ToggleOptionPanel);
+        titleOpenButton.onClick.AddListener(ToggleOptionPanel);
+        RefreshTitleOpenButtonVisibility();
+    }
+
+    private void RefreshTitleOpenButtonVisibility()
+    {
+        if (titleOpenButton == null)
+        {
+            return;
+        }
+
+        bool isTitleState = GameManager.Instance != null && GameManager.Instance.CurrentState == GameState.Title;
+        titleOpenButton.gameObject.SetActive(isTitleState);
+        titleOpenButton.interactable = isTitleState && !optionInputBlocked;
+    }
+
+    private Button FindButtonInCanvas(string buttonName)
+    {
+        Canvas parentCanvas = GetComponentInParent<Canvas>();
+        if (parentCanvas == null)
+        {
+            return null;
+        }
+
+        Button[] buttons = parentCanvas.GetComponentsInChildren<Button>(true);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            if (buttons[i].gameObject.name == buttonName)
+            {
+                return buttons[i];
+            }
+        }
+
+        return null;
     }
 
     private void InitializeScreenControls()
@@ -161,11 +276,6 @@ public class Option : MonoBehaviour
         }
 
         FindScreenControlsInOptionPanel();
-
-        if (createMissingScreenControls && !HasScreenControlReferences())
-        {
-            CreateScreenControls();
-        }
 
         if (!HasScreenControlReferences())
         {
@@ -189,10 +299,10 @@ public class Option : MonoBehaviour
     {
         if (screenModePreviousButton == null) screenModePreviousButton = FindButtonInOptionPanel("ScreenModePrevButton");
         if (screenModeNextButton == null) screenModeNextButton = FindButtonInOptionPanel("ScreenModeNextButton");
-        if (screenModeValueText == null) screenModeValueText = FindTextInOptionPanel("ScreenModeValueText");
+        if (screenModeValueText == null) screenModeValueText = FindTMPTextInOptionPanel("ScreenModeValueText");
         if (windowResolutionPreviousButton == null) windowResolutionPreviousButton = FindButtonInOptionPanel("WindowResolutionPrevButton");
         if (windowResolutionNextButton == null) windowResolutionNextButton = FindButtonInOptionPanel("WindowResolutionNextButton");
-        if (windowResolutionValueText == null) windowResolutionValueText = FindTextInOptionPanel("WindowResolutionValueText");
+        if (windowResolutionValueText == null) windowResolutionValueText = FindTMPTextInOptionPanel("WindowResolutionValueText");
     }
 
     private Button FindButtonInOptionPanel(string buttonName)
@@ -209,7 +319,7 @@ public class Option : MonoBehaviour
         return null;
     }
 
-    private TextMeshProUGUI FindTextInOptionPanel(string textName)
+    private TextMeshProUGUI FindTMPTextInOptionPanel(string textName)
     {
         TextMeshProUGUI[] texts = optionPanel.GetComponentsInChildren<TextMeshProUGUI>(true);
         for (int i = 0; i < texts.Length; i++)
@@ -233,147 +343,36 @@ public class Option : MonoBehaviour
             && windowResolutionValueText != null;
     }
 
-    private void CreateScreenControls()
+    private void SetTMPValueText(TextMeshProUGUI valueText, string value)
     {
-        RectTransform optionPanelRect = optionPanel.GetComponent<RectTransform>();
-        if (optionPanelRect == null)
+        if (valueText == null)
         {
             return;
         }
 
-        RectTransform group = CreateRectObject("ScreenSettingsControls", optionPanelRect);
-        group.anchorMin = new Vector2(0.5f, 0.5f);
-        group.anchorMax = new Vector2(0.5f, 0.5f);
-        group.pivot = new Vector2(0.5f, 0.5f);
-        group.anchoredPosition = new Vector2(0f, -35f);
-        group.sizeDelta = new Vector2(390f, 76f);
-
-        CreateSelectorRow(
-            group,
-            "Screen",
-            "ScreenModePrevButton",
-            "ScreenModeValueText",
-            "ScreenModeNextButton",
-            new Vector2(0f, 18f),
-            out screenModePreviousButton,
-            out screenModeValueText,
-            out screenModeNextButton);
-
-        CreateSelectorRow(
-            group,
-            "Resolution",
-            "WindowResolutionPrevButton",
-            "WindowResolutionValueText",
-            "WindowResolutionNextButton",
-            new Vector2(0f, -18f),
-            out windowResolutionPreviousButton,
-            out windowResolutionValueText,
-            out windowResolutionNextButton);
+        valueText.text = value;
     }
 
-    private void CreateSelectorRow(
-        RectTransform parent,
-        string label,
-        string previousButtonName,
-        string valueTextName,
-        string nextButtonName,
-        Vector2 anchoredPosition,
-        out Button previousButton,
-        out TextMeshProUGUI valueText,
-        out Button nextButton)
+    private void SetVolumeValueText(TextMeshProUGUI valueText, float value)
     {
-        RectTransform row = CreateRectObject(label + "Row", parent);
-        row.anchorMin = new Vector2(0.5f, 0.5f);
-        row.anchorMax = new Vector2(0.5f, 0.5f);
-        row.pivot = new Vector2(0.5f, 0.5f);
-        row.anchoredPosition = anchoredPosition;
-        row.sizeDelta = new Vector2(370f, 30f);
-
-        TextMeshProUGUI labelText = CreateText("Label", row, label, 14, TextAlignmentOptions.Right);
-        RectTransform labelRect = labelText.GetComponent<RectTransform>();
-        labelRect.anchorMin = new Vector2(0f, 0f);
-        labelRect.anchorMax = new Vector2(0f, 1f);
-        labelRect.pivot = new Vector2(0f, 0.5f);
-        labelRect.anchoredPosition = Vector2.zero;
-        labelRect.sizeDelta = new Vector2(94f, 0f);
-
-        previousButton = CreateTextButton(previousButtonName, row, "<");
-        RectTransform previousButtonRect = previousButton.GetComponent<RectTransform>();
-        previousButtonRect.anchorMin = new Vector2(0f, 0.5f);
-        previousButtonRect.anchorMax = new Vector2(0f, 0.5f);
-        previousButtonRect.pivot = new Vector2(0f, 0.5f);
-        previousButtonRect.anchoredPosition = new Vector2(112f, 0f);
-        previousButtonRect.sizeDelta = new Vector2(34f, 28f);
-
-        valueText = CreateValueText(valueTextName, row);
-        RectTransform valueRect = valueText.transform.parent.GetComponent<RectTransform>();
-        valueRect.anchorMin = new Vector2(0f, 0.5f);
-        valueRect.anchorMax = new Vector2(0f, 0.5f);
-        valueRect.pivot = new Vector2(0f, 0.5f);
-        valueRect.anchoredPosition = new Vector2(150f, 0f);
-        valueRect.sizeDelta = new Vector2(174f, 28f);
-
-        nextButton = CreateTextButton(nextButtonName, row, ">");
-        RectTransform nextButtonRect = nextButton.GetComponent<RectTransform>();
-        nextButtonRect.anchorMin = new Vector2(0f, 0.5f);
-        nextButtonRect.anchorMax = new Vector2(0f, 0.5f);
-        nextButtonRect.pivot = new Vector2(0f, 0.5f);
-        nextButtonRect.anchoredPosition = new Vector2(328f, 0f);
-        nextButtonRect.sizeDelta = new Vector2(34f, 28f);
+        int displayValue = Mathf.RoundToInt(Mathf.Clamp(value, 0f, 100f));
+        SetTMPValueText(valueText, $"{displayValue} %");
     }
 
-    private Button CreateTextButton(string buttonName, RectTransform parent, string label)
+    private void RefreshVolumeValueTexts()
     {
-        RectTransform buttonRect = CreateRectObject(buttonName, parent);
-        Image background = buttonRect.gameObject.AddComponent<Image>();
-        background.color = new Color(1f, 1f, 1f, 0.95f);
-
-        Button button = buttonRect.gameObject.AddComponent<Button>();
-        button.targetGraphic = background;
-
-        TextMeshProUGUI buttonText = CreateText("Text", buttonRect, label, 16, TextAlignmentOptions.Center);
-        RectTransform buttonTextRect = buttonText.GetComponent<RectTransform>();
-        buttonTextRect.anchorMin = Vector2.zero;
-        buttonTextRect.anchorMax = Vector2.one;
-        buttonTextRect.offsetMin = Vector2.zero;
-        buttonTextRect.offsetMax = Vector2.zero;
-
-        return button;
+        if (BGMSlider != null) SetVolumeValueText(bgmVolumeValueText, BGMSlider.value);
+        if (SFXSlider != null) SetVolumeValueText(sfxVolumeValueText, SFXSlider.value);
     }
 
-    private TextMeshProUGUI CreateValueText(string textName, RectTransform parent)
+    private void SetScreenModeValueText(string value)
     {
-        RectTransform valueBox = CreateRectObject(textName + "Box", parent);
-        Image background = valueBox.gameObject.AddComponent<Image>();
-        background.color = new Color(1f, 1f, 1f, 0.95f);
-
-        TextMeshProUGUI valueText = CreateText(textName, valueBox, string.Empty, 14, TextAlignmentOptions.Center);
-        RectTransform valueTextRect = valueText.GetComponent<RectTransform>();
-        valueTextRect.anchorMin = Vector2.zero;
-        valueTextRect.anchorMax = Vector2.one;
-        valueTextRect.offsetMin = new Vector2(6f, 0f);
-        valueTextRect.offsetMax = new Vector2(-6f, 0f);
-        return valueText;
+        SetTMPValueText(screenModeValueText, value);
     }
 
-    private RectTransform CreateRectObject(string objectName, RectTransform parent)
+    private void SetWindowResolutionValueText(string value)
     {
-        GameObject newObject = new GameObject(objectName, typeof(RectTransform));
-        RectTransform rectTransform = newObject.GetComponent<RectTransform>();
-        rectTransform.SetParent(parent, false);
-        return rectTransform;
-    }
-
-    private TextMeshProUGUI CreateText(string objectName, RectTransform parent, string text, int fontSize, TextAlignmentOptions alignment)
-    {
-        RectTransform rectTransform = CreateRectObject(objectName, parent);
-        TextMeshProUGUI uiText = rectTransform.gameObject.AddComponent<TextMeshProUGUI>();
-        uiText.fontSize = fontSize;
-        uiText.color = Color.black;
-        uiText.alignment = alignment;
-        uiText.text = text;
-        uiText.raycastTarget = false;
-        return uiText;
+        SetTMPValueText(windowResolutionValueText, value);
     }
 
     private void RefreshWindowResolutionOptions()
@@ -402,7 +401,7 @@ public class Option : MonoBehaviour
     private void RefreshScreenModeValue()
     {
         screenModeIndex = Mathf.Clamp(screenModeIndex, 0, screenModeLabels.Length - 1);
-        screenModeValueText.text = screenModeLabels[screenModeIndex];
+        SetScreenModeValueText(screenModeLabels[screenModeIndex]);
     }
 
     private void RefreshWindowResolutionValue()
@@ -414,18 +413,18 @@ public class Option : MonoBehaviour
 
         if (displayMode != ScreenDisplayModeOption.Windowed)
         {
-            windowResolutionValueText.text = ScreenDisplaySettings.GetResolutionForDisplayMode(displayMode).Label;
+            SetWindowResolutionValueText(ScreenDisplaySettings.GetResolutionForDisplayMode(displayMode).Label);
             return;
         }
 
         if (windowResolutionOptions.Count == 0)
         {
-            windowResolutionValueText.text = "N/A";
+            SetWindowResolutionValueText("N/A");
             return;
         }
 
         windowResolutionIndex = Mathf.Clamp(windowResolutionIndex, 0, windowResolutionOptions.Count - 1);
-        windowResolutionValueText.text = windowResolutionOptions[windowResolutionIndex].Label;
+        SetWindowResolutionValueText(windowResolutionOptions[windowResolutionIndex].Label);
     }
 
     private void RefreshWindowResolutionInteractable()
@@ -517,12 +516,16 @@ public class Option : MonoBehaviour
 
     void UpdateBGMVolume(float value)
     {
+        SetVolumeValueText(bgmVolumeValueText, value);
+
         if (SoundManager.Instance != null)
             SoundManager.Instance.SetBGMVolume(value / 100f);
     }
 
     void UpdateSFXVolume(float value)
     {
+        SetVolumeValueText(sfxVolumeValueText, value);
+
         if (SoundManager.Instance != null)
             SoundManager.Instance.SetSFXVolume(value / 100f);
     }

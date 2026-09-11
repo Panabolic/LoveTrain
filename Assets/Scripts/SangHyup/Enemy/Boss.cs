@@ -15,7 +15,7 @@ public class Boss : Enemy
         calibratedMaxHP = CalculateCalibratedHP();
         currentHP = calibratedMaxHP;
         isAlive = true;
-        sprite.enabled = true;
+        if (sprite != null) sprite.enabled = true;
 
         hasEnteredScreen = false;
 
@@ -33,8 +33,11 @@ public class Boss : Enemy
 
     protected override float CalculateCalibratedHP()
     {
-        float eventDebuff = 1.0f + (PoolManager.instance.eventDebuff / 100.0f);
-        return hp * levelManager.CurrentLevel * eventDebuff;
+        float eventDebuff = PoolManager.instance != null
+            ? 1.0f + (PoolManager.instance.eventDebuff / 100.0f)
+            : 1.0f;
+        int currentLevel = levelManager != null ? levelManager.CurrentLevel : 1;
+        return hp * currentLevel * eventDebuff;
     }
 
     public void StartEntranceRoutine(Vector3 targetPos, float duration)

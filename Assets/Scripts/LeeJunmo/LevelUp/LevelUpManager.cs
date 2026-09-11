@@ -41,9 +41,14 @@ public class LevelUpUIManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
         // 싱글톤 보호 로직 (중복 생성 방지)
-        if (Instance != this) return;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
 
         CacheChoiceSlots();
         CacheRuntimeReferences();
@@ -56,16 +61,34 @@ public class LevelUpUIManager : MonoBehaviour
         isRevealing = false;
     }
 
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
     // ✨ GameManager의 큐에서 호출됨
     public void ShowLevelUpChoices()
     {
         ResetLevelUpUIState();
+        if (levelUpPanel == null ||
+            choiceSlot1 == null ||
+            choiceSlot2 == null ||
+            choiceSlot3 == null ||
+            itemDatabase == null ||
+            itemDatabase.allItems == null ||
+            playerInventory == null)
+        {
+            CloseLevelUpUI();
+            return;
+        }
 
         List<Item_SO> availableItems = new List<Item_SO>();
 
         SoundEventBus.Publish(SoundID.UI_LevelUp);
         foreach (Item_SO item in itemDatabase.allItems)
         {
+            if (item == null) continue;
+
             ItemInstance instance = playerInventory.FindItem(item);
 
             // 1. 아직 없는 아이템이면 획득 가능
@@ -89,8 +112,7 @@ public class LevelUpUIManager : MonoBehaviour
             Debug.Log("모든 아이템이 만렙이거나 획득 불가능하여 레벨업 선택지를 건너뜁니다.");
 
             // UI를 띄우지 않고 바로 닫기 처리 (게임 시간 재개)
-            ResetLevelUpUIState();
-            GameManager.Instance.CloseUI();
+            CloseLevelUpUI();
             return;
         }
 
@@ -124,6 +146,8 @@ public class LevelUpUIManager : MonoBehaviour
 
     private void SetupSlot(LevelUpChoiceUI slot, Item_SO item)
     {
+        if (slot == null) return;
+
         if (item != null) slot.DisplayChoice(item, playerInventory, this);
         else slot.gameObject.SetActive(false); // 아이템이 부족하면 슬롯 끄기
     }
@@ -131,12 +155,17 @@ public class LevelUpUIManager : MonoBehaviour
     public void OnChoiceSelected(Item_SO selectedItemSO)
     {
         if (isRevealing) return;
+        if (selectedItemSO == null || playerInventory == null)
+        {
+            CloseLevelUpUI();
+            return;
+        }
 
         KillRevealSequence();
         ResetAnimatedElementsToOriginal();
         playerInventory.AcquireItem(selectedItemSO);
         ResetLevelUpUIState();
-        GameManager.Instance.CloseUI();
+        if (GameManager.Instance != null) GameManager.Instance.CloseUI();
     }
 
     private void CacheChoiceSlots()
@@ -322,5 +351,14 @@ public class LevelUpUIManager : MonoBehaviour
         }
 
         revealSequence = null;
+    }
+
+    private void CloseLevelUpUI()
+    {
+        ResetLevelUpUIState();
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.CloseUI();
+        }
     }
 }

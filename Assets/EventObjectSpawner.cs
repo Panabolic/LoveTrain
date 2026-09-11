@@ -9,6 +9,9 @@ public class EventObjectSpawner : MonoBehaviour
     [Tooltip("오브젝트가 생성될 위치들 (화면 밖)")]
     [SerializeField] private Transform[] spawnPoints;
 
+    [Tooltip("첫 번째 이벤트 오브젝트 충돌 시 실행할 지정 이벤트. 비워두면 랜덤 이벤트를 사용합니다.")]
+    [SerializeField] private SO_Event firstEvent;
+
     [Tooltip("첫 번째 스폰 시간 (초)")]
     [SerializeField] private float firstSpawnTime = 10f; // ✨ 추가됨
 
@@ -55,7 +58,23 @@ public class EventObjectSpawner : MonoBehaviour
         int randIndex = Random.Range(0, spawnPoints.Length);
         Transform spawnPoint = spawnPoints[randIndex];
 
-        // 오브젝트 생성
-        Instantiate(eventObjectPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject spawnedObject = Instantiate(eventObjectPrefab, spawnPoint.position, Quaternion.identity);
+        if (isFirstSpawn && firstEvent != null)
+        {
+            EventTriggerObject triggerObject = spawnedObject.GetComponent<EventTriggerObject>();
+            if (triggerObject == null)
+            {
+                triggerObject = spawnedObject.GetComponentInChildren<EventTriggerObject>();
+            }
+
+            if (triggerObject != null)
+            {
+                triggerObject.SetEventOverride(firstEvent);
+            }
+            else
+            {
+                Debug.LogWarning("[EventObjectSpawner] First event override could not be assigned because EventTriggerObject was not found.");
+            }
+        }
     }
 }

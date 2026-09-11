@@ -45,7 +45,7 @@ public class AutoScrollBackground : MonoBehaviour
     private void HandleGameStateChange(GameState newState)
     {
         // ✨ [수정] StageTransition 상태는 제외 (StageManager가 수동으로 끌 예정)
-        if (newState == GameState.Start || newState == GameState.Event || newState == GameState.Die)
+        if (newState == GameState.Start || newState == GameState.Event || newState == GameState.Die || newState == GameState.Pause)
         {
             isScrolling = false;
         }

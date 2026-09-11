@@ -134,22 +134,33 @@ public class Train : MonoBehaviour
         if (isDead) return;
         CurrentSpeed += amount;
         if (CurrentSpeed > maxSpeedValue) CurrentSpeed = maxSpeedValue;
-
-        if (isDying && CurrentSpeed > deathSpeedThreshold) RecoverControl();
-        else if (!isDying && CurrentSpeed <= deathSpeedThreshold) StartDyingSequence();
-        else if (CurrentSpeed <= 0)
-        {
-            CurrentSpeed = 0;
-            StartCoroutine(DestroyProcess());
-        }
+        CheckState();
     }
 
     private void CheckState()
     {
-        if (isDying && CurrentSpeed > deathSpeedThreshold) RecoverControl();
-        else if (!isDying && CurrentSpeed <= deathSpeedThreshold || CurrentSpeed < 0)
+        if (isDying)
         {
-            if (CurrentSpeed < deathSpeedThreshold) CurrentSpeed = deathSpeedThreshold;
+            if (CurrentSpeed > deathSpeedThreshold)
+            {
+                RecoverControl();
+            }
+            else if (CurrentSpeed <= 0)
+            {
+                CurrentSpeed = 0;
+                Die();
+            }
+
+            return;
+        }
+
+        if (CurrentSpeed <= deathSpeedThreshold)
+        {
+            if (CurrentSpeed < deathSpeedThreshold)
+            {
+                CurrentSpeed = deathSpeedThreshold;
+            }
+
             StartDyingSequence();
         }
     }
@@ -162,26 +173,14 @@ public class Train : MonoBehaviour
         // 1. 진행 중인 모든 코루틴 강제 중단
         StopAllCoroutines();
 
+        ResetDyingPresentation(false);
+
         // 2. 상태 플래그 '생존'으로 강제 변경
         isDying = false;
-        inKnockback = false;
         isDead = false;
 
         // 3. 물리/트윈 움직임 정지 및 부모 관계 해제
-        transform.DOKill();
         transform.SetParent(null);
-
-        // 4. 손 오브젝트 즉시 비활성화 및 원위치
-        if (handObject != null)
-        {
-            handObject.transform.DOKill();
-            handObject.SetActive(false);
-            handObject.transform.position = handInitialPos;
-        }
-
-        // 5. 오버레이(붉은 화면) 해제
-        if (overlayBorderAnim != null) overlayBorderAnim.Rebind();
-        if (overlayEffectAnim != null) overlayEffectAnim.Rebind();
 
         // 6. 게임오버 UI 끄기
         if (tempDieUI != null) tempDieUI.SetActive(false);
@@ -200,6 +199,11 @@ public class Train : MonoBehaviour
 
     private void StartDyingSequence()
     {
+        if (isDead || isDying)
+        {
+            return;
+        }
+
         isDying = true;
         if (trainController != null) trainController.enabled = false;
 
@@ -263,22 +267,54 @@ public class Train : MonoBehaviour
     private void RecoverControl()
     {
         isDying = false;
-        inKnockback = false;
-
-        transform.DOKill();
+        ResetDyingPresentation(true);
         if (trainController != null) trainController.enabled = true;
 
         if (Spawner.Instance != null) Spawner.Instance.SetRearSpawning(true);
+    }
 
+    private void ResetDyingPresentation(bool playEscapeTrigger)
+    {
+        inKnockback = false;
+
+        transform.DOKill();
         if (handObject != null)
         {
             handObject.transform.DOKill();
-            handObject.transform.DOMove(handInitialPos, handMoveDuration)
-                .SetEase(Ease.InQuad)
-                .OnComplete(() => handObject.SetActive(false));
+            if (playEscapeTrigger)
+            {
+                handObject.transform.DOMove(handInitialPos, handMoveDuration)
+                    .SetEase(Ease.InQuad)
+                    .SetUpdate(true)
+                    .OnComplete(() => handObject.SetActive(false));
+            }
+            else
+            {
+                handObject.transform.position = handInitialPos;
+                handObject.SetActive(false);
+            }
         }
 
-        SetOverlayTrigger("Escape");
+        ResetOverlayAnimator(overlayBorderAnim);
+        ResetOverlayAnimator(overlayEffectAnim);
+
+        if (playEscapeTrigger)
+        {
+            SetOverlayTrigger("Escape");
+        }
+    }
+
+    private void ResetOverlayAnimator(Animator animator)
+    {
+        if (animator == null)
+        {
+            return;
+        }
+
+        animator.ResetTrigger("Dying");
+        animator.ResetTrigger("Escape");
+        animator.Rebind();
+        animator.Update(0f);
     }
 
     private void SetOverlayTrigger(string triggerName)

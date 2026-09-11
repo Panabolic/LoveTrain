@@ -64,6 +64,7 @@ public class EndingManager : MonoBehaviour
     private void OnDestroy()
     {
         KillEndingTweens();
+        if (Instance == this) Instance = null;
     }
 
     private void Update()
@@ -73,7 +74,7 @@ public class EndingManager : MonoBehaviour
         if (isCreditsPlaying)
         {
             // 스킵 (스페이스바) -> 패널 날리기 연출 후 종료
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
             {
                 Debug.Log("⏩ 엔딩 스킵 (패널 이동)");
                 SkipEndingSequence();
@@ -100,7 +101,13 @@ public class EndingManager : MonoBehaviour
         endingSequence = DOTween.Sequence();
         endingSequence.SetUpdate(true);
 
-        endingSequence.AppendCallback(() => GameManager.Instance.ChangeState(GameState.Ending));
+        endingSequence.AppendCallback(() =>
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.ChangeState(GameState.Ending);
+            }
+        });
 
         if (fadePanel != null) endingSequence.Append(fadePanel.FadeIn(1.0f)); // 암전 (Alpha 1)
         else endingSequence.AppendInterval(1.0f);
@@ -155,6 +162,12 @@ public class EndingManager : MonoBehaviour
 
     private IEnumerator SpawnCreditsRoutine()
     {
+        if (developerNames == null)
+        {
+            isSpawningFinished = true;
+            yield break;
+        }
+
         foreach (string creditText in developerNames)
         {
             if (isEndingFinished) yield break;
@@ -167,9 +180,13 @@ public class EndingManager : MonoBehaviour
 
     private void SpawnCreditObject(string text)
     {
-        if (creditPrefab == null || creditSpawnPoints.Length == 0) return;
+        if (creditPrefab == null || creditSpawnPoints == null || creditSpawnPoints.Length == 0) return;
+
         int randIdx = Random.Range(0, creditSpawnPoints.Length);
-        GameObject obj = Instantiate(creditPrefab, creditSpawnPoints[randIdx].position, Quaternion.identity);
+        Transform spawnPoint = creditSpawnPoints[randIdx];
+        if (spawnPoint == null) return;
+
+        GameObject obj = Instantiate(creditPrefab, spawnPoint.position, Quaternion.identity);
         activeCredits.Add(obj);
         CreditEnemy credit = obj.GetComponent<CreditEnemy>();
         if (credit != null) credit.Initialize(text);

@@ -7,11 +7,17 @@ public class StartMenuManager : MonoBehaviour
     [Tooltip("빌드 설정(Build Settings)에 등록된 플레이 씬의 이름을 정확히 입력하세요.")]
     [SerializeField] private string playSceneName = "PlayScene"; // 여기에 실제 게임 씬 이름을 입력
 
+    private void Start()
+    {
+        Option.SetOptionInputBlocked(false);
+    }
+
     /// <summary>
     /// 게임 시작 버튼을 눌렀을 때 호출될 함수입니다.
     /// </summary>
     public void LoadPlayScene()
     {
+        Option.SetOptionInputBlocked(true);
         // Debug.Log($"플레이 씬 '{playSceneName}'을 로드합니다...");
         SceneManager.LoadScene(playSceneName);
     }
@@ -22,7 +28,7 @@ public class StartMenuManager : MonoBehaviour
     {
         // 씬 전환이 필요하다면 여기서 SceneManager.LoadScene("MainGame") 등을 호출
         // 씬 전환 후 상태 변경
-        GameManager.Instance.ChangeState(GameState.Start);
+        if (GameManager.Instance != null) GameManager.Instance.ChangeState(GameState.Start);
     }
 
     /// <summary>
@@ -30,6 +36,7 @@ public class StartMenuManager : MonoBehaviour
     /// </summary>
     public void QuitGame()
     {
+        Option.SetOptionInputBlocked(true);
         // Debug.Log("게임을 종료합니다...");
         Application.Quit();
 

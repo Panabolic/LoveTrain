@@ -1,0 +1,285 @@
+LOVE TRAIN THIRD-PARTY NOTICES
+
+Document date: 2026-06-13
+
+This file records third-party materials used by, or conservatively kept with,
+the LoveTrain release candidate.
+
+This file is provided for attribution and license notice purposes. It is not a
+substitute for final legal review.
+
+========================================================================
+Super Pixel Impact FX Pack 2
+========================================================================
+
+Author / licensor: Will Tice / unTied Games
+Source: https://untiedgames.itch.io/super-pixel-impact-fx-pack-2
+License source: https://untiedgames.com/files/license.txt
+Project path: Assets/Sprites/Super Pixel Impact FX Pack 2
+Use in LoveTrain: DyingExplosion visual effect and/or pixel impact visual
+effects.
+
+The asset page describes the license as:
+"Attribution + no reselling the asset itself. Commercial and non-commercial use
+OK!"
+
+The retained license notice states that the asset pack license permits
+commercial and non-commercial use in a game or application product, requires
+attribution to Will Tice in credits, forbids public distribution of the raw
+asset pack except as part of a game or application product, excludes game-making
+tools unless separately waived, and forbids use of the asset packs as AI
+training material.
+
+Credit used in LoveTrain:
+"Super Pixel Impact FX Pack 2" by Will Tice / unTied Games.
+
+========================================================================
+DOTween Pro
+========================================================================
+
+Copyright (c) 2014-2018 Daniele Giardini - Demigiant
+Project path: Assets/Plugins/Demigiant
+License source: https://dotween.demigiant.com/license.php
+
+DOTween Pro is a licensed Unity Asset Store asset. It may be used in commercial
+and non-commercial Unity applications when every person working on the Unity
+project has a valid DOTween Pro license. Do not redistribute DOTween Pro source
+or plugin portions outside the shipped game unless the Demigiant license
+expressly permits that distribution.
+
+Credit / notice used in LoveTrain:
+DOTween Pro by Daniele Giardini / Demigiant.
+
+========================================================================
+Steamworks.NET
+========================================================================
+
+Steamworks.NET is provided under the MIT License as part of Steamworks.NET.
+Copyright (c) 2013-2022 Riley Labrecque
+Project path: Assets/com.rlabrecque.steamworks.net
+License source: http://www.opensource.org/licenses/mit-license.php
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+========================================================================
+Valve Steamworks SDK Runtime
+========================================================================
+
+Component: steam_api64.dll
+Project path: Assets/com.rlabrecque.steamworks.net/Plugins/steam_api64.dll
+
+This runtime binary is part of the Steamworks SDK integration and is subject to
+Valve's Steamworks SDK / Steamworks partner terms. Track the SDK binary in the
+internal license inventory and confirm redistributable packaging through the
+Steamworks partner documentation before release.
+
+========================================================================
+DungGeunMo / 둥근모꼴+ Fixedsys
+========================================================================
+
+Font: DungGeunMo / DungGeunMo SDF / 둥근모꼴+ Fixedsys
+Project path: Assets/TextMesh Pro/Fonts/DungGeunMo.ttf
+Source evidence: https://cactus.tistory.com/193
+Additional source evidence: https://noonnu.cc/font_page/250
+
+The retained source evidence identifies DungGeunMo as a public-domain-based
+font family. Source page credits include the original DungGeunMo work by Kim
+Jung-tae and Fixedsys Excelsior by Darien Gavin Valentine, with Kil Hyung-jin /
+Cactus listed in the font metadata.
+
+Use in LoveTrain: In-game UI text, captions, and related text rendering.
+
+Credit used in LoveTrain:
+DungGeunMo / 둥근모꼴+ Fixedsys by Kil Hyung-jin / Cactus.
+
+========================================================================
+LiberationSans
+========================================================================
+
+Project path: Assets/TextMesh Pro/Fonts/LiberationSans.ttf
+Project license file: Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt
+
+Digitized data copyright (c) 2010 Google Corporation
+with Reserved Font Arimo, Tinos and Cousine.
+Copyright (c) 2012 Red Hat, Inc.
+with Reserved Font Name Liberation.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+The full license text is provided with the project at the path above.
+
+Note: LoveTrain's TMP default font has been changed to DungGeunMo, but
+LiberationSans sample files remain in the project. Keep this notice while those
+files are shipped or otherwise included in release materials.
+
+========================================================================
+EmojiOne TMP Sample Sprite Asset
+========================================================================
+
+Project path: Assets/TextMesh Pro/Sprites/EmojiOne.png
+Project attribution file: Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt
+
+The TextMesh Pro sample attribution states that the emoji sample is provided by
+EmojiOne and points users to https://www.emojione.com/ for licensing terms.
+
+Note: LoveTrain's TMP default sprite asset and emoji support have been disabled,
+but EmojiOne sample files remain in the project. Keep this notice while those
+files are shipped or otherwise included in release materials.
+
+========================================================================
+285 Game Sound Effects Vol.1
+========================================================================
+
+Author / licensor: Filippo Vicarelli / Filippo Game Audio
+Source: https://filippogameaudio.itch.io/game-sound-effects-01
+Use in LoveTrain: In-game sound effects.
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+The asset page states that all audio files are released under the Creative
+Commons Attribution 4.0 license and gives the example credit:
+"Sound Effects by Filippo Vicarelli."
+
+Credit used in LoveTrain:
+"285 Game Sound Effects Vol.1" by Filippo Vicarelli / Filippo Game Audio,
+licensed under CC BY 4.0.
+
+Changes:
+Files may be renamed, volume-adjusted, trimmed, looped, or converted for
+technical integration in Unity if needed.
+
+========================================================================
+900 Retro Sound Effects!
+========================================================================
+
+Author / licensor: brockjroderick
+Source: https://brockjroderick.itch.io/900-retro-sound-effects
+Use in LoveTrain: In-game sound effects.
+License / permission evidence: itch.io purchase record and creator page. The
+creator has answered that the asset pack is royalty-free.
+
+Attribution is not explicitly stated as required in the currently retained
+evidence, but LoveTrain credits the asset voluntarily.
+
+Credit used in LoveTrain:
+"900 Retro Sound Effects!" by brockjroderick.
+
+Changes:
+Files may be renamed, volume-adjusted, trimmed, looped, or converted for
+technical integration in Unity if needed.
+
+========================================================================
+8Bit Arcade Game Sound Pack
+========================================================================
+
+Author / licensor: SwissDude
+Source: https://swissdude15.itch.io/8bit-arcade-game-sound-asset-pack
+Use in LoveTrain: In-game sound effects, including laser, item, UI, and related
+retro sound effects.
+License / permission evidence: itch.io purchase record and creator reply.
+
+The creator confirmed that use in a commercial game and modification are
+permitted. Attribution is not explicitly stated as required in the currently
+retained evidence, but LoveTrain credits the asset voluntarily.
+
+The asset page states that no generative AI was used.
+
+Some project files were renamed during implementation. A small set of files
+contains embedded metadata that does not match the public asset pack author
+name. The project planner confirmed that the relevant files used in LoveTrain
+originate from this purchased SwissDude asset pack, and they are treated as
+part of this pack rather than as separate third-party assets.
+
+Examples of project files mapped to this pack include:
+- Assets/Resources/Sounds/ETC/촉수 소환.wav
+- Assets/Resources/Sounds/Items/레이저 발사.wav
+- Assets/Resources/Sounds/Items/회복.wav
+- Assets/Resources/Sounds/Items/BeatingHeart.wav
+- Assets/Resources/Sounds/UI/보스 경고.wav
+
+Credit used in LoveTrain:
+"8Bit Arcade Game Sound Pack" by SwissDude.
+
+Changes:
+Files may be renamed, volume-adjusted, trimmed, looped, or converted for
+technical integration in Unity if needed.
+
+========================================================================
+8-Bit Sound Effects [100+ SFX]
+========================================================================
+
+Author / licensor: Beep Yeah!
+Source: https://beepyeah.itch.io/8-bit-sfx-pack
+Use in LoveTrain: In-game sound effects.
+License / permission evidence: itch.io purchase record and asset page retained
+by the project planner.
+
+The asset page states personal or commercial use and royalty-free use.
+
+Credit used in LoveTrain:
+"8-Bit Sound Effects [100+ SFX]" by Beep Yeah!.
+
+Changes:
+Files may be renamed, volume-adjusted, trimmed, looped, or converted for
+technical integration in Unity if needed.
+
+========================================================================
+Retro-stylized Sound Library
+========================================================================
+
+Author / licensor: Helton Yan
+Source: https://heltonyan.itch.io/pixelcombat
+Use in LoveTrain: In-game sound effects.
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Credit used in LoveTrain:
+"Retro-stylized Sound Library" by Helton Yan, licensed under CC BY 4.0.
+
+Changes:
+Files may be renamed, volume-adjusted, trimmed, looped, or converted for
+technical integration in Unity if needed.
+
+========================================================================
+Suno AI Background Music
+========================================================================
+
+Creator / tool: Generated by TEAM MadMole using Suno AI
+Use in LoveTrain: In-game background music.
+Subscription evidence: Suno Pro receipt dated 2025-12-04 retained by the
+project planner.
+Generation date: 2025-12-14 for all listed tracks.
+
+Tracks used:
+- "Slowing mechanical sound"
+- "Very slow tempo"
+- "Heavy mechanical drum beat"
+
+These tracks were generated during a paid Suno Pro subscription period.
+LoveTrain voluntarily discloses the use of Suno AI-generated background music
+in its credits and license documentation.
+
+========================================================================
+Generative AI Disclosure
+========================================================================
+
+Some visual concepts, promotional images, text drafts, and background music
+were created or edited with the assistance of generative AI tools. The final
+materials were reviewed, selected, modified, and integrated by the developer.
+
+The game does not include real-time generative AI features during gameplay.

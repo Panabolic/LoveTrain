@@ -8,6 +8,8 @@ public class FlyMob : Mob
 
     private void FixedUpdate()
     {
+        if (rigid2D == null) return;
+
         if (!isAlive && !isStunned)
         {
             moveDirection           = Vector2.left;
@@ -21,6 +23,8 @@ public class FlyMob : Mob
         // Movement Logic
         if (isAlive && !isStunned)
         {
+            if (targetRigid == null) return;
+
             SetMoveDirection(targetRigid.position);
 
             rigid2D.linearVelocity = moveDirection.normalized * moveSpeed;
@@ -36,7 +40,7 @@ public class FlyMob : Mob
         {
             moveDirection = (deltaX > 0f) ? Vector2.right : Vector2.left;
 
-            sprite.flipX = (moveDirection.x > 0f);
+            if (sprite != null) sprite.flipX = (moveDirection.x > 0f);
 
             return;
         }
@@ -46,7 +50,7 @@ public class FlyMob : Mob
         }
 
         // Set sprite to move direction
-        sprite.flipX = (moveDirection.x > 0f);
+        if (sprite != null) sprite.flipX = (moveDirection.x > 0f);
 
         return;
     }

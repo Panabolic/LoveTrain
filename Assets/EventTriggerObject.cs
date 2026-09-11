@@ -13,6 +13,12 @@ public class EventTriggerObject : MonoBehaviour
     // 내부 변수
     private Vector3 moveDirection;
     private bool hasTriggered = false; // 이벤트 중복 발동 방지
+    private SO_Event eventOverride;
+
+    public void SetEventOverride(SO_Event nextEvent)
+    {
+        eventOverride = nextEvent;
+    }
 
     private void Start()
     {
@@ -56,9 +62,11 @@ public class EventTriggerObject : MonoBehaviour
             // 3. 이벤트 매니저를 통해 이벤트 시작
             if (EventManager.Instance != null)
             {
-                EventManager.Instance.RandomEventStart();
                 hasTriggered = true; // 중복 실행 방지 플래그 On
-                exclamateObj.SetActive(false);
+                if (eventOverride != null) EventManager.Instance.RequestEvent(eventOverride);
+                else EventManager.Instance.RandomEventStart();
+
+                if (exclamateObj != null) exclamateObj.SetActive(false);
             }
 
             // (선택 사항) 충돌 후 시각적 피드백이 필요하면 여기서 처리

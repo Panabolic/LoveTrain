@@ -35,6 +35,8 @@ public class Mob : Enemy
 
     private void FixedUpdate()
     {
+        if (rigid2D == null) return;
+
         // Right after death
         if (!isAlive && !isStunned)
         {
@@ -49,6 +51,8 @@ public class Mob : Enemy
         // Movement Logic
         if (isAlive && !isStunned)
         {
+            if (targetRigid == null) return;
+
             SetMoveDirection(targetRigid.position);
 
             rigid2D.linearVelocity = new Vector2(moveDirection.x * moveSpeed, rigid2D.linearVelocity.y);
@@ -65,20 +69,20 @@ public class Mob : Enemy
         if (x > 0f)
         {
             moveDirection = Vector2.right;
-            sprite.flipX = (moveDirection.x > 0f);
+            if (sprite != null) sprite.flipX = (moveDirection.x > 0f);
             return;
         }
         if (x < 0f)
         {
             moveDirection = Vector2.left;
-            sprite.flipX = (moveDirection.x > 0f);
+            if (sprite != null) sprite.flipX = (moveDirection.x > 0f);
             return;
         }
 
         moveDirection = Vector2.zero;
 
         // Set sprite to move direction
-        sprite.flipX = (moveDirection.x > 0f);
+        if (sprite != null) sprite.flipX = (moveDirection.x > 0f);
 
         return;
     }
@@ -125,6 +129,12 @@ public class Mob : Enemy
 
     protected override float CalculateCalibratedHP()
     {
+        if (GameManager.Instance == null || PoolManager.instance == null)
+        {
+            calibratedMaxHP = hp;
+            return calibratedMaxHP;
+        }
+
         // [수정 1] 게임 시간(분)을 정수(int)로 변환하여 소수점 버림
         // 예: 0분 59초(0.9xxx) -> 0, 1분 1초(1.0xxx) -> 1
         int gameTimeMin = (int)(GameManager.Instance.gameTime / 60.0f);
@@ -155,11 +165,13 @@ public class Mob : Enemy
     {
         base.TakeDamage(damageAmount);
 
-        hitEffect.Play();
+        if (hitEffect != null) hitEffect.Play();
     }
 
     public void Knockback(Vector2 direction, float power)
     {
+        if (rigid2D == null) return;
+
         Vector2 force = direction.normalized * power;
 
         StartCoroutine(Stun());
@@ -186,7 +198,7 @@ public class Mob : Enemy
 
         SoundEventBus.Publish(SoundID.Enemy_Die);
 
-        sprite.enabled = false;
+        if (sprite != null) sprite.enabled = false;
         gameObject.SetActive(false);
 
         if (OnDied != null) OnDied(this);

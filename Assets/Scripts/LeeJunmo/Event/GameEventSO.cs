@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq; // .Sum()을 사용하기 위해
 
 [CreateAssetMenu(fileName = "New Event Select", menuName = "Event System/Event Select")]
 public class GameEventSO : ScriptableObject
@@ -18,10 +17,18 @@ public class GameEventSO : ScriptableObject
     public List<string> Trigger(GameObject target)
     {
         List<string> results = new List<string>();
+        if (rollGroups == null) return results;
 
         foreach (EventRollGroup group in rollGroups)
         {
-            float totalWeight = group.outcomes.Sum(o => o.weight);
+            if (group == null || group.outcomes == null) continue;
+
+            float totalWeight = 0f;
+            foreach (WeightedEventOutcome outcome in group.outcomes)
+            {
+                if (outcome != null) totalWeight += outcome.weight;
+            }
+
             if (totalWeight <= 0) continue;
 
             float roll = Random.Range(0f, totalWeight);
@@ -29,6 +36,8 @@ public class GameEventSO : ScriptableObject
 
             foreach (var outcome in group.outcomes)
             {
+                if (outcome == null) continue;
+
                 roll -= outcome.weight;
                 if (roll <= 0f)
                 {

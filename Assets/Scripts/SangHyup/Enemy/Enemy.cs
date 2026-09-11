@@ -171,9 +171,15 @@ public class Enemy : MonoBehaviour
             inventory.ProcessKillEvent(this.gameObject);
         }
 
-        this.sprite.enabled = false;
+        if (sprite != null)
+        {
+            sprite.enabled = false;
+        }
 
-        Instantiate(killParticle, gameObject.transform.position, gameObject.transform.rotation);
+        if (killParticle != null)
+        {
+            Instantiate(killParticle, gameObject.transform.position, gameObject.transform.rotation);
+        }
 
         yield return new WaitForSeconds(0);
     }
@@ -192,7 +198,11 @@ public class Enemy : MonoBehaviour
     {
         if (PoolManager.instance != null)
         {
-            material.SetInt("_isHit", 0);
+            if (material != null)
+            {
+                material.SetInt("_isHit", 0);
+            }
+
             PoolManager.instance.UnregisterEnemy(this);
         }
     }

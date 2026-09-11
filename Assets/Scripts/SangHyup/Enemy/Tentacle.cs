@@ -99,7 +99,11 @@ public class Tentacle : Enemy
 
         if (currentHP <= 0)
         {
-            Instantiate(killParticle, transform.position, Quaternion.identity);
+            if (killParticle != null)
+            {
+                Instantiate(killParticle, transform.position, Quaternion.identity);
+            }
+
             SoundEventBus.Publish(SoundID.Enemy_Die);
             Destroy(gameObject);
         }

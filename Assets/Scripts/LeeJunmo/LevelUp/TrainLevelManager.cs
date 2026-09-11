@@ -86,7 +86,19 @@ public class TrainLevelManager : MonoBehaviour
 
         // ✨ [핵심 수정] 직접 UI를 띄우지 않고, GameManager 큐에 등록
         // 레벨업이 연속으로 일어나도 큐에 쌓여서 하나씩 처리됨
-        GameManager.Instance.RegisterUIQueue(() => LevelUpUIManager.Instance.ShowLevelUpChoices());
+        if (GameManager.Instance == null) return;
+
+        GameManager.Instance.RegisterUIQueue(() =>
+        {
+            if (LevelUpUIManager.Instance != null)
+            {
+                LevelUpUIManager.Instance.ShowLevelUpChoices();
+            }
+            else if (GameManager.Instance != null)
+            {
+                GameManager.Instance.CloseUI();
+            }
+        });
     }
 
     /// <summary>

@@ -70,7 +70,7 @@ internal static class ScreenDisplaySettings
             case FullScreenMode.FullScreenWindow:
                 return ScreenDisplayModeOption.Borderless;
             default:
-                return ScreenDisplayModeOption.Fullscreen;
+                return ScreenDisplayModeOption.Borderless;
         }
     }
 
@@ -133,11 +133,7 @@ internal static class ScreenDisplaySettings
         else
         {
             ScreenResolutionOption nativeResolution = GetNativeResolution();
-            FullScreenMode fullScreenMode = mode == ScreenDisplayModeOption.Borderless
-                ? FullScreenMode.FullScreenWindow
-                : FullScreenMode.ExclusiveFullScreen;
-
-            Screen.SetResolution(nativeResolution.Width, nativeResolution.Height, fullScreenMode);
+            Screen.SetResolution(nativeResolution.Width, nativeResolution.Height, FullScreenMode.FullScreenWindow);
             FixedAspectRatioController.RequestRefresh();
         }
 
@@ -197,7 +193,7 @@ internal static class ScreenDisplaySettings
     {
         if (value < (int)ScreenDisplayModeOption.Windowed || value > (int)ScreenDisplayModeOption.Borderless)
         {
-            return ScreenDisplayModeOption.Fullscreen;
+            return ScreenDisplayModeOption.Borderless;
         }
 
         return (ScreenDisplayModeOption)value;
