@@ -16,46 +16,10 @@ public class Effect_AcquireSpecificItem : GameEffectSO
         Inventory inventory = target.GetComponent<Inventory>();
         if (inventory == null) return EnglishLocalization.Get("result.error.inventory_missing", "오류: Inventory를 찾을 수 없습니다.");
 
-        // 3. 로직 실행 '전'의 상태를 저장
-        ItemInstance instance = inventory.FindItem(itemToGive);
-        int oldLevel = (instance != null) ? instance.currentUpgrade : 0;
-        bool isNewItem = (instance == null);
+        if (!inventory.CanAcquireItem(itemToGive))
+            return $"<{itemToGive.LocalizedName}>: already owned or no attachment slot available.";
+        inventory.AcquireItem(itemToGive);
+        return EnglishLocalization.Format("result.item_acquired", "새로운 아이템 <{0}>(을)를 획득했습니다.", itemToGive.LocalizedName);
 
-        // 4. (기존 아이템) 이미 최대 레벨이면 즉시 종료
-        if (!isNewItem && oldLevel >= itemToGive.MaxUpgrade)
-        {
-            return EnglishLocalization.Format("result.item_max", "<{0}>(이)가 이미 최대 레벨(MAX)입니다.", itemToGive.LocalizedName);
-        }
-
-        // 5. 로직 실행 (N번 반복)
-        for (int i = 0; i < acquireCount; i++)
-        {
-            if (isNewItem && i == 0)
-            {
-                inventory.AcquireItem(itemToGive);
-                instance = inventory.FindItem(itemToGive); // 인스턴스 참조 갱신
-            }
-            else
-            {
-                if (instance.currentUpgrade >= instance.itemData.MaxUpgrade) break;
-                // [수정]
-                inventory.UpgradeItemInstance(instance);
-            }
-        }
-
-        // 6. 최종 결과 텍스트 반환
-        string levelText = (instance.currentUpgrade >= instance.itemData.MaxUpgrade) ? "MAX" : $"Lv.{instance.currentUpgrade}";
-
-        if (isNewItem)
-        {
-            if (acquireCount > 1) // "NEW → N"
-                return EnglishLocalization.Format("result.new_item_upgrade", "<{0}>(이)가 (NEW → {1})로 업그레이드되었습니다.", itemToGive.LocalizedName, levelText);
-            else // "NEW" (acquireCount가 1이었음)
-                return EnglishLocalization.Format("result.item_acquired", "새로운 아이템 <{0}>(을)를 획득했습니다.", itemToGive.LocalizedName);
-        }
-        else // "Lv.N → Lv.M"
-        {
-            return EnglishLocalization.Format("result.item_upgraded", "<{0}>(이)가 (Lv.{1} → {2})로 업그레이드되었습니다.", itemToGive.LocalizedName, oldLevel, levelText);
-        }
     }
 }

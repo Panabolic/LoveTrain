@@ -23,56 +23,11 @@ public class Effect_AcquireItem : GameEffectSO
 
         // --- [핵심 수정] ---
 
-        // 3. 로직 실행 '전'의 상태를 저장
-        ItemInstance instance = inventory.FindItem(itemToGive);
-        int oldLevel = (instance != null) ? instance.currentUpgrade : 0;
-        bool isNewItem = (instance == null);
+        if (!inventory.CanAcquireItem(itemToGive))
+            return $"<{itemToGive.LocalizedName}>: already owned or no attachment slot available.";
+        inventory.AcquireItem(itemToGive);
+        return EnglishLocalization.Format("result.item_acquired", "새로운 아이템 <{0}>(을)를 획득했습니다.", itemToGive.LocalizedName);
 
-        // 4. (기존 아이템) 이미 최대 레벨이면 즉시 종료
-        if (!isNewItem && oldLevel >= itemToGive.MaxUpgrade)
-        {
-            return EnglishLocalization.Format("result.item_max", "<{0}>(이)가 이미 최대 레벨(MAX)입니다.", itemToGive.LocalizedName);
-        }
-
-        // 5. 로직 실행 (N번 반복)
-        for (int i = 0; i < acquireCount; i++)
-        {
-            // 5a. [신규] 첫 번째 획득
-            if (isNewItem && i == 0)
-            {
-                inventory.AcquireItem(itemToGive); // [실행 1] (이때 1레벨이 됨)
-                instance = inventory.FindItem(itemToGive); // 인스턴스 참조 갱신
-            }
-            else // [업그레이드]
-            {
-                if (instance.currentUpgrade >= instance.itemData.MaxUpgrade) break;
-
-                // [수정] 인벤토리를 통해 업그레이드 (UI 갱신됨)
-                inventory.UpgradeItemInstance(instance);
-            }
-        }
-        // --- [수정 끝] ---
-
-
-        // 6. 최종 결과 텍스트 반환
-        string levelText = (instance.currentUpgrade >= instance.itemData.MaxUpgrade) ? "MAX" : $"Lv.{instance.currentUpgrade}";
-
-        if (isNewItem) // (oldLevel이 0이었음)
-        {
-            if (acquireCount > 1) // "NEW → N"
-            {
-                return EnglishLocalization.Format("result.new_item_upgrade", "<{0}>(이)가 (NEW → {1})로 업그레이드되었습니다.", itemToGive.LocalizedName, levelText);
-            }
-            else // "NEW" (acquireCount가 1이었음)
-            {
-                return EnglishLocalization.Format("result.item_acquired", "새로운 아이템 <{0}>(을)를 획득했습니다.", itemToGive.LocalizedName);
-            }
-        }
-        else // (oldLevel이 1 이상이었음)
-        {
-            // "Lv.N → Lv.M"
-            return EnglishLocalization.Format("result.item_upgraded", "<{0}>(이)가 (Lv.{1} → {2})로 업그레이드되었습니다.", itemToGive.LocalizedName, oldLevel, levelText);
-        }
     }
 
     /// <summary>
@@ -84,7 +39,10 @@ public class Effect_AcquireItem : GameEffectSO
         int acquireCount = parameters.intValue;
         if (acquireCount <= 0) acquireCount = 1;
 
-        // (ItemDatabase를 찾는 로직이 필요 - 예: Resources.Load 또는 싱글톤)
-        return EnglishLocalization.Get("result.error.random_acquire", "랜덤 아이템 획득 로직 실행 (ItemDatabase 필요)");
+        var wallet = target.GetComponent<TrainLevelManager>();
+        if (wallet == null) return "Flesh reward unavailable.";
+        int reward = 50 * acquireCount;
+        wallet.GainExperience(reward);
+        return $"Flesh +{reward}";
     }
 }

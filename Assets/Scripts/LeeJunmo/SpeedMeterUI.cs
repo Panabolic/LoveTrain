@@ -84,7 +84,7 @@ public class SpeedMeterUI : MonoBehaviour
             float ratio = (range > 0) ? (currentSpeed - thresholdSpeed) / range : 0f;
 
             // 135도 -> 0도(설정값)로 이동
-            targetAngleZ = Mathf.Lerp(angleAtThreshold, angleAtMaxSpeed, Mathf.Clamp01(ratio));
+            targetAngleZ = Mathf.LerpUnclamped(angleAtThreshold, angleAtMaxSpeed, ratio);
         }
         else
         {

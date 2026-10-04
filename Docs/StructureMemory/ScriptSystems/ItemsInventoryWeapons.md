@@ -71,6 +71,17 @@ See [Localization](./Localization.md) for the keyed CSV workflow. Item_SO resolv
 
 ## Extension Entry Points
 
+### Train attachment HUD (2026-10-04)
+
+- Junmo uses `InventoryUI.useTrainLayout` with serialized `headSlots`, `middleSlots`, `tailSlots` (three each), and `wheelSlots` (one). Other scenes retain the legacy layoutGroup1/layoutGroup2 presentation by default.
+- The HUD reuses InventoryCell prefabs; InventorySlotUI continues to own icon, level marker, cooldown, and tooltip presentation.
+- InventoryCell owns its dark Backdrop child (first sibling, stretch anchors, 2px inset, no raycast). Scene instances no longer need separate background objects. Existing child names remain intact for InventorySlotUI's named image lookup.
+- `InventoryUI` projects items by `Item_SO.attachmentSocketName`: TrainF to head, TrainR to tail, and other/root attachments to middle. Explicit `wheelItems` references override socket grouping; Junmo currently assigns BlueGear and RedGear.
+- Within each section, display follows inventory order. Precise top/front/center placement and multi-slot occupancy require a future equipment-position contract; these UI locations do not change the item's actual gameplay socket.
+- `hiddenItemCountText` shows +N for equipped items beyond display capacity. This is a UI count only; item acquisition and effects remain owned by Inventory.
+- TrainAttachmentLayout uses the existing train textures as cropped RawImages behind nine equally sized attachment cells and a shared wheel cell. Legacy grids remain disabled in Junmo rather than being deleted.
+- Generated C# project compilation and isolated presenter checks passed; Unity scene import and Play Mode visuals remain unverified.
+
 - Add a new passive or active item by deriving from `Item_SO`, adding a `CreateAssetMenu`, and implementing only the needed hooks.
 - Add or change item-active game states in `ItemRuntimeGameStatePolicy`, then review cooldowns and instantiated item update loops.
 - Add an instantiated item prefab by assigning `Item_SO.instantiatedPrefab` and implementing `IInstantiatedItem` on its behaviour when upgrade sync is needed.
@@ -97,3 +108,10 @@ See [Localization](./Localization.md) for the keyed CSV workflow. Item_SO resolv
 ## Promotion Candidate
 
 This map can become a future item/weapon contract after content authoring rules and serialized item schemas stabilize.
+
+
+## 2026-10-04 Gameplay update (current source)
+
+Gun은 전투 중 자동 발사하고 조준은 기존 입력을 유지한다. Inventory.CanAcquireItem은 중복 및 머리/가운데/꼬리 3칸, 공용 바퀴 1칸을 제한한다. AcquireItem 중복 업그레이드는 제거하고 전용 UpgradeItemInstance를 유지한다. TrainLevelManager는 살점/창조 비용을 제공하고 LevelUpUIManager.ShowCreation은 F 확정, R 유료 재추첨, Esc 취소 및 취소 후 제안 유지를 담당한다. Junmo FleshText는 명시적으로 연결된다.
+
+검증/기본 수치/범위: `Docs/SessionLogs/2026-10-04-combat-fuel-creation.md`.

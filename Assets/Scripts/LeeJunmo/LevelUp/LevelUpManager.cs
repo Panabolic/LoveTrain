@@ -3,6 +3,8 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using TMPro;
 
 public class LevelUpUIManager : MonoBehaviour
 {
@@ -38,6 +40,111 @@ public class LevelUpUIManager : MonoBehaviour
     private bool hasCachedLayout;
     private bool isRevealing;
     private Sequence revealSequence;
+
+    private TrainLevelManager creationWallet;
+    private Item_SO creationOffer;
+    private Item_SO pendingCreationOffer;
+    private TMP_Text creationHelp;
+    private Button rerollButton;
+    private Button cancelButton;
+    private int creationOpenedFrame;
+
+    public void ShowCreation(TrainLevelManager wallet)
+    {
+        ResetLevelUpUIState();
+        creationWallet = wallet;
+        creationOpenedFrame = Time.frameCount;
+        if (wallet == null || wallet.Flesh < wallet.CreationCost || itemDatabase == null || playerInventory == null || choiceSlot2 == null || levelUpPanel == null || itemDatabase.allItems == null)
+        { CloseLevelUpUI(); return; }
+        EnsureCreationControls();
+        creationHelp.gameObject.SetActive(true);
+        rerollButton.gameObject.SetActive(true);
+        cancelButton.gameObject.SetActive(true);
+        levelUpPanel.SetActive(true);
+        if (titleTextRect != null) titleTextRect.gameObject.SetActive(false);
+        if (pendingCreationOffer != null && playerInventory.CanAcquireItem(pendingCreationOffer))
+        {
+            creationOffer = pendingCreationOffer;
+            SetupSlot(choiceSlot2, creationOffer);
+            choiceSlot2.GetComponent<Button>().interactable = true;
+            UpdateCreationHelp();
+        }
+        else RollCreationOffer();
+    }
+
+    private void EnsureCreationControls()
+    {
+        if (creationHelp != null) return;
+        var source = choiceSlot2.GetComponentInChildren<TMP_Text>(true);
+        var label = new GameObject("CreationHelp", typeof(RectTransform));
+        label.transform.SetParent(levelUpPanel.transform, false);
+        creationHelp = label.AddComponent<TextMeshProUGUI>();
+        if (source != null) creationHelp.font = source.font;
+        creationHelp.fontSize = 14;
+        creationHelp.alignment = TextAlignmentOptions.Center;
+        creationHelp.raycastTarget = false;
+        var rect = (RectTransform)label.transform;
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = new Vector2(0, -150);
+        rect.sizeDelta = new Vector2(440, 38);
+        rerollButton = CreateCreationButton("Reroll", new Vector2(-85, -195), () => RerollCreation());
+        cancelButton = CreateCreationButton("Cancel", new Vector2(85, -195), () => CloseLevelUpUI());
+    }
+
+    private Button CreateCreationButton(string label, Vector2 position, UnityEngine.Events.UnityAction action)
+    {
+        var go = new GameObject(label, typeof(RectTransform), typeof(Image), typeof(Button));
+        go.transform.SetParent(levelUpPanel.transform, false);
+        var rect = (RectTransform)go.transform;
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = position; rect.sizeDelta = new Vector2(150, 32);
+        go.GetComponent<Image>().color = new Color(0.15f, 0.18f, 0.23f);
+        var textGo = new GameObject("Label", typeof(RectTransform));
+        textGo.transform.SetParent(go.transform, false);
+        var text = textGo.AddComponent<TextMeshProUGUI>();
+        text.font = creationHelp.font; text.fontSize = 14; text.text = label == "Reroll" ? "R · Reroll" : "Esc · Cancel";
+        text.alignment = TextAlignmentOptions.Center; text.raycastTarget = false;
+        var tr = (RectTransform)textGo.transform; tr.anchorMin = Vector2.zero; tr.anchorMax = Vector2.one; tr.sizeDelta = Vector2.zero;
+        var button = go.GetComponent<Button>(); button.onClick.AddListener(action); return button;
+    }
+
+    private List<Item_SO> GetCreationCandidates()
+    {
+        return itemDatabase.allItems.Where(item => playerInventory.CanAcquireItem(item)).Distinct().ToList();
+    }
+
+    private void RollCreationOffer()
+    {
+        var candidates = GetCreationCandidates();
+        if (candidates.Count == 0) { CloseLevelUpUI(); return; }
+        if (candidates.Count > 1) candidates.Remove(creationOffer);
+        creationOffer = candidates[Random.Range(0, candidates.Count)];
+        pendingCreationOffer = creationOffer;
+        SetupSlot(choiceSlot2, creationOffer);
+        choiceSlot2.GetComponent<Button>().interactable = true;
+        UpdateCreationHelp();
+    }
+
+    private void UpdateCreationHelp()
+    {
+        creationHelp.text = $"F / Click · Create {creationWallet.CreationCost}   |   Reroll {creationWallet.RerollCost}   |   Flesh {creationWallet.Flesh}";
+        rerollButton.interactable = GetCreationCandidates().Count > 1 && (long)creationWallet.Flesh >= (long)creationWallet.CreationCost + creationWallet.RerollCost;
+    }
+
+    private void RerollCreation()
+    {
+        if (creationWallet == null || !rerollButton.interactable) return;
+        if (creationWallet.TrySpendFlesh(creationWallet.RerollCost)) RollCreationOffer();
+    }
+
+    private void Update()
+    {
+        if (creationWallet == null || levelUpPanel == null || !levelUpPanel.activeSelf || Keyboard.current == null || Time.frameCount <= creationOpenedFrame) return;
+        if (GameManager.Instance == null || GameManager.Instance.CurrentState != GameState.Event) return;
+        if (Keyboard.current.escapeKey.wasPressedThisFrame) CloseLevelUpUI();
+        else if (Keyboard.current.rKey.wasPressedThisFrame) RerollCreation();
+        else if (Keyboard.current.fKey.wasPressedThisFrame) OnChoiceSelected(creationOffer);
+    }
 
     private void Awake()
     {
@@ -92,18 +199,12 @@ public class LevelUpUIManager : MonoBehaviour
             ItemInstance instance = playerInventory.FindItem(item);
 
             // 1. 아직 없는 아이템이면 획득 가능
-            if (instance == null)
+            if (playerInventory.CanAcquireItem(item))
             {
                 availableItems.Add(item);
             }
             // 2. 이미 있는 아이템이면 Max 레벨이 아닐 때만 강화 가능
-            else
-            {
-                if (instance.currentUpgrade < item.MaxUpgrade)
-                {
-                    availableItems.Add(item);
-                }
-            }
+
         }
 
         // ✨ [핵심 수정] 획득/강화 가능한 아이템이 하나도 없으면 스킵
@@ -155,6 +256,17 @@ public class LevelUpUIManager : MonoBehaviour
     public void OnChoiceSelected(Item_SO selectedItemSO)
     {
         if (isRevealing) return;
+        if (creationWallet != null)
+        {
+            if (selectedItemSO != creationOffer || !playerInventory.CanAcquireItem(selectedItemSO)) { CloseLevelUpUI(); return; }
+            if (!creationWallet.TrySpendFlesh(creationWallet.CreationCost)) return;
+            playerInventory.AcquireItem(selectedItemSO);
+            creationWallet.CompleteCreation();
+            pendingCreationOffer = null;
+            CloseLevelUpUI();
+            return;
+        }
+
         if (selectedItemSO == null || playerInventory == null)
         {
             CloseLevelUpUI();
@@ -308,6 +420,11 @@ public class LevelUpUIManager : MonoBehaviour
 
     private void ResetLevelUpUIState()
     {
+        creationWallet = null;
+        creationOffer = null;
+        if (creationHelp != null) creationHelp.gameObject.SetActive(false);
+        if (rerollButton != null) rerollButton.gameObject.SetActive(false);
+        if (cancelButton != null) cancelButton.gameObject.SetActive(false);
         KillRevealSequence();
         isRevealing = false;
         choiceShouldReveal.Clear();

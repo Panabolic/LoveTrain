@@ -499,3 +499,14 @@ Map enemy base behavior, mob movement/death, pooling, spawn phases, boss sequenc
 ## Promotion Candidate
 
 This map can become a future enemy/boss architecture document after spawn authoring, boss reward behavior, and pooled enemy lifecycle rules stabilize.
+
+
+## 2026-10-04 Gameplay update (current source)
+
+Junmo Spawner에 FuelBarrel.prefab 참조 및 20초 간격 추가. FuelBarrel은 Enemy를 상속하고 생성 시 시각/충돌을 초기화하며 처치에만 연료20/살점5 보상. 화면 진입 타겟팅과 Enemy 처치 훅을 재사용하고 수명 만료/정리는 보상 없이 제거한다.
+
+검증/기본 수치/범위: `Docs/SessionLogs/2026-10-04-combat-fuel-creation.md`.
+
+2026-10-04 추가: Train.AccelerationProgress로 일반 스폰 빈도(1~1.75배)와 전후 지점 가중치(앞1~4/뒤1~0.25)를 보정. Mob/FlyMob은 Train.RelativeWorldSpeed를 수평 속도에서 빼며, 밀려난 화면 밖 몬스터는 보상 없이 반환. 기준속도에서 기존 분포 유지. 수치/범위는 같은 날짜 게임플레이 로그 참조.
+
+2026-10-04 체감 조정(이전 숫자 대체): 일반 스폰 최대1.35배, 전면 확률은 기존 비율→최대80%까지 선형 변화. 몬스터 상대속도 보정은 초당2까지 변화하여 질주 진입/종료의 즉시 점프를 완화. 진행 단계의 기본 간격 변화는 유지.

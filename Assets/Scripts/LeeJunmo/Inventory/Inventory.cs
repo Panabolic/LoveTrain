@@ -53,22 +53,26 @@ public class Inventory : MonoBehaviour
     /// 새 아이템을 획득(또는 업그레이드)합니다.
     /// UI 갱신 이벤트를 호출합니다.
     /// </summary>
+    public static int AttachmentSection(Item_SO item)
+    {
+        if (item is BlueGear_SO || item is RedGear_SO) return 3;
+        if (item.attachmentSocketName == "TrainF") return 0;
+        if (item.attachmentSocketName == "TrainR") return 2;
+        return 1;
+    }
+
+    public bool CanAcquireItem(Item_SO item)
+    {
+        if (item == null || FindItem(item) != null) return false;
+        int section = AttachmentSection(item), count = 0;
+        foreach (var owned in items)
+            if (owned != null && owned.itemData != null && AttachmentSection(owned.itemData) == section) count++;
+        return count < (section == 3 ? 1 : 3);
+    }
+
     public void AcquireItem(Item_SO newItemSO)
     {
-        // 1. 이미 가진 아이템인지 SO 참조로 비교
-        foreach (ItemInstance instance in items)
-        {
-            if (instance.itemData == newItemSO)
-            {
-                // 2. 이미 있으면 업그레이드 요청
-                // (최대 레벨 체크는 ItemInstance 또는 Item_SO의 로직이 담당)
-                instance.UpgradeLevel();
-
-                // 3. UI 갱신 알림
-                OnInventoryChanged?.Invoke();
-                return;
-            }
-        }
+        if (!CanAcquireItem(newItemSO)) return;
 
         // 4. 없으면 신규 아이템으로 추가
         ItemInstance newInstance = new ItemInstance(newItemSO);

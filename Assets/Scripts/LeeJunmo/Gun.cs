@@ -79,7 +79,7 @@ public class Gun : MonoBehaviour
     private void Start()
     {
         SetWeapon(new ProjectileStrategy());
-        levelManager.OnLevelUp += OnLevelUpDamageIncrease;
+        if (levelManager != null) levelManager.OnLevelUp += OnLevelUpDamageIncrease;
     }
 
     // -------------------------------------------------------
@@ -159,7 +159,7 @@ public class Gun : MonoBehaviour
     {
         // ✨ [핵심 수정] 데미지 계산 공식 통합
         // (기본뎀 + 레벨성장) * (1 + 아이템배율) * (무기비율)
-        float growthDamage = levelManager.CurrentLevel * damageEachLevel;
+        float growthDamage = (levelManager != null ? levelManager.CurrentLevel : 1) * damageEachLevel;
 
         CurrentStats.damage = (baseStats.damage + growthDamage)
                               * (1f + damageMultiplier)
@@ -198,29 +198,21 @@ public class Gun : MonoBehaviour
         currentStrategy.Initialize(this, CurrentStats);
     }
 
+    private void OnDestroy()
+    {
+        if (levelManager != null) levelManager.OnLevelUp -= OnLevelUpDamageIncrease;
+        currentStrategy?.Unequip();
+    }
+
     void Update()
     {
-        if (GameManager.Instance != null)
+        bool shouldFire = false;
+        if (GameManager.Instance != null && Time.timeScale > 0f)
         {
-            GameState currentState = GameManager.Instance.CurrentState;
-            if (currentState == GameState.Die || currentState == GameState.StageTransition)
-            {
-                if (currentStrategy != null) currentStrategy.Process(false);
-                return;
-            }
+            GameState state = GameManager.Instance.CurrentState;
+            shouldFire = state == GameState.Playing || state == GameState.Boss ||
+                (state == GameState.Start && Mouse.current != null && Mouse.current.leftButton.isPressed);
         }
-
-        if (Time.timeScale == 0)
-        {
-            if (currentStrategy != null) currentStrategy.Process(false);
-            return;
-        }
-
-        bool isTriggerHeld = fireAction != null && fireAction.action.IsPressed();
-
-        if (currentStrategy != null)
-        {
-            currentStrategy.Process(isTriggerHeld);
-        }
+        currentStrategy?.Process(shouldFire);
     }
 }

@@ -11,12 +11,12 @@ public class AutoScrollBackground : MonoBehaviour
     [Tooltip("관리할 배경 레이어들을 등록해주세요.")]
     public ParallaxLayer[] layers;
 
-    private float spriteWidth;
     private bool isScrolling = false;
 
     void Start()
     {
-        if (cameraTransform == null) cameraTransform = Camera.main.transform;
+        if (cameraTransform == null && Camera.main != null) cameraTransform = Camera.main.transform;
+        if (cameraTransform == null) { enabled = false; return; }
 
         if (train == null)
         {
@@ -28,6 +28,8 @@ public class AutoScrollBackground : MonoBehaviour
                 return;
             }
         }
+
+        EnsureViewportCoverage();
 
         if (GameManager.Instance != null)
         {
@@ -76,25 +78,87 @@ public class AutoScrollBackground : MonoBehaviour
             layer.layerTransform.position -= new Vector3(movement, 0, 0);
         }
 
-        // 2. 무한 스크롤 재배치
+        // Recycle only tiles wholly outside the viewport; camera-center recycling exposes gaps when zoomed out.
+        float halfWidth = Camera.main != null ? Camera.main.orthographicSize * Camera.main.aspect : 0f;
+        float leftEdge = cameraTransform.position.x - halfWidth;
+        float rightEdge = cameraTransform.position.x + halfWidth;
         foreach (ParallaxLayer layer in layers)
         {
-            if (layer.layerTransform.childCount < 2) continue;
-
-            spriteWidth = layer.layerTransform.GetChild(0).GetComponent<SpriteRenderer>().bounds.size.x;
-
-            Transform leftChild = layer.layerTransform.GetChild(0);
-            Transform rightChild = layer.layerTransform.GetChild(1);
-
-            if (currentTrainSpeed > 0 && cameraTransform.position.x > rightChild.position.x)
+            if (layer.layerTransform == null || layer.layerTransform.childCount < 2) continue;
+            int limit = layer.layerTransform.childCount;
+            for (int i = 0; i < limit; i++)
             {
-                leftChild.position = new Vector3(rightChild.position.x + spriteWidth, leftChild.position.y, leftChild.position.z);
-                leftChild.SetAsLastSibling();
+                Transform first = layer.layerTransform.GetChild(0);
+                Transform last = layer.layerTransform.GetChild(layer.layerTransform.childCount - 1);
+                var firstSprite = first.GetComponent<SpriteRenderer>();
+                var lastSprite = last.GetComponent<SpriteRenderer>();
+                if (firstSprite == null || lastSprite == null) break;
+                if (currentTrainSpeed > 0f && firstSprite.bounds.max.x < leftEdge)
+                {
+                    first.position += Vector3.right * (lastSprite.bounds.max.x - firstSprite.bounds.min.x);
+                    first.SetAsLastSibling();
+                }
+                else if (currentTrainSpeed < 0f && lastSprite.bounds.min.x > rightEdge)
+                {
+                    last.position += Vector3.right * (firstSprite.bounds.min.x - lastSprite.bounds.max.x);
+                    last.SetAsFirstSibling();
+                }
+                else break;
             }
-            else if (currentTrainSpeed < 0 && cameraTransform.position.x < leftChild.position.x)
+        }
+    }
+
+    private void EnsureViewportCoverage()
+    {
+        if (Camera.main == null || layers == null) return;
+        float viewWidth = Camera.main.orthographicSize * Camera.main.aspect * 2f;
+        var visited = new System.Collections.Generic.HashSet<Transform>();
+        foreach (var layer in layers)
+        {
+            Transform root = layer.layerTransform;
+            if (root == null || root.childCount == 0 || !visited.Add(root)) continue;
+            var first = root.GetChild(0).GetComponent<SpriteRenderer>();
+            if (first == null || first.bounds.size.x <= 0f) continue;
+            // Keep authored tile artwork and vertical offsets, but make horizontal seams contiguous.
+            for (int i = 1; i < root.childCount; i++)
             {
-                rightChild.position = new Vector3(leftChild.position.x - spriteWidth, rightChild.position.y, rightChild.position.z);
-                rightChild.SetAsFirstSibling();
+                var previous = root.GetChild(i - 1).GetComponent<SpriteRenderer>();
+                var current = root.GetChild(i).GetComponent<SpriteRenderer>();
+                if (previous == null || current == null) continue;
+                current.transform.position += Vector3.right * (previous.bounds.max.x - current.bounds.min.x);
+            }
+            float leftEdge = cameraTransform.position.x - viewWidth * 0.5f;
+            float rightEdge = cameraTransform.position.x + viewWidth * 0.5f;
+            // Move an unused right tile to the left before the first rendered frame, when needed.
+            for (int i = 0; i < root.childCount; i++)
+            {
+                var left = root.GetChild(0).GetComponent<SpriteRenderer>();
+                var right = root.GetChild(root.childCount - 1).GetComponent<SpriteRenderer>();
+                if (left == null || right == null || left.bounds.min.x <= leftEdge || right.bounds.min.x <= rightEdge) break;
+                right.transform.position += Vector3.right * (left.bounds.min.x - right.bounds.max.x);
+                right.transform.SetAsFirstSibling();
+            }
+            int count = Mathf.Max(2, Mathf.CeilToInt(viewWidth / first.bounds.size.x) + 1);
+            // Authored tiles are already contiguous. Append enough tiles to cover the larger viewport while recycling.
+            while (root.childCount < count)
+            {
+                var left = root.GetChild(0).GetComponent<SpriteRenderer>();
+                bool prepend = left != null && left.bounds.min.x > leftEdge;
+                Transform source = prepend ? root.GetChild(0) : root.GetChild(root.childCount - 1);
+                var sourceSprite = source.GetComponent<SpriteRenderer>();
+                if (sourceSprite == null) break;
+                GameObject extra = Instantiate(source.gameObject, root);
+                var extraSprite = extra.GetComponent<SpriteRenderer>();
+                if (prepend)
+                {
+                    extra.transform.position += Vector3.right * (sourceSprite.bounds.min.x - extraSprite.bounds.max.x);
+                    extra.transform.SetAsFirstSibling();
+                }
+                else
+                {
+                    extra.transform.position += Vector3.right * (sourceSprite.bounds.max.x - extraSprite.bounds.min.x);
+                    extra.transform.SetAsLastSibling();
+                }
             }
         }
     }

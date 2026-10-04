@@ -14,6 +14,8 @@ public class Mob : Enemy
 
     protected Vector2 moveDirection = Vector2.zero;
 
+    protected Train playerTrain;
+
     protected bool isStunned    = false;
     private float stunDuration  = 0.5f;
 
@@ -22,6 +24,7 @@ public class Mob : Enemy
     protected override void Awake()
     {
         base.Awake();
+        if (targetRigid != null) playerTrain = targetRigid.GetComponent<Train>();
 
         // Get components
         rigid2D     = GetComponent<Rigidbody2D>();
@@ -31,6 +34,16 @@ public class Mob : Enemy
     protected override void Start()
     {
         base.Start();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        // Falling behind is not a kill: return the pooled enemy without farming rewards.
+        if (!isAlive || !hasEnteredScreen || playerTrain == null || Camera.main == null ||
+            playerTrain.RelativeWorldSpeed <= moveSpeed || GameManager.Instance == null ||
+            (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss)) return;
+        if (Camera.main.WorldToViewportPoint(transform.position).x < -0.15f) DespawnWithoutExp();
     }
 
     private void FixedUpdate()
@@ -55,7 +68,7 @@ public class Mob : Enemy
 
             SetMoveDirection(targetRigid.position);
 
-            rigid2D.linearVelocity = new Vector2(moveDirection.x * moveSpeed, rigid2D.linearVelocity.y);
+            rigid2D.linearVelocity = new Vector2(moveDirection.x * moveSpeed - (playerTrain != null ? playerTrain.RelativeWorldSpeed : 0f), rigid2D.linearVelocity.y);
         }
     }
 

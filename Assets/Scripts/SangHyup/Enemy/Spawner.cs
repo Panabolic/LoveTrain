@@ -77,6 +77,15 @@ public class Spawner : MonoBehaviour
     private int currentFlyEliteMin, currentFlyEliteMax;
     private float currentSpawnInterval = 1.0f;
 
+    [Header("Fuel supply")]
+    [SerializeField] private GameObject fuelBarrelPrefab;
+    [SerializeField] private float fuelBarrelInterval = 20f;
+    private float fuelBarrelTimer;
+    [Header("Acceleration spawn balance")]
+    [SerializeField] private Train playerTrain;
+    [SerializeField, Min(1f)] private float maxBasicSpawnRateMultiplier = 1.35f;
+    [SerializeField, Range(0f, 1f)] private float maxFrontSpawnProbability = 0.8f;
+    private float AccelerationProgress => playerTrain != null ? playerTrain.AccelerationProgress : 0f;
     private float mobTimer;
     private float eliteMobTimer;
     private float nextBossSpawnTime;
@@ -89,6 +98,11 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
+        if (playerTrain == null)
+        {
+            var player = GameObject.FindWithTag("Player");
+            if (player != null) playerTrain = player.GetComponent<Train>();
+        }
         mobTimer = 0f;
         eliteMobTimer = eliteMobSpawnInterval;
 
@@ -106,19 +120,29 @@ public class Spawner : MonoBehaviour
     {
         if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss) return;
 
+        if (isSpawningEnabled && fuelBarrelPrefab != null)
+        {
+            fuelBarrelTimer += Time.deltaTime;
+            if (fuelBarrelTimer >= Mathf.Max(1f, fuelBarrelInterval))
+            {
+                fuelBarrelTimer = 0f;
+                Instantiate(fuelBarrelPrefab, GetSpawnPosition(false), Quaternion.identity);
+            }
+        }
+
         float gameTime = GameManager.Instance.gameTime;
         UpdatePhase(gameTime);
 
-        mobTimer += Time.deltaTime;
-        if (gameTime >= firstEliteSpawnTime) eliteMobTimer += Time.deltaTime;
+        if (isSpawningEnabled) mobTimer += Time.deltaTime * Mathf.Lerp(1f, Mathf.Max(1f, maxBasicSpawnRateMultiplier), AccelerationProgress);
+        if (isSpawningEnabled && gameTime >= firstEliteSpawnTime) eliteMobTimer += Time.deltaTime;
 
-        if (mobTimer >= currentSpawnInterval)
+        if (isSpawningEnabled && mobTimer >= Mathf.Max(0.1f, currentSpawnInterval))
         {
             SpawnBasicMobs();
-            mobTimer = 0f;
+            mobTimer %= Mathf.Max(0.1f, currentSpawnInterval);
         }
 
-        if (gameTime >= firstEliteSpawnTime && eliteMobTimer >= eliteMobSpawnInterval)
+        if (isSpawningEnabled && gameTime >= firstEliteSpawnTime && eliteMobTimer >= eliteMobSpawnInterval)
         {
             SpawnEliteMob();
             eliteMobTimer = 0f;
@@ -271,24 +295,57 @@ public class Spawner : MonoBehaviour
         if (mob != null) { mob.OnDied -= RespawnMob; mob.OnDied += RespawnMob; }
     }
 
+    private float SideWeight(bool front, int frontCount, int rearCount)
+    {
+        if (frontCount == 0) return !front && isRearSpawnEnabled ? 1f : 0f;
+        if (rearCount == 0 || !isRearSpawnEnabled) return front ? 1f : 0f;
+        float baseline = (float)frontCount / (frontCount + rearCount);
+        float probability = Mathf.Lerp(baseline, Mathf.Max(baseline, maxFrontSpawnProbability), AccelerationProgress);
+        return front ? probability / frontCount : (1f - probability) / rearCount;
+    }
+
     private Vector3 GetSpawnPosition(bool isFly)
     {
-        if (isFly)
+        if (isFly && flyMobSpawnAreas != null && flyMobSpawnAreas.Length > 0)
         {
-            if (flyMobSpawnAreas != null && flyMobSpawnAreas.Length > 0)
+            float playerX = playerTrain != null ? playerTrain.transform.position.x : transform.position.x;
+            int fronts = 0, rears = 0;
+            foreach (var area in flyMobSpawnAreas)
+                if (area != null) { if (area.bounds.center.x >= playerX) fronts++; else rears++; }
+            float total = fronts * SideWeight(true, fronts, rears) + rears * SideWeight(false, fronts, rears);
+            float roll = UnityEngine.Random.value * total;
+            foreach (var area in flyMobSpawnAreas)
             {
-                int whichArea = UnityEngine.Random.Range(0, flyMobSpawnAreas.Length);
-                Bounds bounds = flyMobSpawnAreas[whichArea].bounds;
+                if (area == null) continue;
+                float weight = SideWeight(area.bounds.center.x >= playerX, fronts, rears);
+                if (weight <= 0f) continue;
+                roll -= weight;
+                if (roll > 0f) continue;
+                Bounds bounds = area.bounds;
                 return new Vector3(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), UnityEngine.Random.Range(bounds.min.y, bounds.max.y), 0f);
             }
         }
-        else
-        {
-            List<Transform> candidates = new List<Transform>();
-            if (groundFrontPoints != null) candidates.AddRange(groundFrontPoints);
-            if (isRearSpawnEnabled && groundRearPoints != null) candidates.AddRange(groundRearPoints);
-            if (candidates.Count > 0) return candidates[UnityEngine.Random.Range(0, candidates.Count)].position;
-        }
+        int frontCount = 0, rearCount = 0;
+        if (groundFrontPoints != null) foreach (var point in groundFrontPoints) if (point != null) frontCount++;
+        if (groundRearPoints != null) foreach (var point in groundRearPoints) if (point != null) rearCount++;
+        float frontWeight = SideWeight(true, frontCount, rearCount);
+        float rearWeight = SideWeight(false, frontCount, rearCount);
+        float sum = frontCount * frontWeight + rearCount * rearWeight;
+        float sample = UnityEngine.Random.value * sum;
+        if (groundFrontPoints != null && frontWeight > 0f)
+            foreach (var point in groundFrontPoints)
+            {
+                if (point == null) continue;
+                sample -= frontWeight;
+                if (sample <= 0f) return point.position;
+            }
+        if (groundRearPoints != null && rearWeight > 0f)
+            foreach (var point in groundRearPoints)
+            {
+                if (point == null) continue;
+                sample -= rearWeight;
+                if (sample <= 0f) return point.position;
+            }
         return transform.position;
     }
 

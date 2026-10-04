@@ -27,7 +27,8 @@ public class FlyMob : Mob
 
             SetMoveDirection(targetRigid.position);
 
-            rigid2D.linearVelocity = moveDirection.normalized * moveSpeed;
+            rigid2D.linearVelocity = moveDirection.normalized * moveSpeed -
+                Vector2.right * (playerTrain != null ? playerTrain.RelativeWorldSpeed : 0f);
         }
     }
 

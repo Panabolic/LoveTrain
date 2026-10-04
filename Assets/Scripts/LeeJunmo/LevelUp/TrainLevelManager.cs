@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System;
 using System.Linq;
+using UnityEngine.InputSystem;
+using TMPro;
 
 public class TrainLevelManager : MonoBehaviour
 {
@@ -52,79 +54,71 @@ public class TrainLevelManager : MonoBehaviour
         ExperienceForCurrentLevel = 0;
 
         // 1 -> 2 레벨업 경험치 계산
-        ExperienceToNextLevel = CalculateRequiredDeltaXP(2);
+        ExperienceToNextLevel = float.PositiveInfinity;
     }
 
-    public void GainExperience(float amount)
+    [Header("Part creation")]
+    [SerializeField] private int initialCreationCost = 50;
+    [SerializeField] private int creationCostIncrease = 25;
+    [SerializeField] private int rerollCost = 10;
+    public int Flesh => economy.Flesh;
+    public int CreatedParts => economy.CreatedParts;
+    public int CreationCost => (int)Math.Max(1L, Math.Min(int.MaxValue, (long)initialCreationCost + (long)CreatedParts * Math.Max(0, creationCostIncrease)));
+    public int RerollCost => Mathf.Max(0, rerollCost);
+    private readonly RunPartEconomy economy = new RunPartEconomy();
+    [SerializeField] private TMP_Text fleshText;
+    private bool creationQueued;
+
+    private void Update()
     {
-        if (amount <= 0) return;
-
-        TotalExperience += amount;
-        OnExperienceGained?.Invoke();
-
-        // 레벨업 조건 충족 시 반복 (한 번에 여러 레벨업 가능)
-        while (TotalExperience >= ExperienceToNextLevel)
-        {
-            LevelUp();
-        }
-    }
-
-    private void LevelUp()
-    {
-        CurrentLevel++;
-
-        // 1. 현재 레벨 달성 시점 저장
-        ExperienceForCurrentLevel = ExperienceToNextLevel;
-
-        // 2. 다음 레벨 목표치 계산
-        int nextLevelDelta = CalculateRequiredDeltaXP(CurrentLevel + 1);
-
-        // 3. 최종 목표 누적 경험치 갱신
-        ExperienceToNextLevel = ExperienceForCurrentLevel + nextLevelDelta;
-
-        OnLevelUp?.Invoke();
-
-        // ✨ [핵심 수정] 직접 UI를 띄우지 않고, GameManager 큐에 등록
-        // 레벨업이 연속으로 일어나도 큐에 쌓여서 하나씩 처리됨
-        if (GameManager.Instance == null) return;
-
+        if (fleshText != null) fleshText.text = $"살점 {Flesh}";
+        bool combat = GameManager.Instance != null && Time.timeScale > 0f &&
+            (GameManager.Instance.CurrentState == GameState.Playing || GameManager.Instance.CurrentState == GameState.Boss);
+        if (!combat || GameManager.Instance.IsTimeForEnding || creationQueued || Flesh < CreationCost || Keyboard.current == null || !Keyboard.current.fKey.wasPressedThisFrame) return;
+        if (LevelUpUIManager.Instance == null) return;
+        creationQueued = true;
         GameManager.Instance.RegisterUIQueue(() =>
         {
-            if (LevelUpUIManager.Instance != null)
-            {
-                LevelUpUIManager.Instance.ShowLevelUpChoices();
-            }
-            else if (GameManager.Instance != null)
-            {
-                GameManager.Instance.CloseUI();
-            }
+            creationQueued = false;
+            if (this != null && LevelUpUIManager.Instance != null)
+                LevelUpUIManager.Instance.ShowCreation(this);
+            else if (GameManager.Instance != null) GameManager.Instance.CloseUI();
         });
     }
 
-    /// <summary>
-    /// 목표 레벨 도달에 필요한 경험치량 계산 (공식 적용)
-    /// </summary>
-    private int CalculateRequiredDeltaXP(int targetLevel)
+    // Legacy enemy reward entry point now grants flesh instead of XP and level-up choices.
+    public void GainExperience(float amount)
     {
-        // 1. 레벨 구간 변수 (Lp)
-        int levelGroupIndex = (targetLevel - 1) / 10;
-        int levelPeriodVariable = levelGroupIndex * levelPeriodStep;
-
-        // 2. 벽 변수 (Wv) - 배열에서 검색
-        int wallVariable = 0;
-        if (experienceWalls != null)
-        {
-            foreach (var wall in experienceWalls)
-            {
-                if (wall.targetLevel == targetLevel)
-                {
-                    wallVariable = wall.bonusXP;
-                    break;
-                }
-            }
-        }
-
-        // 3. 최종 공식: (목표 레벨 * (기본값 + 구간변수)) + 벽변수
-        return ((targetLevel-1) * (baseRequiredXP + levelPeriodVariable)) + wallVariable;
+        if (amount <= 0f || float.IsNaN(amount) || float.IsInfinity(amount)) return;
+        economy.AddReward(Mathf.CeilToInt(amount));
+        OnExperienceGained?.Invoke();
     }
+
+    public bool TrySpendFlesh(int amount)
+    {
+        if (!economy.TrySpend(amount)) return false;
+        OnExperienceGained?.Invoke();
+        return true;
+    }
+
+    public void CompleteCreation() { economy.CompleteCreation(); OnExperienceGained?.Invoke(); }
+
+}
+
+public sealed class RunPartEconomy
+{
+    public int Flesh { get; private set; }
+    public int CreatedParts { get; private set; }
+    public void AddReward(int amount)
+    {
+        if (amount <= 0) return;
+        Flesh = (int)Math.Min(int.MaxValue, (long)Flesh + amount);
+    }
+    public bool TrySpend(int amount)
+    {
+        if (amount < 0 || Flesh < amount) return false;
+        Flesh -= amount;
+        return true;
+    }
+    public void CompleteCreation() { if (CreatedParts < int.MaxValue) CreatedParts++; }
 }

@@ -87,3 +87,12 @@ Map the runtime ownership around game state, train/player lifecycle, stage trans
 ## Promotion Candidate
 
 This map can become a future architecture document once game state, stage transition, and train death/recovery ownership stabilizes.
+
+
+## 2026-10-04 Gameplay update (current source)
+
+Train은 이제 연료(CurrentFuel/MaxFuel)가 체력이며 속도로 사망하지 않는다. TrainDriveState(Train.cs 내부 순수 클래스)가 Shift 가속, 해제 후 1초 지연 감속, 5초/1.5배 질주 및 재무장을 담당한다. 전투 상태에서만 주행/연료 시간이 흐른다. 연료 고갈은 기존 사망/엔딩 경로와 연결된다. TrainLevelManager의 GainExperience는 살점을 지급하고 자동 XP 레벨업은 중단한다. 현재 소스에는 과거 메모리의 TrainSpeedHealth/TrainLevelProgression 분리 파일이 없다.
+
+검증/기본 수치/범위: `Docs/SessionLogs/2026-10-04-combat-fuel-creation.md`.
+
+2026-10-04 넓은 화면: Junmo 카메라 size24/y4.22581, 두 BeltScroll 프리팹 Lane 시각1.5배 및 collider 높이/두께 역보정. AutoScrollBackground는 viewport 기준 타일 수/초기 커버리지/재배치를 담당. 지상/비행 스폰 영역 확대. 상세 검증은 `Docs/SessionLogs/2026-10-04-camera-wide-view.md`.

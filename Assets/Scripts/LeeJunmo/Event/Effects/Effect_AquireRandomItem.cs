@@ -11,56 +11,10 @@ public class Effect_AcquireRandomItem : GameEffectSO
 
     public override string Execute(GameObject target, EffectParameters parameters)
     {
-        int acquireCount = parameters.intValue;
-        if (acquireCount <= 0) acquireCount = 1;
-
-        Inventory inventory = target.GetComponent<Inventory>();
-        if (inventory == null || itemDatabase == null) return EnglishLocalization.Get("result.error.item_database_missing", "오류: Inventory 또는 ItemDatabase가 없습니다.");
-
-        // 1. '획득 가능한' 아이템 풀을 필터링 (최대 레벨 아이템 제외)
-        List<Item_SO> availablePool = new List<Item_SO>();
-        foreach (Item_SO item in itemDatabase.allItems)
-        {
-            if (!inventory.IsItemMaxed(item)) // (Inventory에 IsItemMaxed 헬퍼 함수 필요)
-            {
-                availablePool.Add(item);
-            }
-        }
-
-        if (availablePool.Count == 0)
-        {
-            return EnglishLocalization.Get("result.no_new_items", "획득할 수 있는 새로운 아이템이 없습니다.");
-        }
-
-        // 2. 풀에서 N개 뽑기
-        System.Random rng = new System.Random();
-        List<Item_SO> choices = availablePool.OrderBy(x => rng.Next()).Take(acquireCount).ToList();
-
-        // 3. 텍스트 조합 및 아이템 획득
-        List<string> results = new List<string>();
-        foreach (Item_SO item in choices)
-        {
-            bool isNew = (inventory.FindItem(item) == null);
-            inventory.AcquireItem(item);
-
-            if (isNew)
-            {
-                results.Add($"<{item.LocalizedName}> [NEW!]");
-            }
-            else
-            {
-                if (inventory.FindItem(item).currentUpgrade == inventory.FindItem(item).itemData.MaxUpgrade)
-                {
-                    results.Add(EnglishLocalization.Format("result.item_to_max", "<{0}> [레벨 {1} -> MAX]", item.LocalizedName, inventory.FindItem(item).currentUpgrade - 1));
-                }
-                else
-                {
-                    results.Add(EnglishLocalization.Format("result.item_level_change", "<{0}> [레벨 {1} -> {2}]", item.LocalizedName, inventory.FindItem(item).currentUpgrade - 1, inventory.FindItem(item).currentUpgrade));
-                }
-            }
-                
-        } 
-
-        return EnglishLocalization.Get("result.random_items", "랜덤 아이템 획득:\n- ") + string.Join("\n- ", results);
+        var wallet = target.GetComponent<TrainLevelManager>();
+        if (wallet == null) return "Flesh reward unavailable.";
+        int reward = 50 * Mathf.Max(1, parameters.intValue);
+        wallet.GainExperience(reward);
+        return $"Flesh +{reward}";
     }
 }
