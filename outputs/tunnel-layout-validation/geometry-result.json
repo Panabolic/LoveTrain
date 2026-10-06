@@ -1,0 +1,85 @@
+{
+  "ValidationKind": "Static source/PNG alpha geometry only; Unity import/render/PlayMode not executed",
+  "CameraSize": 20.8,
+  "ContentAspect": "16:9",
+  "PngAlphaBounds": [
+    {
+      "Path": "Assets/Sprites/Maps/Map1/Map1New/tunnel front.png",
+      "Width": 355,
+      "Height": 365,
+      "PixelsPerUnit": 16.0,
+      "OpaqueMinLocalX": 3.78125,
+      "OpaqueMaxLocalX": 11.09375
+    },
+    {
+      "Path": "Assets/Sprites/Maps/Map1/Map1New/tunnel back.png",
+      "Width": 355,
+      "Height": 365,
+      "PixelsPerUnit": 16.0,
+      "OpaqueMinLocalX": -7.40625,
+      "OpaqueMaxLocalX": 11.09375
+    },
+    {
+      "Path": "Assets/Sprites/Maps/Map2/tunnel2 front.png",
+      "Width": 355,
+      "Height": 365,
+      "PixelsPerUnit": 16.0,
+      "OpaqueMinLocalX": 8.84375,
+      "OpaqueMaxLocalX": 11.09375
+    },
+    {
+      "Path": "Assets/Sprites/Maps/Map2/tunnel2 back.png",
+      "Width": 355,
+      "Height": 365,
+      "PixelsPerUnit": 16.0,
+      "OpaqueMinLocalX": -5.34375,
+      "OpaqueMaxLocalX": 8.84375
+    }
+  ],
+  "Cases": [
+    {
+      "Tunnel": "Tunnel1",
+      "CameraOffset": 0,
+      "SpawnOffscreenMargin": 13.74930222222222,
+      "ArrivalRightOvershoot": 0.10930222222221886,
+      "CoreTrainEntryOffscreenMargin": 23.855552222222222
+    },
+    {
+      "Tunnel": "Tunnel1",
+      "CameraOffset": 100,
+      "SpawnOffscreenMargin": 13.749302222222212,
+      "ArrivalRightOvershoot": 0.10930222222222596,
+      "CoreTrainEntryOffscreenMargin": 23.85555222222223
+    },
+    {
+      "Tunnel": "Tunnel1",
+      "CameraOffset": 1000,
+      "SpawnOffscreenMargin": 13.74930222222224,
+      "ArrivalRightOvershoot": 0.1093022222221407,
+      "CoreTrainEntryOffscreenMargin": 23.85555222222206
+    },
+    {
+      "Tunnel": "Tunnel2",
+      "CameraOffset": 0,
+      "SpawnOffscreenMargin": 20.080192222222223,
+      "ArrivalRightOvershoot": 0.017692222222216003,
+      "CoreTrainEntryOffscreenMargin": 23.855552222222222
+    },
+    {
+      "Tunnel": "Tunnel2",
+      "CameraOffset": 100,
+      "SpawnOffscreenMargin": 20.080192222222223,
+      "ArrivalRightOvershoot": 0.01769222222222311,
+      "CoreTrainEntryOffscreenMargin": 23.85555222222223
+    },
+    {
+      "Tunnel": "Tunnel2",
+      "CameraOffset": 1000,
+      "SpawnOffscreenMargin": 20.080192222222195,
+      "ArrivalRightOvershoot": 0.017692222222194687,
+      "CoreTrainEntryOffscreenMargin": 23.85555222222206
+    }
+  ],
+  "SceneSHA256": "9FF2DD3DDBA93E277A7815EC6C29F63BA41FB95C68714144F572FDF431784E78",
+  "RendererStartupOutcome": "Licensing IPC refused before fixture result; retained launcher cancelled"
+}

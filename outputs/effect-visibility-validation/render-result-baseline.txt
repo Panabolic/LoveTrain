@@ -1,0 +1,92 @@
+START: actual production URP render request, editor-memory diagnostic objects, sorting-only A/B.
+CHECK Effective production pipeline is URP; QualitySettings/GraphicsSettings overrides remain untouched
+QUALITY index=0, quality-pipeline=UniversalRP, default-pipeline=(null)
+CHECK Authored Junmo orthographic camera is retained
+CHECK Actual StageDatabase first background prefab is available
+CHECK Authored StageManager background parent preserves production local/world positioning
+CHECK Actual BeltScroll component exists on the first stage prefab
+BACKGROUND Assets/Prefabs/Map/BeltScroll.prefab, world-position=(0.03, 9.69, 0.00), camera=(0.00, 2.54, -10.00), size=20.8
+BACKGROUND sorting=ForeGround/1, sprite=map1_layer1 1
+BACKGROUND sorting=ForeGround/1, sprite=map1_layer1 1
+BACKGROUND sorting=BackGround/2, sprite=map1_layer3
+BACKGROUND sorting=BackGround/2, sprite=map1_layer3
+BACKGROUND sorting=BackGround/2, sprite=map1_layer3
+BACKGROUND sorting=BackGround/1, sprite=map1_layer2
+BACKGROUND sorting=BackGround/1, sprite=map1_layer2
+BACKGROUND sorting=BackGround/1, sprite=map1_layer2
+BACKGROUND sorting=BackGround/0, sprite=map1_Back
+BACKGROUND sorting=BackGround/0, sprite=map1_Back
+BACKGROUND sorting=BackGround/0, sprite=map1_Back
+BACKGROUND sorting=BackGround/3, sprite=rail
+BACKGROUND sorting=BackGround/3, sprite=rail
+CHECK Authored FleshPickup prefab exists
+CHECK Original FleshPickup sprite is retained
+CHECK FleshPickup retains original scale 0.5
+FX Flesh, position=(-9.00, -7.60, 0.00), bounds=Center: (-9.00, -7.60, 0.00), Extents: (0.14, 0.17, 0.05), original-sorting=Default/15
+CHECK Authored SoulPickup prefab exists
+CHECK Original SoulPickup sprite is retained
+CHECK SoulPickup retains original scale 0.38
+FX Soul, position=(0.00, -7.60, 0.00), bounds=Center: (0.00, -7.60, 0.00), Extents: (0.19, 0.19, 0.04), original-sorting=Default/15
+CHECK Authored FuelPickup prefab exists
+CHECK Original FuelPickup sprite is retained
+CHECK FuelPickup retains original scale 0.38
+FX Fuel, position=(9.00, -7.60, 0.00), bounds=Center: (9.00, -7.60, 0.00), Extents: (0.19, 0.19, 0.04), original-sorting=Default/15
+CHECK Authored wind effect component exists
+CHECK Authored wind ParticleSystem is retained
+CHECK Manual native wind emission retains 64 fixed original-style white lines
+WIND count=64, style=size3D(2.5,.035,1), white-alpha=.45, original-sorting=Default/25
+SHADER PIPELINE effective=UniversalRP, instance=not-yet-created
+SHADER Flesh, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Wind, material=DrivingParticles, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+CHECK Production render pipeline assets remain unchanged before rendering
+RENDER baseline-without-fx.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK baseline-without-fx.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer Default is available
+RENDER before-default.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK before-default.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer ForeGround is available
+RENDER after-foreground.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK after-foreground.png is submitted through production URP SingleCameraRequest
+COMPOSITE baseline-default=0, baseline-foreground=1482, sorting-only-difference=1482
+CHECK Sorting-only ForeGround pass reveals effects above the actual production background
+CHECK Existing sorting layer Default is available
+RENDER flesh-default.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-default.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer ForeGround is available
+RENDER flesh-foreground.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-foreground.png is submitted through production URP SingleCameraRequest
+PIXEL Flesh: Default changed=0, ForeGround changed=17, sorting-only=17
+CHECK Flesh changes from background-hidden to visible using sorting layer alone
+CHECK Existing sorting layer Default is available
+RENDER soul-default.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK soul-default.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer ForeGround is available
+RENDER soul-foreground.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK soul-foreground.png is submitted through production URP SingleCameraRequest
+PIXEL Soul: Default changed=0, ForeGround changed=28, sorting-only=28
+CHECK Soul changes from background-hidden to visible using sorting layer alone
+CHECK Existing sorting layer Default is available
+RENDER fuel-default.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK fuel-default.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer ForeGround is available
+RENDER fuel-foreground.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK fuel-foreground.png is submitted through production URP SingleCameraRequest
+PIXEL Fuel: Default changed=0, ForeGround changed=49, sorting-only=49
+CHECK Fuel changes from background-hidden to visible using sorting layer alone
+CHECK Existing sorting layer Default is available
+RENDER wind-default.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK wind-default.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer ForeGround is available
+RENDER wind-foreground.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK wind-foreground.png is submitted through production URP SingleCameraRequest
+PIXEL Wind: Default changed=0, ForeGround changed=1388, sorting-only=1388
+CHECK Wind changes from background-hidden to visible using sorting layer alone
+SHADER PIPELINE effective=UniversalRP, instance=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+SHADER Flesh, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Wind, material=DrivingParticles, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+CHECK Production QualitySettings/default URP assets remain unchanged after all A/B renders
+PASS PASS 45 real URP render/sorting checks. No source assets/settings saved. Pickup shader/material, sprite and original .5/.38 scales retained; wind assigned material and line style retained.

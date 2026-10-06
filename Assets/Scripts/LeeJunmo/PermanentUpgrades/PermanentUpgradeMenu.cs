@@ -103,19 +103,13 @@ public sealed class PermanentUpgradeMenu : MonoBehaviour
         owner.StartGameFromUpgrades();
     }
 
-    public void ShowTooltip(PermanentUpgradeNode node, PointerEventData pointer)
-    {
-        hovered = node;
-        RefreshTooltip();
-        tooltip.gameObject.SetActive(true);
-        MoveTooltip(pointer);
-    }
     public void ShowTooltip(PermanentUpgradeNode node, RectTransform card)
     {
         hovered = node;
         RefreshTooltip();
         tooltip.gameObject.SetActive(true);
-        PlaceTooltip(panel.InverseTransformPoint(card.position));
+        Vector3 buttonCenter = card.TransformPoint(card.rect.center);
+        PlaceTooltip(panel.InverseTransformPoint(buttonCenter));
     }
 
     private void RefreshTooltip()
@@ -142,19 +136,16 @@ public sealed class PermanentUpgradeMenu : MonoBehaviour
             next.Cost, StatusText(PermanentUpgradeProgress.GetPurchaseStatus(next)));
     }
 
-    public void MoveTooltip(PointerEventData pointer)
-    {
-        if (hovered == null || !tooltip.gameObject.activeSelf) return;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(panel, pointer.position, pointer.enterEventCamera, out Vector2 point);
-        PlaceTooltip(point);
-    }
     private void PlaceTooltip(Vector2 point)
     {
-        Vector2 half = tooltip.rect.size * 0.5f;
-        point += new Vector2(half.x + 12f, -half.y - 12f);
-        point.x = Mathf.Clamp(point.x, panel.rect.xMin + half.x + 8f, panel.rect.xMax - half.x - 8f);
-        point.y = Mathf.Clamp(point.y, panel.rect.yMin + half.y + 8f, panel.rect.yMax - half.y - 8f);
-        tooltip.anchoredPosition = point;
+        const float gap = 12f;
+        const float edgeMargin = 8f;
+        Vector2 size = tooltip.rect.size;
+        bool openLeft = point.x + gap + size.x > panel.rect.xMax - edgeMargin;
+        bool openUp = point.y - gap - size.y < panel.rect.yMin + edgeMargin;
+        // Keep the corner beside the button center; flip only the axis that cannot fit.
+        tooltip.pivot = new Vector2(openLeft ? 1f : 0f, openUp ? 0f : 1f);
+        tooltip.anchoredPosition = point + new Vector2(openLeft ? -gap : gap, openUp ? gap : -gap);
         tooltip.SetAsLastSibling();
     }
     public void HideTooltip(PermanentUpgradeNode node)

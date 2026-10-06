@@ -22,29 +22,16 @@ public class SimpleSpeedUI : MonoBehaviour
     void Update()
     {
         // train이 할당되었는지 확인
-        if (train != null && GameManager.Instance.CurrentState != GameState.Start)
+        if (speedText == null) return;
+        if (train != null)
         {
             float currentSpeed = train.CurrentSpeed;
             int displaySpeed = Mathf.RoundToInt(currentSpeed);
 
             speedText.text = $"{displaySpeed}";
-            foreach (Animator carAnim in train.carsAnim)
-            {
-                Debug.Log(carAnim.GetFloat("moveSpeed"));
-            }
-
-            // displaySpeed에 따른 Train animation clip speed 조절
-            foreach (Animator carAnim in train.carsAnim)
-            {
-                carAnim.SetFloat("moveSpeed", Mathf.Clamp(displaySpeed, 0, 300) * 0.05f);
-            }
         }
         else
         {
-            foreach (Animator carAnim in train.carsAnim)
-            {
-                Debug.Log(carAnim.GetFloat("moveSpeed"));
-            }
             // 연결이 안 되었을 때 오류 메시지 표시
             speedText.text = EnglishLocalization.Get("ui.controller_missing", "Controller 없음");
         }

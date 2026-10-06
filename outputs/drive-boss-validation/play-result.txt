@@ -1,0 +1,74 @@
+START native isolated Junmo PlayMode.
+Noise controls: disable ordinary/event spawners and automatic gun/item behaviours; cap deltaTime; keep authored eye warning delay 3 seconds, shorten only strike/cleanup/cooldown and mute eye player damage during sequencing checks. Train enabled except exact pickup resource phase. Eye player-damage amount is not validated here.
+LIFECYCLE ExitingEditMode
+LIFECYCLE EnteredPlayMode
+PASS Native Junmo scene creates all authored owners/components
+PASS Authored native acceleration wind component exists
+PASS Authored native wind particle reference is assigned
+PASS Native Train.Start / PursuingHand initialization uses 320/460 and hand 320
+PASS Authored hand is active with positive renderer/collider gap
+PASS Official Dynamic keyboard Shift reaches actual Train.Update and accelerates
+PASS Official Dynamic keyboard Shift reaches actual Train.Update and accelerates
+PASS Native acceleration LateUpdate emits actual wind particles
+PASS Native emitted wind is translucent white and a horizontal line
+PASS Native Update preserves speed during first part of 0.2 second hit lock
+PASS Native Update resumes held Shift after 0.2 seconds without a new key press
+PASS Shift release keeps speed during the 0.5 second delay
+PASS Native wind remains available for the deceleration length sample
+PASS Native Update decelerates after the 0.5 second delay
+PASS Native wind remains available for the deceleration length sample
+PASS Native wind particles shorten as train decelerates
+PASS Native prefab Rigidbody/Transform moves toward train after the actual 0.5 second attraction delay: FleshPickup(Clone)
+PICKUP native transform=(15.57, -6.34, 0.00), body=(16.35, -6.28)
+PASS Native prefab Rigidbody/Transform moves toward train after the actual 0.5 second attraction delay: SoulPickup(Clone)
+PICKUP native transform=(14.16, -7.07, 0.00), body=(14.93, -7.04)
+PASS Native prefab Rigidbody/Transform moves toward train after the actual 0.5 second attraction delay: FuelPickup(Clone)
+PICKUP native transform=(14.15, -7.60, 0.00), body=(14.93, -7.60)
+PASS Actual pickup Update attraction collects flesh and soul once
+PASS Actual fuel pickup heals 10 percent once; Train drain temporarily disabled for this exact assertion
+PASS Pickup resources do not duplicate kill XP
+PASS Resource totals stay unchanged after collected pickups are destroyed
+PASS Real PauseGame / OnGameStateChanged stops pending soul movement and reward
+PASS Actual Ending event settles both pending currency rewards and discards fuel
+PASS Repeated Ending cannot pay a pending pickup twice
+PASS Real GainExperience(10) advances Lv2 and raises base/max by 20
+PASS Run level change leaves hand speed anchored to run-start base
+PASS Native Controller D and ForwardCameraFollow LateUpdate advance world x and camera beyond old right boundary
+PASS PushLeft clamps to the moving rear wall rather than old world -20
+PASS Native stage transition freezes camera and captured pursuit gap
+PASS Actual transition coroutine loads the next stage and resumes play
+PASS Actual stage reset uses the current camera origin
+PASS Transition restores pursuit spacing; stage two hand speed is 350
+PASS Actual held Shift enters a dash before contact
+PASS Authored TrainBoss prefab exists
+PASS Authored native contact colliders exist
+PASS Native trigger/FixedUpdate boss contact interrupts dash and blocks acceleration without death
+PASS Native continuous boss contact pushes left and does not apply old instant-kill fuel damage
+PASS Continued native boss contact reduces speed at 70 per second while Shift remains held
+PASS Native boss OnDisable releases contact and held acceleration resumes
+PASS Authored EyeBoss prefab exists
+PASS Eye fixture retains the authored 3 second warning delay
+PASS Native Tentacle.Setup receives the authored 3 second warning
+EYE START reservation=1, saw-warning=True, first-time=14.17837, first-frame=851, delay=3
+PASS Authored repeated eye presentation has one Enemy/HP owner and one belt component
+PASS Two real hits below old enrage threshold both damage the sole eye HP owner
+PASS Native eye warning lasts the authored 3 seconds before strike (duration=3.009499, frames=180)
+EYE STRIKE reservation=1, time=17.18787, frame=1031
+EYE END reservation=1, kind=strike-complete, time=17.35417, frame=1041
+PASS Native Tentacle.Setup receives the authored 3 second warning
+EYE START reservation=2, saw-warning=True, first-time=17.55436, first-frame=1053, delay=3
+PASS Native eye warning lasts the authored 3 seconds before strike (duration=2.999933, frames=180)
+EYE STRIKE reservation=2, time=20.5543, frame=1233
+EYE END reservation=2, kind=strike-complete, time=20.72104, frame=1243
+PASS Native Tentacle.Setup receives the authored 3 second warning
+EYE START reservation=3, saw-warning=True, first-time=20.92083, first-frame=1255, delay=3
+PASS Native eye warning lasts the authored 3 seconds before strike (duration=3.000116, frames=180)
+EYE STRIKE reservation=3, time=23.92095, frame=1435
+EYE END reservation=3, kind=strike-complete, time=24.08752, frame=1445
+PASS Native eye completes at least two non-overlapping authored-3-second warning/strike/cleanup reservations after low-health damage
+EYE completed-strikes=3, timed-strikes=3, cancelled-warnings=0
+PASS Native pursuing-hand contact enters the existing parent/drag/player-death path
+PASS No changed-runtime-path Console exceptions during native fixture
+PASS: 54 native lifecycle/input/physics/pursuit/drop/XP/stage/boss checks. Other Console errors requiring baseline classification=0
+LIFECYCLE ExitingPlayMode
+LIFECYCLE EnteredEditMode

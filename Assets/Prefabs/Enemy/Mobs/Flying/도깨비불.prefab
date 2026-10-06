@@ -192,13 +192,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05d44acb619053149adf1869b80b20ed, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::FlyMob
   hp: 200
   damage: 30
   exp: 1.5
   hitEffectDuration: 0.05
   killParticle: {fileID: 434769822512540428, guid: e9444e26ed7ddb841be077bcdb687714, type: 3}
+  fleshPickupPrefab: {fileID: 8111295575125405348, guid: 04c571a28ff72f346926367f74085caa, type: 3}
+  soulPickupPrefab: {fileID: 2516287791142759192, guid: 2352af47bb7e20649bd00d11c5f2a097, type: 3}
   moveSpeed: 4.6
   isEliteMob: 0
   diveDistance: 20

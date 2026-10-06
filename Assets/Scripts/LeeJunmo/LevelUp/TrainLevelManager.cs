@@ -26,7 +26,7 @@ public class TrainLevelManager : MonoBehaviour
     [SerializeField] private ExpWall[] experienceWalls;
 
     // --- 상태 변수 ---
-    public int CurrentLevel { get; private set; }
+    public int CurrentLevel { get; private set; } = 1;
     public float TotalExperience { get; private set; }
     public float ExperienceForCurrentLevel { get; private set; }
     public float ExperienceToNextLevel { get; private set; }
@@ -51,16 +51,14 @@ public class TrainLevelManager : MonoBehaviour
         PermanentUpgradeProgress.Reload();
         economy = new RunPartEconomy(PermanentUpgradeProgress.Souls);
         CurrentLevel = 1;
+        TotalExperience = 0f;
+        ExperienceForCurrentLevel = 0f;
+        ExperienceToNextLevel = CalculateRequiredDeltaXP(2);
     }
 
     void Start()
     {
-        CurrentLevel = 1;
-        TotalExperience = 0;
-        ExperienceForCurrentLevel = 0;
-
-        // 1 -> 2 레벨업 경험치 계산
-        ExperienceToNextLevel = float.PositiveInfinity;
+        GetComponent<Train>()?.SetRunLevel(CurrentLevel);
     }
 
     [Header("Part creation")]
@@ -103,11 +101,35 @@ public class TrainLevelManager : MonoBehaviour
         });
     }
 
-    // Legacy enemy reward entry point now grants flesh instead of XP and level-up choices.
+    // XP grows this run's stats; the F workbench remains the sole item-creation path.
     public void GainExperience(float amount)
     {
         if (amount <= 0f || float.IsNaN(amount) || float.IsInfinity(amount)) return;
-        AddFlesh(Mathf.CeilToInt(amount));
+        TotalExperience += amount;
+        while (TotalExperience >= ExperienceToNextLevel)
+        {
+            CurrentLevel++;
+            ExperienceForCurrentLevel = ExperienceToNextLevel;
+            ExperienceToNextLevel = ExperienceForCurrentLevel + CalculateRequiredDeltaXP(CurrentLevel + 1);
+            GetComponent<Train>()?.SetRunLevel(CurrentLevel);
+            OnLevelUp?.Invoke();
+        }
+        OnExperienceGained?.Invoke();
+    }
+
+    private int CalculateRequiredDeltaXP(int targetLevel)
+    {
+        int wallXP = 0;
+        if (experienceWalls != null)
+        {
+            foreach (var wall in experienceWalls)
+            {
+                if (wall.targetLevel != targetLevel) continue;
+                wallXP = wall.bonusXP;
+                break;
+            }
+        }
+        return TrainLevelRules.RequiredDeltaXP(targetLevel, baseRequiredXP, levelPeriodStep, wallXP);
     }
 
     public void AddFlesh(int amount) => AddRewards(amount, 0);
@@ -169,7 +191,6 @@ public class TrainLevelManager : MonoBehaviour
     {
         PermanentUpgradeProgress.SetSouls(Souls);
         UpdateResourceLabels();
-        OnExperienceGained?.Invoke();
         OnResourcesChanged?.Invoke();
     }
 
@@ -183,6 +204,17 @@ public class TrainLevelManager : MonoBehaviour
     private void OnApplicationPause(bool paused) { if (paused) PlayerPrefs.Save(); }
     private void OnDestroy() => PlayerPrefs.Save();
 
+}
+
+public static class TrainLevelRules
+{
+    public static int RequiredDeltaXP(int targetLevel, int baseXP, int periodStep, int wallXP)
+    {
+        long completedLevels = Math.Max(1L, (long)targetLevel - 1L);
+        long periodBonus = completedLevels / 10L * Math.Max(0, periodStep);
+        long required = completedLevels * (Math.Max(1, baseXP) + periodBonus) + Math.Max(0, wallXP);
+        return (int)Math.Max(1L, Math.Min(int.MaxValue, required));
+    }
 }
 
 public sealed class RunPartEconomy

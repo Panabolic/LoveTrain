@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class Train : MonoBehaviour
 {
@@ -31,8 +32,17 @@ public class Train : MonoBehaviour
     public bool IsDashing => drive.DashRemaining > 0f;
     public float FuelDrainPerSecond => IsDashing ? Mathf.Max(0f, dashFuelCost) / Mathf.Max(0.01f, dashDuration) : TrainDriveState.GetFuelDrainPerSecond(CurrentSpeed);
     private readonly TrainDriveState drive = new TrainDriveState();
-    [SerializeField] private float decelerationDelay = 1f;
+    [SerializeField] private float decelerationDelay = 0.5f;
     [SerializeField] private float deceleration = 70f;
+    private readonly HashSet<UnityEngine.Object> bossContacts = new HashSet<UnityEngine.Object>();
+    private float runStartBaseSpeed;
+    private float runStartMaxSpeed;
+    private int runLevel = 1;
+    private bool speedBaselineCaptured;
+    private bool runInitialized;
+    private PursuingHand pursuingHand;
+    public bool IsAccelerating => drive.IsAccelerating;
+    public bool AccelerationBlocked => drive.AccelerationBlockRemaining > 0f || bossContacts.Count > 0;
 
     [Header("디버그 정보")]
     [SerializeField] private float _currentSpeedForInspector;
@@ -82,6 +92,7 @@ public class Train : MonoBehaviour
     {
         carsAnim = GetComponentsInChildren<Animator>();
         trainController = GetComponent<TrainController>();
+        CaptureSpeedBaseline();
     }
 
     private void Start()
@@ -99,13 +110,17 @@ public class Train : MonoBehaviour
         _currentSpeedForInspector = CurrentSpeed;
         isDead = false;
         isDying = false;
+        runInitialized = true;
+        bossContacts.Clear();
 
         if (trainController != null) trainController.enabled = true;
 
         if (handObject != null)
         {
             handInitialPos = handObject.transform.position;
-            handObject.SetActive(false);
+            pursuingHand = handObject.GetComponent<PursuingHand>();
+            handObject.SetActive(pursuingHand != null);
+            if (pursuingHand != null) pursuingHand.InitializeRun(this, runStartBaseSpeed);
         }
 
         SetCarAnimSpeed(0f);
@@ -119,10 +134,11 @@ public class Train : MonoBehaviour
         bool combat = GameManager.Instance != null &&
             (GameManager.Instance.CurrentState == GameState.Playing || GameManager.Instance.CurrentState == GameState.Boss);
         if (!combat || Time.timeScale <= 0f) { SetCarAnimSpeed(0f); return; }
+        bossContacts.RemoveWhere(IsInactiveContact);
         bool shift = Keyboard.current != null && (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed);
         float fuelUsed = drive.Advance(Time.deltaTime, shift, baseSpeed, maxSpeedValue, acceleration,
             deceleration, decelerationDelay, dashDuration, dashSpeedMultiplier,
-            dashFuelCost);
+            dashFuelCost, bossContacts.Count > 0);
         relativeWorldSpeed = Mathf.MoveTowards(relativeWorldSpeed,
             Mathf.Max(0f, CurrentSpeed - baseSpeed) * Mathf.Max(0f, relativeSpeedScale),
             Mathf.Max(0.01f, relativeSpeedChangeRate) * Time.deltaTime);
@@ -150,6 +166,7 @@ public class Train : MonoBehaviour
         if (GameManager.Instance != null && (Time.timeScale <= 0f ||
             (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss))) return;
         if (isDead || IsDashing || damageAmount <= 0f) return;
+        drive.BlockAcceleration(0.2f);
         OnTrainDamaged?.Invoke();
         if (CameraShakeManager.Instance != null) CameraShakeManager.Instance.ShakeCamera();
         SoundEventBus.Publish(SoundID.Player_Hit);
@@ -173,6 +190,45 @@ public class Train : MonoBehaviour
 
     public void BossModifySpeed(float amount) => ModifySpeed(amount);
 
+    private void CaptureSpeedBaseline()
+    {
+        if (speedBaselineCaptured) return;
+        runStartBaseSpeed = baseSpeed;
+        runStartMaxSpeed = maxSpeedValue;
+        speedBaselineCaptured = true;
+    }
+
+    public void SetRunLevel(int level)
+    {
+        CaptureSpeedBaseline();
+        float previousBase = baseSpeed;
+        runLevel = Mathf.Max(1, level);
+        float bonus = (runLevel - 1) * 20f;
+        baseSpeed = runStartBaseSpeed + bonus;
+        maxSpeedValue = runStartMaxSpeed + bonus;
+        if (runInitialized && !isDead)
+            CurrentSpeed = IsDashing ? maxSpeedValue * dashSpeedMultiplier : Mathf.Clamp(CurrentSpeed + baseSpeed - previousBase, 0f, maxSpeedValue);
+    }
+
+    public void SetBossContact(UnityEngine.Object source, bool active)
+    {
+        if (source == null) return;
+        if (active && !isDead) bossContacts.Add(source);
+        else bossContacts.Remove(source);
+    }
+
+    private static bool IsInactiveContact(UnityEngine.Object source)
+    {
+        if (source == null) return true;
+        var component = source as Component;
+        return component != null && !component.gameObject.activeInHierarchy;
+    }
+
+    public void BeginPursuingHandDeath()
+    {
+        if (!isDead) Die();
+    }
+
     // ========================================================================
     // ☠️ [핵심] 엔딩 진입 시 모든 상태 강제 초기화 함수
     // ========================================================================
@@ -180,6 +236,8 @@ public class Train : MonoBehaviour
     {
         // 1. 진행 중인 모든 코루틴 강제 중단
         StopAllCoroutines();
+        if (pursuingHand != null) pursuingHand.StopPursuit();
+        bossContacts.Clear();
 
         ResetDyingPresentation(false);
 
@@ -263,6 +321,9 @@ public class Train : MonoBehaviour
         if (isDead) return;
         isDead = true;
         isDying = false;
+        bossContacts.Clear();
+        drive.CancelDash();
+        if (pursuingHand != null) pursuingHand.StopPursuit();
         if (trainController != null) trainController.enabled = false;
         SetCarAnimSpeed(0f);
         SetOverlayTrigger("Dying");
@@ -289,8 +350,8 @@ public class Train : MonoBehaviour
 
         if (handObject != null)
         {
-            Vector3 targetPos = (dragDestinationPos != null) ? dragDestinationPos :
-                                handObject.transform.position + new Vector3(-30f, 0f, 0f);
+            Vector3 targetPos = dragDestinationPos + Vector3.right *
+                (trainController != null ? trainController.CurrentCameraOffsetX : 0f);
             targetPos.y = handObject.transform.position.y;
 
             yield return handObject.transform
@@ -335,9 +396,13 @@ public sealed class TrainDriveState
 {
     public float Speed;
     public float DashRemaining { get; private set; }
+    public float AccelerationBlockRemaining { get; private set; }
+    public bool IsAccelerating { get; private set; }
     private float releasedTime;
     private bool armed = true;
-    public void Reset() { DashRemaining = 0f; releasedTime = 0f; armed = true; }
+    public void Reset() { DashRemaining = 0f; releasedTime = 0f; armed = true; AccelerationBlockRemaining = 0f; IsAccelerating = false; }
+    public void BlockAcceleration(float duration) { AccelerationBlockRemaining = Math.Max(AccelerationBlockRemaining, Math.Max(0f, duration)); }
+    public void CancelDash() { DashRemaining = 0f; IsAccelerating = false; }
 
     private static float MoveTowards(float value, float target, float delta)
     {
@@ -355,29 +420,48 @@ public sealed class TrainDriveState
 
     public float Advance(float dt, bool held, float baseSpeed, float maxSpeed, float acceleration,
         float deceleration, float delay, float dashDuration, float dashMultiplier,
-        float dashFuelCost)
+        float dashFuelCost, bool bossContact = false)
     {
+        IsAccelerating = false;
         if (dt <= 0f) return 0f;
         if (!held) armed = true;
         if (held) releasedTime = 0f;
+        if (bossContact)
+        {
+            // Boss contact interrupts even a dash; no fuel hit is attached to contact.
+            CancelDash();
+            AccelerationBlockRemaining = Math.Max(0f, AccelerationBlockRemaining - dt);
+            Speed = MoveTowards(Speed, 0f, 70f * dt);
+            return GetFuelDrainPerSecond(Speed) * dt;
+        }
+        float blockedTime = Math.Min(dt, AccelerationBlockRemaining);
+        AccelerationBlockRemaining = Math.Max(0f, AccelerationBlockRemaining - dt);
         float fuel = 0f;
+        if (blockedTime > 0f)
+        {
+            if (!held) ApplyDeceleration(blockedTime, baseSpeed, maxSpeed, deceleration, delay);
+            fuel += GetFuelDrainPerSecond(Speed) * blockedTime;
+            dt -= blockedTime;
+            if (dt <= 0f) return fuel;
+        }
         if (DashRemaining > 0f)
         {
             float usedTime = Math.Min(dt, DashRemaining);
             DashRemaining = Math.Max(0f, DashRemaining - usedTime);
             Speed = maxSpeed * Math.Max(1.01f, dashMultiplier);
             if (DashRemaining <= 0f) { Speed = maxSpeed; releasedTime = 0f; }
-            fuel = Math.Max(0f, dashFuelCost) / Math.Max(0.01f, dashDuration) * usedTime;
+            fuel += Math.Max(0f, dashFuelCost) / Math.Max(0.01f, dashDuration) * usedTime;
             dt -= usedTime;
             if (dt <= 0f) return fuel;
         }
-        if (held) Speed = MoveTowards(Speed, maxSpeed, Math.Max(0f, acceleration) * dt);
+        if (held)
+        {
+            IsAccelerating = Speed < maxSpeed;
+            Speed = MoveTowards(Speed, maxSpeed, Math.Max(0f, acceleration) * dt);
+        }
         else
         {
-            float before = releasedTime;
-            releasedTime += dt;
-            float decelerationTime = Math.Max(0f, releasedTime - Math.Max(0f, delay)) - Math.Max(0f, before - Math.Max(0f, delay));
-            Speed = MoveTowards(Speed, Math.Min(baseSpeed, maxSpeed), Math.Max(0f, deceleration) * decelerationTime);
+            ApplyDeceleration(dt, baseSpeed, maxSpeed, deceleration, delay);
         }
         fuel += GetFuelDrainPerSecond(Speed) * dt;
         if (held && armed && Speed >= maxSpeed)
@@ -387,5 +471,13 @@ public sealed class TrainDriveState
             Speed = maxSpeed * Math.Max(1.01f, dashMultiplier);
         }
         return fuel;
+    }
+
+    private void ApplyDeceleration(float dt, float baseSpeed, float maxSpeed, float deceleration, float delay)
+    {
+        float before = releasedTime;
+        releasedTime += dt;
+        float decelerationTime = Math.Max(0f, releasedTime - Math.Max(0f, delay)) - Math.Max(0f, before - Math.Max(0f, delay));
+        Speed = MoveTowards(Speed, Math.Min(baseSpeed, maxSpeed), Math.Max(0f, deceleration) * decelerationTime);
     }
 }

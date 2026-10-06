@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,275 +7,178 @@ public class EyeBoss : Boss
     [Header("Pattern Settings")]
     [SerializeField] private float waitTimeAfterPatternEnd = 2.0f;
 
-    [Header("Enrage Settings")]
-    [Range(0.1f, 1.0f)]
-    [SerializeField] private float EnragePatternThreshold = 0.2f;
+    // Retain existing prefab data; the forced low-health pattern is retired.
+    [SerializeField, HideInInspector] private float EnragePatternThreshold = 0.2f;
+    [SerializeField, HideInInspector] private float enrageTentacleDamage = 100f;
+    [SerializeField, HideInInspector] private float enrageAttackDelay = 8f;
 
     [Header("Damage & Delay Settings")]
     [SerializeField] private float normalTentacleDamage = 50f;
     [SerializeField] private float normalAttackDelay = 3.0f;
-    [Space]
-    [SerializeField] private float enrageTentacleDamage = 100f;
-    [SerializeField] private float enrageAttackDelay = 8f;
 
     [Header("Reference")]
     [SerializeField] private GameObject tentaclePrefab;
     [SerializeField] private GameObject weakTentaclePrefab;
+    [SerializeField] private Transform[] tentacleSpawnPoints;
+    [SerializeField] private EyeBossBelt belt;
 
-    private Transform[] tentacleSpawnPoints;
-    private List<GameObject> spawnedTentacles = new List<GameObject>();
-
+    private readonly List<GameObject> spawnedTentacles = new List<GameObject>();
+    private readonly List<int> visibleSpawnPoints = new List<int>(8);
     private Coroutine runningPatternCoroutine;
-
-    // 상태 변수
-    private bool isInvincible = false;
-    private bool isBusy = false;
-    private bool enragePatternReady = false;
-    private bool hasEnraged = false;
-
-    // 사운드 중복 재생 방지용 쿨타임 변수
+    private Train playerTrain;
+    private Camera gameCamera;
     private float lastAttackSoundTime = -10f;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        playerTrain = levelManager != null ? levelManager.GetComponent<Train>() : null;
+        if (belt == null) belt = GetComponent<EyeBossBelt>();
+        gameCamera = Camera.main;
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        lastAttackSoundTime = -10f;
+        runningPatternCoroutine = null;
+        if (belt != null) belt.ResetScroll();
+    }
 
     protected override void Start()
     {
         base.Start();
         SoundEventBus.Publish(SoundID.Boss_Roar);
-        int childCount = transform.childCount;
-        tentacleSpawnPoints = new Transform[childCount];
-        for (int i = 0; i < childCount; i++)
-            tentacleSpawnPoints[i] = transform.GetChild(i);
     }
 
     protected override void Update()
     {
         base.Update();
+        if (!isAlive || isEntranceActive || !CombatIsRunning()) return;
+        if (gameCamera == null) gameCamera = Camera.main;
+        if (belt != null && gameCamera != null)
+            belt.Advance(Time.deltaTime, playerTrain != null ? playerTrain.CurrentSpeed : 0f, gameCamera);
 
-        if (!isAlive || isBusy || enragePatternReady || isEntranceActive) return;
-
-        int patternIndex = Random.Range(0, 2);
-        if (patternIndex == 0)
-            runningPatternCoroutine = StartCoroutine(SideAttackPattern());
-        else
-            runningPatternCoroutine = StartCoroutine(CenterAttackPattern());
+        if (runningPatternCoroutine == null && gameCamera != null)
+            runningPatternCoroutine = StartCoroutine(SingleTentacleRoutine());
     }
 
-    public override void TakeDamage(float damageAmount)
+    private IEnumerator SingleTentacleRoutine()
     {
-        if (!isAlive || !hasEnteredScreen || isInvincible) return;
-
-        float predictedHP = currentHP - damageAmount;
-        float thresholdHP = calibratedMaxHP * EnragePatternThreshold;
-
-        if (!hasEnraged && !enragePatternReady && predictedHP <= thresholdHP)
+        // The authored points follow the belt. Only their current visible positions
+        // are candidates; a reserved warning is then fixed in world space.
+        visibleSpawnPoints.Clear();
+        if (tentacleSpawnPoints != null)
         {
-            currentHP = thresholdHP;
-            isInvincible = true;
-            enragePatternReady = true;
-            SoundEventBus.Publish(SoundID.Boss_Roar);
-
-            StartCoroutine(ForceEnrageRoutine());
-        }
-        else
-        {
-            base.TakeDamage(damageAmount);
-        }
-    }
-
-    private IEnumerator ForceEnrageRoutine()
-    {
-        if (runningPatternCoroutine != null)
-        {
-            StopCoroutine(runningPatternCoroutine);
-        }
-
-        ClearAllTentacles();
-
-        isBusy = true;
-
-        yield return null;
-
-        runningPatternCoroutine = StartCoroutine(EnragePatternRoutine());
-    }
-
-    private IEnumerator SideAttackPattern()
-    {
-        isBusy = true;
-
-        int leftOrRight = Random.Range(0, 2);
-        int startIdx = (leftOrRight == 0) ? 0 : 4;
-        int endIdx = (leftOrRight == 0) ? 4 : 8;
-
-        List<int> spawnIndices = new List<int>();
-        for (int i = startIdx; i < endIdx; i++) spawnIndices.Add(i);
-
-        int weakPointIdx = Random.Range(startIdx, endIdx);
-
-        float duration = SpawnTentaclesAndGetDuration(spawnIndices, new List<int> { weakPointIdx }, false);
-
-        yield return new WaitForSeconds(duration);
-        yield return new WaitForSeconds(waitTimeAfterPatternEnd);
-
-        isBusy = false;
-    }
-
-    private IEnumerator CenterAttackPattern()
-    {
-        isBusy = true;
-
-        List<int> spawnIndices = new List<int> { 2, 3, 4, 5 };
-        int weakPointIdx = Random.Range(2, 6);
-
-        float duration = SpawnTentaclesAndGetDuration(spawnIndices, new List<int> { weakPointIdx }, false);
-
-        yield return new WaitForSeconds(duration);
-        yield return new WaitForSeconds(waitTimeAfterPatternEnd);
-
-        isBusy = false;
-    }
-
-    private IEnumerator EnragePatternRoutine()
-    {
-        isBusy = true;
-        hasEnraged = true;
-
-        List<int> allIndices = new List<int>();
-        for (int i = 0; i < tentacleSpawnPoints.Length; i++) allIndices.Add(i);
-
-        int centerWeak = Random.Range(1, 7);
-        List<int> weakPoints = new List<int> { centerWeak - 1, centerWeak, centerWeak + 1 };
-
-        float duration = SpawnTentaclesAndGetDuration(allIndices, weakPoints, true);
-
-        // ✨ [핵심 수정] 기존 WaitForSeconds(duration)을 아래의 루프로 대체
-        // 시간이 다 되거나(timer >= duration), 촉수가 모두 죽으면(Count == 0) 루프 탈출
-        float timer = 0f;
-        while (timer < duration)
-        {
-            // 리스트 관리는 Tentacle의 OnDestroy -> UnregisterTentacle에서 처리되므로
-            // Count가 0이 되면 모든 촉수가 죽은 것임
-            if (spawnedTentacles.Count == 0)
+            for (int i = 0; i < tentacleSpawnPoints.Length; i++)
             {
-                Debug.Log("모든 촉수가 파괴되어 광폭화 패턴이 조기 종료됩니다.");
-                break;
+                Transform point = tentacleSpawnPoints[i];
+                if (point != null && Tentacle.WarningIsVisible(gameCamera, point.position))
+                    visibleSpawnPoints.Add(i);
             }
+        }
 
-            timer += Time.deltaTime;
+        if (visibleSpawnPoints.Count == 0 || tentaclePrefab == null)
+        {
             yield return null;
+            runningPatternCoroutine = null;
+            yield break;
         }
 
-        // 패턴 종료: 무적 해제
-        isInvincible = false;
-        enragePatternReady = false;
-
-        yield return new WaitForSeconds(waitTimeAfterPatternEnd);
-
-        isBusy = false;
-    }
-
-    private float SpawnTentaclesAndGetDuration(List<int> spawnIndices, List<int> weakPointIndices, bool isEnrage)
-    {
-        float maxDuration = 0f;
-        if (tentacleSpawnPoints == null) return maxDuration;
-
-        HashSet<int> weakSet = new HashSet<int>(weakPointIndices);
-
-        float currentDamage = isEnrage ? enrageTentacleDamage : normalTentacleDamage;
-        float currentDelay = isEnrage ? enrageAttackDelay : normalAttackDelay;
-
-        foreach (int index in spawnIndices)
+        int index = visibleSpawnPoints[Random.Range(0, visibleSpawnPoints.Count)];
+        GameObject prefab = weakTentaclePrefab != null && Random.Range(0, 4) == 0
+            ? weakTentaclePrefab : tentaclePrefab;
+        GameObject obj = Instantiate(prefab, tentacleSpawnPoints[index].position, Quaternion.identity);
+        Tentacle tentacle = obj.GetComponent<Tentacle>();
+        if (tentacle == null)
         {
-            if (index < 0 || index >= tentacleSpawnPoints.Length) continue;
-
-            bool isWeak = weakSet.Contains(index);
-            GameObject prefab = isWeak ? weakTentaclePrefab : tentaclePrefab;
-
-            if (prefab == null) continue;
-
-            Transform spawnPoint = tentacleSpawnPoints[index];
-            if (spawnPoint == null) continue;
-
-            GameObject obj = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-            Tentacle tScript = obj.GetComponent<Tentacle>();
-
-            if (tScript != null)
-            {
-                tScript.Setup(this, currentDamage, currentDelay, TryPlayAttackSound);
-                tScript.BeginAttack();
-
-                float d = tScript.GetTotalDuration();
-                if (d > maxDuration) maxDuration = d;
-            }
+            Destroy(obj);
+            yield return null;
+            runningPatternCoroutine = null;
+            yield break;
         }
 
+        tentacle.Setup(this, normalTentacleDamage, normalAttackDelay, TryPlayAttackSound);
+        tentacle.BeginAttack();
         SoundEventBus.Publish(SoundID.Boss_TentacleSpawn);
 
-        return maxDuration;
+        // Never overlap attack reservations, including the animation/cleanup phase.
+        bool attackStarted = false;
+        while (obj != null)
+        {
+            attackStarted |= tentacle.AttackStarted;
+            yield return null;
+        }
+        float remaining = attackStarted ? Mathf.Max(0f, waitTimeAfterPatternEnd) : 0f;
+        while (isAlive && remaining > 0f)
+        {
+            if (CombatIsRunning()) remaining -= Time.deltaTime;
+            yield return null;
+        }
+        runningPatternCoroutine = null;
+    }
+
+    private static bool CombatIsRunning()
+    {
+        return Time.timeScale > 0f && GameManager.Instance != null &&
+            (GameManager.Instance.CurrentState == GameState.Playing || GameManager.Instance.CurrentState == GameState.Boss);
     }
 
     private void TryPlayAttackSound()
     {
-        if (Time.time - lastAttackSoundTime > 0.1f)
-        {
-            SoundEventBus.Publish(SoundID.Boss_TentacleAttack);
-            lastAttackSoundTime = Time.time;
-        }
+        if (Time.time - lastAttackSoundTime <= 0.1f) return;
+        SoundEventBus.Publish(SoundID.Boss_TentacleAttack);
+        lastAttackSoundTime = Time.time;
     }
 
     private void ClearAllTentacles()
     {
         for (int i = spawnedTentacles.Count - 1; i >= 0; i--)
-        {
             if (spawnedTentacles[i] != null) Destroy(spawnedTentacles[i]);
-        }
         spawnedTentacles.Clear();
     }
 
     public void RegisterTentacle(GameObject tentacle)
     {
-        if (tentacle == null) return;
-        if (!spawnedTentacles.Contains(tentacle)) spawnedTentacles.Add(tentacle);
+        if (tentacle != null && !spawnedTentacles.Contains(tentacle)) spawnedTentacles.Add(tentacle);
     }
 
-    public void UnregisterTentacle(GameObject tentacle)
+    public void UnregisterTentacle(GameObject tentacle) => spawnedTentacles.Remove(tentacle);
+
+    protected override void OnDisable()
     {
-        if (spawnedTentacles.Contains(tentacle)) spawnedTentacles.Remove(tentacle);
+        StopAllCoroutines();
+        runningPatternCoroutine = null;
+        ClearAllTentacles();
+        if (belt != null) belt.Hide();
+        base.OnDisable();
     }
 
     protected override IEnumerator Die()
     {
         if (!isAlive) yield break;
         isAlive = false;
+        if (runningPatternCoroutine != null) StopCoroutine(runningPatternCoroutine);
+        runningPatternCoroutine = null;
         ClearAllTentacles();
+        if (belt != null) belt.Hide();
 
         if (killExplosionEffect != null)
-        {
             Instantiate(killExplosionEffect, transform.position, Quaternion.identity);
-        }
-
         yield return base.Die();
-
         yield return new WaitForSeconds(2.0f);
 
-        if (killEvent != null &&
-            GameManager.Instance != null &&
-            EventManager.Instance != null &&
+        if (killEvent != null && GameManager.Instance != null && EventManager.Instance != null &&
             !GameManager.Instance.IsTimeForEnding)
-        {
             EventManager.Instance.RequestEvent(killEvent);
-        }
 
         if (GameManager.Instance != null)
         {
             GameManager.Instance.AddBossKillCount();
             GameManager.Instance.BossDied();
         }
-        else
-        {
-            if (StageManager.Instance != null)
-            {
-                StageManager.Instance.StartStageTransitionSequence();
-            }
-        }
+        else if (StageManager.Instance != null)
+            StageManager.Instance.StartStageTransitionSequence();
 
         Destroy(gameObject);
     }

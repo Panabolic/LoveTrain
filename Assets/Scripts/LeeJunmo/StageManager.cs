@@ -61,6 +61,8 @@ public class StageManager : MonoBehaviour
     private GameObject currentStageObject;
     private Sequence transitionSequence;
     private GameObject transitionTunnel;
+    [SerializeField] private ForwardCameraFollow cameraFollow;
+    [SerializeField] private PursuingHand pursuingHand;
 
     private void Awake()
     {
@@ -115,6 +117,8 @@ public class StageManager : MonoBehaviour
         if (prefab != null)
         {
             currentStageObject = Instantiate(prefab, bgParent);
+            if (cameraFollow != null)
+                currentStageObject.transform.position += Vector3.right * cameraFollow.CurrentOffsetX;
         }
     }
 
@@ -128,6 +132,8 @@ public class StageManager : MonoBehaviour
 
         // 1. 상태 변경 (모든 조작, 스폰, 아이템 정지)
         GameManager.Instance.ChangeState(GameState.StageTransition);
+        if (pursuingHand != null) pursuingHand.CaptureTransitionGap();
+        Vector3 cameraOffset = Vector3.right * (cameraFollow != null ? cameraFollow.CurrentOffsetX : 0f);
 
         Debug.Log($"[StageManager] Stage {CurrentStageIndex + 1} 클리어! 연출 시퀀스 시작.");
 
@@ -139,7 +145,7 @@ public class StageManager : MonoBehaviour
         GameObject tunnel = null;
         if (setting != null && setting.tunnelPrefab != null && setting.tunnelSpawnPoint != null)
         {
-            tunnel = Instantiate(setting.tunnelPrefab, setting.tunnelSpawnPoint.position, Quaternion.identity);
+            tunnel = Instantiate(setting.tunnelPrefab, setting.tunnelSpawnPoint.position + cameraOffset, Quaternion.identity);
         }
         transitionTunnel = tunnel;
 
@@ -150,12 +156,12 @@ public class StageManager : MonoBehaviour
         // [Step 1] 2초 대기 (보스 사망 연출 감상)
         seq.AppendInterval(2.0f);
 
-        seq.Append(train.transform.DOMove(playerResetPosition, 2.0f).SetEase(Ease.OutQuad));
+        seq.Append(train.transform.DOMove(playerResetPosition + cameraOffset, 2.0f).SetEase(Ease.OutQuad));
 
         // [Step 2] 터널 등장 (2초간 이동)
         if (tunnel != null && setting != null && setting.tunnelTargetPoint != null)
         {
-            seq.Append(tunnel.transform.DOMove(setting.tunnelTargetPoint.position, 2.0f).SetEase(Ease.OutQuad));
+            seq.Append(tunnel.transform.DOMove(setting.tunnelTargetPoint.position + cameraOffset, 2.0f).SetEase(Ease.OutQuad));
 
             // ✨ 터널 도착 직후 배경 스크롤 정지 (콜백)
             seq.AppendCallback(() => {
@@ -170,7 +176,7 @@ public class StageManager : MonoBehaviour
         // [Step 3] 기차 진입 (1.5초간 터널 속으로 이동)
         if (train != null && setting != null && setting.trainEnterPoint != null)
         {
-            seq.Append(train.transform.DOMove(setting.trainEnterPoint.position, 1.5f).SetEase(Ease.InQuad));
+            seq.Append(train.transform.DOMove(setting.trainEnterPoint.position + cameraOffset, 1.5f).SetEase(Ease.InQuad));
         }
 
         // [Step 4] 화면 암전 (FadeIn: 검은 화면이 됨)
@@ -186,7 +192,8 @@ public class StageManager : MonoBehaviour
             NextStageDataUpdate();
 
             // 기차 위치 리셋 (화면 왼쪽 시작 지점으로)
-            if (train != null) train.transform.position = playerResetPosition;
+            if (train != null) train.transform.position = playerResetPosition + cameraOffset;
+            if (pursuingHand != null) pursuingHand.RestoreTransitionGap();
 
             // 터널 삭제
             if (tunnel != null) Destroy(tunnel);

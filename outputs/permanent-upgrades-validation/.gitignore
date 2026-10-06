@@ -8,3 +8,7 @@
 !NodeBehaviorChecks.cs
 !FakeUnity.cs
 !audit_upgrade_prefab.py
+!run_tooltip_checks.py
+!TooltipRegressionChecks.cs
+!TooltipUnityDoubles.cs
+!TooltipRegressionValidation.csproj

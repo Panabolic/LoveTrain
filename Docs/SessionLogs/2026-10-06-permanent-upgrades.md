@@ -59,3 +59,42 @@ TaskBrief:
 수동 확인: Start→새 강화 화면, 제목 밑 영혼만 표시, 연료 구매 때 한 칸 채움/영혼 차감, 부족·준비 중·MAX 호버, 게임 재시작 후 진척도 복원, 하단 게임 시작으로 Junmo 진입, Console 확인. 미정 수치/아이템/필살기 연결은 기존 설정 작업으로 남는다.
 
 Doc Impact Check: SessionLog(이 문서), StructureMemory(CoreRuntimeGameFlow), DecisionLog(승인된 노드/프리팹 방식). RefactorLog/ErrorLog/Architecture·Contracts/Presentation HTML 변경 불필요.
+
+## 2026-10-06 — 툴팁 위치 및 경계 방향 수정
+
+TaskBrief: Implementation. 사용자의 실제 Unity 화면에서 연료 버튼 툴팁이 아래쪽 가운데로 밀린 오류를 수정한다. 사용자는 “테두리에 벗어날 것 같으면 그 반대 방향으로 … 중심이 되는 모서리만 그대로”라고 배치 동작을 구체화했다. 허용 범위는 PermanentUpgradeMenu.PlaceTooltip 및 PermanentUpgradeCard.OnSelect와 관련 검증/기록이다. 씬/프리팹/직렬화 필드/강화 수치/구매/저장 형식은 변경하지 않는다.
+
+원인:
+- 중심 pivot을 전제로 계산한 위치를 좌상단 pivot(0,1), 260×170 크기의 프리팹에 적용했다. Panel800×450 중앙 커서의 실제 좌상단이 (142,-97)이 되어, 오른쪽 및 아래 경계를 벗어났다.
+- 마우스 클릭의 OnSelect가 커서 대신 버튼 Transform 위치로 툴팁을 다시 배치했다. 로컬 uGUI Selectable.OnPointerDown은 PointerEventData를 선택 이벤트에 전달하므로 이를 보존할 수 있다.
+
+수정:
+- 커서로부터 12 logical unit 떨어진 모서리를 유지하며 기본 우하단으로 펼친다. 오른쪽 공간이 부족하면 왼쪽(pivot.x=1), 아래 공간이 부족하면 위쪽(pivot.y=0)으로 해당 축만 전환한다. 경계에는8 logical unit의 여유를 둔다. 프리팹의 기본 pivot/anchor 자산은 변경하지 않았다.
+- 클릭 선택은 PointerEventData의 커서 위치를 사용한다. 키보드/컨트롤러 선택은 기존 버튼 위치를 사용한다.
+
+검증:
+- 실제 production 메서드 본문을 추출하여 컴파일·실행한 격리 회귀 검사8511개 통과. 중앙/좌우/상하/모서리 및 화면 내부 grid, 한 축/두 축 flip, 기준 모서리 간격, 시작 pivot 차이, 마우스 클릭/키보드 선택 분기를 확인했다. 수정 전 중심 계산은 회귀 검사에서 실패한다. 대역 RectTransform 검사로서 native Unity의 카메라 변환/실제 렌더링을 증명하지 않는다.
+- 추적 코드 공백 검사를 수행했다. 전체 runtime 소스 컴파일 결과는 아래에 최종 기록한다.
+- Unity가 열린 상태에서 batchmode를 실행하지 않았다. Windows Computer Use 창 목록에서는 LoveTrain Start Editor를 확인했지만 실제 창 제어는 도구에서 “Computer Use was not approved to use unity”로 거부했다. 우회하지 않았으며 실제 Unity Play의 마우스 호버/클릭 확인과 빌드는 미실행이다.
+
+수동 확인: 재컴파일 후 강화 화면에서 중앙/오른쪽/아래쪽/오른쪽 아래 버튼에 호버한다. 커서 옆 모서리와 간격이 유지되고 부족한 방향만 반대로 펼쳐지는지 확인한다. 클릭 후 커서를 정지해도 버튼 기준 위치로 점프하지 않는지, 키보드 선택 설명이 유지되는지 확인한다.
+
+Doc Impact Check: SessionLog(이 문서), StructureMemory(CoreRuntimeGameFlow), ErrorLog(pivot/좌표 및 선택 이벤트 mismatch). DecisionLog/RefactorLog/Architecture·Contracts/Presentation HTML 변경 불필요.
+
+최종 컴파일: 현재 runtime C#142개를 Unity6000.2.3f1 참조DLL로 컴파일하여 오류0/exit0을 확인했다. 경고228개는 현재 전체 workspace 결과이며 같은 상태의 baseline을 재실행하지 않아 이번 수정으로 추가됐다고 판단하지 않았다. 소스 컴파일은 Unity import/Play 및 native RectTransform 표시 검증을 대신하지 않는다. 근거: outputs/permanent-upgrades-validation/tooltip-fix-build.log, tooltip-behavior-checks.log, ValidationReport.md.
+
+## 2026-10-06 — 버튼 중심에 고정하는 툴팁
+
+TaskBrief: Implementation. 사용자의 “버튼 중심에 고정되게 … 마우스 따라다니는 게 아니라” 요청에 따라 Menu/Card 두 파일의 위치 기준과 호버/선택 호출만 수정한다. 기존 경계 반대 방향 전환과 구매/저장/프리팹은 유지한다.
+
+- Card에서 IPointerMoveHandler 및 이동 갱신을 제거했다. 호버와 모든 선택 이벤트가 같은 RectTransform 기반 ShowTooltip을 사용한다.
+- Menu에서 포인터 기반 ShowTooltip/MoveTooltip 경로를 제거했다. 실제 버튼 중심 card.TransformPoint(card.rect.center)를 panel 로컬 좌표로 변환해 배치한다. 현재 버튼 pivot은 상단 중심(0.5,1)이므로 card.position을 사용하면 중심보다36 logical unit 위에 배치된다.
+- 버튼 위에서 커서를 움직여도 기준점은 바뀌지 않는다. 오른쪽/아래쪽 공간이 부족할 때 해당 축만 반대 방향으로 펼치는 기존 동작은 그대로 사용한다.
+
+검증 결과는 아래에 기록한다. 새 Unity 창 제어/실제 Play Mode 및 플레이어 빌드는 실행하지 않는다. 지난 Unity 자동 제어 거부를 우회하지 않았다.
+
+Doc Impact Check: SessionLog, StructureMemory(CoreRuntimeGameFlow), ErrorLog의 현재 배치 방식 설명 갱신. 새로운 오류 항목/DecisionLog/RefactorLog/Architecture·Contracts/Presentation HTML 변경 불필요.
+
+컴파일: 현재 runtime C#142개 소스의 독립 컴파일 exit0/오류0. 실제 UI 표시와 엔진 Transform의 native 실행은 미검증이며, Unity가 재컴파일한 뒤 Play를 재시작하여 확인해야 한다.
+
+최종 회귀 검사: 실제 PlaceTooltip/ShowTooltip/OnPointerEnter/OnSelect 본문을 추출하여8559개 assertions 통과. 버튼 상단 pivot의 실제 rect.center.y=-36, 부모/버튼의 축척·이동 대역, 서로 다른 커서 위치에서도 동일한 표시 좌표, 호버/마우스/키보드 기준점 일치, 경계 방향 전환을 확인했다. 포인터 이동 경로 제거 및 코드/문서 공백 검사도 통과했다. 로그: outputs/permanent-upgrades-validation/tooltip-button-anchor-checks.log, tooltip-button-anchor-build.log. 엔진 입력·변환·실제 Play Mode 검증은 미실행이다.

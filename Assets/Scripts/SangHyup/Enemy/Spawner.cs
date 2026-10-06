@@ -67,6 +67,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Transform[] groundFrontPoints;
     [SerializeField] private Transform[] groundRearPoints;
     [SerializeField] private BoxCollider2D[] flyMobSpawnAreas;
+    [SerializeField] private ForwardCameraFollow cameraFollow;
 
     // --- 제어 플래그 ---
     private bool isSpawningEnabled = true;
@@ -318,10 +319,10 @@ public class Spawner : MonoBehaviour
             if (bossPrefab != null)
             {
                 // 1. 스폰 위치 결정 (SpawnPoint가 없으면 Spawner 위치)
-                Vector3 spawnPos = transform.position;
+                Vector3 spawnPos = CameraRelativePosition(transform);
                 if (setting.spawnPoint != null)
                 {
-                    spawnPos = setting.spawnPoint.position;
+                    spawnPos = CameraRelativePosition(setting.spawnPoint);
                 }
                 else
                 {
@@ -341,7 +342,7 @@ public class Spawner : MonoBehaviour
                     // ✨ arrivalPoint가 존재할 때만 연출 실행
                     if (setting.arrivalPoint != null)
                     {
-                        bossScript.StartEntranceRoutine(setting.arrivalPoint.position, setting.entranceDuration);
+                        bossScript.StartEntranceRoutine(CameraRelativePosition(setting.arrivalPoint), setting.entranceDuration);
                     }
                     else
                     {
@@ -426,18 +427,18 @@ public class Spawner : MonoBehaviour
             float playerX = playerTrain != null ? playerTrain.transform.position.x : transform.position.x;
             int fronts = 0, rears = 0;
             foreach (var area in flyMobSpawnAreas)
-                if (area != null) { if (area.bounds.center.x >= playerX) fronts++; else rears++; }
+                if (area != null) { if (area.bounds.center.x + CameraOffsetFor(area.transform) >= playerX) fronts++; else rears++; }
             float total = fronts * SideWeight(true, fronts, rears) + rears * SideWeight(false, fronts, rears);
             float roll = UnityEngine.Random.value * total;
             foreach (var area in flyMobSpawnAreas)
             {
                 if (area == null) continue;
-                float weight = SideWeight(area.bounds.center.x >= playerX, fronts, rears);
+                float weight = SideWeight(area.bounds.center.x + CameraOffsetFor(area.transform) >= playerX, fronts, rears);
                 if (weight <= 0f) continue;
                 roll -= weight;
                 if (roll > 0f) continue;
                 Bounds bounds = area.bounds;
-                return new Vector3(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), UnityEngine.Random.Range(bounds.min.y, bounds.max.y), 0f);
+                return new Vector3(UnityEngine.Random.Range(bounds.min.x, bounds.max.x) + CameraOffsetFor(area.transform), UnityEngine.Random.Range(bounds.min.y, bounds.max.y), 0f);
             }
         }
         int frontCount = 0, rearCount = 0;
@@ -452,16 +453,26 @@ public class Spawner : MonoBehaviour
             {
                 if (point == null) continue;
                 sample -= frontWeight;
-                if (sample <= 0f) return point.position;
+                if (sample <= 0f) return CameraRelativePosition(point);
             }
         if (groundRearPoints != null && rearWeight > 0f)
             foreach (var point in groundRearPoints)
             {
                 if (point == null) continue;
                 sample -= rearWeight;
-                if (sample <= 0f) return point.position;
+                if (sample <= 0f) return CameraRelativePosition(point);
             }
-        return transform.position;
+        return CameraRelativePosition(transform);
+    }
+
+    private float CameraOffsetFor(Transform point)
+    {
+        return cameraFollow != null && !point.IsChildOf(cameraFollow.transform) ? cameraFollow.CurrentOffsetX : 0f;
+    }
+
+    private Vector3 CameraRelativePosition(Transform point)
+    {
+        return point.position + Vector3.right * CameraOffsetFor(point);
     }
 
     private void UpdatePhase(float currentTime)

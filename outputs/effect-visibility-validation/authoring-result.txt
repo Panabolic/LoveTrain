@@ -1,0 +1,1 @@
+PASS: ForeGround pickup sprites/trail/wind, Monster barrel, eight authored white outline edges per pickup with original sprite assets preserved.

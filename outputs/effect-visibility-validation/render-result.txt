@@ -1,0 +1,305 @@
+START: actual production URP render request, editor-memory diagnostic objects, sorting-only A/B.
+CHECK Effective production pipeline is URP; QualitySettings/GraphicsSettings overrides remain untouched
+QUALITY index=0, quality-pipeline=UniversalRP, default-pipeline=(null)
+CHECK Authored Junmo orthographic camera is retained
+CHECK Actual StageDatabase first background prefab is available
+CHECK Authored StageManager background parent preserves production local/world positioning
+CHECK Actual BeltScroll component exists on the first stage prefab
+BACKGROUND Assets/Prefabs/Map/BeltScroll.prefab, world-position=(0.03, 9.69, 0.00), camera=(0.00, 2.54, -10.00), size=20.8
+BACKGROUND sorting=ForeGround/1, sprite=map1_layer1 1
+BACKGROUND sorting=ForeGround/1, sprite=map1_layer1 1
+BACKGROUND sorting=BackGround/2, sprite=map1_layer3
+BACKGROUND sorting=BackGround/2, sprite=map1_layer3
+BACKGROUND sorting=BackGround/2, sprite=map1_layer3
+BACKGROUND sorting=BackGround/1, sprite=map1_layer2
+BACKGROUND sorting=BackGround/1, sprite=map1_layer2
+BACKGROUND sorting=BackGround/1, sprite=map1_layer2
+BACKGROUND sorting=BackGround/0, sprite=map1_Back
+BACKGROUND sorting=BackGround/0, sprite=map1_Back
+BACKGROUND sorting=BackGround/0, sprite=map1_Back
+BACKGROUND sorting=BackGround/3, sprite=rail
+BACKGROUND sorting=BackGround/3, sprite=rail
+CHECK Authored FleshPickup prefab exists
+CHECK Original FleshPickup sprite is retained
+CHECK FleshPickup retains original scale 0.5
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+FX Flesh, position=(-9.00, -7.60, 0.00), bounds=Center: (-9.00, -7.60, 0.00), Extents: (0.16, 0.16, 0.05), original-sorting=ForeGround/15
+CHECK Authored SoulPickup prefab exists
+CHECK Original SoulPickup sprite is retained
+CHECK SoulPickup retains original scale 0.38
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+FX Soul, position=(0.00, -7.60, 0.00), bounds=Center: (0.00, -7.60, 0.00), Extents: (0.19, 0.19, 0.04), original-sorting=ForeGround/15
+CHECK Authored FuelPickup prefab exists
+CHECK Original FuelPickup sprite is retained
+CHECK FuelPickup retains original scale 0.38
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+FX Fuel, position=(9.00, -7.60, 0.00), bounds=Center: (9.00, -7.60, 0.00), Extents: (0.19, 0.19, 0.04), original-sorting=ForeGround/15
+CHECK Authored wind effect component exists
+CHECK Authored wind ParticleSystem is retained
+CHECK Manual native wind emission retains 64 fixed original-style white lines
+WIND count=64, style=size3D(2.5,.035,1), white-alpha=.45, original-sorting=ForeGround/25
+SHADER PIPELINE effective=UniversalRP, instance=not-yet-created
+SHADER Flesh, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=DrivingParticles, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Wind, material=DrivingParticles, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+CHECK Production render pipeline assets remain unchanged before rendering
+RENDER baseline-without-fx.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK baseline-without-fx.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer Default is available
+RENDER before-default.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK before-default.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer ForeGround is available
+RENDER after-foreground.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK after-foreground.png is submitted through production URP SingleCameraRequest
+COMPOSITE baseline-default=0, baseline-foreground=1565, sorting-only-difference=1565
+CHECK Sorting-only ForeGround pass reveals effects above the actual production background
+CHECK Existing sorting layer Default is available
+RENDER flesh-default.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-default.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer ForeGround is available
+RENDER flesh-foreground.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-foreground.png is submitted through production URP SingleCameraRequest
+PIXEL Flesh: Default changed=0, ForeGround changed=47, sorting-only=47
+CHECK Flesh changes from background-hidden to visible using sorting layer alone
+CHECK Existing sorting layer Default is available
+RENDER soul-default.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK soul-default.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer ForeGround is available
+RENDER soul-foreground.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK soul-foreground.png is submitted through production URP SingleCameraRequest
+PIXEL Soul: Default changed=0, ForeGround changed=52, sorting-only=52
+CHECK Soul changes from background-hidden to visible using sorting layer alone
+CHECK Existing sorting layer Default is available
+RENDER fuel-default.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK fuel-default.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer ForeGround is available
+RENDER fuel-foreground.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK fuel-foreground.png is submitted through production URP SingleCameraRequest
+PIXEL Fuel: Default changed=0, ForeGround changed=78, sorting-only=78
+CHECK Fuel changes from background-hidden to visible using sorting layer alone
+CHECK Existing sorting layer Default is available
+RENDER wind-default.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK wind-default.png is submitted through production URP SingleCameraRequest
+CHECK Existing sorting layer ForeGround is available
+RENDER wind-foreground.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK wind-foreground.png is submitted through production URP SingleCameraRequest
+PIXEL Wind: Default changed=0, ForeGround changed=1388, sorting-only=1388
+CHECK Wind changes from background-hidden to visible using sorting layer alone
+CHECK Flesh has eight authored white outline renderers
+CHECK Existing sorting layer ForeGround is available
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+CHECK Flesh outline follows the selected native body sprite
+CHECK Flesh assigned white silhouette shader is supported and compiles without errors
+CHECK Flesh outline follows the selected native body sprite
+CHECK Flesh assigned white silhouette shader is supported and compiles without errors
+CHECK Flesh outline follows the selected native body sprite
+CHECK Flesh assigned white silhouette shader is supported and compiles without errors
+CHECK Flesh outline follows the selected native body sprite
+CHECK Flesh assigned white silhouette shader is supported and compiles without errors
+CHECK Flesh outline follows the selected native body sprite
+CHECK Flesh assigned white silhouette shader is supported and compiles without errors
+CHECK Flesh outline follows the selected native body sprite
+CHECK Flesh assigned white silhouette shader is supported and compiles without errors
+CHECK Flesh outline follows the selected native body sprite
+CHECK Flesh assigned white silhouette shader is supported and compiles without errors
+CHECK Flesh outline follows the selected native body sprite
+CHECK Flesh assigned white silhouette shader is supported and compiles without errors
+RENDER flesh-body-only.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-body-only.png is submitted through production URP SingleCameraRequest
+RENDER flesh-outlined.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-outlined.png is submitted through production URP SingleCameraRequest
+OUTLINE PIXEL flesh: body-vs-outline=26, added-white=26
+CHECK flesh white outlines produce real new white pixels in production URP with other effects disabled
+CHECK All five authored meat sprites are available to the native outline synchronization check
+CHECK Meat variant 0 has a real sprite
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+CHECK Native RefreshOutline synchronizes meat variant 0 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 0 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 0 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 0 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 0 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 0 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 0 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 0 on each white silhouette
+RENDER flesh-variant-0-body-only.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-variant-0-body-only.png is submitted through production URP SingleCameraRequest
+RENDER flesh-variant-0-outlined.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-variant-0-outlined.png is submitted through production URP SingleCameraRequest
+OUTLINE PIXEL flesh-variant-0: body-vs-outline=29, added-white=29
+CHECK flesh-variant-0 white outlines produce real new white pixels in production URP with other effects disabled
+CHECK Meat variant 1 has a real sprite
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+CHECK Native RefreshOutline synchronizes meat variant 1 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 1 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 1 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 1 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 1 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 1 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 1 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 1 on each white silhouette
+RENDER flesh-variant-1-body-only.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-variant-1-body-only.png is submitted through production URP SingleCameraRequest
+RENDER flesh-variant-1-outlined.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-variant-1-outlined.png is submitted through production URP SingleCameraRequest
+OUTLINE PIXEL flesh-variant-1: body-vs-outline=22, added-white=22
+CHECK flesh-variant-1 white outlines produce real new white pixels in production URP with other effects disabled
+CHECK Meat variant 2 has a real sprite
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+CHECK Native RefreshOutline synchronizes meat variant 2 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 2 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 2 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 2 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 2 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 2 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 2 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 2 on each white silhouette
+RENDER flesh-variant-2-body-only.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-variant-2-body-only.png is submitted through production URP SingleCameraRequest
+RENDER flesh-variant-2-outlined.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-variant-2-outlined.png is submitted through production URP SingleCameraRequest
+OUTLINE PIXEL flesh-variant-2: body-vs-outline=26, added-white=26
+CHECK flesh-variant-2 white outlines produce real new white pixels in production URP with other effects disabled
+CHECK Meat variant 3 has a real sprite
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+CHECK Native RefreshOutline synchronizes meat variant 3 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 3 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 3 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 3 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 3 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 3 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 3 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 3 on each white silhouette
+RENDER flesh-variant-3-body-only.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-variant-3-body-only.png is submitted through production URP SingleCameraRequest
+RENDER flesh-variant-3-outlined.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-variant-3-outlined.png is submitted through production URP SingleCameraRequest
+OUTLINE PIXEL flesh-variant-3: body-vs-outline=32, added-white=32
+CHECK flesh-variant-3 white outlines produce real new white pixels in production URP with other effects disabled
+CHECK Meat variant 4 has a real sprite
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+CHECK Native RefreshOutline synchronizes meat variant 4 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 4 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 4 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 4 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 4 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 4 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 4 on each white silhouette
+CHECK Native RefreshOutline synchronizes meat variant 4 on each white silhouette
+RENDER flesh-variant-4-body-only.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-variant-4-body-only.png is submitted through production URP SingleCameraRequest
+RENDER flesh-variant-4-outlined.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK flesh-variant-4-outlined.png is submitted through production URP SingleCameraRequest
+OUTLINE PIXEL flesh-variant-4: body-vs-outline=19, added-white=19
+CHECK flesh-variant-4 white outlines produce real new white pixels in production URP with other effects disabled
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+CHECK Flesh body material/shader identity is unchanged through sorting and outline A/B renders
+CHECK Soul has eight authored white outline renderers
+CHECK Existing sorting layer ForeGround is available
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+CHECK Soul outline follows the selected native body sprite
+CHECK Soul assigned white silhouette shader is supported and compiles without errors
+CHECK Soul outline follows the selected native body sprite
+CHECK Soul assigned white silhouette shader is supported and compiles without errors
+CHECK Soul outline follows the selected native body sprite
+CHECK Soul assigned white silhouette shader is supported and compiles without errors
+CHECK Soul outline follows the selected native body sprite
+CHECK Soul assigned white silhouette shader is supported and compiles without errors
+CHECK Soul outline follows the selected native body sprite
+CHECK Soul assigned white silhouette shader is supported and compiles without errors
+CHECK Soul outline follows the selected native body sprite
+CHECK Soul assigned white silhouette shader is supported and compiles without errors
+CHECK Soul outline follows the selected native body sprite
+CHECK Soul assigned white silhouette shader is supported and compiles without errors
+CHECK Soul outline follows the selected native body sprite
+CHECK Soul assigned white silhouette shader is supported and compiles without errors
+RENDER soul-body-only.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK soul-body-only.png is submitted through production URP SingleCameraRequest
+RENDER soul-outlined.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK soul-outlined.png is submitted through production URP SingleCameraRequest
+OUTLINE PIXEL soul: body-vs-outline=24, added-white=24
+CHECK soul white outlines produce real new white pixels in production URP with other effects disabled
+CHECK Soul body material/shader identity is unchanged through sorting and outline A/B renders
+CHECK Fuel has eight authored white outline renderers
+CHECK Existing sorting layer ForeGround is available
+CHECK Native RewardPickup.RefreshOutline is available for the frozen diagnostic sprite selection
+CHECK Fuel outline follows the selected native body sprite
+CHECK Fuel assigned white silhouette shader is supported and compiles without errors
+CHECK Fuel outline follows the selected native body sprite
+CHECK Fuel assigned white silhouette shader is supported and compiles without errors
+CHECK Fuel outline follows the selected native body sprite
+CHECK Fuel assigned white silhouette shader is supported and compiles without errors
+CHECK Fuel outline follows the selected native body sprite
+CHECK Fuel assigned white silhouette shader is supported and compiles without errors
+CHECK Fuel outline follows the selected native body sprite
+CHECK Fuel assigned white silhouette shader is supported and compiles without errors
+CHECK Fuel outline follows the selected native body sprite
+CHECK Fuel assigned white silhouette shader is supported and compiles without errors
+CHECK Fuel outline follows the selected native body sprite
+CHECK Fuel assigned white silhouette shader is supported and compiles without errors
+CHECK Fuel outline follows the selected native body sprite
+CHECK Fuel assigned white silhouette shader is supported and compiles without errors
+RENDER fuel-body-only.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK fuel-body-only.png is submitted through production URP SingleCameraRequest
+RENDER fuel-outlined.png, supported-before=True, supported-after=True, pipeline=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+CHECK fuel-outlined.png is submitted through production URP SingleCameraRequest
+OUTLINE PIXEL fuel: body-vs-outline=29, added-white=29
+CHECK fuel white outlines produce real new white pixels in production URP with other effects disabled
+CHECK Fuel body material/shader identity is unchanged through sorting and outline A/B renders
+SHADER PIPELINE effective=UniversalRP, instance=UnityEngine.Rendering.Universal.UniversalRenderPipeline
+SHADER Flesh, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Flesh, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=DrivingParticles, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Soul, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=Sprites-Default, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Fuel, material=PickupOutline, shader=LoveTrain/Pickup White Silhouette, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+SHADER Wind, material=DrivingParticles, shader=Sprites/Default, isSupported=True, compile-error=False, render-pipeline-tag=(none)
+CHECK Production QualitySettings/default URP assets remain unchanged after all A/B renders
+PASS PASS 184 real URP render/sorting/optional-outline checks. No source assets/settings saved. Pickup body shader/material and original .5/.38 scales retained; native RefreshOutline and every authored flesh variant checked when outlines exist; wind assigned material and line style retained.

@@ -518,3 +518,14 @@ Spawner의 보스 조우는 StageManager.OnProgressAdvanced에서 판단한다. 
 예약 전 Pool/보스 프리팹을 확인한다. 경고 중 취소는 요청과 순번을 되돌리고 BossWarningLoopUI.HideWarning으로 표시를 닫는다. OnDisable에서는 씬 파괴를 Playing으로 되살리지 않고 재활성화/모달 복귀 이후에만 미생성 경고의 상태를 복구한다. 실제 Instantiate를 시작한 보스는 예약 해제/Playing 복귀 대상에서 제외한다.
 
 일반·엘리트 몬스터의 기존 GameManager.AddKillCount 호출은 ComboKillState에도 전달한다. 기차 충돌 처치를 포함하고 풀 반환/화면 정리에는 콤보를 추가하지 않는다. 보스 죽음은 기존 AddBossKillCount 통계 경로를 유지한다. 관련 결과: [세션 기록](../../SessionLogs/2026-10-06-stage-combo.md).
+
+## 2026-10-06 Driving and boss behavior update
+
+아래는 이번 주행·보스 변경의 소스 및 프리팹 구성이다. 앞선 눈 보스 동시 패턴·광폭화와 기차 보스 접촉 피해 설명은 이 항목으로 대체한다. [주행·보스·성장 작업 기록](../../SessionLogs/2026-10-06-driving-boss-progression.md)에 격리 Unity 실행 결과와 미실행 확인을 기록한다.
+
+- `EyeBossBelt`는 기존 `EyeBoss` 루트의 SpriteRenderer/Animator/PolygonCollider2D를 재사용한다. 루트의 Enemy·HP·활성 적 등록·사망·보상은 한 개이고, `repeatTiles`의 좌1/우1/좌2/우2 자식 네 개는 순수 SpriteRenderer이다. 각 자식은 루트의 그림·재질·피격 표시를 따르며 별도 Enemy·HP·Animator·Collider를 갖지 않는다. 시작 시 루트 PolygonCollider2D에 반복 위치의 경로를 추가하므로 어느 반복 그림에 맞아도 같은 EyeBoss가 피해를 받는다. 런타임 표시 객체를 자동 생성하지 않는다.
+- 벨트는 진입 완료 후 `Train.CurrentSpeed / 10`으로 왼쪽 스크롤하고 카메라 X에 반복 오프셋을 더해 위치를 유지한다. 기존 촉수 지점 8개는 `EyeBoss.tentacleSpawnPoints`에 명시적으로 참조하므로 표시 자식 추가가 공격 지점 수를 바꾸지 않는다. 화면 안 지점 하나만 선택해 기존 경고를 3초 표시하고 공격 애니메이션과 0.3초 정리가 끝난 뒤 다음 패턴을 예약한다. 정상 공격 피해 50과 프리팹의 공격 후 대기는 유지한다.
+- `Tentacle`은 예약 시의 월드 좌표에서 부모 없이 경고와 공격을 실행한다. 카메라·벨트 전진이 예약 좌표를 옮기지 않으며, 공격 전 경고가 viewport 밖으로 나가면 무보상 취소 후 새 화면 안 위치에서 다시 예고한다. 공격 구간에서만 기차에 피해를 요청하고 한 공격의 여러 기차 collider 접촉은 기차 한 개당 한 번으로 제한한다. EyeBoss의 저체력 HP 고정·무적·전체 촉수 공격은 제거했으며 기존 광폭화 serialized 필드는 숨긴 호환 데이터로만 보존한다. 비활성화·사망 시 패턴 코루틴과 생성한 촉수를 정리한다.
+- TrainBoss 프리팹은 기존 scale 3에서 6으로 두 배 크기를 사용한다. 접촉 시 기존 피해 10000 요청을 제거하고, 보스 본체를 source로 `Train.SetBossContact`에 지속 접촉을 전달한다. `TrainController.PushLeft`로 7 world units/s 밀며 Train의 주행 상태가 접촉 중 가속을 막고 속도를 70/s로 0까지 낮춘다. 질주 중 접촉도 질주를 취소하고 같은 제한을 적용한다. 플레이어 공격으로 보스를 미는 phase별 힘·0.2초 넉백 쿨타임·스턴은 유지한다.
+- TrainBoss는 trigger와 collision의 Enter/Stay/Exit를 처리하고, 여러 기차 collider 중 현재 활성 phase collider와 겹치는 접촉을 재확인한다. 일부 collider 이탈이나 phase 교체로 남은 접촉을 조기 해제하지 않으며 마지막 이탈·비활성화·무보상 제거·사망에서 source를 해제한다. 사망 연출 시작 시 두 phase collider를 비활성화하고 Rigidbody2D 속도를 지워 숨겨진 시체가 이동을 막지 않게 한다.
+- `Spawner.CameraRelativePosition`/`CameraOffsetFor`는 카메라 리그 밖의 작성 지점·영역에 `ForwardCameraFollow.CurrentOffsetX`를 더한다. 일반·엘리트·배럴·주기 스폰과 전후 지점 판정, 보스 생성 및 도착 위치가 전진한 화면을 기준으로 유지된다. 이미 리그 자식인 지점에는 오프셋을 중복 적용하지 않는다. 보스 순서·경고 예약·취소·거리 조우의 소유권은 기존 Spawner/StageBossSchedule에 유지한다.

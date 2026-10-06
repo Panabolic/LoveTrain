@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public sealed class PermanentUpgradeCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
-    IPointerMoveHandler, ISelectHandler, IDeselectHandler
+    ISelectHandler, IDeselectHandler
 {
     [SerializeField] private string nodeId;
     [SerializeField] private UnityEngine.UI.Button purchaseButton;
@@ -73,15 +73,18 @@ public sealed class PermanentUpgradeCard : MonoBehaviour, IPointerEnterHandler, 
     public void OnPointerEnter(PointerEventData pointer)
     {
         pointerInside = true;
-        if (owner != null && node != null) owner.ShowTooltip(node, pointer);
+        if (owner != null && node != null) owner.ShowTooltip(node, (RectTransform)transform);
     }
-    public void OnPointerMove(PointerEventData pointer) { if (owner != null && node != null) owner.MoveTooltip(pointer); }
     public void OnPointerExit(PointerEventData pointer)
     {
         pointerInside = false;
         if (owner != null && node != null) owner.HideTooltip(node);
     }
-    public void OnSelect(BaseEventData eventData) { if (owner != null && node != null) owner.ShowTooltip(node, (RectTransform)transform); }
+    public void OnSelect(BaseEventData eventData)
+    {
+        if (owner == null || node == null) return;
+        owner.ShowTooltip(node, (RectTransform)transform);
+    }
     public void OnDeselect(BaseEventData eventData)
     {
         // Buying the last tier disables selection, but the mouse can still be hovering.

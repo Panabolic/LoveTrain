@@ -10,6 +10,7 @@ public class SpeedMeterUI : MonoBehaviour
     [SerializeField] private Train train;
     [Tooltip("계기판 바늘의 RectTransform")]
     [SerializeField] private RectTransform needleRectTransform;
+    [SerializeField] private UnityEngine.UI.Image fuelFill;
 
     [Header("효과 참조")]
     [SerializeField] private RectTransform lineRectTransform;
@@ -43,11 +44,13 @@ public class SpeedMeterUI : MonoBehaviour
     private bool isEffectPlaying = false;
     private Color originalLineColor;
     private Color originalPanelColor;
+    private float dashJitter;
+    private float jitterRemaining;
 
     void Start()
     {
         // 시작 시 최대 속도 각도로 초기화 (혹은 현재 속도에 맞춰짐)
-        currentAngleZ = angleAtMaxSpeed;
+        currentAngleZ = angleAtThreshold;
 
         if (needleRectTransform != null)
             needleRectTransform.rotation = Quaternion.Euler(0, 0, currentAngleZ);
@@ -66,12 +69,14 @@ public class SpeedMeterUI : MonoBehaviour
 
     void Update()
     {
+        if (train != null && fuelFill != null)
+            fuelFill.fillAmount = train.MaxFuel > 0f ? train.CurrentFuel / train.MaxFuel : 0f;
         if (train == null || needleRectTransform == null) return;
 
         // 1. 현재 속도 및 기준값 가져오기
         float currentSpeed = train.CurrentSpeed;
-        float thresholdSpeed = train.GetDeathSpeed(); // 160
-        float maxSpeed = train.MaxSpeedValue;         // 460
+        float thresholdSpeed = train.BaseSpeed;
+        float maxSpeed = train.MaxSpeedValue;
 
         float targetAngleZ = 0f;
 
@@ -96,9 +101,22 @@ public class SpeedMeterUI : MonoBehaviour
             targetAngleZ = Mathf.Lerp(angleAtZeroSpeed, angleAtThreshold, Mathf.Clamp01(ratio));
         }
 
-        // 3. 부드러운 회전 적용
-        currentAngleZ = Mathf.LerpAngle(currentAngleZ, targetAngleZ, Time.deltaTime * needleSmoothSpeed);
-        needleRectTransform.rotation = Quaternion.Euler(0, 0, currentAngleZ);
+        if (train.IsDashing)
+        {
+            jitterRemaining -= Time.deltaTime;
+            if (jitterRemaining <= 0f)
+            {
+                dashJitter = UnityEngine.Random.Range(-5f, 5f);
+                jitterRemaining = 0.04f;
+            }
+            currentAngleZ = angleAtMaxSpeed + dashJitter;
+        }
+        else
+        {
+            jitterRemaining = 0f;
+            currentAngleZ = Mathf.LerpAngle(currentAngleZ, targetAngleZ, Time.deltaTime * needleSmoothSpeed);
+        }
+        needleRectTransform.localRotation = Quaternion.Euler(0, 0, currentAngleZ);
     }
 
     private void PlayDamageEffect()

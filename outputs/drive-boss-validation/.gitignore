@@ -1,0 +1,13 @@
+*
+!.gitignore
+!README.md
+!DriveBossAuthoring.cs
+!DriveBossPlayValidation.cs
+!DriveBossVisualValidation.cs
+!BuildSources.ps1
+!merge-assets.py
+!source-snapshot.json
+!authoring-result.txt
+!play-result.txt
+!visual-result.txt
+!preview.png

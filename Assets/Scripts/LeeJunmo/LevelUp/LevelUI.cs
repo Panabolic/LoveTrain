@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using TMPro; // TextMeshPro 사용
-using UnityEngine.UI; // Slider 사용
-using DG.Tweening; // ✨ DOTween 사용
+using TMPro;
+using DG.Tweening;
 
 public class LevelUI : MonoBehaviour
 {
@@ -11,17 +10,60 @@ public class LevelUI : MonoBehaviour
 
     [Header("UI 요소")]
     [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField] private Slider xpBarSlider;
+    [SerializeField] private UnityEngine.UI.Slider xpBarSlider;
+    [SerializeField] private UnityEngine.UI.Image xpFill;
+    [SerializeField, Min(0f)] private float fillDuration = 0.5f;
 
-    private Train train;
-    void Start()
+    private Tween fillTween;
+    private int displayedLevel;
+
+    private void OnEnable()
     {
-        if (levelManager != null) train = levelManager.GetComponent<Train>();
+        if (levelManager == null) return;
+        levelManager.OnExperienceGained += UpdateUI;
+        levelManager.OnLevelUp += UpdateUI;
+        RefreshImmediately();
     }
-    void Update()
+
+    private void Start() => RefreshImmediately();
+
+    private void OnDisable()
     {
-        if (train == null) return;
-        if (levelText != null) levelText.text = $"F · {levelManager.CreationCost}   FUEL {Mathf.CeilToInt(train.CurrentFuel)}";
-        if (xpBarSlider != null) xpBarSlider.value = train.MaxFuel > 0f ? train.CurrentFuel / train.MaxFuel : 0f;
+        if (levelManager != null)
+        {
+            levelManager.OnExperienceGained -= UpdateUI;
+            levelManager.OnLevelUp -= UpdateUI;
+        }
+        fillTween?.Kill();
+        fillTween = null;
+    }
+
+    private void RefreshImmediately()
+    {
+        if (levelManager == null) return;
+        displayedLevel = levelManager.CurrentLevel;
+        if (levelText != null) levelText.text = $"Lv. {displayedLevel}";
+        SetFill(levelManager.CurrentLevelProgress);
+    }
+
+    private void UpdateUI()
+    {
+        if (levelManager == null) return;
+        fillTween?.Kill();
+        if (displayedLevel != levelManager.CurrentLevel)
+        {
+            displayedLevel = levelManager.CurrentLevel;
+            if (levelText != null) levelText.text = $"Lv. {displayedLevel}";
+            SetFill(0f);
+        }
+        float fill = xpFill != null ? xpFill.fillAmount : xpBarSlider != null ? xpBarSlider.value : 0f;
+        fillTween = DOTween.To(() => fill, value => { fill = value; SetFill(value); },
+            levelManager.CurrentLevelProgress, fillDuration).SetEase(Ease.OutQuad).SetUpdate(true);
+    }
+
+    private void SetFill(float value)
+    {
+        if (xpFill != null) xpFill.fillAmount = value;
+        if (xpBarSlider != null) xpBarSlider.value = value;
     }
 }

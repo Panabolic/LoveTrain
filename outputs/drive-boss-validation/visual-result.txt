@@ -1,0 +1,1 @@
+PASS: 113 authored-reference/layout checks and 1280x720 UI-only RenderTexture preview. Production world renderer is not tested by this image.

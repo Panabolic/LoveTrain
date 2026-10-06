@@ -141,3 +141,16 @@ Gun은 런 시작의 영구 데미지 보너스를 원본 GunStats와 기본 Pro
 - 승인 범위와 검증·남은 확인은 [살점 HUD 작업 기록](../../SessionLogs/2026-10-06-flesh-hud.md)을 참조한다.
 
 2026-10-06 현재 테스트 조정: 강화costPerCell=0(기본값/Junmo). 정확한UI선택슬롯데이터는유지하지만월드실체부착은Item_SO.attachmentSocketName의기존소켓경로사용; Inventory.GetEquipmentAnchor는공통실체화에서미호출로잠시비활성. 상세및해상도조사결과는같은날짜 item-workbench 세션로그의마지막항목.
+
+## 2026-10-06 런 레벨 복원 / 물리 드롭
+
+- `TrainLevelManager`는 런마다 Lv. 1 / XP 0으로 시작하며 누적 XP와 레벨을 소유한다. `Enemy.Die()`는 `deathRewardGranted`로 중복을 막고 프리팹의 기존 `exp`를 처치 즉시 지급한다. 목표 레벨 L의 추가 필요 XP는 `(L - 1) * (10 + 2 * floor((L - 1) / 10)) + Wall(L)`이며, Junmo의 기존 Lv. 10/20/30/40/50 경험치 벽 +100/+200/+300/+400/+500을 사용한다.
+- `Gun` 공격력은 `(baseDamage + 기본총 영구 보너스 + CurrentLevel * 2) * (1 + damageMultiplier) * weaponDamageRatio`로 재계산한다. 과거와 같이 Lv. 1부터 레벨 성장 +2가 들어가며 기본 ProjectileStrategy와 Gun 기반 레이저에 적용된다. 영구 보너스는 기존 기본총 조건에서만 적용한다. 후방총·리볼버·창·번개·독·거대입의 독립 SO 공격력에 캐릭터 레벨 성장을 추가하지 않는다.
+- 레벨업은 `Train.SetRunLevel(level)`에 전달되어 런 시작 기준 기본 속도와 최대 속도를 레벨당 각각 +20 증가시킨다. 자동 아이템 선택창은 열지 않는다. F 입력, 작업대 제안·장착·강화, 살점 구매 거래는 기존 소유권과 흐름을 유지한다.
+- XP 변경은 `OnExperienceGained` / `OnLevelUp`, 재화·제작 변경은 `OnResourcesChanged`로 분리한다. `LevelUI`는 씬에 작성된 Lv. n / XP Fill 참조만 갱신한다. `FleshHud`는 재화 이벤트를 계속 사용하며, 기존 랜덤 아이템 이벤트의 살점 +50 지급은 XP 호출 대신 `AddFlesh`로 보존한다.
+- `EnemyRewardRules`의 살점·영혼 확률과 총량은 유지한다. 종류별 한 `RewardPickup` 인스턴스가 해당 처치의 총 보상량을 보유하며, 살점 100 보상도 오브젝트 100개를 생성하지 않는다. 자원은 흡수 시 `TrainLevelManager.AddRewards`에 요청한다. Pickup은 제작된 프리팹을 인스턴스화하며 표시 계층이나 새 Manager를 런타임에 만들지 않는다.
+- 살점은 기존 사망 파티클의 5개 Sprite 중 하나를 고르고 선로에 낙하·약하게 튕긴 뒤 0.5초 후 기차로 흡수된다. 영혼은 하늘색 구체가 잠시 상승한 뒤 Trail과 함께 흡수된다. 갈색 배럴 처치의 연한 갈색 연료 드롭은 흡수 시 `Train.HealPercent(0.1f)`를 요청한다. 선로 표면 조회는 기존 Default 레이어의 비 Trigger Collider를 사용한다.
+- Pickup의 시간과 이동은 Playing/Boss에서만 진행하며 Pause/Event/StageTransition에는 정지하고 전투 재개 후 이어진다. Die에는 미수령 드롭을 보상 없이 폐기한다. Ending에는 미수령 살점·영혼을 같은 `Collect` 경로로 한 번 정산하고 제거하여 최종 보스 보상을 보존하며, 연료 드롭은 제거한다. 씬 종료 시 일반 씬 객체로 정리되고 GameManager 상태 이벤트는 OnEnable/OnDisable에서 구독·해제한다.
+- 제작 프리팹은 `Assets/Prefabs/Gameplay/FleshPickup.prefab`, `Assets/Prefabs/Gameplay/SoulPickup.prefab`, `Assets/Prefabs/Gameplay/FuelPickup.prefab`이다. Enemy의 `fleshPickupPrefab` / `soulPickupPrefab`, FuelBarrel의 `fuelPickupPrefab`이 직렬화 참조를 소유한다.
+- 격리 Unity 통합 임포트·컴파일·Play Mode 검증과 원본/copy 일치 검사를 완료했다. 수행 범위와 미실행 확인, 제작 자산 반영 결과는 [주행·보스·성장 작업 기록](../../SessionLogs/2026-10-06-driving-boss-progression.md)에 기록한다.
+- 후속 표시 수정: Pickup 본체/영혼 Trail은 기존 ForeGround, 배럴 몬스터는 Monster 정렬 레이어를 사용한다. Default에서는 불투명 BackGround에 가려지는 것을 실제 URP A/B로 재현했다. 드롭3종은 authored WhiteOutline 자식의8방향 SpriteRenderer와 알파만 흰색으로 그리는 PickupOutline.shader/material을 사용한다. RewardPickup의 직렬화 outlineRenderers는 Initialize에서 선택된 살점 Sprite와 flip/정렬을 동기화한다. 원본 PNG·Sprite·보상 수치와 런타임 계층 생성 금지는 유지한다.

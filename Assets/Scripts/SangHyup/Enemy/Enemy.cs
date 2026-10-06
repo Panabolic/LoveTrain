@@ -16,6 +16,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float exp;
     [SerializeField] protected float hitEffectDuration = 0.05f;
     [SerializeField] protected GameObject killParticle;
+    [Header("Reward pickups")]
+    [SerializeField] private RewardPickup fleshPickupPrefab;
+    [SerializeField] private RewardPickup soulPickupPrefab;
 
     protected float calibratedMaxHP;
     protected float currentHP;
@@ -169,10 +172,13 @@ public class Enemy : MonoBehaviour
         if (deathRewardGranted) yield break;
         deathRewardGranted = true;
         isAlive = false;
+        // XP retains its original death-time reward; physical currency is paid on collection.
+        if (levelManager != null) levelManager.GainExperience(exp);
         if (levelManager != null && RewardKind != EnemyRewardKind.None)
         {
             EnemyReward reward = EnemyRewardRules.Roll(RewardKind, UnityEngine.Random.Range(0, 100), UnityEngine.Random.Range(0, 100));
-            levelManager.AddRewards(reward.Flesh, reward.Souls);
+            RewardPickup.Spawn(fleshPickupPrefab, transform.position, levelManager, reward.Flesh);
+            RewardPickup.Spawn(soulPickupPrefab, transform.position, levelManager, 0, reward.Souls);
         }
 
         Inventory inventory = levelManager?.GetComponent<Inventory>();

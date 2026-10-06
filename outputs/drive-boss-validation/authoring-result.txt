@@ -1,0 +1,2 @@
+PASS: Unity-authored quarter gauge, fuel/XP fills, chase HUD, camera rig, pickup prefabs and enemy references.
+Assets: 40

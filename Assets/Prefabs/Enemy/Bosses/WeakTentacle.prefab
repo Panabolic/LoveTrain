@@ -173,13 +173,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca87aa4b53c69f248ade158e4f5cee19, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Tentacle
   hp: 200
   damage: 50
   exp: 0
   hitEffectDuration: 0.05
   killParticle: {fileID: 434769822512540428, guid: e9444e26ed7ddb841be077bcdb687714, type: 3}
+  fleshPickupPrefab: {fileID: 8111295575125405348, guid: 04c571a28ff72f346926367f74085caa, type: 3}
+  soulPickupPrefab: {fileID: 2516287791142759192, guid: 2352af47bb7e20649bd00d11c5f2a097, type: 3}
   toDestroy: 0.3
 --- !u!199 &-669131907110936352
 ParticleSystemRenderer:

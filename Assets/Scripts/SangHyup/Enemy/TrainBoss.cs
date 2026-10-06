@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TrainBoss : Boss
@@ -34,6 +35,10 @@ public class TrainBoss : Boss
     private float lastKnockbackTime = -999f;
 
     private Vector2 moveDirection = Vector2.zero;
+    private const float ContactPushSpeed = 7f;
+    private readonly List<Collider2D> trainContacts = new List<Collider2D>();
+    private Train contactTrain;
+    private TrainController contactController;
 
     [Header("Phase Colliders")]
     [Tooltip("1페이즈용 콜라이더")]
@@ -52,8 +57,29 @@ public class TrainBoss : Boss
         if (phase2Collider != null) phase2Collider.enabled = false;
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        isStunned = false;
+        isPhase2 = false;
+        lastKnockbackTime = -999f;
+        if (phase1Collider != null) phase1Collider.enabled = true;
+        if (phase2Collider != null) phase2Collider.enabled = false;
+    }
+
     private void FixedUpdate()
     {
+        if (!isAlive || !CombatIsRunning())
+        {
+            ClearTrainContacts();
+            return;
+        }
+        RefreshTrainContacts();
+        if (contactTrain != null)
+        {
+            contactTrain.SetBossContact(this, true);
+            if (contactController != null) contactController.PushLeft(ContactPushSpeed * Time.fixedDeltaTime);
+        }
         if (rigid2D == null || targetRigid == null) return;
 
         // 2. 방향 설정 (무조건 왼쪽)
@@ -77,6 +103,7 @@ public class TrainBoss : Boss
     {
         if (!isAlive || !hasEnteredScreen) return;
         base.TakeDamage(damageAmount);
+        if (!isAlive) return;
 
         CheckPhase();
 
@@ -104,6 +131,7 @@ public class TrainBoss : Boss
         // ✨ [추가] 콜라이더 교체
         if (phase1Collider != null) phase1Collider.enabled = false;
         if (phase2Collider != null) phase2Collider.enabled = true;
+        RefreshTrainContacts();
 
         Debug.Log("TrainBoss: Entered Phase 2! Collider Switched.");
     }
@@ -133,29 +161,92 @@ public class TrainBoss : Boss
         isStunned = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other) => RegisterTrainContact(other);
+    private void OnTriggerStay2D(Collider2D other) => RegisterTrainContact(other);
+    private void OnCollisionEnter2D(Collision2D other) => RegisterTrainContact(other.collider);
+    private void OnCollisionStay2D(Collision2D other) => RegisterTrainContact(other.collider);
+    private void OnCollisionExit2D(Collision2D other) => OnTriggerExit2D(other.collider);
+
+    private void RegisterTrainContact(Collider2D other)
     {
-        if (!isAlive) return;
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
+        if (!isAlive || !CombatIsRunning() || other == null) return;
+        Train train = other.GetComponentInParent<Train>();
+        if (train == null || train.IsDead || (contactTrain != null && contactTrain != train)) return;
+        if (!trainContacts.Contains(other)) trainContacts.Add(other);
+        if (contactTrain == null)
         {
-            Train train = collision.transform.GetComponentInParent<Train>();
-
-            if (train != null)
-            {
-                train.TakeDamage(damage, true);
-                if (CameraShakeManager.Instance != null)
-                {
-                    CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
-                }
-            }
+            contactTrain = train;
+            contactController = train.GetComponent<TrainController>();
+            if (CameraShakeManager.Instance != null)
+                CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
         }
+        // This is a continuous movement constraint, including contact during dash.
+        // Contact no longer subtracts the prefab's old instant-kill fuel damage.
+        train.SetBossContact(this, true);
     }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        // Phase changes may deliver old-collider Exit after new-collider Enter.
+        // Keep the reservation while either current phase collider still overlaps.
+        if (!OverlapsActivePhase(other)) trainContacts.Remove(other);
+        RefreshTrainContacts();
+    }
+
+    private void RefreshTrainContacts()
+    {
+        for (int i = trainContacts.Count - 1; i >= 0; i--)
+        {
+            Collider2D other = trainContacts[i];
+            if (other == null || !other.enabled || !other.gameObject.activeInHierarchy || !OverlapsActivePhase(other))
+                trainContacts.RemoveAt(i);
+        }
+        if (trainContacts.Count == 0 || contactTrain == null || contactTrain.IsDead) ClearTrainContacts();
+    }
+
+    private bool OverlapsActivePhase(Collider2D other)
+    {
+        if (other == null || !other.enabled) return false;
+        return Overlaps(phase1Collider, other) || Overlaps(phase2Collider, other);
+    }
+
+    private static bool Overlaps(Collider2D bossCollider, Collider2D other)
+    {
+        return bossCollider != null && bossCollider.enabled && bossCollider.gameObject.activeInHierarchy &&
+            bossCollider.Distance(other).distance <= 0.02f;
+    }
+
+    private static bool CombatIsRunning()
+    {
+        return Time.timeScale > 0f && GameManager.Instance != null &&
+            (GameManager.Instance.CurrentState == GameState.Playing || GameManager.Instance.CurrentState == GameState.Boss);
+    }
+
+    private void ClearTrainContacts()
+    {
+        if (contactTrain != null) contactTrain.SetBossContact(this, false);
+        contactTrain = null;
+        contactController = null;
+        trainContacts.Clear();
+    }
+
+    protected override void OnDisable()
+    {
+        ClearTrainContacts();
+        StopAllCoroutines();
+        base.OnDisable();
+    }
+
+    private void OnDestroy() => ClearTrainContacts();
 
     protected override IEnumerator Die()
     {
         if (!isAlive) yield break;
         isAlive = false;
+        ClearTrainContacts();
+        if (phase1Collider != null) phase1Collider.enabled = false;
+        if (phase2Collider != null) phase2Collider.enabled = false;
+        if (rigid2D != null) rigid2D.linearVelocity = Vector2.zero;
         yield return base.Die();
         Vector2 explosionEffectPivot = new Vector2(-5f, 2f);
 

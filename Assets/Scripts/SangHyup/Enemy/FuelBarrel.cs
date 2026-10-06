@@ -7,19 +7,23 @@ public class FuelBarrel : Enemy
     [SerializeField, Range(0f, 1f)] private float fuelRewardPercent = 0.1f;
     [SerializeField] private float driftSpeed = 1.5f;
     [SerializeField] private float lifetime = 25f;
+    [SerializeField] private RewardPickup fuelPickupPrefab;
     private float age;
     private float direction;
     private static Sprite barrelSprite;
 
     protected override void Awake()
     {
-        var renderer = gameObject.AddComponent<SpriteRenderer>();
-        renderer.sprite = GetBarrelSprite();
+        var renderer = GetComponent<SpriteRenderer>();
+        if (renderer == null) renderer = gameObject.AddComponent<SpriteRenderer>();
+        if (renderer.sprite == null) renderer.sprite = GetBarrelSprite();
         renderer.sortingOrder = 5;
-        var box = gameObject.AddComponent<BoxCollider2D>();
+        var box = GetComponent<BoxCollider2D>();
+        if (box == null) box = gameObject.AddComponent<BoxCollider2D>();
         box.size = new Vector2(0.65f, 0.85f);
         box.isTrigger = true;
-        var body = gameObject.AddComponent<Rigidbody2D>();
+        var body = GetComponent<Rigidbody2D>();
+        if (body == null) body = gameObject.AddComponent<Rigidbody2D>();
         body.bodyType = RigidbodyType2D.Kinematic;
         hp = 15f; damage = 0f; exp = 0f;
         base.Awake();
@@ -38,13 +42,9 @@ public class FuelBarrel : Enemy
 
     protected override IEnumerator Die()
     {
-        if (!isAlive) yield break;
+        if (!isAlive || deathRewardGranted) yield break;
         isAlive = false;
-        if (levelManager != null)
-        {
-            var train = levelManager.GetComponent<Train>();
-            if (train != null) train.HealPercent(fuelRewardPercent);
-        }
+        RewardPickup.Spawn(fuelPickupPrefab, transform.position, levelManager, 0, 0, fuelRewardPercent);
         yield return base.Die();
         Destroy(gameObject);
     }
@@ -66,8 +66,8 @@ public class FuelBarrel : Enemy
         {
             bool edge = x == 2 || x == 13 || y == 1 || y == 18;
             bool band = y == 5 || y == 14;
-            pixels[y * 16 + x] = edge || band ? new Color(0.92f, 0.94f, 0.97f) : new Color(0.23f, 0.3f, 0.38f);
-            if (x >= 6 && x <= 9 && y >= 8 && y <= 11) pixels[y * 16 + x] = new Color(1f, 0.58f, 0.2f);
+            pixels[y * 16 + x] = edge || band ? new Color(0.35f, 0.19f, 0.08f) : new Color(0.62f, 0.35f, 0.15f);
+            if (x >= 6 && x <= 9 && y >= 8 && y <= 11) pixels[y * 16 + x] = new Color(0.78f, 0.51f, 0.26f);
         }
         texture.SetPixels(pixels); texture.Apply();
         barrelSprite = Sprite.Create(texture, new Rect(0, 0, 16, 20), new Vector2(0.5f, 0.5f), 22f);

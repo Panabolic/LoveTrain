@@ -37,6 +37,7 @@ public class Gun : MonoBehaviour
     private float permanentDamageBonus;
     private float damageMultiplier = 0f; // 데미지 배율 (0.1 = 10% 증가)
     private float fireRateMultiplier = 0f; // 공속 배율
+    private const float damageEachLevel = 2f;
 
     // ✨ [추가] 무기 고유 데미지 비율 (기본값 1.0)
     private float weaponDamageRatio = 1.0f;
@@ -50,7 +51,7 @@ public class Gun : MonoBehaviour
     public Transform FirePoint { get; private set; }
     public float DamageMultiplier => damageMultiplier;
     public float FireRateMultiplier => fireRateMultiplier;
-    public float DamageEachLevel => 0f;
+    public float DamageEachLevel => damageEachLevel;
 
     // ✨ [추가] 외부에서 순수 베이스 스탯을 읽을 수 있게 함 (LaserGun 등에서 사용)
     public GunStats BaseStats => baseStats;
@@ -73,11 +74,14 @@ public class Gun : MonoBehaviour
     private void OnEnable()
     {
         if (fireAction != null) fireAction.action.Enable();
+        if (levelManager != null) levelManager.OnLevelUp += OnLevelUpDamageIncrease;
+        UpdateStats();
     }
 
     private void OnDisable()
     {
         if (fireAction != null) fireAction.action.Disable();
+        if (levelManager != null) levelManager.OnLevelUp -= OnLevelUpDamageIncrease;
     }
 
     private void Start()
@@ -160,9 +164,10 @@ public class Gun : MonoBehaviour
 
     private void UpdateStats()
     {
-        // XP levels were replaced by flesh; item multipliers use the authored base damage.
+        // Preserve the original Lv.1 +2 growth and the default gun's permanent bonus.
         float startingGunBonus = UsesDefaultGunStats() ? permanentDamageBonus : 0f;
-        CurrentStats.damage = (baseStats.damage + startingGunBonus)
+        float growthDamage = (levelManager != null ? levelManager.CurrentLevel : 1) * damageEachLevel;
+        CurrentStats.damage = (baseStats.damage + startingGunBonus + growthDamage)
                               * (1f + damageMultiplier)
                               * weaponDamageRatio;
 

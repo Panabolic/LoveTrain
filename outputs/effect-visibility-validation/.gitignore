@@ -1,0 +1,16 @@
+*
+!.gitignore
+!README.md
+!EffectRenderProbe.cs
+!EffectVisibilityAuthoring.cs
+!merge-assets.py
+!render-result.txt
+!render-result-baseline.txt
+!authoring-result.txt
+!play-result.txt
+!source-snapshot.json
+!*-before.png
+!*-after.png
+!*-outlined.png
+!before-default.png
+!after-foreground.png

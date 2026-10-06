@@ -93,12 +93,12 @@ public class AutoScrollBackground : MonoBehaviour
                 var firstSprite = first.GetComponent<SpriteRenderer>();
                 var lastSprite = last.GetComponent<SpriteRenderer>();
                 if (firstSprite == null || lastSprite == null) break;
-                if (currentTrainSpeed > 0f && firstSprite.bounds.max.x < leftEdge)
+                if (firstSprite.bounds.max.x < leftEdge)
                 {
                     first.position += Vector3.right * (lastSprite.bounds.max.x - firstSprite.bounds.min.x);
                     first.SetAsLastSibling();
                 }
-                else if (currentTrainSpeed < 0f && lastSprite.bounds.min.x > rightEdge)
+                else if (firstSprite.bounds.min.x > leftEdge && lastSprite.bounds.min.x > rightEdge)
                 {
                     last.position += Vector3.right * (firstSprite.bounds.min.x - lastSprite.bounds.max.x);
                     last.SetAsFirstSibling();

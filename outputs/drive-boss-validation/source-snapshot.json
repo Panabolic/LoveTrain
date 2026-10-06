@@ -1,0 +1,1040 @@
+{
+  "runtimeSources": [
+    {
+      "path": "Assets/AutoDestroy.cs",
+      "sha256": "ebe9aa7faab3a011a0b5e0ce355652d2475f1716f2fa9bdaaf8089bb6c7d8078",
+      "copiedSha256": "ebe9aa7faab3a011a0b5e0ce355652d2475f1716f2fa9bdaaf8089bb6c7d8078"
+    },
+    {
+      "path": "Assets/BossWarningLoopUI.cs",
+      "sha256": "d31a94a223f061dbd07b6e167e7ff3fb100c4d797608aeaa18d9245c4c1dab4b",
+      "copiedSha256": "d31a94a223f061dbd07b6e167e7ff3fb100c4d797608aeaa18d9245c4c1dab4b"
+    },
+    {
+      "path": "Assets/BossWarningUI.cs",
+      "sha256": "7d2a5d812901ffda68cc1ed58cdeb87809bf4837b63bb8194186506b404d2086",
+      "copiedSha256": "7d2a5d812901ffda68cc1ed58cdeb87809bf4837b63bb8194186506b404d2086"
+    },
+    {
+      "path": "Assets/DestroyOnAnimationEnd.cs",
+      "sha256": "75583facbd4c149938a9d7b6b295c5511738500a1b83db7ddd9817b9d0ea7015",
+      "copiedSha256": "75583facbd4c149938a9d7b6b295c5511738500a1b83db7ddd9817b9d0ea7015"
+    },
+    {
+      "path": "Assets/DestroyOnAnimationEndzz.cs",
+      "sha256": "45f63fadf62be29b5c6831d45e4742320d50e04defe82715f5eaaa055a0f1159",
+      "copiedSha256": "45f63fadf62be29b5c6831d45e4742320d50e04defe82715f5eaaa055a0f1159"
+    },
+    {
+      "path": "Assets/EventObjectSpawner.cs",
+      "sha256": "bb2de5755c21c027c64a1f8d0e6ed51fe47b89bb38bd57b04962024f7d7d1fbe",
+      "copiedSha256": "bb2de5755c21c027c64a1f8d0e6ed51fe47b89bb38bd57b04962024f7d7d1fbe"
+    },
+    {
+      "path": "Assets/EventTriggerObject.cs",
+      "sha256": "80877ed376550f89a8e7ad809dad654af54025d650011d2adf4400ab62bc7876",
+      "copiedSha256": "80877ed376550f89a8e7ad809dad654af54025d650011d2adf4400ab62bc7876"
+    },
+    {
+      "path": "Assets/LonginusPathData.cs",
+      "sha256": "6f7bcfc5ca9f2cf0b8e3bb3f9bf9fef56de6c20a6ea46e8a9eee37d7bd8f5b5f",
+      "copiedSha256": "6f7bcfc5ca9f2cf0b8e3bb3f9bf9fef56de6c20a6ea46e8a9eee37d7bd8f5b5f"
+    },
+    {
+      "path": "Assets/RevolverBullet.cs",
+      "sha256": "bae0d594281977ae728721dde3153b6947f1b74c2b8f4d409aa4ff679a87ccf1",
+      "copiedSha256": "bae0d594281977ae728721dde3153b6947f1b74c2b8f4d409aa4ff679a87ccf1"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/AccelerationWindEffect.cs",
+      "sha256": "814fcba9f7e82ae9c3deafa9aa095a69aa58ff74e10e6e64c04c7d6d9ebedd18",
+      "copiedSha256": "814fcba9f7e82ae9c3deafa9aa095a69aa58ff74e10e6e64c04c7d6d9ebedd18"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/AutoScrollBackground.cs",
+      "sha256": "555a73b8c7dee406502bbc72ca2796326e0eed2885f145e3cc592f86aaa5e281",
+      "copiedSha256": "555a73b8c7dee406502bbc72ca2796326e0eed2885f145e3cc592f86aaa5e281"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/BackGround.cs",
+      "sha256": "9549d956c32bc71d89b79f2f2850426dcae4a3f9080de957cb5bbc82f2ff4e4a",
+      "copiedSha256": "9549d956c32bc71d89b79f2f2850426dcae4a3f9080de957cb5bbc82f2ff4e4a"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/bullet.cs",
+      "sha256": "d200549922099a6cee877de7a06bbe93019f7335fb26fa987329c2ad8398e73e",
+      "copiedSha256": "d200549922099a6cee877de7a06bbe93019f7335fb26fa987329c2ad8398e73e"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/CameraShakerManager.cs",
+      "sha256": "25a539f6bd0759093e38bfd76fae95954f9def2d9d921d9b2af7cae11bff03f5",
+      "copiedSha256": "25a539f6bd0759093e38bfd76fae95954f9def2d9d921d9b2af7cae11bff03f5"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/ComboKillState.cs",
+      "sha256": "e1d99faa770f91ad81b666783d3d330e44cbdfa53b840e3d9a5933fdf5292fbd",
+      "copiedSha256": "e1d99faa770f91ad81b666783d3d330e44cbdfa53b840e3d9a5933fdf5292fbd"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/ComboKillUI.cs",
+      "sha256": "9e8e05477fdbc6a24f5ef76d52ac5aeeb33690a99f420527b25b79205ed83f57",
+      "copiedSha256": "9e8e05477fdbc6a24f5ef76d52ac5aeeb33690a99f420527b25b79205ed83f57"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/CreditEnemy.cs",
+      "sha256": "7a0b50333f7a73aa313f4a7d5f630b73c1afa86b11cdae1ab0843864c5150b96",
+      "copiedSha256": "7a0b50333f7a73aa313f4a7d5f630b73c1afa86b11cdae1ab0843864c5150b96"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/CreditsUIController.cs",
+      "sha256": "e825197c7ec9040e6e534857a3e15c5d4c1f9f821d8e388d1ee3984264fcb557",
+      "copiedSha256": "e825197c7ec9040e6e534857a3e15c5d4c1f9f821d8e388d1ee3984264fcb557"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/CursorManager.cs",
+      "sha256": "a6bb4a8663ce962442e1294bfb4f7eb563bccc2efedd972b47b49449819af364",
+      "copiedSha256": "a6bb4a8663ce962442e1294bfb4f7eb563bccc2efedd972b47b49449819af364"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/EndingManager.cs",
+      "sha256": "f97765c178d0cd48077e1048734a04bb6fb2a4ac91f0dcdd4c6c1b0070527abc",
+      "copiedSha256": "f97765c178d0cd48077e1048734a04bb6fb2a4ac91f0dcdd4c6c1b0070527abc"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/BulletPoolManager.cs",
+      "sha256": "cac000a9ded6780e53df5ef3d15c10364f55026292b83b7e229aad028955f93d",
+      "copiedSha256": "cac000a9ded6780e53df5ef3d15c10364f55026292b83b7e229aad028955f93d"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/EffectParameters.cs",
+      "sha256": "3dfd337b5d3d40adeaadf8fd73d3d4c6800d3082647f434c545e0b474e834986",
+      "copiedSha256": "3dfd337b5d3d40adeaadf8fd73d3d4c6800d3082647f434c545e0b474e834986"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/Effects/Effect_AcquireSpecificItem.cs",
+      "sha256": "a0781e4ee5f319d5615eecc9bb1098de5e9d52f089a43ffb0a7690e7fa64ffc0",
+      "copiedSha256": "a0781e4ee5f319d5615eecc9bb1098de5e9d52f089a43ffb0a7690e7fa64ffc0"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/Effects/Effect_AquireItem.cs",
+      "sha256": "e9b209e4c07a335140e61c3940dabdb8eebb884c71fda3fe894cf4c96216acca",
+      "copiedSha256": "e9b209e4c07a335140e61c3940dabdb8eebb884c71fda3fe894cf4c96216acca"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/Effects/Effect_AquireRandomItem.cs",
+      "sha256": "0d11df1b03e857840b3de0522d4f3334b589f3dfcad5ce8c939424a77de80a7b",
+      "copiedSha256": "0d11df1b03e857840b3de0522d4f3334b589f3dfcad5ce8c939424a77de80a7b"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/Effects/Effect_IncreaseEnemyHealthBuff.cs",
+      "sha256": "c40fff27e389e7af1df571a57c307729943d6cd4fee54c9ba961dee70a187303",
+      "copiedSha256": "c40fff27e389e7af1df571a57c307729943d6cd4fee54c9ba961dee70a187303"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/Effects/Effect_ModifySpeed.cs",
+      "sha256": "d908db532c987c7c90976059dad39964754dac2bbbedb1a943818d2a90f2a4fb",
+      "copiedSha256": "d908db532c987c7c90976059dad39964754dac2bbbedb1a943818d2a90f2a4fb"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/Effects/Effect_SpawnMobBatch.cs",
+      "sha256": "e1373f4cbb0f3725bdbda6a35f3461c0e830269ee3752b497b8c8ed703317e25",
+      "copiedSha256": "e1373f4cbb0f3725bdbda6a35f3461c0e830269ee3752b497b8c8ed703317e25"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/Effects/Effect_SpawnMobPeriodically.cs",
+      "sha256": "96133ade4daedeaa04058479247892e35cfbec14d3ee0547088f9f6eb9f506ac",
+      "copiedSha256": "96133ade4daedeaa04058479247892e35cfbec14d3ee0547088f9f6eb9f506ac"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/Effects/Effect_UpgradeRandomItemNTimes.cs",
+      "sha256": "f65e0bb514142263e9d710842ba11a78823cb853de964a636bc88355f1c7d083",
+      "copiedSha256": "f65e0bb514142263e9d710842ba11a78823cb853de964a636bc88355f1c7d083"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/Effects/Effect_UpgradeRandomItemToMax.cs",
+      "sha256": "3abf7899b56f061e64f120bf593e42ba45051bb63949eb2c352ed75d17e66bd6",
+      "copiedSha256": "3abf7899b56f061e64f120bf593e42ba45051bb63949eb2c352ed75d17e66bd6"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/EventDatabase.cs",
+      "sha256": "5b2bde9ecda7273774d3f1951deaa2437f8d75f1ceddd55c89a4a58cdbfee6f5",
+      "copiedSha256": "5b2bde9ecda7273774d3f1951deaa2437f8d75f1ceddd55c89a4a58cdbfee6f5"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/EventManager.cs",
+      "sha256": "23d86255b6768cd5b6ecd85a6559f6e1d969f7517da1b998f40b8c372b0f6682",
+      "copiedSha256": "23d86255b6768cd5b6ecd85a6559f6e1d969f7517da1b998f40b8c372b0f6682"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/EventResultOutput.cs",
+      "sha256": "ed4b2c07e7bae8a82b579f72332dd2bcef7457250e2ce35a4bfd75ea0fd827d9",
+      "copiedSha256": "ed4b2c07e7bae8a82b579f72332dd2bcef7457250e2ce35a4bfd75ea0fd827d9"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/EventRollGroup.cs",
+      "sha256": "aefeaf3d531731bf1a54e09f6f55c87c2aa897004e4c66135e66a67ff3017771",
+      "copiedSha256": "aefeaf3d531731bf1a54e09f6f55c87c2aa897004e4c66135e66a67ff3017771"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/EventTextFormatter.cs",
+      "sha256": "7f98ba8845ed710d25f9c27bf35ce63f6e2cd2007e32e8bc1767449c4d39796b",
+      "copiedSha256": "7f98ba8845ed710d25f9c27bf35ce63f6e2cd2007e32e8bc1767449c4d39796b"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/GameEffectSO.cs",
+      "sha256": "e17ca4c462ee031e0b97d767efeef8be6239f857a0de769cb8b6e101f670a514",
+      "copiedSha256": "e17ca4c462ee031e0b97d767efeef8be6239f857a0de769cb8b6e101f670a514"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/GameEventSO.cs",
+      "sha256": "6b733011353a4fc12c9800fcc92b83da511fd42d2e1a8225fe1d83a1711e05cf",
+      "copiedSha256": "6b733011353a4fc12c9800fcc92b83da511fd42d2e1a8225fe1d83a1711e05cf"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/SO_Event.cs",
+      "sha256": "25483d0fff87b5d3dcacece3731a5bf6b35a1016d8209126ba5a63aa70993f7a",
+      "copiedSha256": "25483d0fff87b5d3dcacece3731a5bf6b35a1016d8209126ba5a63aa70993f7a"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Event/WeightedEventOutcome.cs",
+      "sha256": "54264de00986fbb3cf6d568a8050af36611471978fb8401842394bd846015d45",
+      "copiedSha256": "54264de00986fbb3cf6d568a8050af36611471978fb8401842394bd846015d45"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/FixedAspectRatioController.cs",
+      "sha256": "d9e3db4b1b7a4517219dc41999343ede23b647dce59ace6027967b95f48d24d2",
+      "copiedSha256": "d9e3db4b1b7a4517219dc41999343ede23b647dce59ace6027967b95f48d24d2"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/FontChanger.cs",
+      "sha256": "5e736eab52d2abcb73493b8eedf7efc343886cb94a96f445883647cbcd52dad0",
+      "copiedSha256": "5e736eab52d2abcb73493b8eedf7efc343886cb94a96f445883647cbcd52dad0"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/ForwardCameraFollow.cs",
+      "sha256": "bd00cf43519084d88a0b2da3536b2ba5bb36e463af9f35321d7b784911893e37",
+      "copiedSha256": "bd00cf43519084d88a0b2da3536b2ba5bb36e463af9f35321d7b784911893e37"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/GameManager.cs",
+      "sha256": "901e6dd8794b66535d552aa6264a2d7bc4c15f6ac9b90af5fccfa73096a4cd11",
+      "copiedSha256": "901e6dd8794b66535d552aa6264a2d7bc4c15f6ac9b90af5fccfa73096a4cd11"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Gun.cs",
+      "sha256": "d73039043e14c75e83e91cad1824b57ac0f9e54cfb0aaf6f412172acf35f0258",
+      "copiedSha256": "d73039043e14c75e83e91cad1824b57ac0f9e54cfb0aaf6f412172acf35f0258"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/GunRotator.cs",
+      "sha256": "cbfb580ebf36da1321d1e787b0809f020fbb89bc4becd8b9d58cad11baa819a6",
+      "copiedSha256": "cbfb580ebf36da1321d1e787b0809f020fbb89bc4becd8b9d58cad11baa819a6"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Inventory/Inventory.cs",
+      "sha256": "8457df84ce0743af5f3d3d1f407750eab296fc83a361d240c3d5572ea53fd765",
+      "copiedSha256": "8457df84ce0743af5f3d3d1f407750eab296fc83a361d240c3d5572ea53fd765"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Inventory/InventorySlotUI.cs",
+      "sha256": "844b9b73abd89fa08d10fb8a4eb847d22ea38b69c7cefb6b250e6b4bd888b886",
+      "copiedSha256": "844b9b73abd89fa08d10fb8a4eb847d22ea38b69c7cefb6b250e6b4bd888b886"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Inventory/InventoryUI.cs",
+      "sha256": "3951fbc97d2a127f904a8ff6c66a595d27c792935a6147b3b466e6ef99e756fa",
+      "copiedSha256": "3951fbc97d2a127f904a8ff6c66a595d27c792935a6147b3b466e6ef99e756fa"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/IRicochetSource.cs",
+      "sha256": "bf5816b5c8f043eb72d4c8b7b68096cd8033972c4002f43cac4073d72e14d400",
+      "copiedSha256": "bf5816b5c8f043eb72d4c8b7b68096cd8033972c4002f43cac4073d72e14d400"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Item_SO.cs",
+      "sha256": "44971975909acd144801aa9b56b1c54f3a03d3c63cc537d142c21c134a2f0e67",
+      "copiedSha256": "44971975909acd144801aa9b56b1c54f3a03d3c63cc537d142c21c134a2f0e67"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/BeatingHeart_SO.cs",
+      "sha256": "86d7347aa25359d783ada4ca9680d858380d9024f5c411c778f1265bddaa8160",
+      "copiedSha256": "86d7347aa25359d783ada4ca9680d858380d9024f5c411c778f1265bddaa8160"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/BibleZone.cs",
+      "sha256": "1d8077f45dcb0b64192624afa64d50d7106080ec6fcf74d1a2619548fafcd8c7",
+      "copiedSha256": "1d8077f45dcb0b64192624afa64d50d7106080ec6fcf74d1a2619548fafcd8c7"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/BloodyBible_SO.cs",
+      "sha256": "885cd3af5ae12d8e86dc26e5622dfd93977620aee0e87b61c0a178c5eba4508c",
+      "copiedSha256": "885cd3af5ae12d8e86dc26e5622dfd93977620aee0e87b61c0a178c5eba4508c"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/BlueGear_SO.cs",
+      "sha256": "54d2370c0db8ce00e2dd036c832aa4d61d80c0ff187153320930a06eaba35144",
+      "copiedSha256": "54d2370c0db8ce00e2dd036c832aa4d61d80c0ff187153320930a06eaba35144"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/CrownOfThorns_SO.cs",
+      "sha256": "a876f1e18bfdadd5d86b129a663c42a9b45b48b62e996e7ebcd21e318bce9f68",
+      "copiedSha256": "a876f1e18bfdadd5d86b129a663c42a9b45b48b62e996e7ebcd21e318bce9f68"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/CrownOfThorns.cs",
+      "sha256": "a17f5efb85e9ba0b4a6a2d58e70d1ffcc313c91563e825187a57b007ee2e6876",
+      "copiedSha256": "a17f5efb85e9ba0b4a6a2d58e70d1ffcc313c91563e825187a57b007ee2e6876"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/HealingItem_SO.cs",
+      "sha256": "e201047397d40b44a84b39368bce4383d2d5216fdb3d7e10c1f237284418e4be",
+      "copiedSha256": "e201047397d40b44a84b39368bce4383d2d5216fdb3d7e10c1f237284418e4be"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/HealingItem.cs",
+      "sha256": "9027dd7855405bba8c7a82801f441465dfe95b17d9bc1795e6718fbe34e20893",
+      "copiedSha256": "9027dd7855405bba8c7a82801f441465dfe95b17d9bc1795e6718fbe34e20893"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/IInstantiatedItem.cs",
+      "sha256": "6146ca864528f05f6f66708536b2523abc1e42654472b8d9947d8cedd4328188",
+      "copiedSha256": "6146ca864528f05f6f66708536b2523abc1e42654472b8d9947d8cedd4328188"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/ItemDatabase.cs",
+      "sha256": "1fcbd81c31c2133b7d30ecc66844cc820228501c1fa21ed875007c0e0ab37971",
+      "copiedSha256": "1fcbd81c31c2133b7d30ecc66844cc820228501c1fa21ed875007c0e0ab37971"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/ItemInstance.cs",
+      "sha256": "22fa528b7384c26639199c1c74f00d117e07ae1a94bfaae3de3237c94af472f4",
+      "copiedSha256": "22fa528b7384c26639199c1c74f00d117e07ae1a94bfaae3de3237c94af472f4"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/ItemToolTip.cs",
+      "sha256": "b8c64976fecd4bba9d8cda6d81fbca0f52fc95785b5eb136ad91eff7d096a327",
+      "copiedSha256": "b8c64976fecd4bba9d8cda6d81fbca0f52fc95785b5eb136ad91eff7d096a327"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/IWeaponStrategy.cs",
+      "sha256": "b3125b4be9bff9a667845a3740dc35662310aec292d070b912a9791ba48b42de",
+      "copiedSha256": "b3125b4be9bff9a667845a3740dc35662310aec292d070b912a9791ba48b42de"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/LaserBeamSprite.cs",
+      "sha256": "397e55791fcc0cf64aa1fb3c2c2124d4cdd7ee1073d78d875d8ab084d3b90c63",
+      "copiedSha256": "397e55791fcc0cf64aa1fb3c2c2124d4cdd7ee1073d78d875d8ab084d3b90c63"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/LaserGun_SO.cs",
+      "sha256": "61d5b84fb13ce85f3064451b552463851052b9271c95cfb75fd4795b83b32ba8",
+      "copiedSha256": "61d5b84fb13ce85f3064451b552463851052b9271c95cfb75fd4795b83b32ba8"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/LaserGun.cs",
+      "sha256": "2fde3cef50326b3f5cd8cba95a628ed6bf907fc9c7a52f2de25b41a49814438e",
+      "copiedSha256": "2fde3cef50326b3f5cd8cba95a628ed6bf907fc9c7a52f2de25b41a49814438e"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/LaserSpriteStrategy.cs",
+      "sha256": "295d9a394b46dbb3c618d94f5dc1511e5fd6b5e6d237dcb7556b37139232a00b",
+      "copiedSha256": "295d9a394b46dbb3c618d94f5dc1511e5fd6b5e6d237dcb7556b37139232a00b"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/LevelUpSpriteAtlas.cs",
+      "sha256": "7da83f1094650669be8470ee232e91f6be713429ab6600cff19c8a9f9d24537c",
+      "copiedSha256": "7da83f1094650669be8470ee232e91f6be713429ab6600cff19c8a9f9d24537c"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/LightningBolt.cs",
+      "sha256": "e987554de84e26044ee962de8e8ca9f612353eff3f7c440a51f2008188d4319a",
+      "copiedSha256": "e987554de84e26044ee962de8e8ca9f612353eff3f7c440a51f2008188d4319a"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/LonginusLauncher_SO.cs",
+      "sha256": "1a097e8cffc63f3b2243cf14a5ba78112c720386f2958714a2840f0e919e95d0",
+      "copiedSha256": "1a097e8cffc63f3b2243cf14a5ba78112c720386f2958714a2840f0e919e95d0"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/LonginusLauncher.cs",
+      "sha256": "18a5bb6501f2fea76197a9b440321c626d2175a6a52e380a5188e7c89f8a1a8e",
+      "copiedSha256": "18a5bb6501f2fea76197a9b440321c626d2175a6a52e380a5188e7c89f8a1a8e"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/LonginusSpear.cs",
+      "sha256": "6f5316cc9a7ba7de1e60ec620911af4fcf711a88bcceffcc2b615ff79e7b28bd",
+      "copiedSha256": "6f5316cc9a7ba7de1e60ec620911af4fcf711a88bcceffcc2b615ff79e7b28bd"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/MagicBullet_SO.cs",
+      "sha256": "96bc72a11ff2de20835a1974e028eda4f2de00a0630b7ac93554a15571a16877",
+      "copiedSha256": "96bc72a11ff2de20835a1974e028eda4f2de00a0630b7ac93554a15571a16877"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/PoisonGas.cs",
+      "sha256": "2e1f631c1c9c1087a1a684466dacab7c91c49a34ea4b81d8327876012cfe602a",
+      "copiedSha256": "2e1f631c1c9c1087a1a684466dacab7c91c49a34ea4b81d8327876012cfe602a"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/PoisonMissile.cs",
+      "sha256": "431448fc91d9966dc236e305eeb511da01719fa686eb2bf01c8885042d57c12d",
+      "copiedSha256": "431448fc91d9966dc236e305eeb511da01719fa686eb2bf01c8885042d57c12d"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/PoisonMissileLauncher_SO.cs",
+      "sha256": "219aaedb29938103637824fa8df45b82cf73ba6290e7ae70231ccfbb0774aec9",
+      "copiedSha256": "219aaedb29938103637824fa8df45b82cf73ba6290e7ae70231ccfbb0774aec9"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/PoisonMissileLauncher.cs",
+      "sha256": "dae13a5ce2b6cd5b050eba8e6021e60214179f7a363edfdd18f93b52a53009f6",
+      "copiedSha256": "dae13a5ce2b6cd5b050eba8e6021e60214179f7a363edfdd18f93b52a53009f6"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/ProjectileStrategy.cs",
+      "sha256": "d425d4130cfb5e3c4386af19e434343188be82771122b789079fefd96c2ab5f2",
+      "copiedSha256": "d425d4130cfb5e3c4386af19e434343188be82771122b789079fefd96c2ab5f2"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/RearGun_SO.cs",
+      "sha256": "673ef51957da680f5e99cee9a4b10432be25cf527212db3e2ce3b33b3f71130f",
+      "copiedSha256": "673ef51957da680f5e99cee9a4b10432be25cf527212db3e2ce3b33b3f71130f"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/RearGun.cs",
+      "sha256": "25e1d032ef7725a0175005052bedd1117fd6cfc17c5306392267b769cce478c5",
+      "copiedSha256": "25e1d032ef7725a0175005052bedd1117fd6cfc17c5306392267b769cce478c5"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/RedGear_SO.cs",
+      "sha256": "288f9fc9e9adf1194001f3f23758efb8b781645e561086638aa9441ac971bd6e",
+      "copiedSha256": "288f9fc9e9adf1194001f3f23758efb8b781645e561086638aa9441ac971bd6e"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/Revolver_SO.cs",
+      "sha256": "62854c0f75978f767da7d9258d4a50b6cfe82247b2f60c5b773e49f236382ad6",
+      "copiedSha256": "62854c0f75978f767da7d9258d4a50b6cfe82247b2f60c5b773e49f236382ad6"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/Revolver.cs",
+      "sha256": "21a6834e347f7d0751da753603cfb49a5b7d56764de393e4a5b44284726bf577",
+      "copiedSha256": "21a6834e347f7d0751da753603cfb49a5b7d56764de393e4a5b44284726bf577"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/ToolTipSystem.cs",
+      "sha256": "8de8e21c5699a344a3131497b25deb9c809b69636a8d034ffce0e0f545d8c0cf",
+      "copiedSha256": "8de8e21c5699a344a3131497b25deb9c809b69636a8d034ffce0e0f545d8c0cf"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Items/WeaponVisual.cs",
+      "sha256": "0e5d9e9ff085d713f4d99773c7e35c902e49455845ffae091da1f53dce3190ae",
+      "copiedSha256": "0e5d9e9ff085d713f4d99773c7e35c902e49455845ffae091da1f53dce3190ae"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/LevelUp/FleshCreationProgress.cs",
+      "sha256": "994e2b28cf5ebf5851c6fe6e14a01c49b8234d5065bcac998591a2ae64d90990",
+      "copiedSha256": "994e2b28cf5ebf5851c6fe6e14a01c49b8234d5065bcac998591a2ae64d90990"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/LevelUp/FleshHud.cs",
+      "sha256": "ed0b4abd1ceaf2e50e47881b1b1bb338b541e94763e711704c008d1cc652945f",
+      "copiedSha256": "ed0b4abd1ceaf2e50e47881b1b1bb338b541e94763e711704c008d1cc652945f"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/LevelUp/LevelUI.cs",
+      "sha256": "42fc2accb583105a9d375cbc6c2070027ec7c147761eda6b2612fe92e4bd2009",
+      "copiedSha256": "42fc2accb583105a9d375cbc6c2070027ec7c147761eda6b2612fe92e4bd2009"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/LevelUp/LevelUpChoiceUI.cs",
+      "sha256": "721f6cbe4d0c0a3272666cb56c71deaf611004588794a9044cd96773416565e5",
+      "copiedSha256": "721f6cbe4d0c0a3272666cb56c71deaf611004588794a9044cd96773416565e5"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/LevelUp/LevelUpManager.cs",
+      "sha256": "e3e71c3181d7b70afa974f9ab5389fbb62f70b527ba4d1c3211c7edea56da996",
+      "copiedSha256": "e3e71c3181d7b70afa974f9ab5389fbb62f70b527ba4d1c3211c7edea56da996"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/LevelUp/TrainItemWorkbenchView.cs",
+      "sha256": "d8819c69fd107f1bea8e2d8d67e70ab69d561e9a6c77cbfd1a141fa5324c8bce",
+      "copiedSha256": "d8819c69fd107f1bea8e2d8d67e70ab69d561e9a6c77cbfd1a141fa5324c8bce"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/LevelUp/TrainLevelManager.cs",
+      "sha256": "4f97b70897ed4174fb88ff4444b487b6e4c7b9e8f238a1e6eb691d172380f080",
+      "copiedSha256": "4f97b70897ed4174fb88ff4444b487b6e4c7b9e8f238a1e6eb691d172380f080"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/LevelUp/WorkbenchChoiceUI.cs",
+      "sha256": "a55e53b277614aff49a4182a88ae29b3711ab24462bc73041b2446784e07c7ec",
+      "copiedSha256": "a55e53b277614aff49a4182a88ae29b3711ab24462bc73041b2446784e07c7ec"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Localization/EnglishLocalization.cs",
+      "sha256": "a4d7b17d3cc4c65e2aef9dba008662483e882865a69a13c2da6ef7808d3b993d",
+      "copiedSha256": "a4d7b17d3cc4c65e2aef9dba008662483e882865a69a13c2da6ef7808d3b993d"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Localization/LocalizationCsv.cs",
+      "sha256": "5b0225d99ec89c9558f2146af5f1eb51ab9120be41052e2a6e5e15bd8c45ad8c",
+      "copiedSha256": "5b0225d99ec89c9558f2146af5f1eb51ab9120be41052e2a6e5e15bd8c45ad8c"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Localization/LocalizedText.cs",
+      "sha256": "76e1637ed4fdc75ea94c90fff8f2ca0a72945c093b37301029e439ac5bc0b745",
+      "copiedSha256": "76e1637ed4fdc75ea94c90fff8f2ca0a72945c093b37301029e439ac5bc0b745"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Option.cs",
+      "sha256": "b052f60c8dd2ff27c495322bde0540c97e684a3c7093857f83345efa35a7304d",
+      "copiedSha256": "b052f60c8dd2ff27c495322bde0540c97e684a3c7093857f83345efa35a7304d"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/ParallaxLayer.cs",
+      "sha256": "e6a69d61c78dc5f791661239f014a88dfa3ea78db64dac067f0f9e997fdb39d3",
+      "copiedSha256": "e6a69d61c78dc5f791661239f014a88dfa3ea78db64dac067f0f9e997fdb39d3"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/PermanentUpgrades/PermanentUpgradeCard.cs",
+      "sha256": "3915a008b30fc083a989614f0a829764c1dd98aa13a0841e78e8e21aa284d135",
+      "copiedSha256": "3915a008b30fc083a989614f0a829764c1dd98aa13a0841e78e8e21aa284d135"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/PermanentUpgrades/PermanentUpgradeCatalog.cs",
+      "sha256": "1167b99c28b1692c57bf70f84ee5a40e5989c9cb0f6d5e9eaf8209481c9251e9",
+      "copiedSha256": "1167b99c28b1692c57bf70f84ee5a40e5989c9cb0f6d5e9eaf8209481c9251e9"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/PermanentUpgrades/PermanentUpgradeDefinition.cs",
+      "sha256": "ae7f3adf28bc35dcdf0ee1c6c632631c44ee9021cc82e4e8b7e40d27555ecc7e",
+      "copiedSha256": "ae7f3adf28bc35dcdf0ee1c6c632631c44ee9021cc82e4e8b7e40d27555ecc7e"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/PermanentUpgrades/PermanentUpgradeMenu.cs",
+      "sha256": "11f79cc115c48a5e095a3adf7c7a0b4505f75d32cb2c5d6d5d78c71cf9836f82",
+      "copiedSha256": "11f79cc115c48a5e095a3adf7c7a0b4505f75d32cb2c5d6d5d78c71cf9836f82"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/PermanentUpgrades/PermanentUpgradeNode.cs",
+      "sha256": "a62c1af3d01c74eb0298f1796e9e5eb992779146520b49a8c18027f6e88309cb",
+      "copiedSha256": "a62c1af3d01c74eb0298f1796e9e5eb992779146520b49a8c18027f6e88309cb"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/PermanentUpgrades/PermanentUpgradeProgress.cs",
+      "sha256": "77dcbc6ae0bd30b43f8697ad460a3f8bf96149d91bee9c29c20da72b2d85714b",
+      "copiedSha256": "77dcbc6ae0bd30b43f8697ad460a3f8bf96149d91bee9c29c20da72b2d85714b"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/ProgressUIController.cs",
+      "sha256": "b347377bb9e6e5e7c7263978ab9edebe0fa6f7baff2b86c3056979018d3cfa5b",
+      "copiedSha256": "b347377bb9e6e5e7c7263978ab9edebe0fa6f7baff2b86c3056979018d3cfa5b"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/PursuingHand.cs",
+      "sha256": "8d904c452371ab514faf02c63fe6d687ae14506968131b95ed943b6fac3781df",
+      "copiedSha256": "8d904c452371ab514faf02c63fe6d687ae14506968131b95ed943b6fac3781df"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/SceneLoader.cs",
+      "sha256": "b315c81652cd2cfbd06bad913e295790dc841e9a0ff1f5f1374adb3b11734daf",
+      "copiedSha256": "b315c81652cd2cfbd06bad913e295790dc841e9a0ff1f5f1374adb3b11734daf"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/ScreenDisplaySettings.cs",
+      "sha256": "8c6c3b9f9bb350f33ecafdc15d22e71699968993e167dd39189003440240b8eb",
+      "copiedSha256": "8c6c3b9f9bb350f33ecafdc15d22e71699968993e167dd39189003440240b8eb"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/SimpleSpeedUI.cs",
+      "sha256": "96c64d91450658d17cd32358a2f640bea32e790a9f8c04461d13a1f97967437f",
+      "copiedSha256": "96c64d91450658d17cd32358a2f640bea32e790a9f8c04461d13a1f97967437f"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/SoundDefines.cs",
+      "sha256": "5fc11da89c8977b71780dec49956d9855b1d4ab03358483003f66415d5170fc6",
+      "copiedSha256": "5fc11da89c8977b71780dec49956d9855b1d4ab03358483003f66415d5170fc6"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/SoundEventBus.cs",
+      "sha256": "374f500ba086b94dc0f9b11a73a3159d9d0695d84e5375444333003251d1b311",
+      "copiedSha256": "374f500ba086b94dc0f9b11a73a3159d9d0695d84e5375444333003251d1b311"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/SpeedMeterUI.cs",
+      "sha256": "a563958ee3b96892644f5ac3bbe2813b93d3a1c481457b95a8fe5f1ffab217d1",
+      "copiedSha256": "a563958ee3b96892644f5ac3bbe2813b93d3a1c481457b95a8fe5f1ffab217d1"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/StageDatabase.cs",
+      "sha256": "e7524070ecd03950fd4d20aa48a8c91e75473009388a5f5df39d5f83b23f2e4e",
+      "copiedSha256": "e7524070ecd03950fd4d20aa48a8c91e75473009388a5f5df39d5f83b23f2e4e"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/StageManager.cs",
+      "sha256": "022119a099890beaaa1ac4e51f5f375434ea7642d599de6df2d66a9823b08c99",
+      "copiedSha256": "022119a099890beaaa1ac4e51f5f375434ea7642d599de6df2d66a9823b08c99"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/StageProgressUI.cs",
+      "sha256": "d0ab9fcf5de32272bc25b359dedd5fc11d82c5d97f063a4aaf820b1eb860d6cc",
+      "copiedSha256": "d0ab9fcf5de32272bc25b359dedd5fc11d82c5d97f063a4aaf820b1eb860d6cc"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/StartMenuManager.cs",
+      "sha256": "b05ed360d58aecaf255a23d7abadf8fb54ee0cef92870538dc31e7521c9212d7",
+      "copiedSha256": "b05ed360d58aecaf255a23d7abadf8fb54ee0cef92870538dc31e7521c9212d7"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/StartObject.cs",
+      "sha256": "8a17c2d8644a2bebe16b9c59b0decedb4484b813a6ef20c8edb865d52f144e73",
+      "copiedSha256": "8a17c2d8644a2bebe16b9c59b0decedb4484b813a6ef20c8edb865d52f144e73"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/SteamIntegration.cs",
+      "sha256": "5e64659c7b89e8d7a5e8d73e0bb28ee9c69c21f21782e2f6b9059a737051cedb",
+      "copiedSha256": "5e64659c7b89e8d7a5e8d73e0bb28ee9c69c21f21782e2f6b9059a737051cedb"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/Train.cs",
+      "sha256": "0727ed1bc4ebe8e015d0b19e2f45ce4c0161d959705db8be2e8e206262fbad92",
+      "copiedSha256": "0727ed1bc4ebe8e015d0b19e2f45ce4c0161d959705db8be2e8e206262fbad92"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/TrainController.cs",
+      "sha256": "171e58ea160fb496ed38a5da285ff4d3621409d99101f2c43b29961ad8fcb4da",
+      "copiedSha256": "171e58ea160fb496ed38a5da285ff4d3621409d99101f2c43b29961ad8fcb4da"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/UIAlphaFader.cs",
+      "sha256": "216b4f47e394df08a0c0607102b80f19880859beae66ffbe7e410986a71d19a1",
+      "copiedSha256": "216b4f47e394df08a0c0607102b80f19880859beae66ffbe7e410986a71d19a1"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/UIButtonSound.cs",
+      "sha256": "010c6be2a3f2784538d2fd30ae3a4fb3737a89ce31feb4a217e1ca81a84bf884",
+      "copiedSha256": "010c6be2a3f2784538d2fd30ae3a4fb3737a89ce31feb4a217e1ca81a84bf884"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/Boss.cs",
+      "sha256": "1b8428773155b105a384afa4bc553110735e51c61e4c1f7553ee8a1e5c8b3eca",
+      "copiedSha256": "1b8428773155b105a384afa4bc553110735e51c61e4c1f7553ee8a1e5c8b3eca"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/Enemy.cs",
+      "sha256": "6783e3b8313f67e4267860a9aba4bf47415cafe320f7f56a85227c7112198828",
+      "copiedSha256": "6783e3b8313f67e4267860a9aba4bf47415cafe320f7f56a85227c7112198828"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/EyeBoss.cs",
+      "sha256": "89899e8cc3ae797ca67641c3b893495b5e730e35382547b2e7650730097de3b9",
+      "copiedSha256": "89899e8cc3ae797ca67641c3b893495b5e730e35382547b2e7650730097de3b9"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/EyeBossBelt.cs",
+      "sha256": "a9e288340837221feff4c027af0e06374359ef8b8c48f170101a98f73d7b941e",
+      "copiedSha256": "a9e288340837221feff4c027af0e06374359ef8b8c48f170101a98f73d7b941e"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/FlyMob.cs",
+      "sha256": "12eb8cdaf5150b49944c99bc088079338b6fd5052f19d85bb16698a579931ac1",
+      "copiedSha256": "12eb8cdaf5150b49944c99bc088079338b6fd5052f19d85bb16698a579931ac1"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/FuelBarrel.cs",
+      "sha256": "1bf92b84975decff05067c6a8dbb329a78ec5075cf769428f9b3427f5ac9dd83",
+      "copiedSha256": "1bf92b84975decff05067c6a8dbb329a78ec5075cf769428f9b3427f5ac9dd83"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/Mob.cs",
+      "sha256": "94f81da04d6ae6d256ff7a6beee4f7ff3e6a7091b9fa332dd2185ceae3074d3c",
+      "copiedSha256": "94f81da04d6ae6d256ff7a6beee4f7ff3e6a7091b9fa332dd2185ceae3074d3c"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/PoolManager.cs",
+      "sha256": "d75649ce5be9a4ca922bc12789b8d8621fed0bba3fdaf2db8df1023acea284d5",
+      "copiedSha256": "d75649ce5be9a4ca922bc12789b8d8621fed0bba3fdaf2db8df1023acea284d5"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/RewardPickup.cs",
+      "sha256": "520566ec7e997f8375f8bce91bf5c2818fe0f68816df56b14977f875559c6818",
+      "copiedSha256": "520566ec7e997f8375f8bce91bf5c2818fe0f68816df56b14977f875559c6818"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/Spawner.cs",
+      "sha256": "7aa63e6b3c0a2fcc841cd1dfd2650dc8ab5fdbcc5332922e71aa927799bfbc58",
+      "copiedSha256": "7aa63e6b3c0a2fcc841cd1dfd2650dc8ab5fdbcc5332922e71aa927799bfbc58"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/Tentacle.cs",
+      "sha256": "89ce757407d852839afb2c51d69961178dfd119f517233cf0c5f80f76eae9462",
+      "copiedSha256": "89ce757407d852839afb2c51d69961178dfd119f517233cf0c5f80f76eae9462"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/TrainBoss.cs",
+      "sha256": "50dd189cc0bd86943d98a6608402a879e2c1aadf8126ead3a674ffafe861d3b7",
+      "copiedSha256": "50dd189cc0bd86943d98a6608402a879e2c1aadf8126ead3a674ffafe861d3b7"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Items/GiantMaw_SO.cs",
+      "sha256": "7de0c29c6d0d401be48d557b0f63008b34225535f785ae91489d76be9e25e722",
+      "copiedSha256": "7de0c29c6d0d401be48d557b0f63008b34225535f785ae91489d76be9e25e722"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Items/GiantMaw.cs",
+      "sha256": "365b4855147e31498eee7e60cd8bb629340809b37acd970a465ac2323f379016",
+      "copiedSha256": "365b4855147e31498eee7e60cd8bb629340809b37acd970a465ac2323f379016"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Projectile/Projectile.cs",
+      "sha256": "99a3ca6b53542d9c2b8eaf3dbe97dde0e1893b4441ae92696353c54c287d6a24",
+      "copiedSha256": "99a3ca6b53542d9c2b8eaf3dbe97dde0e1893b4441ae92696353c54c287d6a24"
+    },
+    {
+      "path": "Assets/Scripts/Steamworks.NET/SteamManager.cs",
+      "sha256": "0cb2c43f2dfea8c8808d1f086cf4281ef33e1724ec560ab250832bff8ab8401f",
+      "copiedSha256": "0cb2c43f2dfea8c8808d1f086cf4281ef33e1724ec560ab250832bff8ab8401f"
+    },
+    {
+      "path": "Assets/SmashEffectButton.cs",
+      "sha256": "13c14e844146616fc1d2ae4700873bf1a2bff1bfc95bb3c70375cc55d6718d28",
+      "copiedSha256": "13c14e844146616fc1d2ae4700873bf1a2bff1bfc95bb3c70375cc55d6718d28"
+    },
+    {
+      "path": "Assets/SoundDataDrawer.cs",
+      "sha256": "91b46c1a756afcc1666b7e7568821ae37767cf31aca80474c36074d2b3bdb642",
+      "copiedSha256": "91b46c1a756afcc1666b7e7568821ae37767cf31aca80474c36074d2b3bdb642"
+    },
+    {
+      "path": "Assets/SoundManager.cs",
+      "sha256": "1662bcce90b894304d5ae8d68fe61051917638afa9769b0fdcf6b487708751d9",
+      "copiedSha256": "1662bcce90b894304d5ae8d68fe61051917638afa9769b0fdcf6b487708751d9"
+    }
+  ],
+  "changedAssets": [
+    {
+      "path": "Assets/Prefabs/Enemy/Bosses/EyeBoss.prefab",
+      "sha256": "2054d8a707c457c474740b2f687ef07de7ec9b8106f42c37533e5cdc9f779651",
+      "copiedSha256": "2054d8a707c457c474740b2f687ef07de7ec9b8106f42c37533e5cdc9f779651"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Bosses/Tentacle.prefab",
+      "sha256": "88b0bc3926b79147c156ff46451bd8d3e2e10e1614b6a634f727a3b958ec175a",
+      "copiedSha256": "88b0bc3926b79147c156ff46451bd8d3e2e10e1614b6a634f727a3b958ec175a"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Bosses/TrainBoss.prefab",
+      "sha256": "1b7686b5b653b975039be8636df9c9a71fd7634ae6d638187b127103d64a60d6",
+      "copiedSha256": "1b7686b5b653b975039be8636df9c9a71fd7634ae6d638187b127103d64a60d6"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Bosses/WeakTentacle.prefab",
+      "sha256": "5a2bcfbf6dc8ffefed1df58bd5c60da84d0e2e4477fa13e5ad44d6a358ff55f3",
+      "copiedSha256": "5a2bcfbf6dc8ffefed1df58bd5c60da84d0e2e4477fa13e5ad44d6a358ff55f3"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/CreditEnemy.prefab",
+      "sha256": "f24daa68bf8bd152b5a1ebdcddde01f96439783deddb4ab8eb1977763c22bd28",
+      "copiedSha256": "f24daa68bf8bd152b5a1ebdcddde01f96439783deddb4ab8eb1977763c22bd28"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteFlying/엘리트 도깨비불.prefab",
+      "sha256": "a6a950d089924d42e02abf7cb3cbe8d5af1ea59173a1505f5137c38ed1d22ab3",
+      "copiedSha256": "a6a950d089924d42e02abf7cb3cbe8d5af1ea59173a1505f5137c38ed1d22ab3"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteFlying/엘리트 문어.prefab",
+      "sha256": "06f1871adaae4757312c146d0e21581d645518271480af71e5f5629bdf3772f8",
+      "copiedSha256": "06f1871adaae4757312c146d0e21581d645518271480af71e5f5629bdf3772f8"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteFlying/엘리트 박쥐.prefab",
+      "sha256": "c2cc152c488bd9db281d513c277da346f23a81dc99ee7ab3280e226c069d18eb",
+      "copiedSha256": "c2cc152c488bd9db281d513c277da346f23a81dc99ee7ab3280e226c069d18eb"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteFlying/엘리트 입.prefab",
+      "sha256": "40b180445051dcf55e985bfe5f3d2b32d9194d801865e6c5d03ecb2a8d139134",
+      "copiedSha256": "40b180445051dcf55e985bfe5f3d2b32d9194d801865e6c5d03ecb2a8d139134"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteFlying/엘리트 타코야키.prefab",
+      "sha256": "88bc2efbcad6e7a2a5f88235b351099d5a2222c5b3322756e196aae0364f3a8c",
+      "copiedSha256": "88bc2efbcad6e7a2a5f88235b351099d5a2222c5b3322756e196aae0364f3a8c"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteFlying/엘리트 파리.prefab",
+      "sha256": "23bcf8bfffbef11cb93cc8772bfcf4f947f59a83fcd874f0956157e197ac83ca",
+      "copiedSha256": "23bcf8bfffbef11cb93cc8772bfcf4f947f59a83fcd874f0956157e197ac83ca"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteFlying/엘리트 회전눈깔.prefab",
+      "sha256": "09f29cd3deed9f0a43830a3e0b2465a713d8451455875a49bedabf69eed849cf",
+      "copiedSha256": "09f29cd3deed9f0a43830a3e0b2465a713d8451455875a49bedabf69eed849cf"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteGround/EliteDeepOne.prefab",
+      "sha256": "46baa99a6beaebb354cd8ab0c94da3c75168c998001c3874811214d777cf8ea1",
+      "copiedSha256": "46baa99a6beaebb354cd8ab0c94da3c75168c998001c3874811214d777cf8ea1"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteGround/엘리트 개구리.prefab",
+      "sha256": "d2c9d847ef0a575e549cd4ad25c51b090cf0d4c05f9de1dc1102b7065322e151",
+      "copiedSha256": "d2c9d847ef0a575e549cd4ad25c51b090cf0d4c05f9de1dc1102b7065322e151"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteGround/엘리트 나는 기어다닐거에요.prefab",
+      "sha256": "09ec65684adf4c23378da1d2799f067e9cec79e1eb55e71fc2848a73bc4cd88f",
+      "copiedSha256": "09ec65684adf4c23378da1d2799f067e9cec79e1eb55e71fc2848a73bc4cd88f"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteGround/엘리트 뒤틀린 살점.prefab",
+      "sha256": "b6e8292729e32fdf29599f11b5ae9df6c67143e911abd4c15f05fea66f35589c",
+      "copiedSha256": "b6e8292729e32fdf29599f11b5ae9df6c67143e911abd4c15f05fea66f35589c"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteGround/엘리트 마요네즈.prefab",
+      "sha256": "dc3193837cb28ef626db9474b144f1324323dd1779197e54037caa1ab88fea7f",
+      "copiedSha256": "dc3193837cb28ef626db9474b144f1324323dd1779197e54037caa1ab88fea7f"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteGround/엘리트 마이클 와조스키.prefab",
+      "sha256": "3108432f93db33d09d0844470703450dde3c3f6bb123dd894c4ca7be208b7a15",
+      "copiedSha256": "3108432f93db33d09d0844470703450dde3c3f6bb123dd894c4ca7be208b7a15"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteGround/엘리트 입질.prefab",
+      "sha256": "8f3428cd2f8c0c61a1a64c064604ce71fd270c4cb0d2ad6d593121af500b1031",
+      "copiedSha256": "8f3428cd2f8c0c61a1a64c064604ce71fd270c4cb0d2ad6d593121af500b1031"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Elite/EliteOldOne.prefab",
+      "sha256": "c7d9ee175903abbf7928ffba4213e24471c81cf4ba938f15e6e26cc5663faa5e",
+      "copiedSha256": "c7d9ee175903abbf7928ffba4213e24471c81cf4ba938f15e6e26cc5663faa5e"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Flying/OldOne.prefab",
+      "sha256": "496aba583aa3507fcaac5e423993a87cd9ddd34d04b23532e4bf2589c7822a1f",
+      "copiedSha256": "496aba583aa3507fcaac5e423993a87cd9ddd34d04b23532e4bf2589c7822a1f"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Flying/도깨비불.prefab",
+      "sha256": "a06a2c734f6e8ac847cd69a9002b6e0a257094edf1adf64fec874cb288a923ef",
+      "copiedSha256": "a06a2c734f6e8ac847cd69a9002b6e0a257094edf1adf64fec874cb288a923ef"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Flying/문어.prefab",
+      "sha256": "a084f46bd39f059145cf1bddf99ac2d1ca4209712e017701a61102f768755e84",
+      "copiedSha256": "a084f46bd39f059145cf1bddf99ac2d1ca4209712e017701a61102f768755e84"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Flying/박쥐.prefab",
+      "sha256": "79f459f1a4a40e2e971b6867c9a10dc7891d3b1db96f17f1214cfa421e264029",
+      "copiedSha256": "79f459f1a4a40e2e971b6867c9a10dc7891d3b1db96f17f1214cfa421e264029"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Flying/입.prefab",
+      "sha256": "03e0fdf3da693671893b3cbc95a77c7633a2eaf16c2199108c6ef249df70f79b",
+      "copiedSha256": "03e0fdf3da693671893b3cbc95a77c7633a2eaf16c2199108c6ef249df70f79b"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Flying/치킨 배트.prefab",
+      "sha256": "5eee7b77fd107686f359da48b981b2450db008116ff5f46ae163f6d85e761cb9",
+      "copiedSha256": "5eee7b77fd107686f359da48b981b2450db008116ff5f46ae163f6d85e761cb9"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Flying/타코야키.prefab",
+      "sha256": "3434df0187e5ecf79ea6f63e83eedc43aec47bb4419f630a436535919cc30f08",
+      "copiedSha256": "3434df0187e5ecf79ea6f63e83eedc43aec47bb4419f630a436535919cc30f08"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Flying/파리.prefab",
+      "sha256": "9faeb675df0de25625893f5d9bf057b14e2237a3f36fb2446220b81dd6f1507d",
+      "copiedSha256": "9faeb675df0de25625893f5d9bf057b14e2237a3f36fb2446220b81dd6f1507d"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Flying/회전눈깔.prefab",
+      "sha256": "b209e3c7b4a85511e89f3f29288c65e1060203a019190826febc40930a3bb909",
+      "copiedSha256": "b209e3c7b4a85511e89f3f29288c65e1060203a019190826febc40930a3bb909"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/FuelBarrel.prefab",
+      "sha256": "35915156af0948963cbdae706b51fcc0a2ea4b284d4576ffbfb11a852c39b756",
+      "copiedSha256": "35915156af0948963cbdae706b51fcc0a2ea4b284d4576ffbfb11a852c39b756"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Ground/DeepOne.prefab",
+      "sha256": "9776b697530b4bbd75b1d768d28c7d0f55c4dd4397831f9c0c0ba2118ef3d3ec",
+      "copiedSha256": "9776b697530b4bbd75b1d768d28c7d0f55c4dd4397831f9c0c0ba2118ef3d3ec"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Ground/개구리.prefab",
+      "sha256": "d11482ccae119d69097239ac0d6eed4497602f43c681e20403e5d69504e313ed",
+      "copiedSha256": "d11482ccae119d69097239ac0d6eed4497602f43c681e20403e5d69504e313ed"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Ground/광신차.prefab",
+      "sha256": "f5673e92f7dbdd99697574abc0e09376d177cffa54e5d9d2c382350debbce450",
+      "copiedSha256": "f5673e92f7dbdd99697574abc0e09376d177cffa54e5d9d2c382350debbce450"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Ground/나는 기어다닐거에요.prefab",
+      "sha256": "c0895f1ceb6635e1d842e3114f0fc42f6254ec4725c5f5537905251f12186736",
+      "copiedSha256": "c0895f1ceb6635e1d842e3114f0fc42f6254ec4725c5f5537905251f12186736"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Ground/뒤틀린 살점.prefab",
+      "sha256": "f296cfa4d5ed3ce40199c67b918f502f9d0c45702f1d48d5bdb49fd6118f816f",
+      "copiedSha256": "f296cfa4d5ed3ce40199c67b918f502f9d0c45702f1d48d5bdb49fd6118f816f"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Ground/마요네즈.prefab",
+      "sha256": "52f42dd7ed9a7c5d620a07e7a18975b8cd1ceddd84de2b9e960835fafa65e981",
+      "copiedSha256": "52f42dd7ed9a7c5d620a07e7a18975b8cd1ceddd84de2b9e960835fafa65e981"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Ground/마이클 와조스키.prefab",
+      "sha256": "af884f75d6e2d2cdabc9e988e14b06560e34006ab9d879e6003d6a3aeac25f5c",
+      "copiedSha256": "af884f75d6e2d2cdabc9e988e14b06560e34006ab9d879e6003d6a3aeac25f5c"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Ground/쇼고스.prefab",
+      "sha256": "db61d580b233485dcc9bfe637c7b30390d63e8b731648e150213729e6dbd8535",
+      "copiedSha256": "db61d580b233485dcc9bfe637c7b30390d63e8b731648e150213729e6dbd8535"
+    },
+    {
+      "path": "Assets/Prefabs/Enemy/Mobs/Ground/입질.prefab",
+      "sha256": "a21617ec83aafe6e77613a281f729b8049eb0172dfa9ee6537709d774b9c1d59",
+      "copiedSha256": "a21617ec83aafe6e77613a281f729b8049eb0172dfa9ee6537709d774b9c1d59"
+    },
+    {
+      "path": "Assets/Prefabs/Gameplay.meta",
+      "sha256": "dabc312254cf9995c561ee818476f27b8891adbb01163620e082adb9157e7684",
+      "copiedSha256": "dabc312254cf9995c561ee818476f27b8891adbb01163620e082adb9157e7684"
+    },
+    {
+      "path": "Assets/Prefabs/Gameplay/FleshPickup.prefab",
+      "sha256": "85f3496d4105752706d95464f488396fe13cc80f491c4db81b94e66ef39a002f",
+      "copiedSha256": "85f3496d4105752706d95464f488396fe13cc80f491c4db81b94e66ef39a002f"
+    },
+    {
+      "path": "Assets/Prefabs/Gameplay/FleshPickup.prefab.meta",
+      "sha256": "3947984d59656ad180ef2fb27f4c4191eb82453fa4168627a7d83e4eb1b41d4a",
+      "copiedSha256": "3947984d59656ad180ef2fb27f4c4191eb82453fa4168627a7d83e4eb1b41d4a"
+    },
+    {
+      "path": "Assets/Prefabs/Gameplay/FuelPickup.prefab",
+      "sha256": "0ab8aac750cbb059f0b752d6408a97240aca79df48486c2223b4002bbf64d8ac",
+      "copiedSha256": "0ab8aac750cbb059f0b752d6408a97240aca79df48486c2223b4002bbf64d8ac"
+    },
+    {
+      "path": "Assets/Prefabs/Gameplay/FuelPickup.prefab.meta",
+      "sha256": "c5f588f06a3a8cb2540b4457fb5b9106e9f1147840ef061def7607dadb551662",
+      "copiedSha256": "c5f588f06a3a8cb2540b4457fb5b9106e9f1147840ef061def7607dadb551662"
+    },
+    {
+      "path": "Assets/Prefabs/Gameplay/SoulPickup.prefab",
+      "sha256": "a8b2650e1bd713777161567249f486e943650fd3f027f2a0d43f4c8c937a7232",
+      "copiedSha256": "a8b2650e1bd713777161567249f486e943650fd3f027f2a0d43f4c8c937a7232"
+    },
+    {
+      "path": "Assets/Prefabs/Gameplay/SoulPickup.prefab.meta",
+      "sha256": "2714607f50f8aff302bc9497654b52edc2e56448f73fdb8d377e2880810f90b7",
+      "copiedSha256": "2714607f50f8aff302bc9497654b52edc2e56448f73fdb8d377e2880810f90b7"
+    },
+    {
+      "path": "Assets/Scenes/Junmo.unity",
+      "sha256": "ec59296993e2d16ab32712c77ea6774cc5288a3df08ab578522403cd2d2a6ebe",
+      "copiedSha256": "ec59296993e2d16ab32712c77ea6774cc5288a3df08ab578522403cd2d2a6ebe"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/AccelerationWindEffect.cs.meta",
+      "sha256": "9b10f74c8df98119621366b65dabb3869833e3e2d4946dac9c2872ac12072e9d",
+      "copiedSha256": "9b10f74c8df98119621366b65dabb3869833e3e2d4946dac9c2872ac12072e9d"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/ForwardCameraFollow.cs.meta",
+      "sha256": "856eaeefeecc358568309532c98dd7c3206a8e892be6885ee9ef96f69900e3d6",
+      "copiedSha256": "856eaeefeecc358568309532c98dd7c3206a8e892be6885ee9ef96f69900e3d6"
+    },
+    {
+      "path": "Assets/Scripts/LeeJunmo/PursuingHand.cs.meta",
+      "sha256": "b722d8567329f98c24348eceb2fe149fe2e1fb144a7fdca03be4d262ffd0752c",
+      "copiedSha256": "b722d8567329f98c24348eceb2fe149fe2e1fb144a7fdca03be4d262ffd0752c"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/EyeBossBelt.cs.meta",
+      "sha256": "e42031b7384933798c94bb4df9af04e6d0cf77fd0c6c9a65e861c720289920f9",
+      "copiedSha256": "e42031b7384933798c94bb4df9af04e6d0cf77fd0c6c9a65e861c720289920f9"
+    },
+    {
+      "path": "Assets/Scripts/SangHyup/Enemy/RewardPickup.cs.meta",
+      "sha256": "d1d0b06174aa23cc1d1dae9a8ede7776632df5f9d1cdc2cc0883f8f4755206ad",
+      "copiedSha256": "d1d0b06174aa23cc1d1dae9a8ede7776632df5f9d1cdc2cc0883f8f4755206ad"
+    },
+    {
+      "path": "Assets/Sprites/UI/Driving.meta",
+      "sha256": "17e4f5eff6fd7e348b97725f9b7997971aa16426360451917428bab8f0ef69d8",
+      "copiedSha256": "17e4f5eff6fd7e348b97725f9b7997971aa16426360451917428bab8f0ef69d8"
+    },
+    {
+      "path": "Assets/Sprites/UI/Driving/Barrel.png",
+      "sha256": "cc4fe0f5fa64cf9d1bb47456ac069b839144f4e0bd3c6c0e0294acdf8f0f36e5",
+      "copiedSha256": "cc4fe0f5fa64cf9d1bb47456ac069b839144f4e0bd3c6c0e0294acdf8f0f36e5"
+    },
+    {
+      "path": "Assets/Sprites/UI/Driving/Barrel.png.meta",
+      "sha256": "a1a8a56b2cb7b445d612dcc62dbfa1fd89370d3d8a7ecea62a387907385783e3",
+      "copiedSha256": "a1a8a56b2cb7b445d612dcc62dbfa1fd89370d3d8a7ecea62a387907385783e3"
+    },
+    {
+      "path": "Assets/Sprites/UI/Driving/DrivingParticles.mat",
+      "sha256": "650b41b427cfe544978badf59992503e30cc9f17dac446452c3512a8a25fcde6",
+      "copiedSha256": "650b41b427cfe544978badf59992503e30cc9f17dac446452c3512a8a25fcde6"
+    },
+    {
+      "path": "Assets/Sprites/UI/Driving/DrivingParticles.mat.meta",
+      "sha256": "382e4e1dd7ea194b39b8e249a167cab983556fcdfd1a973027b4227e57115044",
+      "copiedSha256": "382e4e1dd7ea194b39b8e249a167cab983556fcdfd1a973027b4227e57115044"
+    },
+    {
+      "path": "Assets/Sprites/UI/Driving/QuarterDial.png",
+      "sha256": "3632cf1a39ccb53c85daacbb9fb34cfb55b096dc52c0b557be6665c7f514fff3",
+      "copiedSha256": "3632cf1a39ccb53c85daacbb9fb34cfb55b096dc52c0b557be6665c7f514fff3"
+    },
+    {
+      "path": "Assets/Sprites/UI/Driving/QuarterDial.png.meta",
+      "sha256": "aca6fc467765ea2b30f78119ba607c7cccd2e7eefd1fb06c2d4f83d18482010f",
+      "copiedSha256": "aca6fc467765ea2b30f78119ba607c7cccd2e7eefd1fb06c2d4f83d18482010f"
+    },
+    {
+      "path": "Assets/Sprites/UI/Driving/Soul.png",
+      "sha256": "65ea23b8f8af02e12ae144547a8488b467ce18166efef08e9e74b51bed2e49e6",
+      "copiedSha256": "65ea23b8f8af02e12ae144547a8488b467ce18166efef08e9e74b51bed2e49e6"
+    },
+    {
+      "path": "Assets/Sprites/UI/Driving/Soul.png.meta",
+      "sha256": "67574b4fe10f1b588f5060efb24c4b2bb5d53c90ce360ffa1e641fd118bf44ae",
+      "copiedSha256": "67574b4fe10f1b588f5060efb24c4b2bb5d53c90ce360ffa1e641fd118bf44ae"
+    },
+    {
+      "path": "Assets/Sprites/UI/Driving/WhiteSquare.png",
+      "sha256": "db993f2d24618c82972fb8a7bc2c85a44cc6c2f8c34609ca0af3a0e4c34c15a7",
+      "copiedSha256": "db993f2d24618c82972fb8a7bc2c85a44cc6c2f8c34609ca0af3a0e4c34c15a7"
+    },
+    {
+      "path": "Assets/Sprites/UI/Driving/WhiteSquare.png.meta",
+      "sha256": "5e055a39ba5547dfbd68e42f51a41f6a0e7b4089dbe33ea0ed23f2421b315645",
+      "copiedSha256": "5e055a39ba5547dfbd68e42f51a41f6a0e7b4089dbe33ea0ed23f2421b315645"
+    }
+  ],
+  "copyMismatches": [],
+  "nativeResultSha256": "a411c8c70e72ea1fe306c347016d927a451a7f41a5aa5679fcb2bd20366adb8d",
+  "visualPreviewSha256": "5ee6a22b1970a0a8250e384c7b9f36df70f654a53db0783ff766b8aef269c56b",
+  "verification": {
+    "nativeChecks": 54,
+    "referenceLayoutChecks": 113,
+    "runtimeSources": 142,
+    "editorSources": 10
+  }
+}

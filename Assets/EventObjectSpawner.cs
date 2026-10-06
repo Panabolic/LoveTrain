@@ -8,6 +8,7 @@ public class EventObjectSpawner : MonoBehaviour
 
     [Tooltip("오브젝트가 생성될 위치들 (화면 밖)")]
     [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private ForwardCameraFollow cameraFollow;
 
     [Tooltip("첫 번째 이벤트 오브젝트 충돌 시 실행할 지정 이벤트. 비워두면 랜덤 이벤트를 사용합니다.")]
     [SerializeField] private SO_Event firstEvent;
@@ -77,7 +78,10 @@ public class EventObjectSpawner : MonoBehaviour
         Transform spawnPoint = spawnPoints[randIndex];
         if (spawnPoint == null) return false;
 
-        GameObject spawnedObject = Instantiate(eventObjectPrefab, spawnPoint.position, Quaternion.identity);
+        Vector3 spawnPosition = spawnPoint.position;
+        if (cameraFollow != null && !spawnPoint.IsChildOf(cameraFollow.transform))
+            spawnPosition.x += cameraFollow.CurrentOffsetX;
+        GameObject spawnedObject = Instantiate(eventObjectPrefab, spawnPosition, Quaternion.identity);
         EventTriggerObject triggerObject = spawnedObject.GetComponent<EventTriggerObject>();
         if (triggerObject == null) triggerObject = spawnedObject.GetComponentInChildren<EventTriggerObject>();
         if (triggerObject == null)

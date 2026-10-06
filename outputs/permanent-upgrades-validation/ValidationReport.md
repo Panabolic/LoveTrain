@@ -1,5 +1,25 @@
 # Permanent upgrade validation — prefab migration, 2026-10-06
 
+## Tooltip button-center regression — 2026-10-06
+
+The latest user correction fixes the tooltip to the hovered button's center. Mouse motion does not reposition it. Both `OnPointerEnter` and `OnSelect` pass the same card RectTransform; `ShowTooltip` converts `card.rect.center` through `TransformPoint` and the panel's `InverseTransformPoint`. The existing independent left/up border direction changes remain.
+
+- `python run_tooltip_checks.py` passed 8,559 isolated assertions against four method bodies extracted unchanged from current production: `PlaceTooltip`, `ShowTooltip`, `OnPointerEnter`, and `OnSelect`. Checks include the top-center button pivot's local center at y=-36, translated/scaled transform doubles, three widely differing pointer positions that yield the same tooltip position, identical hover/mouse-selection/keyboard-selection anchoring, unbound-card guards, and all prior border/pivot/position-grid checks. The runner also checks that pointer-move handlers and pointer-based menu positioning APIs are absent. See `tooltip-button-anchor-checks.log`.
+- `BuildSources.ps1 -LogName tooltip-button-anchor-build.log` compiled all 142 current runtime sources with exit 0 and 228 current-workspace warnings. Only runtime source compilation was required; no Editor source or asset changed.
+- Harness updates passed focused `git diff --check` and Python syntax checks.
+
+**Limits:** transforms and input events are doubles, not actual Unity execution. Asset import, real input, Play Mode, and player builds remain unexecuted. No new native UI automation or batchmode attempt was made for this correction. The first harness run had a fixture expectation that overlooked the border flip for y=-36; correcting that expectation to the above-button anchor (-24) produced the final passing result without production changes.
+
+## Historical tooltip direction regression — 2026-10-06
+
+Before the button-center correction above, the tooltip kept its cursor-adjacent corner twelve panel-local units from the pointer. Its opening direction changed independently on each axis when the default right/down direction would cross the eight-unit panel margin. `PermanentUpgradeCard.OnSelect` retained `PointerEventData` for mouse selection and used the selected card transform for keyboard selection. This pointer-following behavior has been superseded.
+
+- `python run_tooltip_checks.py` passed 8,511 isolated assertions. The runner extracts the actual, unchanged `PlaceTooltip` and `OnSelect` method bodies from the production sources at execution time; it does not maintain a second implementation. Small Unity coordinate/input doubles exercise the central position, each border/corner, both-axis flips, exact margin thresholds, three initial pivots, a screen-position grid, mouse selection dispatch, keyboard fallback, and unbound-card guards. See `tooltip-behavior-checks.log`.
+- `BuildSources.ps1 -LogName tooltip-fix-build.log` compiled all 142 current runtime sources against the installed Unity references with exit 0. The current dirty workspace emitted 228 warnings, including the existing Inspector-assigned Menu/Card fields. No comparable same-workspace baseline build was executed for warning attribution; this count must not be compared directly with the earlier migration's smaller source set.
+- Validation harness additions and updates passed focused `git diff --check`.
+
+**Limits:** the coordinate/input doubles do not execute Unity's screen-to-local camera conversion, actual Input System events, Editor asset import, Play Mode, or player builds. The running Editor was not batch-started again. Root's native UI verification attempt was denied by the computer-use tool, so actual pointer placement remains a manual Unity check.
+
 ## Current implementation and evidence
 
 The current UI uses `Assets/Resources/PermanentUpgradeMenu.prefab`: ten presentation nodes group the original twenty-four purchase stages. The prefab owns Canvas, text, buttons, tooltip, progress rectangles, and fixed-aspect wrappers. Menu code loads the GameObject prefab, checks its menu component, instantiates the authored hierarchy, and requests state changes from the existing progression owner. No production source or asset was modified by this validation work.

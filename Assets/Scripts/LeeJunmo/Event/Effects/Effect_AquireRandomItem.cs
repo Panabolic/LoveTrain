@@ -14,7 +14,7 @@ public class Effect_AcquireRandomItem : GameEffectSO
         var wallet = target.GetComponent<TrainLevelManager>();
         if (wallet == null) return "Flesh reward unavailable.";
         int reward = 50 * Mathf.Max(1, parameters.intValue);
-        wallet.GainExperience(reward);
+        wallet.AddFlesh(reward);
         return $"Flesh +{reward}";
     }
 }

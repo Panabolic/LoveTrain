@@ -7,20 +7,29 @@ public class TrainController : MonoBehaviour
     [SerializeField] private float trainMoveSpeed = 5f; // A/D로 좌우 이동하는 속도
     [SerializeField] private float minXPosition = -8f;
     [SerializeField] private float maxXPosition = 8f;
+    [SerializeField] private ForwardCameraFollow cameraFollow;
 
     // --- 외부 공개 속성 ---
     // 몬스터가 참조할 수 있도록 Min/Max X Position을 public으로 공개
-    public float MinXPosition => minXPosition;
+    public float CurrentCameraOffsetX => cameraFollow != null ? cameraFollow.CurrentOffsetX : 0f;
+    public float MinXPosition => minXPosition + CurrentCameraOffsetX;
     public float MaxXPosition => maxXPosition;
+
+    public void SetCameraFollow(ForwardCameraFollow follow) { cameraFollow = follow; }
+
+    public void PushLeft(float distance)
+    {
+        if (distance <= 0f) return;
+        Vector3 position = transform.position;
+        position.x = Mathf.Max(MinXPosition, position.x - distance);
+        transform.position = position;
+    }
 
 
     void Update()
     {
-        if (GameManager.Instance == null ||
-                    GameManager.Instance.CurrentState == GameState.Die ||
-                    GameManager.Instance.CurrentState == GameState.Start ||
-                    GameManager.Instance.CurrentState == GameState.StageTransition ||
-                    GameManager.Instance.CurrentState == GameState.Ending) // 여기!
+        if (GameManager.Instance == null || Time.timeScale <= 0f ||
+            (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss))
         {
             return;
         }
@@ -52,7 +61,7 @@ public class TrainController : MonoBehaviour
         Vector3 newPosition = transform.position + movement;
 
         // 위치 제한
-        newPosition.x = Mathf.Clamp(newPosition.x, minXPosition, maxXPosition);
+        newPosition.x = Mathf.Max(newPosition.x, MinXPosition);
         transform.position = newPosition;
     }
 }

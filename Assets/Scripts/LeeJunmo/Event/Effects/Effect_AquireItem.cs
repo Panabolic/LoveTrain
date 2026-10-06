@@ -42,7 +42,7 @@ public class Effect_AcquireItem : GameEffectSO
         var wallet = target.GetComponent<TrainLevelManager>();
         if (wallet == null) return "Flesh reward unavailable.";
         int reward = 50 * acquireCount;
-        wallet.GainExperience(reward);
+        wallet.AddFlesh(reward);
         return $"Flesh +{reward}";
     }
 }
