@@ -4,3 +4,9 @@
 !WorkbenchRenderPreview-layout-v2.cs
 !render-result-v2.txt
 !*-layout-v2.png
+!OctoberFixValidation.cs
+!HudBottomCenterValidation.cs
+!october-fix-validation-result.txt
+!hud-bottom-center-result.txt
+!hud-bottom-centered-*.png
+!source-snapshot-latest.json

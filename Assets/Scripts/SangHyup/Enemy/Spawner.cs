@@ -55,7 +55,9 @@ public class Spawner : MonoBehaviour
 
     [Tooltip("각 보스별 세부 설정 (위치, 딜레이 등)")]
     [SerializeField] private BossSpawnSetting[] bossSettings;
-    [SerializeField] private float bossSpawnInterval = 180.0f;
+    // Retain the serialized name for existing scenes; ordinary bosses no longer
+    // use a fixed run-time interval.
+    [HideInInspector, SerializeField] private float bossSpawnInterval = 180.0f;
 
     [Header("Interval Settings")]
     [SerializeField] private float eliteMobSpawnInterval = 20.0f;
@@ -88,9 +90,16 @@ public class Spawner : MonoBehaviour
     private float AccelerationProgress => playerTrain != null ? playerTrain.AccelerationProgress : 0f;
     private float mobTimer;
     private float eliteMobTimer;
-    private float nextBossSpawnTime;
-
     private int nextBossIndex = 0;
+    private readonly StageBossSchedule bossSchedule = new StageBossSchedule();
+    private StageManager stageManager;
+    private GameManager gameManager;
+    private Coroutine bossSpawnRoutine;
+    private bool bossSequenceRunning;
+    private StageBossRequest pendingBossRequest;
+    private int pendingBossStageNumber;
+    private int bossIndexBeforeWarning;
+    private bool cancelledWarningNeedsRecovery;
 
     private List<PeriodicSpawnTask> periodicSpawnTasks = new List<PeriodicSpawnTask>();
 
@@ -106,8 +115,12 @@ public class Spawner : MonoBehaviour
         mobTimer = 0f;
         eliteMobTimer = eliteMobSpawnInterval;
 
-        nextBossSpawnTime = bossSpawnInterval;
         nextBossIndex = 0;
+        bossSchedule.Reset();
+        gameManager = GameManager.Instance;
+        stageManager = StageManager.Instance;
+        if (stageManager != null) stageManager.OnProgressAdvanced += HandleStageProgress;
+        if (gameManager != null) gameManager.OnGameStateChanged += HandleGameStateChanged;
 
         periodicSpawnTasks.Clear();
         UpdatePhase(0f);
@@ -116,9 +129,72 @@ public class Spawner : MonoBehaviour
         isRearSpawnEnabled = true;
     }
 
+    private void OnDestroy()
+    {
+        if (stageManager != null) stageManager.OnProgressAdvanced -= HandleStageProgress;
+        if (gameManager != null) gameManager.OnGameStateChanged -= HandleGameStateChanged;
+        CancelBossSequence();
+        cancelledWarningNeedsRecovery = false;
+        if (Instance == this) Instance = null;
+    }
+
+    // OnDisable also runs during scene teardown. Defer any gameplay recovery
+    // until this component is actually enabled again, rather than reviving an unload.
+    private void OnDisable() { CancelBossSequence(true); }
+    private void OnEnable() { RecoverCancelledWarning(); }
+
+    private void HandleGameStateChanged(GameState state)
+    {
+        if (state == GameState.Die || state == GameState.Ending || state == GameState.StageTransition ||
+            state == GameState.Title || state == GameState.Start)
+        {
+            CancelBossSequence();
+            cancelledWarningNeedsRecovery = false;
+        }
+    }
+
+    private void CancelBossSequence(bool recoverOnEnable = false)
+    {
+        bool wasPending = bossSequenceRunning;
+        if (bossSpawnRoutine != null) StopCoroutine(bossSpawnRoutine);
+        bossSpawnRoutine = null;
+        bossSequenceRunning = false;
+        if (!wasPending) return;
+
+        bossSchedule.CancelRequest(pendingBossRequest, pendingBossStageNumber);
+        nextBossIndex = bossIndexBeforeWarning;
+        pendingBossRequest = StageBossRequest.None;
+        if (BossWarningLoopUI.Instance != null) BossWarningLoopUI.Instance.HideWarning();
+        GameManager manager = GameManager.Instance;
+        cancelledWarningNeedsRecovery = recoverOnEnable && manager != null &&
+            (manager.CurrentState == GameState.Boss || manager.CurrentState == GameState.Pause || manager.CurrentState == GameState.Event);
+    }
+
+    private void RecoverCancelledWarning()
+    {
+        if (!cancelledWarningNeedsRecovery || !isActiveAndEnabled || GameManager.Instance == null) return;
+        GameState state = GameManager.Instance.CurrentState;
+        // Preserve the modal's queue/time-scale bookkeeping. Its normal resume
+        // restores Boss first; this Update then recovers the cancelled encounter.
+        if (state == GameState.Pause || state == GameState.Event) return;
+        cancelledWarningNeedsRecovery = false;
+        if (state == GameState.Boss) GameManager.Instance.ChangeState(GameState.Playing);
+    }
+
+    private void HandleStageProgress()
+    {
+        if (!isActiveAndEnabled || !isSpawningEnabled || bossSequenceRunning || gameManager == null || stageManager == null) return;
+        StageBossRequest request = bossSchedule.GetDueRequest(gameManager.CurrentState == GameState.Playing,
+            stageManager.StageNumber, stageManager.StageDistance, stageManager.StageLength,
+            gameManager.gameTime, gameManager.maxGameTime);
+        if (request != StageBossRequest.None) SpawnNextBoss(request);
+    }
+
     private void Update()
     {
-        if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss) return;
+        RecoverCancelledWarning();
+        if (GameManager.Instance == null || Time.timeScale <= 0f ||
+            (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss)) return;
 
         if (isSpawningEnabled && fuelBarrelPrefab != null)
         {
@@ -148,36 +224,52 @@ public class Spawner : MonoBehaviour
             eliteMobTimer = 0f;
         }
 
-        if (gameTime >= nextBossSpawnTime)
-        {
-            SpawnNextBoss();
-            nextBossSpawnTime += bossSpawnInterval;
-        }
-
         HandlePeriodicTasks();
     }
 
-    private void SpawnNextBoss()
+    private bool SpawnNextBoss(StageBossRequest request)
     {
         if (bossSequence == null || bossSequence.Length == 0)
         {
             Debug.LogWarning("[Spawner] BossSequence가 설정되지 않았습니다!");
-            return;
+            return false;
         }
 
         int safeIndex = nextBossIndex % bossSequence.Length;
         BossName bossToSpawn = bossSequence[safeIndex];
 
-        StartBossSequence(bossToSpawn);
-
-        nextBossIndex = (nextBossIndex + 1) % bossSequence.Length;
+        if (!StartBossSequence(bossToSpawn, request)) return false;
 
         Debug.Log($"[Spawner] 다음 보스 인덱스 예약: {nextBossIndex} ({bossSequence[nextBossIndex]})");
+        return true;
     }
 
-    private void StartBossSequence(BossName bossName)
+    private bool StartBossSequence(BossName bossName, StageBossRequest request = StageBossRequest.None)
     {
-        StartCoroutine(BossSpawnRoutine(bossName));
+        if (!isActiveAndEnabled || !isSpawningEnabled || bossSequenceRunning || GameManager.Instance == null ||
+            GameManager.Instance.CurrentState != GameState.Playing) return false;
+        // Validate before entering Boss or reserving the sequence/schedule. A
+        // missing pool/prefab must remain retryable in Playing when repaired.
+        if (GetBossPrefab(bossName) == null) return false;
+        pendingBossRequest = request;
+        pendingBossStageNumber = stageManager != null ? stageManager.StageNumber : 0;
+        bossIndexBeforeWarning = nextBossIndex;
+        if (request != StageBossRequest.None)
+        {
+            bossSchedule.RecordRequest(request, pendingBossStageNumber);
+            nextBossIndex = (nextBossIndex + 1) % bossSequence.Length;
+        }
+        bossSequenceRunning = true;
+        Coroutine startedRoutine = StartCoroutine(BossSpawnRoutine(bossName));
+        // A state listener may disable this component synchronously during the
+        // coroutine's first MoveNext, before StartCoroutine returns its handle.
+        if (!bossSequenceRunning)
+        {
+            if (startedRoutine != null) StopCoroutine(startedRoutine);
+            return false;
+        }
+        bossSpawnRoutine = startedRoutine;
+        return true;
     }
 
     private IEnumerator BossSpawnRoutine(BossName bossName)
@@ -187,6 +279,8 @@ public class Spawner : MonoBehaviour
 
         GameManager.Instance.AppearBoss();
 
+        if (!bossSequenceRunning || !isActiveAndEnabled || !isSpawningEnabled) yield break;
+
         if (BossWarningLoopUI.Instance != null)
         {
             BossWarningLoopUI.Instance.ShowWarning();
@@ -194,15 +288,31 @@ public class Spawner : MonoBehaviour
 
         yield return new WaitForSeconds(setting.spawnDelayAfterWarning);
 
-        SpawnBossObject(bossName);
+        // Pausing/event UI suspends the existing scaled warning wait. Terminal
+        // states cancel it, preventing a boss from appearing after a lost run.
+        while (GameManager.Instance != null &&
+            (GameManager.Instance.CurrentState == GameState.Pause || GameManager.Instance.CurrentState == GameState.Event))
+            yield return null;
+        if (!isSpawningEnabled || !isActiveAndEnabled || GameManager.Instance == null ||
+            GameManager.Instance.CurrentState != GameState.Boss || !SpawnBossObject(bossName))
+        {
+            // The prefab can be removed while the warning is running. Release
+            // only an unspawned encounter, preserving a real active boss.
+            CancelBossSequence(true);
+            RecoverCancelledWarning();
+            yield break;
+        }
+        bossSpawnRoutine = null;
+        bossSequenceRunning = false;
+        pendingBossRequest = StageBossRequest.None;
     }
 
     // ✨ [수정] arrivalPoint 유무에 따른 분기 처리
-    private void SpawnBossObject(BossName boss)
+    private bool SpawnBossObject(BossName boss)
     {
-        if (PoolManager.instance != null)
+        GameObject bossPrefab = GetBossPrefab(boss);
+        if (bossPrefab != null)
         {
-            GameObject bossPrefab = PoolManager.instance.GetBoss(boss);
             BossSpawnSetting setting = GetBossSetting(boss);
 
             if (bossPrefab != null)
@@ -219,6 +329,9 @@ public class Spawner : MonoBehaviour
                 }
 
                 // 2. 보스 생성 (SpawnPoint 위치에)
+                // Once instantiation begins, disable/stop must not roll back the
+                // committed encounter or return to Playing with a live boss.
+                bossSequenceRunning = false;
                 GameObject bossObj = Instantiate(bossPrefab, spawnPos, Quaternion.identity);
 
                 // 3. 등장 연출 처리
@@ -237,8 +350,10 @@ public class Spawner : MonoBehaviour
                         // 즉시 패턴 로직이 작동함 (기존 방식)
                     }
                 }
+                return true;
             }
         }
+        return false;
     }
 
     private void SpawnBasicMobs()
@@ -396,20 +511,78 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public void SetSpawning(bool enabled) { isSpawningEnabled = enabled; if (!enabled) StopAllCoroutines(); }
+    public void SetSpawning(bool enabled)
+    {
+        isSpawningEnabled = enabled;
+        if (!enabled)
+        {
+            CancelBossSequence(true);
+            StopAllCoroutines();
+        }
+        RecoverCancelledWarning();
+    }
     public void SetRearSpawning(bool enabled) { isRearSpawnEnabled = enabled; }
     private void InitEnemyPhysics(GameObject enemy) { Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>(); if (rb != null) { rb.linearVelocity = Vector2.zero; rb.angularVelocity = 0f; } }
 
     private BossSpawnSetting GetBossSetting(BossName name)
     {
-        foreach (var s in bossSettings)
-            if (s.bossName == name) return s;
+        if (bossSettings != null)
+            foreach (var s in bossSettings)
+                if (s != null && s.bossName == name) return s;
 
         return new BossSpawnSetting { bossName = name, spawnDelayAfterWarning = 3.0f };
+    }
+
+    private GameObject GetBossPrefab(BossName name)
+    {
+        if (PoolManager.instance == null) return null;
+        try { return PoolManager.instance.GetBoss(name); }
+        // PoolManager's authored boss array is accessed directly by GetBoss.
+        // Reject its absent/out-of-range entries at this feature boundary.
+        catch (IndexOutOfRangeException) { return null; }
+        catch (NullReferenceException) { return null; }
     }
 
     private void RespawnMob(Mob mob) { }
     public void SpawnBoss(BossName boss) { StartBossSequence(boss); }
     public void SpawnTrainBoss() { StartBossSequence(BossName.TrainBoss); }
     public void SpawnEyeBoss() { StartBossSequence(BossName.EyeBoss); }
+}
+
+// Run-time ending takes priority over the route completion on the same frame.
+// Request state is committed only after Spawner accepts a valid boss sequence.
+public enum StageBossRequest { None, Stage, Final }
+
+public sealed class StageBossSchedule
+{
+    private int requestedStageNumber;
+    private bool finalRequested;
+    private int finalRequestedStageNumber;
+
+    public void Reset() { requestedStageNumber = 0; finalRequested = false; finalRequestedStageNumber = 0; }
+
+    public StageBossRequest GetDueRequest(bool isPlaying, int stageNumber, float distance, float length,
+        float gameTime, float endingTime)
+    {
+        if (!isPlaying || finalRequested) return StageBossRequest.None;
+        if (gameTime >= endingTime) return StageBossRequest.Final;
+        if (length > 0f && distance >= length && requestedStageNumber != stageNumber) return StageBossRequest.Stage;
+        return StageBossRequest.None;
+    }
+
+    public void RecordRequest(StageBossRequest request, int stageNumber)
+    {
+        if (request == StageBossRequest.Final) { finalRequested = true; finalRequestedStageNumber = stageNumber; }
+        else if (request == StageBossRequest.Stage) requestedStageNumber = stageNumber;
+    }
+
+    public void CancelRequest(StageBossRequest request, int stageNumber)
+    {
+        if (request == StageBossRequest.Stage && requestedStageNumber == stageNumber) requestedStageNumber = 0;
+        else if (request == StageBossRequest.Final && finalRequestedStageNumber == stageNumber)
+        {
+            finalRequested = false;
+            finalRequestedStageNumber = 0;
+        }
+    }
 }

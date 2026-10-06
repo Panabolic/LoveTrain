@@ -114,9 +114,8 @@ public class Item_SO : ScriptableObject
 
         // 2. 부착될 소켓 찾기 (기본값 = user 루트)
         Transform parentTransform = null;
-        Inventory inventory = user.GetComponent<Inventory>();
-        if (instance != null && inventory != null)
-            parentTransform = inventory.GetEquipmentAnchor(instance.equippedSlotIndex);
+        // Temporary legacy placement: the selected UI slot does not move the world visual.
+        // Use the item's authored socket until precise attachment positions are enabled again.
         if (parentTransform == null && !string.IsNullOrEmpty(attachmentSocketName))
         {
             Transform socket = FindChildSocket(user.transform, attachmentSocketName);

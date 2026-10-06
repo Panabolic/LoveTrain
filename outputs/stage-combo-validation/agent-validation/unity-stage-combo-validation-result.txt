@@ -1,0 +1,387 @@
+PASS Expected disposable project path verified
+PASS Unique disposable save identity verified
+PASS Fixture starts in EditMode
+PASS Default stage length is 57,600 distance units
+PASS Distance uses actual speed 160 before endpoint
+PASS Distance saturates at endpoint for speed 160
+PASS Distance uses actual speed 320 before endpoint
+PASS Distance saturates at endpoint for speed 320
+PASS Distance uses actual speed 460 before endpoint
+PASS Distance saturates at endpoint for speed 460
+PASS Distance uses actual speed 690 before endpoint
+PASS Distance saturates at endpoint for speed 690
+PASS 25% event point at 14,400
+PASS 50% event point at 28,800
+PASS 75% event point at 43,200
+PASS Base speed remains before endpoint before 180 seconds
+PASS Base speed reaches endpoint around distance-derived 180 seconds
+PASS Next stage increments run counter and resets distance
+PASS Inactive travel and negative speed or time do not advance distance
+PASS Restart resets run stage counter
+PASS Combo begins empty
+PASS Combo survives just before 3-second boundary
+PASS Combo expires after 3 seconds
+PASS Each next kill refills its 3-second clock
+PASS Combo underline fraction at half lifetime
+PASS Invalid deltas do not corrupt combo lifetime
+PASS Digit-based punctuation for 1
+PASS Digit-based punctuation for 9
+PASS Digit-based punctuation for 10
+PASS Digit-based punctuation for 99
+PASS Digit-based punctuation for 100
+PASS Digit-based punctuation for 999
+PASS Digit-based punctuation for 1000
+PASS Digit-based punctuation for 2147483647
+PASS Event remains pending just before 0.25
+PASS Event becomes due exactly at 0.25
+PASS Event is not duplicated at 0.25
+PASS Event remains pending just before 0.5
+PASS Event becomes due exactly at 0.5
+PASS Event is not duplicated at 0.5
+PASS Event remains pending just before 0.75
+PASS Event becomes due exactly at 0.75
+PASS Event is not duplicated at 0.75
+PASS Exactly three route events per stage
+PASS Overshooting multiple route nodes catches each once
+PASS Existing first/second-stage upgrade selection preserved
+PASS Elapsed 180 seconds alone does not request a boss
+PASS Distance endpoint requests boss even before 180 seconds
+PASS Completed route requests a stage boss only once
+PASS Independent run stage number permits next route boss
+PASS No boss request while game is outside Playing
+PASS Final boss takes priority when 15-minute and route boundaries coincide
+PASS Final boss can become due before current route completes
+PASS Final boss request suppresses later duplicate requests
+PASS New run resets request deduplication
+PASS Authored route, combo and existing timer exist
+PASS Authored presenter scripts resolve
+PASS Authored reference StageProgressUI.stageManager
+PASS Authored reference StageProgressUI.progressFill
+PASS Authored reference StageProgressUI.currentPosition
+PASS Authored array eventMarkers length 3
+PASS Authored array eventMarkers index 0
+PASS Authored array eventMarkers index 1
+PASS Authored array eventMarkers index 2
+PASS Authored array eventSymbols length 3
+PASS Authored array eventSymbols index 0
+PASS Authored array eventSymbols index 1
+PASS Authored array eventSymbols index 2
+PASS Authored reference ComboKillUI.countText
+PASS Authored reference ComboKillUI.godMessage
+PASS Authored reference ComboKillUI.timeFill
+PASS Authored reference ComboKillUI.timeTrack
+PASS Authored reference ComboKillUI.visibility
+PASS Route displays scene StageManager
+PASS Route, timer and combo share the authored Canvas
+PASS Junmo has no missing MonoBehaviour scripts
+PASS HUD graphic does not intercept input: RouteLine
+PASS HUD graphic does not intercept input: CompletedRoute
+PASS HUD graphic does not intercept input: Departure
+PASS HUD graphic does not intercept input: Event1
+PASS HUD graphic does not intercept input: CircleInterior
+PASS HUD graphic does not intercept input: Exclamation
+PASS HUD graphic does not intercept input: Event2
+PASS HUD graphic does not intercept input: CircleInterior
+PASS HUD graphic does not intercept input: Exclamation
+PASS HUD graphic does not intercept input: Event3
+PASS HUD graphic does not intercept input: CircleInterior
+PASS HUD graphic does not intercept input: Exclamation
+PASS HUD graphic does not intercept input: Boss
+PASS HUD graphic does not intercept input: CurrentPosition
+PASS HUD graphic does not intercept input: ComboCount
+PASS HUD graphic does not intercept input: ComboTimeTrack
+PASS HUD graphic does not intercept input: ComboTimeFill
+PASS HUD graphic does not intercept input: AncientGodNotice
+PASS Actual normal and elite kill methods feed combo and preserve cumulative statistics
+PASS Boss kill statistic does not add a combo kill
+PASS Kills outside combat do not extend combo in Event
+PASS Kills outside combat do not extend combo in Pause
+PASS Kills outside combat do not extend combo in Start
+PASS Kills outside combat do not extend combo in Title
+PASS Kills during Boss combat feed combo
+PASS Actual state transition resets combo in StageTransition
+PASS Actual state transition resets combo in Die
+PASS Actual state transition resets combo in Ending
+PASS Three event symbols authored
+PASS Event node displays an exclamation icon
+PASS Event node displays an exclamation icon
+PASS Event node displays an exclamation icon
+PASS Route has no removed node explanation or percent text: Exclamation
+PASS Route has no removed node explanation or percent text: Exclamation
+PASS Route has no removed node explanation or percent text: Exclamation
+PASS Combo presenter remains a passive HUD
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Real presenter formats count 0
+PASS God message threshold at 0
+PASS Combo visibility at 0
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Real presenter formats count 1
+PASS God message threshold at 1
+PASS Combo visibility at 1
+PASS Underline follows the actual text width at 1
+PASS Sprite-free underline visibly scales with lifetime at 1
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Real presenter formats count 9
+PASS God message threshold at 9
+PASS Combo visibility at 9
+PASS Underline follows the actual text width at 9
+PASS Sprite-free underline visibly scales with lifetime at 9
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Real presenter formats count 10
+PASS God message threshold at 10
+PASS Combo visibility at 10
+PASS Underline follows the actual text width at 10
+PASS Sprite-free underline visibly scales with lifetime at 10
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Real presenter formats count 99
+PASS God message threshold at 99
+PASS Combo visibility at 99
+PASS Underline follows the actual text width at 99
+PASS Sprite-free underline visibly scales with lifetime at 99
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Real presenter formats count 100
+PASS God message threshold at 100
+PASS Combo visibility at 100
+PASS Underline follows the actual text width at 100
+PASS Sprite-free underline visibly scales with lifetime at 100
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Real presenter formats count 1000
+PASS God message threshold at 1000
+PASS Combo visibility at 1000
+PASS Underline follows the actual text width at 1000
+PASS Sprite-free underline visibly scales with lifetime at 1000
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Disable hides combo and god message
+PASS Enable refreshes still-current state
+LAYOUT capture=1280x720, production content=(x:0.00, y:0.00, width:1280.00, height:720.00)
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Route remains horizontally centered at 1280x720
+PASS Timer stays below route at 1280x720
+PASS Combo stays below timer at 1280x720
+PASS Authored HUD fits production safe area (x:368.00, y:652.80, width:544.00, height:38.40)
+PASS Authored HUD fits production safe area (x:480.00, y:572.80, width:320.00, height:51.20)
+PASS Authored HUD fits production safe area (x:793.60, y:441.60, width:460.80, height:112.00)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: ComboCount = Combo Kill 9
+PASS HUD text remains one line: ComboCount
+PASS Route remains horizontally centered at 1280x720
+PASS Timer stays below route at 1280x720
+PASS Combo stays below timer at 1280x720
+PASS Authored HUD fits production safe area (x:368.00, y:652.80, width:544.00, height:38.40)
+PASS Authored HUD fits production safe area (x:480.00, y:572.80, width:320.00, height:51.20)
+PASS Authored HUD fits production safe area (x:793.60, y:441.60, width:460.80, height:112.00)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: ComboCount = Combo Kill 10!
+PASS HUD text remains one line: ComboCount
+PASS Text fits authored rectangle: AncientGodNotice = 고대신이 당신을 눈 여겨 봅니다.
+PASS HUD text remains one line: AncientGodNotice
+PASS Route remains horizontally centered at 1280x720
+PASS Timer stays below route at 1280x720
+PASS Combo stays below timer at 1280x720
+PASS Authored HUD fits production safe area (x:368.00, y:652.80, width:544.00, height:38.40)
+PASS Authored HUD fits production safe area (x:480.00, y:572.80, width:320.00, height:51.20)
+PASS Authored HUD fits production safe area (x:793.60, y:441.60, width:460.80, height:112.00)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: ComboCount = Combo Kill 100!!
+PASS HUD text remains one line: ComboCount
+PASS Text fits authored rectangle: AncientGodNotice = 고대신이 당신을 눈 여겨 봅니다.
+PASS HUD text remains one line: AncientGodNotice
+PASS Route remains horizontally centered at 1280x720
+PASS Timer stays below route at 1280x720
+PASS Combo stays below timer at 1280x720
+PASS Authored HUD fits production safe area (x:368.00, y:652.80, width:544.00, height:38.40)
+PASS Authored HUD fits production safe area (x:480.00, y:572.80, width:320.00, height:51.20)
+PASS Authored HUD fits production safe area (x:793.60, y:441.60, width:460.80, height:112.00)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Expired combo remains hidden at (1280, 720)
+LAYOUT capture=1920x1080, production content=(x:0.00, y:0.00, width:1920.00, height:1080.00)
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Route remains horizontally centered at 1920x1080
+PASS Timer stays below route at 1920x1080
+PASS Combo stays below timer at 1920x1080
+PASS Authored HUD fits production safe area (x:552.00, y:979.20, width:816.00, height:57.60)
+PASS Authored HUD fits production safe area (x:720.00, y:859.20, width:480.00, height:76.80)
+PASS Authored HUD fits production safe area (x:1190.40, y:662.40, width:691.20, height:168.00)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: ComboCount = Combo Kill 9
+PASS HUD text remains one line: ComboCount
+PASS Route remains horizontally centered at 1920x1080
+PASS Timer stays below route at 1920x1080
+PASS Combo stays below timer at 1920x1080
+PASS Authored HUD fits production safe area (x:552.00, y:979.20, width:816.00, height:57.60)
+PASS Authored HUD fits production safe area (x:720.00, y:859.20, width:480.00, height:76.80)
+PASS Authored HUD fits production safe area (x:1190.40, y:662.40, width:691.20, height:168.00)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: ComboCount = Combo Kill 10!
+PASS HUD text remains one line: ComboCount
+PASS Text fits authored rectangle: AncientGodNotice = 고대신이 당신을 눈 여겨 봅니다.
+PASS HUD text remains one line: AncientGodNotice
+PASS Route remains horizontally centered at 1920x1080
+PASS Timer stays below route at 1920x1080
+PASS Combo stays below timer at 1920x1080
+PASS Authored HUD fits production safe area (x:552.00, y:979.20, width:816.00, height:57.60)
+PASS Authored HUD fits production safe area (x:720.00, y:859.20, width:480.00, height:76.80)
+PASS Authored HUD fits production safe area (x:1190.40, y:662.40, width:691.20, height:168.00)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: ComboCount = Combo Kill 100!!
+PASS HUD text remains one line: ComboCount
+PASS Text fits authored rectangle: AncientGodNotice = 고대신이 당신을 눈 여겨 봅니다.
+PASS HUD text remains one line: AncientGodNotice
+PASS Route remains horizontally centered at 1920x1080
+PASS Timer stays below route at 1920x1080
+PASS Combo stays below timer at 1920x1080
+PASS Authored HUD fits production safe area (x:552.00, y:979.20, width:816.00, height:57.60)
+PASS Authored HUD fits production safe area (x:720.00, y:859.20, width:480.00, height:76.80)
+PASS Authored HUD fits production safe area (x:1190.40, y:662.40, width:691.20, height:168.00)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Expired combo remains hidden at (1920, 1080)
+LAYOUT capture=1024x768, production content=(x:0.00, y:96.00, width:1024.00, height:576.00)
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Route remains horizontally centered at 1024x768
+PASS Timer stays below route at 1024x768
+PASS Combo stays below timer at 1024x768
+PASS Authored HUD fits production safe area (x:294.40, y:618.24, width:435.20, height:30.72)
+PASS Authored HUD fits production safe area (x:384.00, y:554.24, width:256.00, height:40.96)
+PASS Authored HUD fits production safe area (x:634.88, y:449.28, width:368.64, height:89.60)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: ComboCount = Combo Kill 9
+PASS HUD text remains one line: ComboCount
+PASS Route remains horizontally centered at 1024x768
+PASS Timer stays below route at 1024x768
+PASS Combo stays below timer at 1024x768
+PASS Authored HUD fits production safe area (x:294.40, y:618.24, width:435.20, height:30.72)
+PASS Authored HUD fits production safe area (x:384.00, y:554.24, width:256.00, height:40.96)
+PASS Authored HUD fits production safe area (x:634.88, y:449.28, width:368.64, height:89.60)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: ComboCount = Combo Kill 10!
+PASS HUD text remains one line: ComboCount
+PASS Text fits authored rectangle: AncientGodNotice = 고대신이 당신을 눈 여겨 봅니다.
+PASS HUD text remains one line: AncientGodNotice
+PASS Route remains horizontally centered at 1024x768
+PASS Timer stays below route at 1024x768
+PASS Combo stays below timer at 1024x768
+PASS Authored HUD fits production safe area (x:294.40, y:618.24, width:435.20, height:30.72)
+PASS Authored HUD fits production safe area (x:384.00, y:554.24, width:256.00, height:40.96)
+PASS Authored HUD fits production safe area (x:634.88, y:449.28, width:368.64, height:89.60)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: Exclamation = !
+PASS HUD text remains one line: Exclamation
+PASS Text fits authored rectangle: ComboCount = Combo Kill 100!!
+PASS HUD text remains one line: ComboCount
+PASS Text fits authored rectangle: AncientGodNotice = 고대신이 당신을 눈 여겨 봅니다.
+PASS HUD text remains one line: AncientGodNotice
+PASS Route remains horizontally centered at 1024x768
+PASS Timer stays below route at 1024x768
+PASS Combo stays below timer at 1024x768
+PASS Authored HUD fits production safe area (x:294.40, y:618.24, width:435.20, height:30.72)
+PASS Authored HUD fits production safe area (x:384.00, y:554.24, width:256.00, height:40.96)
+PASS Authored HUD fits production safe area (x:634.88, y:449.28, width:368.64, height:89.60)
+PASS Combo retains right edge margin
+PASS Real route fill position 0.4
+PASS Real train marker position 0.4
+PASS Expired combo remains hidden at (1024, 768)
+PASS: 382 real-source / authored-scene EditMode checks; 15 UI-only RenderTexture images.
+No PlayMode, collision/input, player build or gameplay screenshot claim.

@@ -12,51 +12,61 @@ public class EventObjectSpawner : MonoBehaviour
     [Tooltip("첫 번째 이벤트 오브젝트 충돌 시 실행할 지정 이벤트. 비워두면 랜덤 이벤트를 사용합니다.")]
     [SerializeField] private SO_Event firstEvent;
 
-    [Tooltip("첫 번째 스폰 시간 (초)")]
+    // Keep legacy serialized timing values for existing scenes; route distances
+    // now determine all three encounters instead of these former time settings.
+    [HideInInspector]
     [SerializeField] private float firstSpawnTime = 60f;
 
-    [Tooltip("이후 반복 스폰 주기 (초)")]
+    [HideInInspector]
     [SerializeField] private float spawnInterval = 60f;
 
     [Header("강화 이벤트")]
-    [SerializeField, Min(1)] private int eventsPerStage = 3;
+    [HideInInspector, SerializeField] private int eventsPerStage = 3;
     [SerializeField] private bool testFirstStageUpgrade = true;
     [SerializeField, Range(0f, 1f)] private float laterStageUpgradeProbability = 1f / 3f;
 
     private readonly StageEventSchedule schedule = new StageEventSchedule();
     private GameManager gameManager;
-    private bool stageTransitionPending;
+    private StageManager stageManager;
 
     private void Start()
     {
         gameManager = GameManager.Instance;
-        if (gameManager != null) gameManager.OnGameStateChanged += HandleGameStateChanged;
-        schedule.BeginStage(1, gameManager != null ? gameManager.gameTime : 0f);
+        stageManager = StageManager.Instance;
+        if (stageManager != null)
+        {
+            stageManager.OnProgressAdvanced += HandleStageProgress;
+            stageManager.OnStageStarted += HandleStageStarted;
+        }
+        schedule.BeginStage(stageManager != null ? stageManager.StageNumber : 1);
     }
 
     private void OnDestroy()
     {
-        if (gameManager != null) gameManager.OnGameStateChanged -= HandleGameStateChanged;
-    }
-
-    private void HandleGameStateChanged(GameState state)
-    {
-        if (state == GameState.StageTransition) stageTransitionPending = true;
-        else if (state == GameState.Playing && stageTransitionPending)
+        if (stageManager != null)
         {
-            stageTransitionPending = false;
-            schedule.AdvanceStage(firstSpawnTime, spawnInterval, eventsPerStage);
+            stageManager.OnProgressAdvanced -= HandleStageProgress;
+            stageManager.OnStageStarted -= HandleStageStarted;
         }
     }
 
-    private void Update()
+    private void HandleStageStarted(int stageNumber)
     {
-        if (gameManager == null || Time.timeScale <= 0f) return;
-        // The third ordinary encounter and boss are both due at 180 seconds. Allow
-        // that due encounter to spawn even if the boss changed state this frame.
+        schedule.BeginStage(stageNumber);
+    }
+
+    private void HandleStageProgress()
+    {
+        if (!isActiveAndEnabled || gameManager == null || stageManager == null || Time.timeScale <= 0f) return;
+        // Another distance consumer can start a boss earlier in this callback
+        // list. Already crossed encounter boundaries still belong to this frame.
         if (gameManager.CurrentState != GameState.Playing && gameManager.CurrentState != GameState.Boss) return;
-        if (!schedule.IsDue(gameManager.gameTime, firstSpawnTime, spawnInterval, eventsPerStage)) return;
-        if (SpawnEventObject(schedule.SpawnedEvents + 1)) schedule.RecordSpawn();
+        if (schedule.StageNumber != stageManager.StageNumber) schedule.BeginStage(stageManager.StageNumber);
+        while (schedule.IsDue(stageManager.StageDistance, stageManager.StageLength))
+        {
+            if (!SpawnEventObject(schedule.SpawnedEvents + 1)) break;
+            schedule.RecordSpawn();
+        }
     }
 
     private bool SpawnEventObject(int encounterNumber)
@@ -93,35 +103,23 @@ public class EventObjectSpawner : MonoBehaviour
 // the last authored stage is reached. Bosses remain owned by Spawner.
 public sealed class StageEventSchedule
 {
+    public const int EncountersPerStage = 3;
     public int StageNumber { get; private set; } = 1;
     public int SpawnedEvents { get; private set; }
-    private float stageStartTime;
 
-    public void BeginStage(int stageNumber, float gameTime)
+    public void BeginStage(int stageNumber)
     {
         StageNumber = System.Math.Max(1, stageNumber);
         SpawnedEvents = 0;
-        stageStartTime = gameTime;
     }
 
-    public bool IsDue(float gameTime, float firstSpawnTime, float interval, int eventLimit)
+    public bool IsDue(float stageDistance, float stageLength)
     {
-        if (SpawnedEvents >= System.Math.Max(1, eventLimit)) return false;
-        float dueTime = System.Math.Max(1f, firstSpawnTime) + SpawnedEvents * System.Math.Max(1f, interval);
-        return gameTime - stageStartTime >= dueTime;
+        if (SpawnedEvents >= EncountersPerStage || stageLength <= 0f) return false;
+        return stageDistance >= stageLength * ((SpawnedEvents + 1) * 0.25f);
     }
 
-    public void AdvanceStage(float firstSpawnTime, float interval, int eventLimit)
-    {
-        // Bosses use fixed run-time boundaries. Sampling the slightly overshot
-        // clock after a boss would accumulate drift and lose the next third event.
-        stageStartTime += System.Math.Max(1f, firstSpawnTime) +
-            (System.Math.Max(1, eventLimit) - 1) * System.Math.Max(1f, interval);
-        StageNumber++;
-        SpawnedEvents = 0;
-    }
-
-    public void RecordSpawn() { SpawnedEvents++; }
+    public void RecordSpawn() { SpawnedEvents = System.Math.Min(EncountersPerStage, SpawnedEvents + 1); }
 
     public static bool IsUpgradeEncounter(int stageNumber, int encounterNumber, bool testFirstStage,
         float randomValue, float laterStageProbability)

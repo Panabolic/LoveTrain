@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using DG.Tweening;
 
 public class StageManager : MonoBehaviour
@@ -29,6 +30,9 @@ public class StageManager : MonoBehaviour
     [Tooltip("배경 프리팹 데이터베이스")]
     [SerializeField] private StageDatabase stageDatabase;
 
+    [Tooltip("기본 속도 320으로 180초 주행할 거리입니다. 보스 조우는 시간이 아닌 이 거리로 결정합니다.")]
+    [SerializeField, Min(1f)] private float stageLength = StageDistanceProgress.DefaultStageLength;
+
     // 스테이지별 연출 설정 리스트 (0번 인덱스 = 1스테이지 클리어 시 사용)
     [Header("Transition Settings (Per Stage)")]
     [SerializeField] private List<StageTransitionSetting> transitionSettings;
@@ -45,18 +49,48 @@ public class StageManager : MonoBehaviour
     // 현재 스테이지 인덱스
     public int CurrentStageIndex { get; private set; } = 0;
 
+    public float StageDistance => distanceProgress.StageDistance;
+    public float StageLength => distanceProgress.StageLength;
+    public float NormalizedProgress => distanceProgress.NormalizedProgress;
+    public int StageNumber => distanceProgress.StageNumber;
+    public event Action OnProgressAdvanced;
+    public event Action<int> OnStageStarted;
+    private readonly StageDistanceProgress distanceProgress = new StageDistanceProgress();
+
     // 현재 씬에 생성된 배경 오브젝트 참조
     private GameObject currentStageObject;
+    private Sequence transitionSequence;
+    private GameObject transitionTunnel;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        distanceProgress.Reset(stageLength);
     }
 
     private void Start()
     {
         // 게임 시작 시 첫 번째 스테이지 로드
         LoadStage(0);
+        OnStageStarted?.Invoke(StageNumber);
+    }
+
+    // Train and GameManager finish their Update first. All distance consumers
+    // receive the same frame's speed and run clock, without script-order settings.
+    private void LateUpdate()
+    {
+        GameManager gameManager = GameManager.Instance;
+        if (gameManager == null || gameManager.CurrentState != GameState.Playing || Time.timeScale <= 0f) return;
+        if (train != null && !train.IsDead)
+            distanceProgress.Advance(train.CurrentSpeed, Time.deltaTime, true);
+        OnProgressAdvanced?.Invoke();
+    }
+
+    private void OnDestroy()
+    {
+        transitionSequence?.Kill();
+        if (transitionTunnel != null) Destroy(transitionTunnel);
+        if (Instance == this) Instance = null;
     }
 
     // -----------------------------------------------------------
@@ -89,26 +123,29 @@ public class StageManager : MonoBehaviour
     // -----------------------------------------------------------
     public void StartStageTransitionSequence()
     {
+        if (train == null || train.IsDead || train.IsDying ||
+            GameManager.Instance == null || (transitionSequence != null && transitionSequence.IsActive())) return;
+
         // 1. 상태 변경 (모든 조작, 스폰, 아이템 정지)
         GameManager.Instance.ChangeState(GameState.StageTransition);
-
-        if (train.IsDying) return;
 
         Debug.Log($"[StageManager] Stage {CurrentStageIndex + 1} 클리어! 연출 시퀀스 시작.");
 
         // 현재 스테이지에 맞는 연출 설정 가져오기
-        int settingIndex = CurrentStageIndex % transitionSettings.Count;
-        StageTransitionSetting setting = transitionSettings[settingIndex];
+        StageTransitionSetting setting = transitionSettings != null && transitionSettings.Count > 0
+            ? transitionSettings[CurrentStageIndex % transitionSettings.Count] : null;
 
         // 터널 생성 (화면 밖)
         GameObject tunnel = null;
-        if (setting.tunnelPrefab != null && setting.tunnelSpawnPoint != null)
+        if (setting != null && setting.tunnelPrefab != null && setting.tunnelSpawnPoint != null)
         {
             tunnel = Instantiate(setting.tunnelPrefab, setting.tunnelSpawnPoint.position, Quaternion.identity);
         }
+        transitionTunnel = tunnel;
 
         // ✨ 시퀀스 조립
         Sequence seq = DOTween.Sequence();
+        transitionSequence = seq;
 
         // [Step 1] 2초 대기 (보스 사망 연출 감상)
         seq.AppendInterval(2.0f);
@@ -116,7 +153,7 @@ public class StageManager : MonoBehaviour
         seq.Append(train.transform.DOMove(playerResetPosition, 2.0f).SetEase(Ease.OutQuad));
 
         // [Step 2] 터널 등장 (2초간 이동)
-        if (tunnel != null && setting.tunnelTargetPoint != null)
+        if (tunnel != null && setting != null && setting.tunnelTargetPoint != null)
         {
             seq.Append(tunnel.transform.DOMove(setting.tunnelTargetPoint.position, 2.0f).SetEase(Ease.OutQuad));
 
@@ -131,7 +168,7 @@ public class StageManager : MonoBehaviour
         }
 
         // [Step 3] 기차 진입 (1.5초간 터널 속으로 이동)
-        if (train != null && setting.trainEnterPoint != null)
+        if (train != null && setting != null && setting.trainEnterPoint != null)
         {
             seq.Append(train.transform.DOMove(setting.trainEnterPoint.position, 1.5f).SetEase(Ease.InQuad));
         }
@@ -153,6 +190,7 @@ public class StageManager : MonoBehaviour
 
             // 터널 삭제
             if (tunnel != null) Destroy(tunnel);
+            transitionTunnel = null;
         });
 
         // 데이터 교체 후 잠시 대기 (로딩 느낌, 0.5초)
@@ -167,7 +205,8 @@ public class StageManager : MonoBehaviour
         // [Step 7] 시퀀스 종료 시 게임 재개
         seq.OnComplete(() =>
         {
-            if (GameManager.Instance != null)
+            transitionSequence = null;
+            if (GameManager.Instance != null && GameManager.Instance.CurrentState == GameState.StageTransition)
             {
                 GameManager.Instance.ChangeState(GameState.Playing);
                 Debug.Log("[StageManager] 다음 스테이지 시작! (Game Resumed)");
@@ -182,7 +221,44 @@ public class StageManager : MonoBehaviour
 
         int nextIndex = (CurrentStageIndex + 1) % stageDatabase.stagePrefabs.Count;
         LoadStage(nextIndex);
+        distanceProgress.BeginNextStage(stageLength);
+        OnStageStarted?.Invoke(StageNumber);
 
         Debug.Log($"[StageManager] 스테이지 데이터 교체 완료: {nextIndex + 1} 스테이지");
+    }
+}
+
+// Distance is a run rule, independent of the looping authored background index.
+public sealed class StageDistanceProgress
+{
+    public const float DefaultStageLength = 57600f;
+    private double distance;
+    public int StageNumber { get; private set; } = 1;
+    public float StageLength { get; private set; } = DefaultStageLength;
+    public float StageDistance => (float)distance;
+    public float NormalizedProgress => StageDistance / StageLength;
+
+    public void Reset(float length)
+    {
+        StageNumber = 1;
+        BeginDistance(length);
+    }
+
+    public void BeginNextStage(float length)
+    {
+        StageNumber++;
+        BeginDistance(length);
+    }
+
+    private void BeginDistance(float length)
+    {
+        StageLength = Math.Max(1f, length);
+        distance = 0d;
+    }
+
+    public void Advance(float speed, float deltaTime, bool isPlaying)
+    {
+        if (!isPlaying || deltaTime <= 0f) return;
+        distance = Math.Min(StageLength, distance + (double)Math.Max(0f, speed) * deltaTime);
     }
 }

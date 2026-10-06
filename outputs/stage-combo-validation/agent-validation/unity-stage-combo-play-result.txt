@@ -1,0 +1,46 @@
+START actual copied Junmo PlayMode stage/combo lifecycle fixture.
+PASS Native Junmo owners and authored combo presenter initialize
+PASS Native stage starts with 57,600-unit route and first run stage
+PASS Native LateUpdate displays 9 kills without punctuation
+PASS Below 10 kills shows combo without god message
+PASS Native Update/LateUpdate advance run clock and route while Playing
+PASS Native route advancement follows current train speed over elapsed run time
+PASS Native elite kill crosses digit punctuation threshold
+PASS Native presenter reveals requested 10-kill message
+PASS Real modal queue enters Event pause
+PASS Native run timer stops during Event
+PASS Native route progress stops during Event
+PASS Native combo timer stops during Event
+PASS Real queue release resumes prior combat state
+PASS Combo native clock resumes after modal close
+PASS Actual PauseGame freezes scaled simulation
+PASS Native run timer stops during Pause
+PASS Native route progress stops during Pause
+PASS Native combo timer stops during Pause
+PASS Actual ResumeGame and AppearBoss enter live Boss combat
+PASS Native run timer stops during Boss
+PASS Native route progress stops during Boss
+PASS Combo decreases during native Boss combat while run timer stays stopped
+PASS Combo expires after approximately 3 native scaled seconds
+PASS Native presenter hides expired combo and god message
+PASS Native OnDisable hides presenter while state remains owned by GameManager
+PASS Native OnEnable restores current combo immediately
+PASS Native 100-kill label has two exclamation marks
+PASS Actual StageTransition resets combo
+PASS Actual scene Spawner exists with no instantiated bosses before warning probe
+PASS Actual distance consumer enters Boss and reserves its warning coroutine
+PASS Actual warning records the route request before spawning
+PASS No boss prefab is instantiated during the initial warning interval
+PASS Native Spawner.OnDisable cancels warning coroutine and releases running flag
+PASS Native OnDisable defers gameplay recovery until component is enabled again
+PASS Cancelled warning restores the same boss index and releases the route reservation
+PASS Disabled component keeps warning recovery deferred across native frames
+PASS Native Spawner.OnEnable restores Playing before route consumers retry
+PASS Native StageManager.LateUpdate reserves the cancelled route boss once after re-enable
+PASS Native retry advances the same boss index exactly once and deduplicates its route request
+PASS Actual SetSpawning(false) cancels retry and immediately restores Playing while enabled
+PASS Both real warning attempts cancel before the authored 4-second spawn delay with zero boss instances
+PASS Stopped and disabled Spawner remains idle across native route notifications
+PASS Actual PlayerDied resets combo
+PASS No stage/combo feature error stack traces observed
+PASS: 44 native copied-Junmo PlayMode checks including real warning cancellation and re-enable retry. Other runtime errors requiring baseline classification: 0. Train input/fuel and unrelated mob spawning disabled only in fixture; route seeded before warning probe. No collisions, physical input, full encounter or player-build claim.

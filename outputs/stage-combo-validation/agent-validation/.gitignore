@@ -1,0 +1,5 @@
+bin/
+obj/
+*.csproj
+*.log
+compiled-sources.txt

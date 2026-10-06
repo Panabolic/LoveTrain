@@ -1,0 +1,1 @@
+37 actual-source Spawner reservation/cancellation checks passed with dependency doubles. Coroutine first/next MoveNext is exercised; Unity scheduler, real WaitForSeconds timing and actual warning rendering are excluded.

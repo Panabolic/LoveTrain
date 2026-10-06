@@ -1,0 +1,48 @@
+[
+  {
+    "Path": "Assets/Scripts/LeeJunmo/GameManager.cs",
+    "SHA256": "901E6DD8794B66535D552AA6264A2D7BC4C15F6AC9B90AF5FCCFA73096A4CD11",
+    "ValidatedCopyMatch": true
+  },
+  {
+    "Path": "Assets/Scripts/LeeJunmo/StageManager.cs",
+    "SHA256": "5037CF02B615D0D5F7650A29A5F1B6FBC4CE461FFAE4CA3DA2D3D20D25E08481",
+    "ValidatedCopyMatch": true
+  },
+  {
+    "Path": "Assets/Scripts/SangHyup/Enemy/Spawner.cs",
+    "SHA256": "ACC0EF289371C5AB92DB89A14636E115EBE73C5B6BA0401B6833425B0E61B9A8",
+    "ValidatedCopyMatch": true
+  },
+  {
+    "Path": "Assets/EventObjectSpawner.cs",
+    "SHA256": "1BE59F1D54A53A05731FC12E9F97F627A17B11DCB87535EC8A32CEC10248CDCD",
+    "ValidatedCopyMatch": true
+  },
+  {
+    "Path": "Assets/BossWarningLoopUI.cs",
+    "SHA256": "D31A94A223F061DBD07B6E167E7FF3FB100C4D797608AEAA18D9245C4C1DAB4B",
+    "ValidatedCopyMatch": true
+  },
+  {
+    "Path": "Assets/Scripts/LeeJunmo/ComboKillState.cs",
+    "SHA256": "E1D99FAA770F91AD81B666783D3D330E44CBDFA53B840E3D9A5933FDF5292FBD",
+    "ValidatedCopyMatch": true
+  },
+  {
+    "Path": "Assets/Scripts/LeeJunmo/ComboKillUI.cs",
+    "SHA256": "9E8E05477FDBC6A24F5EF76D52AC5AEEB33690A99F420527B25B79205ED83F57",
+    "ValidatedCopyMatch": true
+  },
+  {
+    "Path": "Assets/Scripts/LeeJunmo/StageProgressUI.cs",
+    "SHA256": "51458813483094F62AA31F7470F086C7C98B914092C3FB84B69822A9EF75178C",
+    "ValidatedCopyMatch": true
+  },
+  {
+    "Path": "Assets/Scenes/Junmo.unity",
+    "SHA256": "73B7310735F78FCDE49AA58C4D38BF0D1B084E302B1EDE648ACDC2093D52CF8C",
+    "ValidatedCopyMatch": true,
+    "FormattingOnlyAfterValidation": "Removed spaces after empty m_Name fields in approved blocks only"
+  }
+]

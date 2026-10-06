@@ -129,12 +129,15 @@ Gun은 런 시작의 영구 데미지 보너스를 원본 GunStats와 기본 Pro
 
 ## 2026-10-06 살점 HUD / 조직 창조
 
-- Junmo `CurrencyHUD`는 씬에 작성된 `FleshHud`와 TMP/Image/키 안내 참조를 사용한다. 런타임 UI 자동 생성 없이 오른쪽 아래의 기존 우측·하단 여백을 유지하고, 영혼을 상단에 배치한다.
+- Junmo `CurrencyHUD`는 씬에 작성된 `FleshHud`와 TMP/Image/키 안내 참조를 사용한다. 런타임 UI 자동 생성 없이 오른쪽 아래의 우측 20 logical px 여백을 유지하고, 영혼을 상단에 배치한다.
 - 살점과 영혼의 라벨·숫자는 모두 같은 크기(12 logical px)와 오른쪽 정렬을 사용하며 두 줄의 오른쪽 경계를 맞춘다.
-- 장비 HUD와의 겹침을 피하도록 최종 박스 150×92/게이지 130×11 logical px를 사용한다. 기존 우측 20/하단 17 여백을 유지하고 장비 슬롯 10개와의 실제 PlayMode 교차 0을 확인했다.
+- 하단 UI 중앙 배치와 키 안내 아래 여백 균형을 맞춘 현재 박스는 150×84 logical px, 우측 20/하단 9이다. 내부 요소의 크기·상단 오프셋을 유지하고 박스 아래 여백만 늘렸다. 게이지 130×11, 재화 글자 12를 유지한다. 기본 카메라의 선로 이미지 하단은 화면 하단에서 약101.7이며 박스는 y9~93, 중앙51에 놓인다. 키 그림자 아래 여백은8.5이다. 카메라 흔들림 중 여백은 별도이며 기본 화면 배치를 대상으로 한다.
+- Junmo의 미터기/연료 바와 기차 아이템·바퀴 슬롯, 별도 LevelText는 부모 RectTransform의 Y를 기존보다5 logical px 내려 하단 섹션 중앙에 배치한다. TrainAttachmentLayout의 authored anchoredPosition.y는41이며 작업대는 현재 레이아웃을 저장·복원한다.
 - 자원·제작 횟수·비용은 기존 `TrainLevelManager`/`RunPartEconomy`가 소유한다. `FleshCreationProgress`는 현재 살점과 증가하는 제작 비용의 누적 합만 계산하는 표시용 값이다. 경제·보상·F 입력·실제 장착 거래는 변경하지 않는다.
 - `FleshHud`는 `OnResourcesChanged`와 `EnglishLocalization.LanguageChanged`를 OnEnable/OnDisable에서 균형 있게 구독·해제하고 Start에서 초기 영혼을 다시 표시한다. 기존 wallet의 fleshText/soulText 필드는 보존하되 Junmo에서는 참조를 비워 이 뷰가 동일한 TMP를 단독 갱신한다.
 - 완성한 제작분의 색을 바탕으로, 다음 제작분의 색을 잔여 살점/다음 비용 비율만큼 겹친다. 빨주노초파남보·분홍·청록·백색을 순환하며 Sprite 없는 Simple Image의 가로 앵커를 변경한다. 비용 상한과 증가량 0에서도 계산은 유한하다.
 - 게이지 바로 아래에 `F 조직 창조`와 현재 1회 비용을 표시한다. 자원 기준 2회 이상이면 `조직 창조 X N`으로 표시하며 별도 횟수·추가 획득 안내·분수는 없다.
 - `CanRequestCreation`은 Playing/Boss, 양수 timeScale, 키보드, 큐·거래·열린 작업대 여부와 후보 가용성을 표시용으로 조회한다. 후보 조회는 `LevelUpUIManager.CanShowCreation`에 캐시하며 Inventory 변경/재활성화/Database 변경 시 다시 계산한다. 매 프레임에는 캐시와 상태만 조회한다.
 - 승인 범위와 검증·남은 확인은 [살점 HUD 작업 기록](../../SessionLogs/2026-10-06-flesh-hud.md)을 참조한다.
+
+2026-10-06 현재 테스트 조정: 강화costPerCell=0(기본값/Junmo). 정확한UI선택슬롯데이터는유지하지만월드실체부착은Item_SO.attachmentSocketName의기존소켓경로사용; Inventory.GetEquipmentAnchor는공통실체화에서미호출로잠시비활성. 상세및해상도조사결과는같은날짜 item-workbench 세션로그의마지막항목.

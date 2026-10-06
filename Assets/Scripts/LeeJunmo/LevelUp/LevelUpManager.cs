@@ -22,8 +22,8 @@ public class LevelUpUIManager : MonoBehaviour
     [SerializeField] private TrainItemWorkbenchView workbenchPrefab;
     [SerializeField] private float trainPanelScale = 1.25f;
     [SerializeField] private float panelMoveDuration = 0.35f;
-    [Tooltip("Pending design: negative means upgrades remain disabled until a cost is authored.")]
-    [SerializeField] private int upgradeCostPerCell = -1;
+    [Tooltip("Test price: zero allows free upgrades; a negative value disables upgrading.")]
+    [SerializeField] private int upgradeCostPerCell = 0;
 
     private enum Mode { None, Creation, Upgrade }
     private Mode mode;

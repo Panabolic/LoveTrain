@@ -1,0 +1,965 @@
+PASS Isolated save identity verified before preference access
+PASS EditMode only
+PASS BloodyBible visual source resolves
+PASS BloodyBible: UI slot 0 preserves exact legacy socket/root
+PASS BloodyBible: local zero placement
+PASS BloodyBible: UI slot 1 preserves exact legacy socket/root
+PASS BloodyBible: local zero placement
+PASS BloodyBible: UI slot 2 preserves exact legacy socket/root
+PASS BloodyBible: local zero placement
+PASS BloodyBible: UI slot 3 preserves exact legacy socket/root
+PASS BloodyBible: local zero placement
+PASS BloodyBible: UI slot 4 preserves exact legacy socket/root
+PASS BloodyBible: local zero placement
+PASS BloodyBible: UI slot 5 preserves exact legacy socket/root
+PASS BloodyBible: local zero placement
+PASS BloodyBible: UI slot 6 preserves exact legacy socket/root
+PASS BloodyBible: local zero placement
+PASS BloodyBible: UI slot 7 preserves exact legacy socket/root
+PASS BloodyBible: local zero placement
+PASS BloodyBible: UI slot 8 preserves exact legacy socket/root
+PASS BloodyBible: local zero placement
+PASS BloodyBible: UI slot 9 preserves exact legacy socket/root
+PASS BloodyBible: local zero placement
+PASS BeatingHeart visual source resolves
+PASS BeatingHeart: UI slot 0 preserves exact legacy socket/root
+PASS BeatingHeart: local zero placement
+PASS BeatingHeart: UI slot 1 preserves exact legacy socket/root
+PASS BeatingHeart: local zero placement
+PASS BeatingHeart: UI slot 2 preserves exact legacy socket/root
+PASS BeatingHeart: local zero placement
+PASS BeatingHeart: UI slot 3 preserves exact legacy socket/root
+PASS BeatingHeart: local zero placement
+PASS BeatingHeart: UI slot 4 preserves exact legacy socket/root
+PASS BeatingHeart: local zero placement
+PASS BeatingHeart: UI slot 5 preserves exact legacy socket/root
+PASS BeatingHeart: local zero placement
+PASS BeatingHeart: UI slot 6 preserves exact legacy socket/root
+PASS BeatingHeart: local zero placement
+PASS BeatingHeart: UI slot 7 preserves exact legacy socket/root
+PASS BeatingHeart: local zero placement
+PASS BeatingHeart: UI slot 8 preserves exact legacy socket/root
+PASS BeatingHeart: local zero placement
+PASS BeatingHeart: UI slot 9 preserves exact legacy socket/root
+PASS BeatingHeart: local zero placement
+PASS RedGear visual source resolves
+PASS RedGear: UI slot 0 preserves exact legacy socket/root
+PASS RedGear: local zero placement
+PASS RedGear: UI slot 1 preserves exact legacy socket/root
+PASS RedGear: local zero placement
+PASS RedGear: UI slot 2 preserves exact legacy socket/root
+PASS RedGear: local zero placement
+PASS RedGear: UI slot 3 preserves exact legacy socket/root
+PASS RedGear: local zero placement
+PASS RedGear: UI slot 4 preserves exact legacy socket/root
+PASS RedGear: local zero placement
+PASS RedGear: UI slot 5 preserves exact legacy socket/root
+PASS RedGear: local zero placement
+PASS RedGear: UI slot 6 preserves exact legacy socket/root
+PASS RedGear: local zero placement
+PASS RedGear: UI slot 7 preserves exact legacy socket/root
+PASS RedGear: local zero placement
+PASS RedGear: UI slot 8 preserves exact legacy socket/root
+PASS RedGear: local zero placement
+PASS RedGear: UI slot 9 preserves exact legacy socket/root
+PASS RedGear: local zero placement
+PASS PoisonMissileLauncher visual source resolves
+PASS PoisonMissileLauncher: UI slot 0 preserves exact legacy socket/root
+PASS PoisonMissileLauncher: local zero placement
+PASS PoisonMissileLauncher: UI slot 1 preserves exact legacy socket/root
+PASS PoisonMissileLauncher: local zero placement
+PASS PoisonMissileLauncher: UI slot 2 preserves exact legacy socket/root
+PASS PoisonMissileLauncher: local zero placement
+PASS PoisonMissileLauncher: UI slot 3 preserves exact legacy socket/root
+PASS PoisonMissileLauncher: local zero placement
+PASS PoisonMissileLauncher: UI slot 4 preserves exact legacy socket/root
+PASS PoisonMissileLauncher: local zero placement
+PASS PoisonMissileLauncher: UI slot 5 preserves exact legacy socket/root
+PASS PoisonMissileLauncher: local zero placement
+PASS PoisonMissileLauncher: UI slot 6 preserves exact legacy socket/root
+PASS PoisonMissileLauncher: local zero placement
+PASS PoisonMissileLauncher: UI slot 7 preserves exact legacy socket/root
+PASS PoisonMissileLauncher: local zero placement
+PASS PoisonMissileLauncher: UI slot 8 preserves exact legacy socket/root
+PASS PoisonMissileLauncher: local zero placement
+PASS PoisonMissileLauncher: UI slot 9 preserves exact legacy socket/root
+PASS PoisonMissileLauncher: local zero placement
+PASS RearGun visual source resolves
+PASS RearGun: UI slot 0 preserves exact legacy socket/root
+PASS RearGun: local zero placement
+PASS RearGun: UI slot 1 preserves exact legacy socket/root
+PASS RearGun: local zero placement
+PASS RearGun: UI slot 2 preserves exact legacy socket/root
+PASS RearGun: local zero placement
+PASS RearGun: UI slot 3 preserves exact legacy socket/root
+PASS RearGun: local zero placement
+PASS RearGun: UI slot 4 preserves exact legacy socket/root
+PASS RearGun: local zero placement
+PASS RearGun: UI slot 5 preserves exact legacy socket/root
+PASS RearGun: local zero placement
+PASS RearGun: UI slot 6 preserves exact legacy socket/root
+PASS RearGun: local zero placement
+PASS RearGun: UI slot 7 preserves exact legacy socket/root
+PASS RearGun: local zero placement
+PASS RearGun: UI slot 8 preserves exact legacy socket/root
+PASS RearGun: local zero placement
+PASS RearGun: UI slot 9 preserves exact legacy socket/root
+PASS RearGun: local zero placement
+PASS LaserGun visual source resolves
+PASS LaserGun: UI slot 0 preserves exact legacy socket/root
+PASS LaserGun: local zero placement
+PASS LaserGun: UI slot 1 preserves exact legacy socket/root
+PASS LaserGun: local zero placement
+PASS LaserGun: UI slot 2 preserves exact legacy socket/root
+PASS LaserGun: local zero placement
+PASS LaserGun: UI slot 3 preserves exact legacy socket/root
+PASS LaserGun: local zero placement
+PASS LaserGun: UI slot 4 preserves exact legacy socket/root
+PASS LaserGun: local zero placement
+PASS LaserGun: UI slot 5 preserves exact legacy socket/root
+PASS LaserGun: local zero placement
+PASS LaserGun: UI slot 6 preserves exact legacy socket/root
+PASS LaserGun: local zero placement
+PASS LaserGun: UI slot 7 preserves exact legacy socket/root
+PASS LaserGun: local zero placement
+PASS LaserGun: UI slot 8 preserves exact legacy socket/root
+PASS LaserGun: local zero placement
+PASS LaserGun: UI slot 9 preserves exact legacy socket/root
+PASS LaserGun: local zero placement
+PASS Common visual helper creates no EquipmentSlot_ transforms
+PASS Common visual helper never requests generated equipment anchors
+PASS Authored scene test upgrade cost is zero
+PASS Zero-flesh wallet enables zero-cost upgrade
+PASS Free upgrade reaches 2 without charging zero-flesh wallet
+PASS Free upgrade reaches 3 without charging zero-flesh wallet
+PASS Free upgrade reaches 4 without charging zero-flesh wallet
+PASS Free upgrade reaches 5 without charging zero-flesh wallet
+PASS Free upgrade reaches 6 without charging zero-flesh wallet
+PASS Asset max upgrade remains respected
+PASS Maximum-level upgrade button disables
+PASS Actual StageManager bgParent resolves
+PASS Stage 0 retains authored prefab root local position under actual bgParent
+PASS Stage 1 retains authored prefab root local position under actual bgParent
+NATIVE CANVAS rect=(x:-400.00, y:-225.00, width:800.00, height:450.00), pixelRect=(x:0.00, y:0.00, width:1920.00, height:1080.00), renderingDisplaySize=(1920.00, 1080.00), sourceScaleFactor=2.4, uiPixelRect=(x:0.00, y:0.00, width:1920.00, height:1080.00)
+PASS 1920x1080: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:0.00, y:0.00, width:1920.00, height:1080.00), expected=(x:0.00, y:0.00, width:1920.00, height:1080.00), canvas=(x:-400.00, y:-225.00, width:800.00, height:450.00)
+RESOLUTION 1920x1080 content=(x:0.00, y:0.00, width:1920.00, height:1080.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:78.00) root scale=(1.00, 1.00, 1.00)
+PASS Authored HUD is 150x78
+PASS (1920, 1080): HUD stays inside actual production content
+PASS (1920, 1080): graphic contained, including shadow: HudBackground
+PASS (1920, 1080): graphic contained, including shadow: FleshText
+PASS (1920, 1080): graphic contained, including shadow: SoulText
+PASS (1920, 1080): graphic contained, including shadow: TopBorder
+PASS (1920, 1080): graphic contained, including shadow: BottomBorder
+PASS (1920, 1080): graphic contained, including shadow: LeftBorder
+PASS (1920, 1080): graphic contained, including shadow: RightBorder
+PASS (1920, 1080): graphic contained, including shadow: TopLeftCorner
+PASS (1920, 1080): graphic contained, including shadow: TopRightCorner
+PASS (1920, 1080): graphic contained, including shadow: FleshGauge
+PASS (1920, 1080): graphic contained, including shadow: CompletedFill
+PASS (1920, 1080): graphic contained, including shadow: ProgressFill
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider1
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider2
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider3
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider4
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider5
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider6
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider7
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider8
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider9
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider10
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider11
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider12
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider13
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider14
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider15
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider16
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider17
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider18
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider19
+PASS (1920, 1080): graphic contained, including shadow: PixelDivider20
+PASS (1920, 1080): graphic contained, including shadow: FKey
+PASS (1920, 1080): graphic contained, including shadow: KeyText
+PASS (1920, 1080): graphic contained, including shadow: KeyShadow
+PASS (1920, 1080): graphic contained, including shadow: CreationLabel
+PASS (1920, 1080): graphic contained, including shadow: CreationCost
+PASS (1920, 1080): equipment slot 0 has zero HUD overlap
+PASS (1920, 1080): equipment slot 1 has zero HUD overlap
+PASS (1920, 1080): equipment slot 2 has zero HUD overlap
+PASS (1920, 1080): equipment slot 3 has zero HUD overlap
+PASS (1920, 1080): equipment slot 4 has zero HUD overlap
+PASS (1920, 1080): equipment slot 5 has zero HUD overlap
+PASS (1920, 1080): equipment slot 6 has zero HUD overlap
+PASS (1920, 1080): equipment slot 7 has zero HUD overlap
+PASS (1920, 1080): equipment slot 8 has zero HUD overlap
+PASS (1920, 1080): equipment slot 9 has zero HUD overlap
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane collider top screen=254.7577
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane (1) collider top screen=254.7577
+RAIL (1920, 1080) BeltScroll(Clone) visible alpha lower screen=244.0258, HUD top=228, pixel gap=16.02579, logical gap=6.677411
+PASS (1920, 1080): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll(Clone)
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane collider top screen=254.9145
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane (1) collider top screen=254.9145
+RAIL (1920, 1080) BeltScroll 1(Clone) visible alpha lower screen=244.1826, HUD top=228, pixel gap=16.1826, logical gap=6.742751
+PASS (1920, 1080): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll 1(Clone)
+PASS (1920, 1080): text fits ko amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 0
+PASS (1920, 1080): text fits ko amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (1920, 1080): text fits ko amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (1920, 1080): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (1920, 1080): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (1920, 1080): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1920, 1080): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (1920, 1080): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (1920, 1080): text fits ko amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 1170
+PASS (1920, 1080): text fits ko amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (1920, 1080): text fits ko amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1920, 1080): text fits ko amount=1170 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 13
+PASS (1920, 1080): text fits ko amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (1920, 1080): text fits ko amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 2147483647
+PASS (1920, 1080): text fits ko amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 2147483647
+PASS (1920, 1080): text fits ko amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1920, 1080): text fits ko amount=2147483647 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 20721
+PASS (1920, 1080): text fits ko amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (1920, 1080): text fits en amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 0
+PASS (1920, 1080): text fits en amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (1920, 1080): text fits en amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (1920, 1080): text fits en amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 105
+PASS (1920, 1080): text fits en amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (1920, 1080): text fits en amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1920, 1080): text fits en amount=105 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 2
+PASS (1920, 1080): text fits en amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (1920, 1080): text fits en amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 1170
+PASS (1920, 1080): text fits en amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (1920, 1080): text fits en amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1920, 1080): text fits en amount=1170 CreationLabel
+TEXT CreationLabel font=8.2 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 13
+PASS (1920, 1080): text fits en amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (1920, 1080): text fits en amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 2147483647
+PASS (1920, 1080): text fits en amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 2147483647
+PASS (1920, 1080): text fits en amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1920, 1080): text fits en amount=2147483647 CreationLabel
+TEXT CreationLabel font=7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 20721
+PASS (1920, 1080): text fits en amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+NATIVE CANVAS rect=(x:-400.00, y:-225.00, width:800.00, height:450.00), pixelRect=(x:0.00, y:0.00, width:1280.00, height:720.00), renderingDisplaySize=(1280.00, 720.00), sourceScaleFactor=1.6, uiPixelRect=(x:0.00, y:0.00, width:1280.00, height:720.00)
+PASS 1280x720: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:0.00, y:0.00, width:1280.00, height:720.00), expected=(x:0.00, y:0.00, width:1280.00, height:720.00), canvas=(x:-400.00, y:-225.00, width:800.00, height:450.00)
+RESOLUTION 1280x720 content=(x:0.00, y:0.00, width:1280.00, height:720.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:78.00) root scale=(1.00, 1.00, 1.00)
+PASS Authored HUD is 150x78
+PASS (1280, 720): HUD stays inside actual production content
+PASS (1280, 720): graphic contained, including shadow: HudBackground
+PASS (1280, 720): graphic contained, including shadow: FleshText
+PASS (1280, 720): graphic contained, including shadow: SoulText
+PASS (1280, 720): graphic contained, including shadow: TopBorder
+PASS (1280, 720): graphic contained, including shadow: BottomBorder
+PASS (1280, 720): graphic contained, including shadow: LeftBorder
+PASS (1280, 720): graphic contained, including shadow: RightBorder
+PASS (1280, 720): graphic contained, including shadow: TopLeftCorner
+PASS (1280, 720): graphic contained, including shadow: TopRightCorner
+PASS (1280, 720): graphic contained, including shadow: FleshGauge
+PASS (1280, 720): graphic contained, including shadow: CompletedFill
+PASS (1280, 720): graphic contained, including shadow: ProgressFill
+PASS (1280, 720): graphic contained, including shadow: PixelDivider1
+PASS (1280, 720): graphic contained, including shadow: PixelDivider2
+PASS (1280, 720): graphic contained, including shadow: PixelDivider3
+PASS (1280, 720): graphic contained, including shadow: PixelDivider4
+PASS (1280, 720): graphic contained, including shadow: PixelDivider5
+PASS (1280, 720): graphic contained, including shadow: PixelDivider6
+PASS (1280, 720): graphic contained, including shadow: PixelDivider7
+PASS (1280, 720): graphic contained, including shadow: PixelDivider8
+PASS (1280, 720): graphic contained, including shadow: PixelDivider9
+PASS (1280, 720): graphic contained, including shadow: PixelDivider10
+PASS (1280, 720): graphic contained, including shadow: PixelDivider11
+PASS (1280, 720): graphic contained, including shadow: PixelDivider12
+PASS (1280, 720): graphic contained, including shadow: PixelDivider13
+PASS (1280, 720): graphic contained, including shadow: PixelDivider14
+PASS (1280, 720): graphic contained, including shadow: PixelDivider15
+PASS (1280, 720): graphic contained, including shadow: PixelDivider16
+PASS (1280, 720): graphic contained, including shadow: PixelDivider17
+PASS (1280, 720): graphic contained, including shadow: PixelDivider18
+PASS (1280, 720): graphic contained, including shadow: PixelDivider19
+PASS (1280, 720): graphic contained, including shadow: PixelDivider20
+PASS (1280, 720): graphic contained, including shadow: FKey
+PASS (1280, 720): graphic contained, including shadow: KeyText
+PASS (1280, 720): graphic contained, including shadow: KeyShadow
+PASS (1280, 720): graphic contained, including shadow: CreationLabel
+PASS (1280, 720): graphic contained, including shadow: CreationCost
+PASS (1280, 720): equipment slot 0 has zero HUD overlap
+PASS (1280, 720): equipment slot 1 has zero HUD overlap
+PASS (1280, 720): equipment slot 2 has zero HUD overlap
+PASS (1280, 720): equipment slot 3 has zero HUD overlap
+PASS (1280, 720): equipment slot 4 has zero HUD overlap
+PASS (1280, 720): equipment slot 5 has zero HUD overlap
+PASS (1280, 720): equipment slot 6 has zero HUD overlap
+PASS (1280, 720): equipment slot 7 has zero HUD overlap
+PASS (1280, 720): equipment slot 8 has zero HUD overlap
+PASS (1280, 720): equipment slot 9 has zero HUD overlap
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane collider top screen=169.8385
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane (1) collider top screen=169.8385
+RAIL (1280, 720) BeltScroll(Clone) visible alpha lower screen=162.6839, HUD top=152, pixel gap=10.68387, logical gap=6.677418
+PASS (1280, 720): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll(Clone)
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane collider top screen=169.943
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane (1) collider top screen=169.943
+RAIL (1280, 720) BeltScroll 1(Clone) visible alpha lower screen=162.7884, HUD top=152, pixel gap=10.78841, logical gap=6.742754
+PASS (1280, 720): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll 1(Clone)
+PASS (1280, 720): text fits ko amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 0
+PASS (1280, 720): text fits ko amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (1280, 720): text fits ko amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (1280, 720): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (1280, 720): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (1280, 720): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1280, 720): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (1280, 720): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (1280, 720): text fits ko amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 1170
+PASS (1280, 720): text fits ko amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (1280, 720): text fits ko amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1280, 720): text fits ko amount=1170 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 13
+PASS (1280, 720): text fits ko amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (1280, 720): text fits ko amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 2147483647
+PASS (1280, 720): text fits ko amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 2147483647
+PASS (1280, 720): text fits ko amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1280, 720): text fits ko amount=2147483647 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 20721
+PASS (1280, 720): text fits ko amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (1280, 720): text fits en amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 0
+PASS (1280, 720): text fits en amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (1280, 720): text fits en amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (1280, 720): text fits en amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 105
+PASS (1280, 720): text fits en amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (1280, 720): text fits en amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1280, 720): text fits en amount=105 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 2
+PASS (1280, 720): text fits en amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (1280, 720): text fits en amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 1170
+PASS (1280, 720): text fits en amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (1280, 720): text fits en amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1280, 720): text fits en amount=1170 CreationLabel
+TEXT CreationLabel font=8.2 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 13
+PASS (1280, 720): text fits en amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (1280, 720): text fits en amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 2147483647
+PASS (1280, 720): text fits en amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 2147483647
+PASS (1280, 720): text fits en amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1280, 720): text fits en amount=2147483647 CreationLabel
+TEXT CreationLabel font=7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 20721
+PASS (1280, 720): text fits en amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+NATIVE CANVAS rect=(x:-400.00, y:-225.00, width:800.00, height:450.00), pixelRect=(x:0.00, y:0.00, width:960.00, height:540.00), renderingDisplaySize=(960.00, 540.00), sourceScaleFactor=1.2, uiPixelRect=(x:0.00, y:0.00, width:960.00, height:540.00)
+PASS 960x540: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:0.00, y:0.00, width:960.00, height:540.00), expected=(x:0.00, y:0.00, width:960.00, height:540.00), canvas=(x:-400.00, y:-225.00, width:800.00, height:450.00)
+RESOLUTION 960x540 content=(x:0.00, y:0.00, width:960.00, height:540.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:78.00) root scale=(1.00, 1.00, 1.00)
+PASS Authored HUD is 150x78
+PASS (960, 540): HUD stays inside actual production content
+PASS (960, 540): graphic contained, including shadow: HudBackground
+PASS (960, 540): graphic contained, including shadow: FleshText
+PASS (960, 540): graphic contained, including shadow: SoulText
+PASS (960, 540): graphic contained, including shadow: TopBorder
+PASS (960, 540): graphic contained, including shadow: BottomBorder
+PASS (960, 540): graphic contained, including shadow: LeftBorder
+PASS (960, 540): graphic contained, including shadow: RightBorder
+PASS (960, 540): graphic contained, including shadow: TopLeftCorner
+PASS (960, 540): graphic contained, including shadow: TopRightCorner
+PASS (960, 540): graphic contained, including shadow: FleshGauge
+PASS (960, 540): graphic contained, including shadow: CompletedFill
+PASS (960, 540): graphic contained, including shadow: ProgressFill
+PASS (960, 540): graphic contained, including shadow: PixelDivider1
+PASS (960, 540): graphic contained, including shadow: PixelDivider2
+PASS (960, 540): graphic contained, including shadow: PixelDivider3
+PASS (960, 540): graphic contained, including shadow: PixelDivider4
+PASS (960, 540): graphic contained, including shadow: PixelDivider5
+PASS (960, 540): graphic contained, including shadow: PixelDivider6
+PASS (960, 540): graphic contained, including shadow: PixelDivider7
+PASS (960, 540): graphic contained, including shadow: PixelDivider8
+PASS (960, 540): graphic contained, including shadow: PixelDivider9
+PASS (960, 540): graphic contained, including shadow: PixelDivider10
+PASS (960, 540): graphic contained, including shadow: PixelDivider11
+PASS (960, 540): graphic contained, including shadow: PixelDivider12
+PASS (960, 540): graphic contained, including shadow: PixelDivider13
+PASS (960, 540): graphic contained, including shadow: PixelDivider14
+PASS (960, 540): graphic contained, including shadow: PixelDivider15
+PASS (960, 540): graphic contained, including shadow: PixelDivider16
+PASS (960, 540): graphic contained, including shadow: PixelDivider17
+PASS (960, 540): graphic contained, including shadow: PixelDivider18
+PASS (960, 540): graphic contained, including shadow: PixelDivider19
+PASS (960, 540): graphic contained, including shadow: PixelDivider20
+PASS (960, 540): graphic contained, including shadow: FKey
+PASS (960, 540): graphic contained, including shadow: KeyText
+PASS (960, 540): graphic contained, including shadow: KeyShadow
+PASS (960, 540): graphic contained, including shadow: CreationLabel
+PASS (960, 540): graphic contained, including shadow: CreationCost
+PASS (960, 540): equipment slot 0 has zero HUD overlap
+PASS (960, 540): equipment slot 1 has zero HUD overlap
+PASS (960, 540): equipment slot 2 has zero HUD overlap
+PASS (960, 540): equipment slot 3 has zero HUD overlap
+PASS (960, 540): equipment slot 4 has zero HUD overlap
+PASS (960, 540): equipment slot 5 has zero HUD overlap
+PASS (960, 540): equipment slot 6 has zero HUD overlap
+PASS (960, 540): equipment slot 7 has zero HUD overlap
+PASS (960, 540): equipment slot 8 has zero HUD overlap
+PASS (960, 540): equipment slot 9 has zero HUD overlap
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane collider top screen=127.3788
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane (1) collider top screen=127.3788
+RAIL (960, 540) BeltScroll(Clone) visible alpha lower screen=122.0129, HUD top=114, pixel gap=8.012894, logical gap=6.677411
+PASS (960, 540): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll(Clone)
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane collider top screen=127.4573
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane (1) collider top screen=127.4573
+RAIL (960, 540) BeltScroll 1(Clone) visible alpha lower screen=122.0913, HUD top=114, pixel gap=8.091301, logical gap=6.742751
+PASS (960, 540): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll 1(Clone)
+PASS (960, 540): text fits ko amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 0
+PASS (960, 540): text fits ko amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (960, 540): text fits ko amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (960, 540): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (960, 540): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (960, 540): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (960, 540): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (960, 540): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (960, 540): text fits ko amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 1170
+PASS (960, 540): text fits ko amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (960, 540): text fits ko amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (960, 540): text fits ko amount=1170 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 13
+PASS (960, 540): text fits ko amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (960, 540): text fits ko amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 2147483647
+PASS (960, 540): text fits ko amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 2147483647
+PASS (960, 540): text fits ko amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (960, 540): text fits ko amount=2147483647 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 20721
+PASS (960, 540): text fits ko amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (960, 540): text fits en amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 0
+PASS (960, 540): text fits en amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (960, 540): text fits en amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (960, 540): text fits en amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 105
+PASS (960, 540): text fits en amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (960, 540): text fits en amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (960, 540): text fits en amount=105 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 2
+PASS (960, 540): text fits en amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (960, 540): text fits en amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 1170
+PASS (960, 540): text fits en amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (960, 540): text fits en amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (960, 540): text fits en amount=1170 CreationLabel
+TEXT CreationLabel font=8.2 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 13
+PASS (960, 540): text fits en amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (960, 540): text fits en amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 2147483647
+PASS (960, 540): text fits en amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 2147483647
+PASS (960, 540): text fits en amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (960, 540): text fits en amount=2147483647 CreationLabel
+TEXT CreationLabel font=7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 20721
+PASS (960, 540): text fits en amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+NATIVE CANVAS rect=(x:-400.00, y:-300.00, width:800.00, height:600.00), pixelRect=(x:0.00, y:0.00, width:800.00, height:600.00), renderingDisplaySize=(800.00, 600.00), sourceScaleFactor=1, uiPixelRect=(x:0.00, y:0.00, width:800.00, height:600.00)
+PASS 800x600: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:0.00, y:75.00, width:800.00, height:450.00), expected=(x:0.00, y:75.00, width:800.00, height:450.00), canvas=(x:-400.00, y:-300.00, width:800.00, height:600.00)
+RESOLUTION 800x600 content=(x:0.00, y:75.00, width:800.00, height:450.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:78.00) root scale=(1.00, 1.00, 1.00)
+PASS Authored HUD is 150x78
+PASS (800, 600): HUD stays inside actual production content
+PASS (800, 600): graphic contained, including shadow: HudBackground
+PASS (800, 600): graphic contained, including shadow: FleshText
+PASS (800, 600): graphic contained, including shadow: SoulText
+PASS (800, 600): graphic contained, including shadow: TopBorder
+PASS (800, 600): graphic contained, including shadow: BottomBorder
+PASS (800, 600): graphic contained, including shadow: LeftBorder
+PASS (800, 600): graphic contained, including shadow: RightBorder
+PASS (800, 600): graphic contained, including shadow: TopLeftCorner
+PASS (800, 600): graphic contained, including shadow: TopRightCorner
+PASS (800, 600): graphic contained, including shadow: FleshGauge
+PASS (800, 600): graphic contained, including shadow: CompletedFill
+PASS (800, 600): graphic contained, including shadow: ProgressFill
+PASS (800, 600): graphic contained, including shadow: PixelDivider1
+PASS (800, 600): graphic contained, including shadow: PixelDivider2
+PASS (800, 600): graphic contained, including shadow: PixelDivider3
+PASS (800, 600): graphic contained, including shadow: PixelDivider4
+PASS (800, 600): graphic contained, including shadow: PixelDivider5
+PASS (800, 600): graphic contained, including shadow: PixelDivider6
+PASS (800, 600): graphic contained, including shadow: PixelDivider7
+PASS (800, 600): graphic contained, including shadow: PixelDivider8
+PASS (800, 600): graphic contained, including shadow: PixelDivider9
+PASS (800, 600): graphic contained, including shadow: PixelDivider10
+PASS (800, 600): graphic contained, including shadow: PixelDivider11
+PASS (800, 600): graphic contained, including shadow: PixelDivider12
+PASS (800, 600): graphic contained, including shadow: PixelDivider13
+PASS (800, 600): graphic contained, including shadow: PixelDivider14
+PASS (800, 600): graphic contained, including shadow: PixelDivider15
+PASS (800, 600): graphic contained, including shadow: PixelDivider16
+PASS (800, 600): graphic contained, including shadow: PixelDivider17
+PASS (800, 600): graphic contained, including shadow: PixelDivider18
+PASS (800, 600): graphic contained, including shadow: PixelDivider19
+PASS (800, 600): graphic contained, including shadow: PixelDivider20
+PASS (800, 600): graphic contained, including shadow: FKey
+PASS (800, 600): graphic contained, including shadow: KeyText
+PASS (800, 600): graphic contained, including shadow: KeyShadow
+PASS (800, 600): graphic contained, including shadow: CreationLabel
+PASS (800, 600): graphic contained, including shadow: CreationCost
+PASS (800, 600): equipment slot 0 has zero HUD overlap
+PASS (800, 600): equipment slot 1 has zero HUD overlap
+PASS (800, 600): equipment slot 2 has zero HUD overlap
+PASS (800, 600): equipment slot 3 has zero HUD overlap
+PASS (800, 600): equipment slot 4 has zero HUD overlap
+PASS (800, 600): equipment slot 5 has zero HUD overlap
+PASS (800, 600): equipment slot 6 has zero HUD overlap
+PASS (800, 600): equipment slot 7 has zero HUD overlap
+PASS (800, 600): equipment slot 8 has zero HUD overlap
+PASS (800, 600): equipment slot 9 has zero HUD overlap
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane collider top screen=181.149
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane (1) collider top screen=181.149
+RAIL (800, 600) BeltScroll(Clone) visible alpha lower screen=176.6774, HUD top=170, pixel gap=6.677383, logical gap=6.677383
+PASS (800, 600): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll(Clone)
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane collider top screen=181.2144
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane (1) collider top screen=181.2144
+RAIL (800, 600) BeltScroll 1(Clone) visible alpha lower screen=176.7427, HUD top=170, pixel gap=6.742722, logical gap=6.742722
+PASS (800, 600): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll 1(Clone)
+PASS (800, 600): text fits ko amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 0
+PASS (800, 600): text fits ko amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (800, 600): text fits ko amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (800, 600): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (800, 600): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (800, 600): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (800, 600): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (800, 600): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (800, 600): text fits ko amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 1170
+PASS (800, 600): text fits ko amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (800, 600): text fits ko amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (800, 600): text fits ko amount=1170 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 13
+PASS (800, 600): text fits ko amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (800, 600): text fits ko amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 2147483647
+PASS (800, 600): text fits ko amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 2147483647
+PASS (800, 600): text fits ko amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (800, 600): text fits ko amount=2147483647 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 20721
+PASS (800, 600): text fits ko amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (800, 600): text fits en amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 0
+PASS (800, 600): text fits en amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (800, 600): text fits en amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (800, 600): text fits en amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 105
+PASS (800, 600): text fits en amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (800, 600): text fits en amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (800, 600): text fits en amount=105 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 2
+PASS (800, 600): text fits en amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (800, 600): text fits en amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 1170
+PASS (800, 600): text fits en amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (800, 600): text fits en amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (800, 600): text fits en amount=1170 CreationLabel
+TEXT CreationLabel font=8.2 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 13
+PASS (800, 600): text fits en amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (800, 600): text fits en amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 2147483647
+PASS (800, 600): text fits en amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 2147483647
+PASS (800, 600): text fits en amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (800, 600): text fits en amount=2147483647 CreationLabel
+TEXT CreationLabel font=7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 20721
+PASS (800, 600): text fits en amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+NATIVE CANVAS rect=(x:-400.00, y:-167.44, width:800.00, height:334.88), pixelRect=(x:0.00, y:0.00, width:3440.00, height:1440.00), renderingDisplaySize=(3440.00, 1440.00), sourceScaleFactor=4.3, uiPixelRect=(x:0.00, y:0.00, width:3440.00, height:1440.00)
+PASS 3440x1440: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:440.00, y:0.00, width:2560.00, height:1440.00), expected=(x:440.00, y:0.00, width:2560.00, height:1440.00), canvas=(x:-400.00, y:-167.44, width:800.00, height:334.88)
+RESOLUTION 3440x1440 content=(x:440.00, y:0.00, width:2560.00, height:1440.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:78.00) root scale=(0.74, 0.74, 1.00)
+PASS Authored HUD is 150x78
+PASS (3440, 1440): HUD stays inside actual production content
+PASS (3440, 1440): graphic contained, including shadow: HudBackground
+PASS (3440, 1440): graphic contained, including shadow: FleshText
+PASS (3440, 1440): graphic contained, including shadow: SoulText
+PASS (3440, 1440): graphic contained, including shadow: TopBorder
+PASS (3440, 1440): graphic contained, including shadow: BottomBorder
+PASS (3440, 1440): graphic contained, including shadow: LeftBorder
+PASS (3440, 1440): graphic contained, including shadow: RightBorder
+PASS (3440, 1440): graphic contained, including shadow: TopLeftCorner
+PASS (3440, 1440): graphic contained, including shadow: TopRightCorner
+PASS (3440, 1440): graphic contained, including shadow: FleshGauge
+PASS (3440, 1440): graphic contained, including shadow: CompletedFill
+PASS (3440, 1440): graphic contained, including shadow: ProgressFill
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider1
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider2
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider3
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider4
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider5
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider6
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider7
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider8
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider9
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider10
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider11
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider12
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider13
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider14
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider15
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider16
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider17
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider18
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider19
+PASS (3440, 1440): graphic contained, including shadow: PixelDivider20
+PASS (3440, 1440): graphic contained, including shadow: FKey
+PASS (3440, 1440): graphic contained, including shadow: KeyText
+PASS (3440, 1440): graphic contained, including shadow: KeyShadow
+PASS (3440, 1440): graphic contained, including shadow: CreationLabel
+PASS (3440, 1440): graphic contained, including shadow: CreationCost
+PASS (3440, 1440): equipment slot 0 has zero HUD overlap
+PASS (3440, 1440): equipment slot 1 has zero HUD overlap
+PASS (3440, 1440): equipment slot 2 has zero HUD overlap
+PASS (3440, 1440): equipment slot 3 has zero HUD overlap
+PASS (3440, 1440): equipment slot 4 has zero HUD overlap
+PASS (3440, 1440): equipment slot 5 has zero HUD overlap
+PASS (3440, 1440): equipment slot 6 has zero HUD overlap
+PASS (3440, 1440): equipment slot 7 has zero HUD overlap
+PASS (3440, 1440): equipment slot 8 has zero HUD overlap
+PASS (3440, 1440): equipment slot 9 has zero HUD overlap
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane collider top screen=339.6769
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane (1) collider top screen=339.6769
+RAIL (3440, 1440) BeltScroll(Clone) visible alpha lower screen=325.3677, HUD top=304, pixel gap=21.36774, logical gap=6.677418
+PASS (3440, 1440): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll(Clone)
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane collider top screen=339.886
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane (1) collider top screen=339.886
+RAIL (3440, 1440) BeltScroll 1(Clone) visible alpha lower screen=325.5768, HUD top=304, pixel gap=21.57681, logical gap=6.742754
+PASS (3440, 1440): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll 1(Clone)
+PASS (3440, 1440): text fits ko amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 0
+PASS (3440, 1440): text fits ko amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (3440, 1440): text fits ko amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (3440, 1440): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (3440, 1440): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (3440, 1440): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (3440, 1440): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (3440, 1440): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (3440, 1440): text fits ko amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 1170
+PASS (3440, 1440): text fits ko amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (3440, 1440): text fits ko amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (3440, 1440): text fits ko amount=1170 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 13
+PASS (3440, 1440): text fits ko amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (3440, 1440): text fits ko amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 2147483647
+PASS (3440, 1440): text fits ko amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 2147483647
+PASS (3440, 1440): text fits ko amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (3440, 1440): text fits ko amount=2147483647 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 20721
+PASS (3440, 1440): text fits ko amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (3440, 1440): text fits en amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 0
+PASS (3440, 1440): text fits en amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (3440, 1440): text fits en amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (3440, 1440): text fits en amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 105
+PASS (3440, 1440): text fits en amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (3440, 1440): text fits en amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (3440, 1440): text fits en amount=105 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 2
+PASS (3440, 1440): text fits en amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (3440, 1440): text fits en amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 1170
+PASS (3440, 1440): text fits en amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (3440, 1440): text fits en amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (3440, 1440): text fits en amount=1170 CreationLabel
+TEXT CreationLabel font=8.2 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 13
+PASS (3440, 1440): text fits en amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (3440, 1440): text fits en amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 2147483647
+PASS (3440, 1440): text fits en amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 2147483647
+PASS (3440, 1440): text fits en amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (3440, 1440): text fits en amount=2147483647 CreationLabel
+TEXT CreationLabel font=7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 20721
+PASS (3440, 1440): text fits en amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+NATIVE CANVAS rect=(x:-400.00, y:-225.00, width:800.00, height:450.00), pixelRect=(x:0.00, y:0.00, width:640.00, height:360.00), renderingDisplaySize=(640.00, 360.00), sourceScaleFactor=0.8, uiPixelRect=(x:0.00, y:0.00, width:640.00, height:360.00)
+PASS 640x360: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:0.00, y:0.00, width:640.00, height:360.00), expected=(x:0.00, y:0.00, width:640.00, height:360.00), canvas=(x:-400.00, y:-225.00, width:800.00, height:450.00)
+RESOLUTION 640x360 content=(x:0.00, y:0.00, width:640.00, height:360.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:78.00) root scale=(1.00, 1.00, 1.00)
+PASS Authored HUD is 150x78
+PASS (640, 360): HUD stays inside actual production content
+PASS (640, 360): graphic contained, including shadow: HudBackground
+PASS (640, 360): graphic contained, including shadow: FleshText
+PASS (640, 360): graphic contained, including shadow: SoulText
+PASS (640, 360): graphic contained, including shadow: TopBorder
+PASS (640, 360): graphic contained, including shadow: BottomBorder
+PASS (640, 360): graphic contained, including shadow: LeftBorder
+PASS (640, 360): graphic contained, including shadow: RightBorder
+PASS (640, 360): graphic contained, including shadow: TopLeftCorner
+PASS (640, 360): graphic contained, including shadow: TopRightCorner
+PASS (640, 360): graphic contained, including shadow: FleshGauge
+PASS (640, 360): graphic contained, including shadow: CompletedFill
+PASS (640, 360): graphic contained, including shadow: ProgressFill
+PASS (640, 360): graphic contained, including shadow: PixelDivider1
+PASS (640, 360): graphic contained, including shadow: PixelDivider2
+PASS (640, 360): graphic contained, including shadow: PixelDivider3
+PASS (640, 360): graphic contained, including shadow: PixelDivider4
+PASS (640, 360): graphic contained, including shadow: PixelDivider5
+PASS (640, 360): graphic contained, including shadow: PixelDivider6
+PASS (640, 360): graphic contained, including shadow: PixelDivider7
+PASS (640, 360): graphic contained, including shadow: PixelDivider8
+PASS (640, 360): graphic contained, including shadow: PixelDivider9
+PASS (640, 360): graphic contained, including shadow: PixelDivider10
+PASS (640, 360): graphic contained, including shadow: PixelDivider11
+PASS (640, 360): graphic contained, including shadow: PixelDivider12
+PASS (640, 360): graphic contained, including shadow: PixelDivider13
+PASS (640, 360): graphic contained, including shadow: PixelDivider14
+PASS (640, 360): graphic contained, including shadow: PixelDivider15
+PASS (640, 360): graphic contained, including shadow: PixelDivider16
+PASS (640, 360): graphic contained, including shadow: PixelDivider17
+PASS (640, 360): graphic contained, including shadow: PixelDivider18
+PASS (640, 360): graphic contained, including shadow: PixelDivider19
+PASS (640, 360): graphic contained, including shadow: PixelDivider20
+PASS (640, 360): graphic contained, including shadow: FKey
+PASS (640, 360): graphic contained, including shadow: KeyText
+PASS (640, 360): graphic contained, including shadow: KeyShadow
+PASS (640, 360): graphic contained, including shadow: CreationLabel
+PASS (640, 360): graphic contained, including shadow: CreationCost
+PASS (640, 360): equipment slot 0 has zero HUD overlap
+PASS (640, 360): equipment slot 1 has zero HUD overlap
+PASS (640, 360): equipment slot 2 has zero HUD overlap
+PASS (640, 360): equipment slot 3 has zero HUD overlap
+PASS (640, 360): equipment slot 4 has zero HUD overlap
+PASS (640, 360): equipment slot 5 has zero HUD overlap
+PASS (640, 360): equipment slot 6 has zero HUD overlap
+PASS (640, 360): equipment slot 7 has zero HUD overlap
+PASS (640, 360): equipment slot 8 has zero HUD overlap
+PASS (640, 360): equipment slot 9 has zero HUD overlap
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane collider top screen=84.91923
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+CONTACT BeltScroll(Clone) Lane (1) collider top screen=84.91923
+RAIL (640, 360) BeltScroll(Clone) visible alpha lower screen=81.34193, HUD top=75.99999, pixel gap=5.341934, logical gap=6.677418
+PASS (640, 360): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll(Clone)
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane collider top screen=84.97151
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+CONTACT BeltScroll 1(Clone) Lane (1) collider top screen=84.97151
+RAIL (640, 360) BeltScroll 1(Clone) visible alpha lower screen=81.3942, HUD top=75.99999, pixel gap=5.394203, logical gap=6.742754
+PASS (640, 360): HUD clears actual visible rail alpha by >=6.5 logical pixels, BeltScroll 1(Clone)
+PASS (640, 360): text fits ko amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 0
+PASS (640, 360): text fits ko amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (640, 360): text fits ko amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (640, 360): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (640, 360): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (640, 360): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (640, 360): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (640, 360): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (640, 360): text fits ko amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 1170
+PASS (640, 360): text fits ko amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (640, 360): text fits ko amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (640, 360): text fits ko amount=1170 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 13
+PASS (640, 360): text fits ko amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (640, 360): text fits ko amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 2147483647
+PASS (640, 360): text fits ko amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 2147483647
+PASS (640, 360): text fits ko amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (640, 360): text fits ko amount=2147483647 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 20721
+PASS (640, 360): text fits ko amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (640, 360): text fits en amount=0 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 0
+PASS (640, 360): text fits en amount=0 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (640, 360): text fits en amount=0 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (640, 360): text fits en amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 105
+PASS (640, 360): text fits en amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (640, 360): text fits en amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (640, 360): text fits en amount=105 CreationLabel
+TEXT CreationLabel font=8.7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 2
+PASS (640, 360): text fits en amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (640, 360): text fits en amount=1170 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 1170
+PASS (640, 360): text fits en amount=1170 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 7
+PASS (640, 360): text fits en amount=1170 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (640, 360): text fits en amount=1170 CreationLabel
+TEXT CreationLabel font=8.2 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 13
+PASS (640, 360): text fits en amount=1170 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+PASS (640, 360): text fits en amount=2147483647 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Flesh 2147483647
+PASS (640, 360): text fits en amount=2147483647 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=Souls 2147483647
+PASS (640, 360): text fits en amount=2147483647 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (640, 360): text fits en amount=2147483647 CreationLabel
+TEXT CreationLabel font=7 rect=(74.00, 17.00) overflow=False lines=1 value=Create tissue X 20721
+PASS (640, 360): text fits en amount=2147483647 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=Cost 30
+RESULT PASS: 670 checks, 0 failures. Actual copied-source EditMode method probes and 6 RenderTexture dimensions using production FixedAspectRatioController roots; no PlayMode, user save, real input/raycast, camera-shake or gameplay-motion claim.

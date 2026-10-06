@@ -1,0 +1,1 @@
+70 distance/event/boss behavior checks passed. Pure production classes extracted from StageManager.cs, EventObjectSpawner.cs and Spawner.cs; Unity MonoBehaviour lifecycle and coroutine execution excluded.

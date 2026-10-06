@@ -1,0 +1,81 @@
+{
+  "CapturedAtUtc": "2026-10-06T07:31:34.4948285Z",
+  "ComparedCommit": "92da21788ff6e5097f6aa80d7f1ccab8620afc2d",
+  "RuntimeSources": [
+    {
+      "Path": "Assets/Scripts/LeeJunmo/GameManager.cs",
+      "SHA256": "901E6DD8794B66535D552AA6264A2D7BC4C15F6AC9B90AF5FCCFA73096A4CD11",
+      "MatchesLatestHudValidationCopy": true,
+      "MatchesEarlierStageComboSource": true
+    },
+    {
+      "Path": "Assets/Scripts/LeeJunmo/StageManager.cs",
+      "SHA256": "5037CF02B615D0D5F7650A29A5F1B6FBC4CE461FFAE4CA3DA2D3D20D25E08481",
+      "MatchesLatestHudValidationCopy": true,
+      "MatchesEarlierStageComboSource": true
+    },
+    {
+      "Path": "Assets/Scripts/SangHyup/Enemy/Spawner.cs",
+      "SHA256": "ACC0EF289371C5AB92DB89A14636E115EBE73C5B6BA0401B6833425B0E61B9A8",
+      "MatchesLatestHudValidationCopy": true,
+      "MatchesEarlierStageComboSource": true
+    },
+    {
+      "Path": "Assets/EventObjectSpawner.cs",
+      "SHA256": "1BE59F1D54A53A05731FC12E9F97F627A17B11DCB87535EC8A32CEC10248CDCD",
+      "MatchesLatestHudValidationCopy": true,
+      "MatchesEarlierStageComboSource": true
+    },
+    {
+      "Path": "Assets/BossWarningLoopUI.cs",
+      "SHA256": "D31A94A223F061DBD07B6E167E7FF3FB100C4D797608AEAA18D9245C4C1DAB4B",
+      "MatchesLatestHudValidationCopy": true,
+      "MatchesEarlierStageComboSource": true
+    },
+    {
+      "Path": "Assets/Scripts/LeeJunmo/ComboKillState.cs",
+      "SHA256": "E1D99FAA770F91AD81B666783D3D330E44CBDFA53B840E3D9A5933FDF5292FBD",
+      "MatchesLatestHudValidationCopy": true,
+      "MatchesEarlierStageComboSource": true
+    },
+    {
+      "Path": "Assets/Scripts/LeeJunmo/ComboKillUI.cs",
+      "SHA256": "9E8E05477FDBC6A24F5EF76D52AC5AEEB33690A99F420527B25B79205ED83F57",
+      "MatchesLatestHudValidationCopy": true,
+      "MatchesEarlierStageComboSource": true
+    },
+    {
+      "Path": "Assets/Scripts/LeeJunmo/StageProgressUI.cs",
+      "SHA256": "51458813483094F62AA31F7470F086C7C98B914092C3FB84B69822A9EF75178C",
+      "MatchesLatestHudValidationCopy": true,
+      "MatchesEarlierStageComboSource": true
+    },
+    {
+      "Path": "Assets/Scripts/LeeJunmo/Item_SO.cs",
+      "SHA256": "44971975909ACD144801AA9B56B1C54F3A03D3C63CC537D142C21C134A2F0E67",
+      "MatchesLatestHudValidationCopy": true,
+      "MatchesEarlierStageComboSource": null
+    },
+    {
+      "Path": "Assets/Scripts/LeeJunmo/LevelUp/LevelUpManager.cs",
+      "SHA256": "E3E71C3181D7B70AFA974F9AB5389FBB62F70B527BA4D1C3211C7EDEA56DA996",
+      "MatchesLatestHudValidationCopy": true,
+      "MatchesEarlierStageComboSource": null
+    }
+  ],
+  "Scene": {
+    "Path": "Assets/Scenes/Junmo.unity",
+    "SHA256": "D3EB54285F11D76FAD380E69BF0F9A13E8FC45524A10FC5EEE418CFE544EF1A6",
+    "MatchesLatestHudValidationCopy": true,
+    "EarlierStageComboSceneSHA256": "73B7310735F78FCDE49AA58C4D38BF0D1B084E302B1EDE648ACDC2093D52CF8C",
+    "StageComboPlayModeRepeatedAfterHudChanges": false,
+    "LatestEvidence": "outputs/unity-ui-preview/hud-bottom-center-result.txt",
+    "LatestValidationScope": "413 Editor-method / six RenderTexture layout checks; not PlayMode"
+  },
+  "Evidence": [
+    "outputs/stage-combo-validation/source-snapshot.json",
+    "outputs/stage-combo-validation/agent-validation/unity-stage-combo-play-result.txt",
+    "outputs/unity-ui-preview/october-fix-validation-result.txt",
+    "outputs/unity-ui-preview/hud-bottom-center-result.txt"
+  ]
+}

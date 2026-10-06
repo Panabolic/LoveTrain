@@ -510,3 +510,11 @@ Junmo Spawner에 FuelBarrel.prefab 참조 및 20초 간격 추가. FuelBarrel은
 2026-10-04 추가: Train.AccelerationProgress로 일반 스폰 빈도(1~1.75배)와 전후 지점 가중치(앞1~4/뒤1~0.25)를 보정. Mob/FlyMob은 Train.RelativeWorldSpeed를 수평 속도에서 빼며, 밀려난 화면 밖 몬스터는 보상 없이 반환. 기준속도에서 기존 분포 유지. 수치/범위는 같은 날짜 게임플레이 로그 참조.
 
 2026-10-04 체감 조정(이전 숫자 대체): 일반 스폰 최대1.35배, 전면 확률은 기존 비율→최대80%까지 선형 변화. 몬스터 상대속도 보정은 초당2까지 변화하여 질주 진입/종료의 즉시 점프를 완화. 진행 단계의 기본 간격 변화는 유지.
+
+## 2026-10-06 Distance boss requests
+
+Spawner의 보스 조우는 StageManager.OnProgressAdvanced에서 판단한다. 내부 StageBossSchedule은 구간 거리 57,600 도달을 한 번 요청하고, 기존 Playing 시간 900초의 최종 보스 요청을 별도로 우선한다. 180초 간격 보스 요청은 제거했으며 기존 serialized 시간 필드는 이름/타입을 보존하고 Inspector에서 숨겼다. 기존 보스 순서, 경고 딜레이, 프리팹 생성과 진입 위치/시간은 유지한다.
+
+예약 전 Pool/보스 프리팹을 확인한다. 경고 중 취소는 요청과 순번을 되돌리고 BossWarningLoopUI.HideWarning으로 표시를 닫는다. OnDisable에서는 씬 파괴를 Playing으로 되살리지 않고 재활성화/모달 복귀 이후에만 미생성 경고의 상태를 복구한다. 실제 Instantiate를 시작한 보스는 예약 해제/Playing 복귀 대상에서 제외한다.
+
+일반·엘리트 몬스터의 기존 GameManager.AddKillCount 호출은 ComboKillState에도 전달한다. 기차 충돌 처치를 포함하고 풀 반환/화면 정리에는 콤보를 추가하지 않는다. 보스 죽음은 기존 AddBossKillCount 통계 경로를 유지한다. 관련 결과: [세션 기록](../../SessionLogs/2026-10-06-stage-combo.md).

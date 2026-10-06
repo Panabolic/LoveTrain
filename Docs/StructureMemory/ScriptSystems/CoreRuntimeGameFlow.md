@@ -111,3 +111,15 @@ PermanentUpgradeProgress가 영혼 잔액과 구매 ID의 공용 원본을 versi
 ## 2026-10-06 Item workbench update
 
 2026-10-06 러브트레인2: 속도구간별연료/질주총30, 일반·엘리트충돌피해와감속분리, 몬스터확률살점/영혼보상, 연료통10%회복·재화없음, 제작30+10/무료리롤5+영혼1~5. 모달상태피격차단/강제닫기UI큐복구. Unity격리import+Editor메서드103검사와규칙332개통과; 실제PlayMode미검증. 상세는 `Docs/SessionLogs/2026-10-06-item-workbench.md`.
+
+## 2026-10-06 Distance stages and combo HUD
+
+현재 소스의 스테이지 조우는 고정 180초 간격 대신 `StageManager`의 이동 거리로 결정한다. 내부 `StageDistanceProgress`가 Playing에서 현재 속도 × deltaTime을 누적하며 구간 길이는 57,600(320 × 180초)이다. Boss/Event/Pause/StageTransition에서는 이동 거리가 정지한다. 실제 런의 StageNumber는 반복 배경 CurrentStageIndex와 분리되며, 터널 암전에서 다음 배경을 로드할 때 거리와 이벤트 구간을 초기화한다. StageManager.LateUpdate가 Train/GameManager.Update 이후 `OnProgressAdvanced`를 발행하여 조우 소비자들이 동일한 거리와 런 시간을 사용한다.
+
+15분 타이머는 기존 `GameManager.gameTime`의 Playing 시간이며 보스전에는 정지한다. `Spawner`는 구간 끝 조우와 900초 최종 조우를 별도로 판단하고 같은 프레임에는 최종 조우를 우선한다. 시간 180초 자체는 보스 조우 조건이 아니다.
+
+`GameManager`는 일반·엘리트의 기존 AddKillCount 경로(무기와 충돌 처치)에 연결된 `ComboKillState`를 소유한다. 마지막 처치부터 3초를 Playing/Boss에서 계산하고 Event/Pause에서는 유지한다. 관찰한 Time.timeAsDouble 차이를 Update/처치 등록/상태 전환 전에 한 번 정산하여 콜백 순서와 FixedUpdate 시각 역행에 따른 만료 오차를 방지한다. 전환·사망·엔딩·씬 초기화에서 콤보를 초기화한다. 보스·촉수·연료통은 콤보 집계 대상에 추가하지 않았다.
+
+Junmo의 기존 Canvas/OtherUI 안에 StageProgressHUD와 ComboKillHUD를 씬 제작한다. StageProgressUI는 직렬화 StageManager와 선/위치/이벤트 표시 참조를 읽는다. 최상단 중앙의 경로 아래에는 기존 TimeText가 놓이며 이벤트 노드는 느낌표 아이콘만 표시한다. 노드 설명과 퍼센트 텍스트는 없다. ComboKillUI는 우측 상단, 타이머보다 아래에서 GM의 읽기 값으로 문구·3초 밑줄·10킬 이상 고대신 문구를 표시한다. 자릿수마다 느낌표가 추가된다(9 → 10! → 100!!). 두 UI는 런타임 계층 생성이나 새 Manager/DDOL 객체를 사용하지 않는다.
+
+승인 범위와 검증 결과: [거리 스테이지와 콤보 HUD 세션](../../SessionLogs/2026-10-06-stage-combo.md).

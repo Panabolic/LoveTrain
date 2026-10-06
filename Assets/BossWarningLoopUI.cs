@@ -66,6 +66,8 @@ public class BossWarningLoopUI : MonoBehaviour
         StartSequence();
     }
 
+    public void HideWarning() => ResetWarningState();
+
     // -----------------------------------------------------------
     // 제어 함수 (Start, Pause, Resume, Stop)
     // -----------------------------------------------------------

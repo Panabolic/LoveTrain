@@ -32,6 +32,12 @@ public class GameManager : MonoBehaviour
     public int EliteKillCount { get; private set; }
     public int BossKillCount { get; private set; }
     public int TotalKillCount => NormalKillCount + EliteKillCount + BossKillCount;
+    public int ComboKillCount => comboKills.Count;
+    public float ComboTimeRemaining => comboKills.RemainingTime;
+    public float ComboTimeFraction => comboKills.Fraction;
+
+    private readonly ComboKillState comboKills = new ComboKillState();
+    private double comboClockTime;
 
     private Queue<Action> uiRequestQueue = new Queue<Action>();
     private bool isUIProcessing = false;
@@ -75,6 +81,19 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (CurrentState == GameState.Playing) gameTime += Time.deltaTime;
+        AdvanceComboClock();
+    }
+
+    private void AdvanceComboClock()
+    {
+        double currentTime = Time.timeAsDouble;
+        // FixedUpdate can observe an earlier physics timestamp than the last rendered frame.
+        // A repeated or earlier observation must neither subtract twice nor move this clock back.
+        if (currentTime <= comboClockTime) return;
+        double elapsed = currentTime - comboClockTime;
+        comboClockTime = currentTime;
+        if (CurrentState == GameState.Playing || CurrentState == GameState.Boss)
+            comboKills.Advance(elapsed);
     }
 
     // 물리 및 시간 설정 초기화 함수
@@ -91,6 +110,8 @@ public class GameManager : MonoBehaviour
 
         gameTime = 0f;
         NormalKillCount = 0; EliteKillCount = 0; BossKillCount = 0;
+        comboKills.Reset();
+        comboClockTime = Time.timeAsDouble;
 
         // 큐 초기화 (이전 게임 잔여물 제거)
         uiRequestQueue.Clear();
@@ -114,12 +135,19 @@ public class GameManager : MonoBehaviour
     // ... (PauseGame, ResumeGame, UI Logic 등 기존 코드 그대로 사용) ...
 
     public void EnterStartState() { ChangeState(GameState.Start); }
-    public void AddKillCount(bool isElite) { if (isElite) EliteKillCount++; else NormalKillCount++; }
+    public void AddKillCount(bool isElite)
+    {
+        if (isElite) EliteKillCount++; else NormalKillCount++;
+        AdvanceComboClock();
+        if (CurrentState == GameState.Playing || CurrentState == GameState.Boss)
+            comboKills.RegisterKill();
+    }
     public void AddBossKillCount() { BossKillCount++; }
 
     public void ChangeState(GameState newState)
     {
         if (CurrentState == newState) return;
+        AdvanceComboClock();
 
         if (BossWarningLoopUI.Instance != null)
         {
@@ -128,6 +156,8 @@ public class GameManager : MonoBehaviour
         }
 
         CurrentState = newState;
+        if (newState == GameState.StageTransition || newState == GameState.Die || newState == GameState.Ending)
+            comboKills.Reset();
         OnGameStateChanged?.Invoke(newState);
         Debug.Log($"Game State Changed to: {newState}");
     }

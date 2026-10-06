@@ -74,3 +74,9 @@ This map can become a future UI/event contract if more gameplay popup systems be
 ## 2026-10-06 Item workbench update
 
 2026-10-06 강화이벤트: EventObjectSpawner 60초/스테이지3회, stage1두번째테스트강화/stage2첫강화/stage3+랜덤. 붉은Station 충돌이ShowUpgradeEvent를 공유큐로실행. StageEventSchedule은 예정경계로시계진행. CancelUIQueue는강제모달닫기의pause복구, 실제Ending/Die 신규UI거부. 마지막보스시간900 도달만으로이벤트를차단하지않음. 상세/검증은 `Docs/SessionLogs/2026-10-06-item-workbench.md`.
+
+## 2026-10-06 Distance-based event encounters
+
+위 시간 기준은 이번 승인으로 거리 기준으로 대체됐다. EventObjectSpawner는 StageManager의 OnProgressAdvanced/OnStageStarted를 구독하고 파괴 시 해제한다. StageEventSchedule은 매 구간의 거리 25%/50%/75%에서 각 이벤트를 한 번 예약하며, 큰 프레임이 여러 경계를 넘으면 누락 없이 처리한다. 실패한 생성은 소비하지 않아 다음 주행 갱신에서 다시 시도한다. 같은 갱신에서 Spawner가 먼저 Boss 상태로 전환해도 이미 넘은 이벤트 경계는 처리한다.
+
+첫 지정 이벤트, 첫 구간 두 번째/두 번째 구간 첫 번째 강화와 이후 강화 확률, 기존 Station 이동·충돌·공유 UI 큐는 유지한다. 경계는 오브젝트 생성 시점이며 창을 직접 여는 시점으로 변경하지 않았다. HUD 이벤트 노드는 느낌표 아이콘이며 설명/퍼센트 텍스트가 없다. 관련 결과: [세션 기록](../../SessionLogs/2026-10-06-stage-combo.md).

@@ -1,0 +1,58 @@
+Preserved feature errors and other runtime messages for baseline classification.
+[Warning][BASELINE_COMPARISON_REQUIRED] DontDestroyOnLoad only works for root GameObjects or components on root GameObjects.
+UnityEngine.Object:DontDestroyOnLoad (UnityEngine.Object)
+SceneLoader:Awake () (at Assets/Scripts/LeeJunmo/SceneLoader.cs:22)
+
+[Warning][BASELINE_COMPARISON_REQUIRED] DontDestroyOnLoad only works for root GameObjects or components on root GameObjects.
+UnityEngine.Object:DontDestroyOnLoad (UnityEngine.Object)
+PoolManager:Awake () (at Assets/Scripts/SangHyup/Enemy/PoolManager.cs:52)
+
+[Warning][BASELINE_COMPARISON_REQUIRED] DontDestroyOnLoad only works for root GameObjects or components on root GameObjects.
+UnityEngine.Object:DontDestroyOnLoad (UnityEngine.Object)
+GameManager:Awake () (at Assets/Scripts/LeeJunmo/GameManager.cs:52)
+
+[Warning][BASELINE_COMPARISON_REQUIRED] DontDestroyOnLoad only works for root GameObjects or components on root GameObjects.
+UnityEngine.Object:DontDestroyOnLoad (UnityEngine.Object)
+SoundManager:Awake () (at Assets/SoundManager.cs:34)
+
+[Warning][BASELINE_COMPARISON_REQUIRED] StartObject 'StartObj'에 isTrigger가 체크된 Collider2D가 없습니다!
+UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
+StartObject:Start () (at Assets/Scripts/LeeJunmo/StartObject.cs:30)
+
+[Warning][BASELINE_COMPARISON_REQUIRED] [SoundManager] 등록되지 않은 사운드 ID: BGM_Boss
+UnityEngine.Debug:LogWarning (object)
+SoundManager:PlaySoundHandler (SoundID,UnityEngine.Vector3) (at Assets/SoundManager.cs:169)
+SoundManager:HandleGameStateChanged (GameState) (at Assets/SoundManager.cs:136)
+GameManager:ChangeState (GameState) (at Assets/Scripts/LeeJunmo/GameManager.cs:161)
+GameManager:AppearBoss () (at Assets/Scripts/LeeJunmo/GameManager.cs:278)
+StageComboPlayValidation:Tick () (at Assets/Editor/StageComboPlayValidation.cs:105)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+[Warning][FEATURE] [SoundManager] 등록되지 않은 사운드 ID: BGM_Boss
+UnityEngine.Debug:LogWarning (object)
+SoundManager:PlaySoundHandler (SoundID,UnityEngine.Vector3) (at Assets/SoundManager.cs:169)
+SoundManager:HandleGameStateChanged (GameState) (at Assets/SoundManager.cs:136)
+GameManager:ChangeState (GameState) (at Assets/Scripts/LeeJunmo/GameManager.cs:161)
+GameManager:AppearBoss () (at Assets/Scripts/LeeJunmo/GameManager.cs:278)
+Spawner/<BossSpawnRoutine>d__57:MoveNext () (at Assets/Scripts/SangHyup/Enemy/Spawner.cs:280)
+UnityEngine.MonoBehaviour:StartCoroutine (System.Collections.IEnumerator)
+Spawner:StartBossSequence (BossName,StageBossRequest) (at Assets/Scripts/SangHyup/Enemy/Spawner.cs:263)
+Spawner:SpawnNextBoss (StageBossRequest) (at Assets/Scripts/SangHyup/Enemy/Spawner.cs:241)
+Spawner:HandleStageProgress () (at Assets/Scripts/SangHyup/Enemy/Spawner.cs:190)
+System.Reflection.MethodBase:Invoke (object,object[])
+StageComboPlayValidation:Call (object,string) (at Assets/Editor/StageComboPlayValidation.cs:253)
+StageComboPlayValidation:Tick () (at Assets/Editor/StageComboPlayValidation.cs:139)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+[Warning][FEATURE] [SoundManager] 등록되지 않은 사운드 ID: BGM_Boss
+UnityEngine.Debug:LogWarning (object)
+SoundManager:PlaySoundHandler (SoundID,UnityEngine.Vector3) (at Assets/SoundManager.cs:169)
+SoundManager:HandleGameStateChanged (GameState) (at Assets/SoundManager.cs:136)
+GameManager:ChangeState (GameState) (at Assets/Scripts/LeeJunmo/GameManager.cs:161)
+GameManager:AppearBoss () (at Assets/Scripts/LeeJunmo/GameManager.cs:278)
+Spawner/<BossSpawnRoutine>d__57:MoveNext () (at Assets/Scripts/SangHyup/Enemy/Spawner.cs:280)
+UnityEngine.MonoBehaviour:StartCoroutine (System.Collections.IEnumerator)
+Spawner:StartBossSequence (BossName,StageBossRequest) (at Assets/Scripts/SangHyup/Enemy/Spawner.cs:263)
+Spawner:SpawnNextBoss (StageBossRequest) (at Assets/Scripts/SangHyup/Enemy/Spawner.cs:241)
+Spawner:HandleStageProgress () (at Assets/Scripts/SangHyup/Enemy/Spawner.cs:190)
+StageManager:LateUpdate () (at Assets/Scripts/LeeJunmo/StageManager.cs:86)

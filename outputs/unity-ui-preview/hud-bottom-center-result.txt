@@ -1,0 +1,528 @@
+PASS Isolated save identity verified before preference access
+PASS EditMode only
+PASS Actual StageManager bgParent resolves
+PASS Stage 0 retains authored prefab root local position under actual bgParent
+PASS Stage 1 retains authored prefab root local position under actual bgParent
+NATIVE CANVAS rect=(x:-400.00, y:-225.00, width:800.00, height:450.00), pixelRect=(x:0.00, y:0.00, width:1920.00, height:1080.00), renderingDisplaySize=(1920.00, 1080.00), sourceScaleFactor=2.4, uiPixelRect=(x:0.00, y:0.00, width:1920.00, height:1080.00)
+PASS 1920x1080: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:0.00, y:0.00, width:1920.00, height:1080.00), expected=(x:0.00, y:0.00, width:1920.00, height:1080.00), canvas=(x:-400.00, y:-225.00, width:800.00, height:450.00)
+RESOLUTION 1920x1080 content=(x:0.00, y:0.00, width:1920.00, height:1080.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:84.00) root scale=(1.00, 1.00, 1.00)
+PASS CurrencyHUD final authored84height/9bottom
+PASS (1920, 1080): currency bounds contained
+PASS (1920, 1080): currency graphic contained HudBackground
+PASS (1920, 1080): currency graphic contained FleshText
+PASS (1920, 1080): currency graphic contained SoulText
+PASS (1920, 1080): currency graphic contained TopBorder
+PASS (1920, 1080): currency graphic contained BottomBorder
+PASS (1920, 1080): currency graphic contained LeftBorder
+PASS (1920, 1080): currency graphic contained RightBorder
+PASS (1920, 1080): currency graphic contained TopLeftCorner
+PASS (1920, 1080): currency graphic contained TopRightCorner
+PASS (1920, 1080): currency graphic contained FleshGauge
+PASS (1920, 1080): currency graphic contained CompletedFill
+PASS (1920, 1080): currency graphic contained ProgressFill
+PASS (1920, 1080): currency graphic contained PixelDivider1
+PASS (1920, 1080): currency graphic contained PixelDivider2
+PASS (1920, 1080): currency graphic contained PixelDivider3
+PASS (1920, 1080): currency graphic contained PixelDivider4
+PASS (1920, 1080): currency graphic contained PixelDivider5
+PASS (1920, 1080): currency graphic contained PixelDivider6
+PASS (1920, 1080): currency graphic contained PixelDivider7
+PASS (1920, 1080): currency graphic contained PixelDivider8
+PASS (1920, 1080): currency graphic contained PixelDivider9
+PASS (1920, 1080): currency graphic contained PixelDivider10
+PASS (1920, 1080): currency graphic contained PixelDivider11
+PASS (1920, 1080): currency graphic contained PixelDivider12
+PASS (1920, 1080): currency graphic contained PixelDivider13
+PASS (1920, 1080): currency graphic contained PixelDivider14
+PASS (1920, 1080): currency graphic contained PixelDivider15
+PASS (1920, 1080): currency graphic contained PixelDivider16
+PASS (1920, 1080): currency graphic contained PixelDivider17
+PASS (1920, 1080): currency graphic contained PixelDivider18
+PASS (1920, 1080): currency graphic contained PixelDivider19
+PASS (1920, 1080): currency graphic contained PixelDivider20
+PASS (1920, 1080): currency graphic contained FKey
+PASS (1920, 1080): currency graphic contained KeyText
+PASS (1920, 1080): currency graphic contained KeyShadow
+PASS (1920, 1080): currency graphic contained CreationLabel
+PASS (1920, 1080): currency graphic contained CreationCost
+PASS (1920, 1080): equipment slot 0 currency nonoverlap
+PASS (1920, 1080): equipment slot 1 currency nonoverlap
+PASS (1920, 1080): equipment slot 2 currency nonoverlap
+PASS (1920, 1080): equipment slot 3 currency nonoverlap
+PASS (1920, 1080): equipment slot 4 currency nonoverlap
+PASS (1920, 1080): equipment slot 5 currency nonoverlap
+PASS (1920, 1080): equipment slot 6 currency nonoverlap
+PASS (1920, 1080): equipment slot 7 currency nonoverlap
+PASS (1920, 1080): equipment slot 8 currency nonoverlap
+PASS (1920, 1080): equipment slot 9 currency nonoverlap
+PASS (1920, 1080): gauge/fuel frame not clipped
+PASS (1920, 1080): train/slots/wheel/level not clipped
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+PASS (1920, 1080): all lower HUD groups below visible rail BeltScroll(Clone)
+RAIL (1920, 1080) BeltScroll(Clone) alphaLower=244.0258 logical=101.6774
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+PASS (1920, 1080): all lower HUD groups below visible rail BeltScroll 1(Clone)
+RAIL (1920, 1080) BeltScroll 1(Clone) alphaLower=244.1826 logical=101.7427
+PASS (1920, 1080): gauge visible bounds centered in lower section
+GROUP (1920, 1080) gauge bounds=(x:48.00, y:11.52, width:432.00, height:216.00) logicalCenter=49.79999 sectionCenter=50.8387
+PASS (1920, 1080): train visible bounds centered in lower section
+GROUP (1920, 1080) train bounds=(x:532.80, y:21.20, width:960.00, height:197.20) logicalCenter=49.91755 sectionCenter=50.8387
+PASS (1920, 1080): currency visible bounds centered in lower section
+GROUP (1920, 1080) currency bounds=(x:1512.00, y:21.60, width:360.00, height:201.60) logicalCenter=51 sectionCenter=50.8387
+PADDING (1920, 1080) soulTextBounds=(x:1761.60, y:178.50, width:86.40, height:28.80) topLogical=6.624991 keyShadowBottomLogical=8.500013 difference=1.875022
+PASS (1920, 1080): KeyShadow bottom padding8.5logical
+PASS (1920, 1080): visible glyph geometry and key shadow padding balanced within2logical(SDF geometry tolerance)
+PASS (1920, 1080): optional hidden+n visible glyph above content bottom
+OPTIONAL (1920, 1080) hidden+n rect=(x:1406.40, y:-2.40, width:86.40, height:57.60) ink=(x:1461.98, y:12.00, width:32.83, height:28.80)
+PASS (1920, 1080): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (1920, 1080): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (1920, 1080): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1920, 1080): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (1920, 1080): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (1920, 1080): real creation methods open workbench
+PASS (1920, 1080): creation close restores parent/sibling
+PASS (1920, 1080): creation close restores authored lowered position/scale/anchors/size
+NATIVE CANVAS rect=(x:-400.00, y:-225.00, width:800.00, height:450.00), pixelRect=(x:0.00, y:0.00, width:1280.00, height:720.00), renderingDisplaySize=(1280.00, 720.00), sourceScaleFactor=1.6, uiPixelRect=(x:0.00, y:0.00, width:1280.00, height:720.00)
+PASS 1280x720: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:0.00, y:0.00, width:1280.00, height:720.00), expected=(x:0.00, y:0.00, width:1280.00, height:720.00), canvas=(x:-400.00, y:-225.00, width:800.00, height:450.00)
+RESOLUTION 1280x720 content=(x:0.00, y:0.00, width:1280.00, height:720.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:84.00) root scale=(1.00, 1.00, 1.00)
+PASS CurrencyHUD final authored84height/9bottom
+PASS (1280, 720): currency bounds contained
+PASS (1280, 720): currency graphic contained HudBackground
+PASS (1280, 720): currency graphic contained FleshText
+PASS (1280, 720): currency graphic contained SoulText
+PASS (1280, 720): currency graphic contained TopBorder
+PASS (1280, 720): currency graphic contained BottomBorder
+PASS (1280, 720): currency graphic contained LeftBorder
+PASS (1280, 720): currency graphic contained RightBorder
+PASS (1280, 720): currency graphic contained TopLeftCorner
+PASS (1280, 720): currency graphic contained TopRightCorner
+PASS (1280, 720): currency graphic contained FleshGauge
+PASS (1280, 720): currency graphic contained CompletedFill
+PASS (1280, 720): currency graphic contained ProgressFill
+PASS (1280, 720): currency graphic contained PixelDivider1
+PASS (1280, 720): currency graphic contained PixelDivider2
+PASS (1280, 720): currency graphic contained PixelDivider3
+PASS (1280, 720): currency graphic contained PixelDivider4
+PASS (1280, 720): currency graphic contained PixelDivider5
+PASS (1280, 720): currency graphic contained PixelDivider6
+PASS (1280, 720): currency graphic contained PixelDivider7
+PASS (1280, 720): currency graphic contained PixelDivider8
+PASS (1280, 720): currency graphic contained PixelDivider9
+PASS (1280, 720): currency graphic contained PixelDivider10
+PASS (1280, 720): currency graphic contained PixelDivider11
+PASS (1280, 720): currency graphic contained PixelDivider12
+PASS (1280, 720): currency graphic contained PixelDivider13
+PASS (1280, 720): currency graphic contained PixelDivider14
+PASS (1280, 720): currency graphic contained PixelDivider15
+PASS (1280, 720): currency graphic contained PixelDivider16
+PASS (1280, 720): currency graphic contained PixelDivider17
+PASS (1280, 720): currency graphic contained PixelDivider18
+PASS (1280, 720): currency graphic contained PixelDivider19
+PASS (1280, 720): currency graphic contained PixelDivider20
+PASS (1280, 720): currency graphic contained FKey
+PASS (1280, 720): currency graphic contained KeyText
+PASS (1280, 720): currency graphic contained KeyShadow
+PASS (1280, 720): currency graphic contained CreationLabel
+PASS (1280, 720): currency graphic contained CreationCost
+PASS (1280, 720): equipment slot 0 currency nonoverlap
+PASS (1280, 720): equipment slot 1 currency nonoverlap
+PASS (1280, 720): equipment slot 2 currency nonoverlap
+PASS (1280, 720): equipment slot 3 currency nonoverlap
+PASS (1280, 720): equipment slot 4 currency nonoverlap
+PASS (1280, 720): equipment slot 5 currency nonoverlap
+PASS (1280, 720): equipment slot 6 currency nonoverlap
+PASS (1280, 720): equipment slot 7 currency nonoverlap
+PASS (1280, 720): equipment slot 8 currency nonoverlap
+PASS (1280, 720): equipment slot 9 currency nonoverlap
+PASS (1280, 720): gauge/fuel frame not clipped
+PASS (1280, 720): train/slots/wheel/level not clipped
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+PASS (1280, 720): all lower HUD groups below visible rail BeltScroll(Clone)
+RAIL (1280, 720) BeltScroll(Clone) alphaLower=162.6839 logical=101.6774
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+PASS (1280, 720): all lower HUD groups below visible rail BeltScroll 1(Clone)
+RAIL (1280, 720) BeltScroll 1(Clone) alphaLower=162.7884 logical=101.7427
+PASS (1280, 720): gauge visible bounds centered in lower section
+GROUP (1280, 720) gauge bounds=(x:32.00, y:7.68, width:288.00, height:144.00) logicalCenter=49.79999 sectionCenter=50.8387
+PASS (1280, 720): train visible bounds centered in lower section
+GROUP (1280, 720) train bounds=(x:355.20, y:14.14, width:640.00, height:131.46) logicalCenter=49.91755 sectionCenter=50.8387
+PASS (1280, 720): currency visible bounds centered in lower section
+GROUP (1280, 720) currency bounds=(x:1008.00, y:14.40, width:240.00, height:134.40) logicalCenter=51 sectionCenter=50.8387
+PADDING (1280, 720) soulTextBounds=(x:1174.40, y:119.00, width:57.60, height:19.20) topLogical=6.624985 keyShadowBottomLogical=8.500014 difference=1.87503
+PASS (1280, 720): KeyShadow bottom padding8.5logical
+PASS (1280, 720): visible glyph geometry and key shadow padding balanced within2logical(SDF geometry tolerance)
+PASS (1280, 720): optional hidden+n visible glyph above content bottom
+OPTIONAL (1280, 720) hidden+n rect=(x:937.60, y:-1.60, width:57.60, height:38.40) ink=(x:974.66, y:8.00, width:21.89, height:19.20)
+PASS (1280, 720): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (1280, 720): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (1280, 720): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (1280, 720): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (1280, 720): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (1280, 720): real creation methods open workbench
+PASS (1280, 720): creation close restores parent/sibling
+PASS (1280, 720): creation close restores authored lowered position/scale/anchors/size
+NATIVE CANVAS rect=(x:-400.00, y:-225.00, width:800.00, height:450.00), pixelRect=(x:0.00, y:0.00, width:960.00, height:540.00), renderingDisplaySize=(960.00, 540.00), sourceScaleFactor=1.2, uiPixelRect=(x:0.00, y:0.00, width:960.00, height:540.00)
+PASS 960x540: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:0.00, y:0.00, width:960.00, height:540.00), expected=(x:0.00, y:0.00, width:960.00, height:540.00), canvas=(x:-400.00, y:-225.00, width:800.00, height:450.00)
+RESOLUTION 960x540 content=(x:0.00, y:0.00, width:960.00, height:540.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:84.00) root scale=(1.00, 1.00, 1.00)
+PASS CurrencyHUD final authored84height/9bottom
+PASS (960, 540): currency bounds contained
+PASS (960, 540): currency graphic contained HudBackground
+PASS (960, 540): currency graphic contained FleshText
+PASS (960, 540): currency graphic contained SoulText
+PASS (960, 540): currency graphic contained TopBorder
+PASS (960, 540): currency graphic contained BottomBorder
+PASS (960, 540): currency graphic contained LeftBorder
+PASS (960, 540): currency graphic contained RightBorder
+PASS (960, 540): currency graphic contained TopLeftCorner
+PASS (960, 540): currency graphic contained TopRightCorner
+PASS (960, 540): currency graphic contained FleshGauge
+PASS (960, 540): currency graphic contained CompletedFill
+PASS (960, 540): currency graphic contained ProgressFill
+PASS (960, 540): currency graphic contained PixelDivider1
+PASS (960, 540): currency graphic contained PixelDivider2
+PASS (960, 540): currency graphic contained PixelDivider3
+PASS (960, 540): currency graphic contained PixelDivider4
+PASS (960, 540): currency graphic contained PixelDivider5
+PASS (960, 540): currency graphic contained PixelDivider6
+PASS (960, 540): currency graphic contained PixelDivider7
+PASS (960, 540): currency graphic contained PixelDivider8
+PASS (960, 540): currency graphic contained PixelDivider9
+PASS (960, 540): currency graphic contained PixelDivider10
+PASS (960, 540): currency graphic contained PixelDivider11
+PASS (960, 540): currency graphic contained PixelDivider12
+PASS (960, 540): currency graphic contained PixelDivider13
+PASS (960, 540): currency graphic contained PixelDivider14
+PASS (960, 540): currency graphic contained PixelDivider15
+PASS (960, 540): currency graphic contained PixelDivider16
+PASS (960, 540): currency graphic contained PixelDivider17
+PASS (960, 540): currency graphic contained PixelDivider18
+PASS (960, 540): currency graphic contained PixelDivider19
+PASS (960, 540): currency graphic contained PixelDivider20
+PASS (960, 540): currency graphic contained FKey
+PASS (960, 540): currency graphic contained KeyText
+PASS (960, 540): currency graphic contained KeyShadow
+PASS (960, 540): currency graphic contained CreationLabel
+PASS (960, 540): currency graphic contained CreationCost
+PASS (960, 540): equipment slot 0 currency nonoverlap
+PASS (960, 540): equipment slot 1 currency nonoverlap
+PASS (960, 540): equipment slot 2 currency nonoverlap
+PASS (960, 540): equipment slot 3 currency nonoverlap
+PASS (960, 540): equipment slot 4 currency nonoverlap
+PASS (960, 540): equipment slot 5 currency nonoverlap
+PASS (960, 540): equipment slot 6 currency nonoverlap
+PASS (960, 540): equipment slot 7 currency nonoverlap
+PASS (960, 540): equipment slot 8 currency nonoverlap
+PASS (960, 540): equipment slot 9 currency nonoverlap
+PASS (960, 540): gauge/fuel frame not clipped
+PASS (960, 540): train/slots/wheel/level not clipped
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+PASS (960, 540): all lower HUD groups below visible rail BeltScroll(Clone)
+RAIL (960, 540) BeltScroll(Clone) alphaLower=122.0129 logical=101.6774
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+PASS (960, 540): all lower HUD groups below visible rail BeltScroll 1(Clone)
+RAIL (960, 540) BeltScroll 1(Clone) alphaLower=122.0913 logical=101.7427
+PASS (960, 540): gauge visible bounds centered in lower section
+GROUP (960, 540) gauge bounds=(x:24.00, y:5.76, width:216.00, height:108.00) logicalCenter=49.79999 sectionCenter=50.8387
+PASS (960, 540): train visible bounds centered in lower section
+GROUP (960, 540) train bounds=(x:266.40, y:10.60, width:480.00, height:98.60) logicalCenter=49.91755 sectionCenter=50.8387
+PASS (960, 540): currency visible bounds centered in lower section
+GROUP (960, 540) currency bounds=(x:756.00, y:10.80, width:180.00, height:100.80) logicalCenter=51 sectionCenter=50.8387
+PADDING (960, 540) soulTextBounds=(x:880.80, y:89.25, width:43.20, height:14.40) topLogical=6.624991 keyShadowBottomLogical=8.500013 difference=1.875022
+PASS (960, 540): KeyShadow bottom padding8.5logical
+PASS (960, 540): visible glyph geometry and key shadow padding balanced within2logical(SDF geometry tolerance)
+PASS (960, 540): optional hidden+n visible glyph above content bottom
+OPTIONAL (960, 540) hidden+n rect=(x:703.20, y:-1.20, width:43.20, height:28.80) ink=(x:730.99, y:6.00, width:16.42, height:14.40)
+PASS (960, 540): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (960, 540): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (960, 540): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (960, 540): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (960, 540): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (960, 540): real creation methods open workbench
+PASS (960, 540): creation close restores parent/sibling
+PASS (960, 540): creation close restores authored lowered position/scale/anchors/size
+NATIVE CANVAS rect=(x:-400.00, y:-300.00, width:800.00, height:600.00), pixelRect=(x:0.00, y:0.00, width:800.00, height:600.00), renderingDisplaySize=(800.00, 600.00), sourceScaleFactor=1, uiPixelRect=(x:0.00, y:0.00, width:800.00, height:600.00)
+PASS 800x600: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:0.00, y:75.00, width:800.00, height:450.00), expected=(x:0.00, y:75.00, width:800.00, height:450.00), canvas=(x:-400.00, y:-300.00, width:800.00, height:600.00)
+RESOLUTION 800x600 content=(x:0.00, y:75.00, width:800.00, height:450.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:84.00) root scale=(1.00, 1.00, 1.00)
+PASS CurrencyHUD final authored84height/9bottom
+PASS (800, 600): currency bounds contained
+PASS (800, 600): currency graphic contained HudBackground
+PASS (800, 600): currency graphic contained FleshText
+PASS (800, 600): currency graphic contained SoulText
+PASS (800, 600): currency graphic contained TopBorder
+PASS (800, 600): currency graphic contained BottomBorder
+PASS (800, 600): currency graphic contained LeftBorder
+PASS (800, 600): currency graphic contained RightBorder
+PASS (800, 600): currency graphic contained TopLeftCorner
+PASS (800, 600): currency graphic contained TopRightCorner
+PASS (800, 600): currency graphic contained FleshGauge
+PASS (800, 600): currency graphic contained CompletedFill
+PASS (800, 600): currency graphic contained ProgressFill
+PASS (800, 600): currency graphic contained PixelDivider1
+PASS (800, 600): currency graphic contained PixelDivider2
+PASS (800, 600): currency graphic contained PixelDivider3
+PASS (800, 600): currency graphic contained PixelDivider4
+PASS (800, 600): currency graphic contained PixelDivider5
+PASS (800, 600): currency graphic contained PixelDivider6
+PASS (800, 600): currency graphic contained PixelDivider7
+PASS (800, 600): currency graphic contained PixelDivider8
+PASS (800, 600): currency graphic contained PixelDivider9
+PASS (800, 600): currency graphic contained PixelDivider10
+PASS (800, 600): currency graphic contained PixelDivider11
+PASS (800, 600): currency graphic contained PixelDivider12
+PASS (800, 600): currency graphic contained PixelDivider13
+PASS (800, 600): currency graphic contained PixelDivider14
+PASS (800, 600): currency graphic contained PixelDivider15
+PASS (800, 600): currency graphic contained PixelDivider16
+PASS (800, 600): currency graphic contained PixelDivider17
+PASS (800, 600): currency graphic contained PixelDivider18
+PASS (800, 600): currency graphic contained PixelDivider19
+PASS (800, 600): currency graphic contained PixelDivider20
+PASS (800, 600): currency graphic contained FKey
+PASS (800, 600): currency graphic contained KeyText
+PASS (800, 600): currency graphic contained KeyShadow
+PASS (800, 600): currency graphic contained CreationLabel
+PASS (800, 600): currency graphic contained CreationCost
+PASS (800, 600): equipment slot 0 currency nonoverlap
+PASS (800, 600): equipment slot 1 currency nonoverlap
+PASS (800, 600): equipment slot 2 currency nonoverlap
+PASS (800, 600): equipment slot 3 currency nonoverlap
+PASS (800, 600): equipment slot 4 currency nonoverlap
+PASS (800, 600): equipment slot 5 currency nonoverlap
+PASS (800, 600): equipment slot 6 currency nonoverlap
+PASS (800, 600): equipment slot 7 currency nonoverlap
+PASS (800, 600): equipment slot 8 currency nonoverlap
+PASS (800, 600): equipment slot 9 currency nonoverlap
+PASS (800, 600): gauge/fuel frame not clipped
+PASS (800, 600): train/slots/wheel/level not clipped
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+PASS (800, 600): all lower HUD groups below visible rail BeltScroll(Clone)
+RAIL (800, 600) BeltScroll(Clone) alphaLower=176.6774 logical=101.6774
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+PASS (800, 600): all lower HUD groups below visible rail BeltScroll 1(Clone)
+RAIL (800, 600) BeltScroll 1(Clone) alphaLower=176.7427 logical=101.7427
+PASS (800, 600): gauge visible bounds centered in lower section
+GROUP (800, 600) gauge bounds=(x:20.00, y:79.80, width:180.00, height:90.00) logicalCenter=49.79999 sectionCenter=50.8387
+PASS (800, 600): train visible bounds centered in lower section
+GROUP (800, 600) train bounds=(x:222.00, y:83.84, width:400.00, height:82.16) logicalCenter=49.91753 sectionCenter=50.8387
+PASS (800, 600): currency visible bounds centered in lower section
+GROUP (800, 600) currency bounds=(x:630.00, y:84.00, width:150.00, height:84.00) logicalCenter=51.00002 sectionCenter=50.8387
+PADDING (800, 600) soulTextBounds=(x:734.00, y:149.38, width:36.00, height:12.00) topLogical=6.625015 keyShadowBottomLogical=8.500008 difference=1.874992
+PASS (800, 600): KeyShadow bottom padding8.5logical
+PASS (800, 600): visible glyph geometry and key shadow padding balanced within2logical(SDF geometry tolerance)
+PASS (800, 600): optional hidden+n visible glyph above content bottom
+OPTIONAL (800, 600) hidden+n rect=(x:586.00, y:74.00, width:36.00, height:24.00) ink=(x:609.16, y:80.00, width:13.68, height:12.00)
+PASS (800, 600): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (800, 600): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (800, 600): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (800, 600): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (800, 600): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (800, 600): real creation methods open workbench
+PASS (800, 600): creation close restores parent/sibling
+PASS (800, 600): creation close restores authored lowered position/scale/anchors/size
+NATIVE CANVAS rect=(x:-400.00, y:-167.44, width:800.00, height:334.88), pixelRect=(x:0.00, y:0.00, width:3440.00, height:1440.00), renderingDisplaySize=(3440.00, 1440.00), sourceScaleFactor=4.3, uiPixelRect=(x:0.00, y:0.00, width:3440.00, height:1440.00)
+PASS 3440x1440: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:440.00, y:0.00, width:2560.00, height:1440.00), expected=(x:440.00, y:0.00, width:2560.00, height:1440.00), canvas=(x:-400.00, y:-167.44, width:800.00, height:334.88)
+RESOLUTION 3440x1440 content=(x:440.00, y:0.00, width:2560.00, height:1440.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:84.00) root scale=(0.74, 0.74, 1.00)
+PASS CurrencyHUD final authored84height/9bottom
+PASS (3440, 1440): currency bounds contained
+PASS (3440, 1440): currency graphic contained HudBackground
+PASS (3440, 1440): currency graphic contained FleshText
+PASS (3440, 1440): currency graphic contained SoulText
+PASS (3440, 1440): currency graphic contained TopBorder
+PASS (3440, 1440): currency graphic contained BottomBorder
+PASS (3440, 1440): currency graphic contained LeftBorder
+PASS (3440, 1440): currency graphic contained RightBorder
+PASS (3440, 1440): currency graphic contained TopLeftCorner
+PASS (3440, 1440): currency graphic contained TopRightCorner
+PASS (3440, 1440): currency graphic contained FleshGauge
+PASS (3440, 1440): currency graphic contained CompletedFill
+PASS (3440, 1440): currency graphic contained ProgressFill
+PASS (3440, 1440): currency graphic contained PixelDivider1
+PASS (3440, 1440): currency graphic contained PixelDivider2
+PASS (3440, 1440): currency graphic contained PixelDivider3
+PASS (3440, 1440): currency graphic contained PixelDivider4
+PASS (3440, 1440): currency graphic contained PixelDivider5
+PASS (3440, 1440): currency graphic contained PixelDivider6
+PASS (3440, 1440): currency graphic contained PixelDivider7
+PASS (3440, 1440): currency graphic contained PixelDivider8
+PASS (3440, 1440): currency graphic contained PixelDivider9
+PASS (3440, 1440): currency graphic contained PixelDivider10
+PASS (3440, 1440): currency graphic contained PixelDivider11
+PASS (3440, 1440): currency graphic contained PixelDivider12
+PASS (3440, 1440): currency graphic contained PixelDivider13
+PASS (3440, 1440): currency graphic contained PixelDivider14
+PASS (3440, 1440): currency graphic contained PixelDivider15
+PASS (3440, 1440): currency graphic contained PixelDivider16
+PASS (3440, 1440): currency graphic contained PixelDivider17
+PASS (3440, 1440): currency graphic contained PixelDivider18
+PASS (3440, 1440): currency graphic contained PixelDivider19
+PASS (3440, 1440): currency graphic contained PixelDivider20
+PASS (3440, 1440): currency graphic contained FKey
+PASS (3440, 1440): currency graphic contained KeyText
+PASS (3440, 1440): currency graphic contained KeyShadow
+PASS (3440, 1440): currency graphic contained CreationLabel
+PASS (3440, 1440): currency graphic contained CreationCost
+PASS (3440, 1440): equipment slot 0 currency nonoverlap
+PASS (3440, 1440): equipment slot 1 currency nonoverlap
+PASS (3440, 1440): equipment slot 2 currency nonoverlap
+PASS (3440, 1440): equipment slot 3 currency nonoverlap
+PASS (3440, 1440): equipment slot 4 currency nonoverlap
+PASS (3440, 1440): equipment slot 5 currency nonoverlap
+PASS (3440, 1440): equipment slot 6 currency nonoverlap
+PASS (3440, 1440): equipment slot 7 currency nonoverlap
+PASS (3440, 1440): equipment slot 8 currency nonoverlap
+PASS (3440, 1440): equipment slot 9 currency nonoverlap
+PASS (3440, 1440): gauge/fuel frame not clipped
+PASS (3440, 1440): train/slots/wheel/level not clipped
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+PASS (3440, 1440): all lower HUD groups below visible rail BeltScroll(Clone)
+RAIL (3440, 1440) BeltScroll(Clone) alphaLower=325.3677 logical=101.6774
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+PASS (3440, 1440): all lower HUD groups below visible rail BeltScroll 1(Clone)
+RAIL (3440, 1440) BeltScroll 1(Clone) alphaLower=325.5768 logical=101.7427
+PASS (3440, 1440): gauge visible bounds centered in lower section
+GROUP (3440, 1440) gauge bounds=(x:504.00, y:15.36, width:576.00, height:288.00) logicalCenter=49.79999 sectionCenter=50.8387
+PASS (3440, 1440): train visible bounds centered in lower section
+GROUP (3440, 1440) train bounds=(x:1150.40, y:28.27, width:1280.00, height:262.93) logicalCenter=49.91753 sectionCenter=50.8387
+PASS (3440, 1440): currency visible bounds centered in lower section
+GROUP (3440, 1440) currency bounds=(x:2456.00, y:28.80, width:480.00, height:268.80) logicalCenter=51 sectionCenter=50.8387
+PADDING (3440, 1440) soulTextBounds=(x:2788.80, y:238.00, width:115.20, height:38.40) topLogical=6.625004 keyShadowBottomLogical=8.500014 difference=1.87501
+PASS (3440, 1440): KeyShadow bottom padding8.5logical
+PASS (3440, 1440): visible glyph geometry and key shadow padding balanced within2logical(SDF geometry tolerance)
+PASS (3440, 1440): optional hidden+n visible glyph above content bottom
+OPTIONAL (3440, 1440) hidden+n rect=(x:2315.20, y:-3.20, width:115.20, height:76.80) ink=(x:2389.31, y:16.00, width:43.78, height:38.40)
+PASS (3440, 1440): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (3440, 1440): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (3440, 1440): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (3440, 1440): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (3440, 1440): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (3440, 1440): real creation methods open workbench
+PASS (3440, 1440): creation close restores parent/sibling
+PASS (3440, 1440): creation close restores authored lowered position/scale/anchors/size
+NATIVE CANVAS rect=(x:-400.00, y:-225.00, width:800.00, height:450.00), pixelRect=(x:0.00, y:0.00, width:640.00, height:360.00), renderingDisplaySize=(640.00, 360.00), sourceScaleFactor=0.8, uiPixelRect=(x:0.00, y:0.00, width:640.00, height:360.00)
+PASS 640x360: actual logical 800x450 content corners equal target content pixel rect AFTER native render
+CONTENT CORNERS actual=(x:0.00, y:0.00, width:640.00, height:360.00), expected=(x:0.00, y:0.00, width:640.00, height:360.00), canvas=(x:-400.00, y:-225.00, width:800.00, height:450.00)
+RESOLUTION 640x360 content=(x:0.00, y:0.00, width:640.00, height:360.00) authored logical HUD=(x:-150.00, y:0.00, width:150.00, height:84.00) root scale=(1.00, 1.00, 1.00)
+PASS CurrencyHUD final authored84height/9bottom
+PASS (640, 360): currency bounds contained
+PASS (640, 360): currency graphic contained HudBackground
+PASS (640, 360): currency graphic contained FleshText
+PASS (640, 360): currency graphic contained SoulText
+PASS (640, 360): currency graphic contained TopBorder
+PASS (640, 360): currency graphic contained BottomBorder
+PASS (640, 360): currency graphic contained LeftBorder
+PASS (640, 360): currency graphic contained RightBorder
+PASS (640, 360): currency graphic contained TopLeftCorner
+PASS (640, 360): currency graphic contained TopRightCorner
+PASS (640, 360): currency graphic contained FleshGauge
+PASS (640, 360): currency graphic contained CompletedFill
+PASS (640, 360): currency graphic contained ProgressFill
+PASS (640, 360): currency graphic contained PixelDivider1
+PASS (640, 360): currency graphic contained PixelDivider2
+PASS (640, 360): currency graphic contained PixelDivider3
+PASS (640, 360): currency graphic contained PixelDivider4
+PASS (640, 360): currency graphic contained PixelDivider5
+PASS (640, 360): currency graphic contained PixelDivider6
+PASS (640, 360): currency graphic contained PixelDivider7
+PASS (640, 360): currency graphic contained PixelDivider8
+PASS (640, 360): currency graphic contained PixelDivider9
+PASS (640, 360): currency graphic contained PixelDivider10
+PASS (640, 360): currency graphic contained PixelDivider11
+PASS (640, 360): currency graphic contained PixelDivider12
+PASS (640, 360): currency graphic contained PixelDivider13
+PASS (640, 360): currency graphic contained PixelDivider14
+PASS (640, 360): currency graphic contained PixelDivider15
+PASS (640, 360): currency graphic contained PixelDivider16
+PASS (640, 360): currency graphic contained PixelDivider17
+PASS (640, 360): currency graphic contained PixelDivider18
+PASS (640, 360): currency graphic contained PixelDivider19
+PASS (640, 360): currency graphic contained PixelDivider20
+PASS (640, 360): currency graphic contained FKey
+PASS (640, 360): currency graphic contained KeyText
+PASS (640, 360): currency graphic contained KeyShadow
+PASS (640, 360): currency graphic contained CreationLabel
+PASS (640, 360): currency graphic contained CreationCost
+PASS (640, 360): equipment slot 0 currency nonoverlap
+PASS (640, 360): equipment slot 1 currency nonoverlap
+PASS (640, 360): equipment slot 2 currency nonoverlap
+PASS (640, 360): equipment slot 3 currency nonoverlap
+PASS (640, 360): equipment slot 4 currency nonoverlap
+PASS (640, 360): equipment slot 5 currency nonoverlap
+PASS (640, 360): equipment slot 6 currency nonoverlap
+PASS (640, 360): equipment slot 7 currency nonoverlap
+PASS (640, 360): equipment slot 8 currency nonoverlap
+PASS (640, 360): equipment slot 9 currency nonoverlap
+PASS (640, 360): gauge/fuel frame not clipped
+PASS (640, 360): train/slots/wheel/level not clipped
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.865002
+PASS (640, 360): all lower HUD groups below visible rail BeltScroll(Clone)
+RAIL (640, 360) BeltScroll(Clone) alphaLower=81.34193 logical=101.6774
+ALPHA Lane source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+ALPHA Lane (1) source=Assets/Sprites/Maps/rail.png bottom row=0 PPU=12 worldLower=-8.858961
+PASS (640, 360): all lower HUD groups below visible rail BeltScroll 1(Clone)
+RAIL (640, 360) BeltScroll 1(Clone) alphaLower=81.3942 logical=101.7427
+PASS (640, 360): gauge visible bounds centered in lower section
+GROUP (640, 360) gauge bounds=(x:16.00, y:3.84, width:144.00, height:72.00) logicalCenter=49.79998 sectionCenter=50.8387
+PASS (640, 360): train visible bounds centered in lower section
+GROUP (640, 360) train bounds=(x:177.60, y:7.07, width:320.00, height:65.73) logicalCenter=49.91753 sectionCenter=50.8387
+PASS (640, 360): currency visible bounds centered in lower section
+GROUP (640, 360) currency bounds=(x:504.00, y:7.20, width:120.00, height:67.20) logicalCenter=50.99999 sectionCenter=50.8387
+PADDING (640, 360) soulTextBounds=(x:587.20, y:59.50, width:28.80, height:9.60) topLogical=6.625004 keyShadowBottomLogical=8.500001 difference=1.874997
+PASS (640, 360): KeyShadow bottom padding8.5logical
+PASS (640, 360): visible glyph geometry and key shadow padding balanced within2logical(SDF geometry tolerance)
+PASS (640, 360): optional hidden+n visible glyph above content bottom
+OPTIONAL (640, 360) hidden+n rect=(x:468.80, y:-0.80, width:28.80, height:19.20) ink=(x:487.33, y:4.00, width:10.94, height:9.60)
+PASS (640, 360): text fits ko amount=105 FleshText
+TEXT FleshText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=살점 105
+PASS (640, 360): text fits ko amount=105 SoulText
+TEXT SoulText font=12 rect=(130.00, 16.00) overflow=False lines=1 value=영혼 7
+PASS (640, 360): text fits ko amount=105 KeyText
+TEXT KeyText font=10 rect=(16.00, 16.00) overflow=False lines=1 value=F
+PASS (640, 360): text fits ko amount=105 CreationLabel
+TEXT CreationLabel font=9 rect=(74.00, 17.00) overflow=False lines=1 value=조직 창조 X 2
+PASS (640, 360): text fits ko amount=105 CreationCost
+TEXT CreationCost font=8 rect=(33.00, 17.00) overflow=False lines=1 value=비용 30
+PASS (640, 360): real creation methods open workbench
+PASS (640, 360): creation close restores parent/sibling
+PASS (640, 360): creation close restores authored lowered position/scale/anchors/size
+RESULT PASS: 413 checks, 0 failures. Actual copied-source EditMode method probes and 6 RenderTexture dimensions using production FixedAspectRatioController roots; no PlayMode, user save, real input/raycast, camera-shake or gameplay-motion claim.
