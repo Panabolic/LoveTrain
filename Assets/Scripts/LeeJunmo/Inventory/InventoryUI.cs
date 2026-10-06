@@ -22,6 +22,29 @@ public class InventoryUI : MonoBehaviour
     // 관리할 모든 UI 슬롯 리스트
     private List<InventorySlotUI> uiSlots = new List<InventorySlotUI>();
 
+    public Inventory InventoryData => inventoryData;
+    public RectTransform EquipmentRect => headSlots.Length > 0 && headSlots[0] != null
+        ? headSlots[0].transform.parent as RectTransform : null;
+
+    public InventorySlotUI GetEquipmentSlot(int index)
+    {
+        InventorySlotUI[] section = index < 3 ? headSlots : index < 6 ? middleSlots : index < 9 ? tailSlots : wheelSlots;
+        int local = index < 3 ? index : index < 6 ? index - 3 : index < 9 ? index - 6 : index - 9;
+        return index >= 0 && index < 10 && local < section.Length ? section[local] : null;
+    }
+
+    public void ConfigureWorkbench(LevelUpUIManager owner)
+    {
+        for (int i = 0; i < 10; i++) GetEquipmentSlot(i)?.ConfigureWorkbench(owner, i);
+        RefreshUI();
+    }
+
+    public void MarkDropTargets(Item_SO item)
+    {
+        for (int i = 0; i < 10; i++)
+            GetEquipmentSlot(i)?.SetInvalidDropTarget(item != null && !inventoryData.CanEquipAt(item, i));
+    }
+
     void Start()
     {
         // 1. 16개의 슬롯을 자동으로 찾아 리스트에 추가
@@ -86,25 +109,16 @@ public class InventoryUI : MonoBehaviour
         ClearSlots(tailSlots);
         ClearSlots(wheelSlots);
 
-        int head = 0, middle = 0, tail = 0, wheel = 0, hidden = 0;
+        int hidden = 0;
         if (inventoryData != null)
         {
             foreach (ItemInstance item in inventoryData.items)
             {
                 if (item == null || item.itemData == null) continue;
 
-                bool shown;
-                if (IsWheelItem(item.itemData))
-                    shown = BindNextSlot(wheelSlots, ref wheel, item);
-                else if (item.itemData.attachmentSocketName == "TrainF")
-                    shown = BindNextSlot(headSlots, ref head, item);
-                else if (item.itemData.attachmentSocketName == "TrainR")
-                    shown = BindNextSlot(tailSlots, ref tail, item);
-                else
-                    shown = BindNextSlot(middleSlots, ref middle, item);
-
-                // Presentation capacity must not delete or reject equipped items.
-                if (!shown) hidden++;
+                InventorySlotUI slot = GetEquipmentSlot(inventoryData.GetAssignedSlot(item));
+                if (slot != null) slot.UpdateSlot(item);
+                else hidden++;
             }
         }
 

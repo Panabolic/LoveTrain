@@ -10,6 +10,8 @@ public class EventTriggerObject : MonoBehaviour
     [SerializeField] private float lifeTime = 15f;
 
     [SerializeField] private GameObject exclamateObj;
+    [SerializeField] private bool isUpgradeEvent;
+    public bool IsUpgradeEvent => isUpgradeEvent;
     // 내부 변수
     private Vector3 moveDirection;
     private bool hasTriggered = false; // 이벤트 중복 발동 방지
@@ -20,8 +22,18 @@ public class EventTriggerObject : MonoBehaviour
         eventOverride = nextEvent;
     }
 
+    public void SetUpgradeEvent(bool upgrade)
+    {
+        isUpgradeEvent = upgrade;
+        if (!upgrade) return;
+        eventOverride = null;
+        foreach (SpriteRenderer renderer in GetComponentsInChildren<SpriteRenderer>(true))
+            renderer.color = new Color(1f, 0.2f, 0.25f, renderer.color.a);
+    }
+
     private void Start()
     {
+        if (isUpgradeEvent) SetUpgradeEvent(true);
         // 1. 자동 파괴 타이머 시작 (메모리 누수 방지)
         Destroy(gameObject, lifeTime);
 
@@ -43,36 +55,46 @@ public class EventTriggerObject : MonoBehaviour
 
     private void Update()
     {
-        // 게임이 멈춰있지 않을 때만 이동
-        if (Time.timeScale > 0 || GameManager.Instance.CurrentState != GameState.Die)
+        GameManager manager = GameManager.Instance;
+        if (manager == null || Time.timeScale <= 0f) return;
+        if (manager.CurrentState == GameState.StageTransition || manager.CurrentState == GameState.Ending)
         {
-            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+            Destroy(gameObject);
+            return;
         }
+        if (manager.CurrentState == GameState.Playing || manager.CurrentState == GameState.Boss)
+            transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 이미 발동했으면 무시
         if (hasTriggered) return;
+        GameManager manager = GameManager.Instance;
+        if (manager == null ||
+            (manager.CurrentState != GameState.Playing && manager.CurrentState != GameState.Boss)) return;
 
         // 기차와 충돌했는지 확인 (Layer 또는 Tag)
         // 기존 코드 컨벤션에 따라 'Train' 레이어 체크
         if (collision.gameObject.layer == LayerMask.NameToLayer("Train") || collision.CompareTag("Player"))
         {
-            // 3. 이벤트 매니저를 통해 이벤트 시작
-            if (EventManager.Instance != null)
+            if (isUpgradeEvent)
+            {
+                if (LevelUpUIManager.Instance == null) return;
+                hasTriggered = true;
+                manager.RegisterUIQueue(() =>
+                {
+                    if (LevelUpUIManager.Instance != null) LevelUpUIManager.Instance.ShowUpgradeEvent();
+                    else if (GameManager.Instance != null) GameManager.Instance.CloseUI();
+                });
+            }
+            else if (EventManager.Instance != null)
             {
                 hasTriggered = true; // 중복 실행 방지 플래그 On
                 if (eventOverride != null) EventManager.Instance.RequestEvent(eventOverride);
                 else EventManager.Instance.RandomEventStart();
-
-                if (exclamateObj != null) exclamateObj.SetActive(false);
             }
-
-            // (선택 사항) 충돌 후 시각적 피드백이 필요하면 여기서 처리
-            // 예: 스프라이트 반투명화
-            // var sprite = GetComponent<SpriteRenderer>();
-            // if (sprite != null) sprite.color = new Color(1, 1, 1, 0.5f);
+            if (hasTriggered && exclamateObj != null) exclamateObj.SetActive(false);
         }
     }
 }

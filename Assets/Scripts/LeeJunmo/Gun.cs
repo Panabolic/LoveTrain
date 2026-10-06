@@ -33,9 +33,10 @@ public class Gun : MonoBehaviour
 
     // --- 내부 변수 ---
     private GunStats baseStats; // 아이템 배율이 적용되지 않은 '무기 순수 스탯'
+    private GunStats defaultBaseStats;
+    private float permanentDamageBonus;
     private float damageMultiplier = 0f; // 데미지 배율 (0.1 = 10% 증가)
     private float fireRateMultiplier = 0f; // 공속 배율
-    private float damageEachLevel = 2f;
 
     // ✨ [추가] 무기 고유 데미지 비율 (기본값 1.0)
     private float weaponDamageRatio = 1.0f;
@@ -49,7 +50,7 @@ public class Gun : MonoBehaviour
     public Transform FirePoint { get; private set; }
     public float DamageMultiplier => damageMultiplier;
     public float FireRateMultiplier => fireRateMultiplier;
-    public float DamageEachLevel => damageEachLevel;
+    public float DamageEachLevel => 0f;
 
     // ✨ [추가] 외부에서 순수 베이스 스탯을 읽을 수 있게 함 (LaserGun 등에서 사용)
     public GunStats BaseStats => baseStats;
@@ -64,6 +65,9 @@ public class Gun : MonoBehaviour
 
         FirePoint = defaultFirePoint;
         baseStats = CurrentStats;
+        defaultBaseStats = baseStats;
+        permanentDamageBonus = PermanentUpgradeProgress.BaseGunDamageBonus;
+        UpdateStats();
     }
 
     private void OnEnable()
@@ -79,7 +83,6 @@ public class Gun : MonoBehaviour
     private void Start()
     {
         SetWeapon(new ProjectileStrategy());
-        if (levelManager != null) levelManager.OnLevelUp += OnLevelUpDamageIncrease;
     }
 
     // -------------------------------------------------------
@@ -157,11 +160,9 @@ public class Gun : MonoBehaviour
 
     private void UpdateStats()
     {
-        // ✨ [핵심 수정] 데미지 계산 공식 통합
-        // (기본뎀 + 레벨성장) * (1 + 아이템배율) * (무기비율)
-        float growthDamage = (levelManager != null ? levelManager.CurrentLevel : 1) * damageEachLevel;
-
-        CurrentStats.damage = (baseStats.damage + growthDamage)
+        // XP levels were replaced by flesh; item multipliers use the authored base damage.
+        float startingGunBonus = UsesDefaultGunStats() ? permanentDamageBonus : 0f;
+        CurrentStats.damage = (baseStats.damage + startingGunBonus)
                               * (1f + damageMultiplier)
                               * weaponDamageRatio;
 
@@ -187,6 +188,16 @@ public class Gun : MonoBehaviour
         Debug.Log($"[Gun] 스탯 갱신: Dmg {CurrentStats.damage} (Ratio: {weaponDamageRatio}), Rate {CurrentStats.fireRate}");
     }
 
+    private bool UsesDefaultGunStats()
+    {
+        return (currentStrategy == null || currentStrategy is ProjectileStrategy)
+            && baseStats.damage == defaultBaseStats.damage
+            && baseStats.speed == defaultBaseStats.speed
+            && baseStats.fireRate == defaultBaseStats.fireRate
+            && baseStats.projectilePrefab == defaultBaseStats.projectilePrefab
+            && baseStats.laserPrefab == defaultBaseStats.laserPrefab;
+    }
+
     // -------------------------------------------------------
     // 전략 및 업데이트
     // -------------------------------------------------------
@@ -195,12 +206,12 @@ public class Gun : MonoBehaviour
         if (currentStrategy != null) currentStrategy.Unequip();
         currentStrategy = newStrategy;
 
-        currentStrategy.Initialize(this, CurrentStats);
+        // Strategy changes can enter or leave the starting weapon without changing its damage field.
+        UpdateStats();
     }
 
     private void OnDestroy()
     {
-        if (levelManager != null) levelManager.OnLevelUp -= OnLevelUpDamageIncrease;
         currentStrategy?.Unequip();
     }
 

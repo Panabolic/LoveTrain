@@ -22,14 +22,14 @@ public class Train : MonoBehaviour
     [SerializeField] private float maxFuel = 100f;
     [SerializeField] private float baseSpeed = 320f;
     [SerializeField] private float acceleration = 70f;
-    [SerializeField] private float fuelDrainPerSecond = 0.25f;
-    [SerializeField] private float accelerationFuelMultiplier = 4f;
     [SerializeField] private float dashSpeedMultiplier = 1.5f;
     [SerializeField] private float dashDuration = 5f;
-    [SerializeField] private float dashFuelPerSecond = 10f;
+    [Tooltip("질주 전체 시간 동안 소모하는 총 연료입니다.")]
+    [SerializeField] private float dashFuelCost = 30f;
     public float CurrentFuel { get; private set; }
     public float MaxFuel => maxFuel;
     public bool IsDashing => drive.DashRemaining > 0f;
+    public float FuelDrainPerSecond => IsDashing ? Mathf.Max(0f, dashFuelCost) / Mathf.Max(0.01f, dashDuration) : TrainDriveState.GetFuelDrainPerSecond(CurrentSpeed);
     private readonly TrainDriveState drive = new TrainDriveState();
     [SerializeField] private float decelerationDelay = 1f;
     [SerializeField] private float deceleration = 70f;
@@ -86,6 +86,12 @@ public class Train : MonoBehaviour
 
     private void Start()
     {
+        // Snapshot permanent upgrades before initializing this run's fuel and driving state.
+        maxFuel = Mathf.Max(1f, maxFuel + PermanentUpgradeProgress.FuelCapacityBonus);
+        float upgradedDashDuration = PermanentUpgradeProgress.DashDurationOverride;
+        float upgradedDashMultiplier = PermanentUpgradeProgress.DashSpeedMultiplierOverride;
+        if (upgradedDashDuration > 0f) dashDuration = upgradedDashDuration;
+        if (upgradedDashMultiplier > 0f) dashSpeedMultiplier = upgradedDashMultiplier;
         CurrentSpeed = Mathf.Min(baseSpeed, maxSpeedValue);
         CurrentFuel = maxFuel;
         drive.Reset();
@@ -116,7 +122,7 @@ public class Train : MonoBehaviour
         bool shift = Keyboard.current != null && (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed);
         float fuelUsed = drive.Advance(Time.deltaTime, shift, baseSpeed, maxSpeedValue, acceleration,
             deceleration, decelerationDelay, dashDuration, dashSpeedMultiplier,
-            fuelDrainPerSecond, accelerationFuelMultiplier, dashFuelPerSecond);
+            dashFuelCost);
         relativeWorldSpeed = Mathf.MoveTowards(relativeWorldSpeed,
             Mathf.Max(0f, CurrentSpeed - baseSpeed) * Mathf.Max(0f, relativeSpeedScale),
             Mathf.Max(0.01f, relativeSpeedChangeRate) * Time.deltaTime);
@@ -141,11 +147,22 @@ public class Train : MonoBehaviour
 
     public virtual void TakeDamage(float damageAmount, bool isBossAttack = false)
     {
+        if (GameManager.Instance != null && (Time.timeScale <= 0f ||
+            (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss))) return;
         if (isDead || IsDashing || damageAmount <= 0f) return;
         OnTrainDamaged?.Invoke();
         if (CameraShakeManager.Instance != null) CameraShakeManager.Instance.ShakeCamera();
         SoundEventBus.Publish(SoundID.Player_Hit);
         ModifyFuel(-damageAmount);
+    }
+
+    public void TakeCollisionDamage(float fuelDamage, float speedLoss)
+    {
+        if (GameManager.Instance != null && (Time.timeScale <= 0f ||
+            (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss))) return;
+        if (isDead || IsDashing) return;
+        TakeDamage(fuelDamage);
+        if (!isDead) ModifySpeed(-Mathf.Max(0f, speedLoss));
     }
 
     public void ModifySpeed(float amount)
@@ -327,20 +344,32 @@ public sealed class TrainDriveState
         return Math.Abs(target - value) <= delta ? target : value + Math.Sign(target - value) * delta;
     }
 
+    public static float GetFuelDrainPerSecond(float speed)
+    {
+        if (speed < 355f) return 0.25f;
+        if (speed < 390f) return 0.4f;
+        if (speed < 425f) return 0.5f;
+        if (speed < 460f) return 0.6f;
+        return 0.75f;
+    }
+
     public float Advance(float dt, bool held, float baseSpeed, float maxSpeed, float acceleration,
         float deceleration, float delay, float dashDuration, float dashMultiplier,
-        float baseDrain, float fuelMultiplier, float dashDrain)
+        float dashFuelCost)
     {
         if (dt <= 0f) return 0f;
         if (!held) armed = true;
         if (held) releasedTime = 0f;
+        float fuel = 0f;
         if (DashRemaining > 0f)
         {
             float usedTime = Math.Min(dt, DashRemaining);
-            DashRemaining = Math.Max(0f, DashRemaining - dt);
+            DashRemaining = Math.Max(0f, DashRemaining - usedTime);
             Speed = maxSpeed * Math.Max(1.01f, dashMultiplier);
             if (DashRemaining <= 0f) { Speed = maxSpeed; releasedTime = 0f; }
-            return Math.Max(0f, dashDrain) * usedTime;
+            fuel = Math.Max(0f, dashFuelCost) / Math.Max(0.01f, dashDuration) * usedTime;
+            dt -= usedTime;
+            if (dt <= 0f) return fuel;
         }
         if (held) Speed = MoveTowards(Speed, maxSpeed, Math.Max(0f, acceleration) * dt);
         else
@@ -350,8 +379,7 @@ public sealed class TrainDriveState
             float decelerationTime = Math.Max(0f, releasedTime - Math.Max(0f, delay)) - Math.Max(0f, before - Math.Max(0f, delay));
             Speed = MoveTowards(Speed, Math.Min(baseSpeed, maxSpeed), Math.Max(0f, deceleration) * decelerationTime);
         }
-        float extra = Math.Max(0f, Speed / Math.Max(1f, baseSpeed) - 1f);
-        float fuel = Math.Max(0f, baseDrain) * (1f + extra * Math.Max(0f, fuelMultiplier)) * dt;
+        fuel += GetFuelDrainPerSecond(Speed) * dt;
         if (held && armed && Speed >= maxSpeed)
         {
             armed = false;

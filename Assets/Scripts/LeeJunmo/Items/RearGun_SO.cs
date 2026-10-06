@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "RearGun", menuName = "Items/RearGun")]
@@ -22,7 +22,7 @@ public class RearGun_SO : Item_SO
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        GameObject rearGunGO = InstantiateVisual(user);
+        GameObject rearGunGO = InstantiateVisual(user, instance);
         if (rearGunGO == null) return null;
 
         RearGun logic = rearGunGO.GetComponent<RearGun>();

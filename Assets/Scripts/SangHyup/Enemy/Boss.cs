@@ -5,6 +5,9 @@ public class Boss : Enemy
 {
     [SerializeField] protected SO_Event killEvent;
     [SerializeField] protected GameObject killExplosionEffect;
+    [Tooltip("스테이지별 체력. 0 이하 또는 미설정 항목은 기존 hp를 사용합니다.")]
+    [SerializeField] private float[] stageHitPoints;
+    protected override EnemyRewardKind RewardKind => EnemyRewardKind.Boss;
 
     // 등장 연출 중인지 체크하는 플래그 (true면 공격 안 함)
     protected bool isEntranceActive = false;
@@ -15,6 +18,7 @@ public class Boss : Enemy
         calibratedMaxHP = CalculateCalibratedHP();
         currentHP = calibratedMaxHP;
         isAlive = true;
+        deathRewardGranted = false;
         if (sprite != null) sprite.enabled = true;
 
         hasEnteredScreen = false;
@@ -36,8 +40,10 @@ public class Boss : Enemy
         float eventDebuff = PoolManager.instance != null
             ? 1.0f + (PoolManager.instance.eventDebuff / 100.0f)
             : 1.0f;
-        int currentLevel = levelManager != null ? levelManager.CurrentLevel : 1;
-        return hp * currentLevel * eventDebuff;
+        int stageIndex = StageManager.Instance != null ? StageManager.Instance.CurrentStageIndex : 0;
+        float authoredHP = stageHitPoints != null && stageIndex >= 0 && stageIndex < stageHitPoints.Length && stageHitPoints[stageIndex] > 0f
+            ? stageHitPoints[stageIndex] : hp;
+        return authoredHP * eventDebuff;
     }
 
     public void StartEntranceRoutine(Vector3 targetPos, float duration)

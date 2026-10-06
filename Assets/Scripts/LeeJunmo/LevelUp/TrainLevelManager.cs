@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using System.Linq;
 using UnityEngine.InputSystem;
 using TMPro;
 
@@ -47,6 +46,13 @@ public class TrainLevelManager : MonoBehaviour
     public event Action OnExperienceGained;
     public event Action OnLevelUp;
 
+    private void Awake()
+    {
+        PermanentUpgradeProgress.Reload();
+        economy = new RunPartEconomy(PermanentUpgradeProgress.Souls);
+        CurrentLevel = 1;
+    }
+
     void Start()
     {
         CurrentLevel = 1;
@@ -58,23 +64,34 @@ public class TrainLevelManager : MonoBehaviour
     }
 
     [Header("Part creation")]
-    [SerializeField] private int initialCreationCost = 50;
-    [SerializeField] private int creationCostIncrease = 25;
-    [SerializeField] private int rerollCost = 10;
+    [SerializeField, Min(1)] private int initialCreationCost = 30;
+    [SerializeField, Min(0)] private int creationCostIncrease = 10;
     public int Flesh => economy.Flesh;
+    public int Souls => economy.Souls;
     public int CreatedParts => economy.CreatedParts;
     public int CreationCost => (int)Math.Max(1L, Math.Min(int.MaxValue, (long)initialCreationCost + (long)CreatedParts * Math.Max(0, creationCostIncrease)));
-    public int RerollCost => Mathf.Max(0, rerollCost);
-    private readonly RunPartEconomy economy = new RunPartEconomy();
+    public int CreationCostIncrease => Math.Max(0, creationCostIncrease);
+    public int RerollCost => economy.RerollCost;
+    public int FreeRerollsRemaining => economy.FreeRerollsRemaining;
+    public bool CanReroll => economy.CanReroll;
+    public bool CanPurchaseCreation => Flesh >= CreationCost;
+    // Presentation query only; the existing F input and purchase transaction keep ownership.
+    public bool CanRequestCreation => CanPurchaseCreation && !creationQueued && !committingCreation &&
+        Time.timeScale > 0f && GameManager.Instance != null &&
+        (GameManager.Instance.CurrentState == GameState.Playing || GameManager.Instance.CurrentState == GameState.Boss) &&
+        Keyboard.current != null && LevelUpUIManager.Instance != null && LevelUpUIManager.Instance.CanShowCreation;
+    private RunPartEconomy economy = new RunPartEconomy();
     [SerializeField] private TMP_Text fleshText;
+    [SerializeField] private TMP_Text soulText;
     private bool creationQueued;
+    private bool committingCreation;
+    public event Action OnResourcesChanged;
 
     private void Update()
     {
-        if (fleshText != null) fleshText.text = $"살점 {Flesh}";
         bool combat = GameManager.Instance != null && Time.timeScale > 0f &&
             (GameManager.Instance.CurrentState == GameState.Playing || GameManager.Instance.CurrentState == GameState.Boss);
-        if (!combat || GameManager.Instance.IsTimeForEnding || creationQueued || Flesh < CreationCost || Keyboard.current == null || !Keyboard.current.fKey.wasPressedThisFrame) return;
+        if (!combat || creationQueued || Flesh < CreationCost || Keyboard.current == null || !Keyboard.current.fKey.wasPressedThisFrame) return;
         if (LevelUpUIManager.Instance == null) return;
         creationQueued = true;
         GameManager.Instance.RegisterUIQueue(() =>
@@ -90,29 +107,117 @@ public class TrainLevelManager : MonoBehaviour
     public void GainExperience(float amount)
     {
         if (amount <= 0f || float.IsNaN(amount) || float.IsInfinity(amount)) return;
-        economy.AddReward(Mathf.CeilToInt(amount));
-        OnExperienceGained?.Invoke();
+        AddFlesh(Mathf.CeilToInt(amount));
+    }
+
+    public void AddFlesh(int amount) => AddRewards(amount, 0);
+    public void AddSouls(int amount) => AddRewards(0, amount);
+
+    public void AddRewards(int flesh, int souls)
+    {
+        economy.AddReward(flesh, souls);
+        ResourcesChanged();
     }
 
     public bool TrySpendFlesh(int amount)
     {
+        if (committingCreation) return false;
         if (!economy.TrySpend(amount)) return false;
-        OnExperienceGained?.Invoke();
+        ResourcesChanged();
         return true;
     }
 
-    public void CompleteCreation() { economy.CompleteCreation(); OnExperienceGained?.Invoke(); }
+    public bool TryPurchaseCreation()
+    {
+        if (committingCreation) return false;
+        if (!economy.TryPurchaseCreation(CreationCost)) return false;
+        ResourcesChanged();
+        return true;
+    }
+
+    public bool TryPurchaseCreation(Func<bool> equip)
+    {
+        if (committingCreation || equip == null || !CanPurchaseCreation) return false;
+        int cost = CreationCost;
+        committingCreation = true;
+        try
+        {
+            if (!equip()) return false;
+            if (!economy.TryPurchaseCreation(cost)) return false;
+        }
+        finally { committingCreation = false; }
+        ResourcesChanged();
+        return true;
+    }
+
+    public bool TryReroll()
+    {
+        if (!economy.TryReroll()) return false;
+        ResourcesChanged();
+        return true;
+    }
+
+    // Compatibility for event callers that already paid through TrySpendFlesh.
+    public void CompleteCreation()
+    {
+        if (committingCreation) return;
+        economy.CompleteCreation();
+        ResourcesChanged();
+    }
+
+    private void ResourcesChanged()
+    {
+        PermanentUpgradeProgress.SetSouls(Souls);
+        UpdateResourceLabels();
+        OnExperienceGained?.Invoke();
+        OnResourcesChanged?.Invoke();
+    }
+
+    private void UpdateResourceLabels()
+    {
+        if (fleshText != null) fleshText.text = $"살점 {Flesh}";
+        if (soulText != null) soulText.text = $"영혼 {Souls}";
+    }
+
+    private void OnEnable() => UpdateResourceLabels();
+    private void OnApplicationPause(bool paused) { if (paused) PlayerPrefs.Save(); }
+    private void OnDestroy() => PlayerPrefs.Save();
 
 }
 
 public sealed class RunPartEconomy
 {
     public int Flesh { get; private set; }
+    public int Souls { get; private set; }
     public int CreatedParts { get; private set; }
-    public void AddReward(int amount)
+    public int FreeRerollsRemaining { get; private set; } = 5;
+    private int paidRerolls;
+    public int RerollCost => FreeRerollsRemaining > 0 ? 0 : Math.Min(5, paidRerolls + 1);
+    public bool CanReroll => FreeRerollsRemaining > 0 || Souls >= RerollCost;
+
+    public RunPartEconomy(int savedSouls = 0) { Souls = Math.Max(0, savedSouls); }
+
+    public void AddReward(int amount, int souls = 0)
     {
-        if (amount <= 0) return;
-        Flesh = (int)Math.Min(int.MaxValue, (long)Flesh + amount);
+        Flesh = (int)Math.Min(int.MaxValue, (long)Flesh + Math.Max(0, amount));
+        Souls = (int)Math.Min(int.MaxValue, (long)Souls + Math.Max(0, souls));
+    }
+    public bool TryPurchaseCreation(int cost)
+    {
+        if (cost < 1 || !TrySpend(cost)) return false;
+        CompleteCreation();
+        return true;
+    }
+    public bool TryReroll()
+    {
+        if (!CanReroll) return false;
+        if (FreeRerollsRemaining > 0) FreeRerollsRemaining--;
+        else
+        {
+            Souls -= RerollCost;
+            paidRerolls = Math.Min(4, paidRerolls + 1);
+        }
+        return true;
     }
     public bool TrySpend(int amount)
     {

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System;
 
 public class Enemy : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class Enemy : MonoBehaviour
     protected float calibratedMaxHP;
     protected float currentHP;
     protected bool isAlive = true;
+    protected bool deathRewardGranted;
+    protected virtual EnemyRewardKind RewardKind => EnemyRewardKind.None;
 
     protected bool hasEnteredScreen = false;
     private Color originalColor;
@@ -57,6 +60,7 @@ public class Enemy : MonoBehaviour
     {
         currentHP = CalculateCalibratedHP();
         isAlive = true;
+        deathRewardGranted = false;
 
         // ✨ [수정] null 체크 추가
         if (sprite != null)
@@ -162,8 +166,14 @@ public class Enemy : MonoBehaviour
 
     protected virtual IEnumerator Die()
     {
+        if (deathRewardGranted) yield break;
+        deathRewardGranted = true;
         isAlive = false;
-        if (levelManager != null) levelManager.GainExperience(exp);
+        if (levelManager != null && RewardKind != EnemyRewardKind.None)
+        {
+            EnemyReward reward = EnemyRewardRules.Roll(RewardKind, UnityEngine.Random.Range(0, 100), UnityEngine.Random.Range(0, 100));
+            levelManager.AddRewards(reward.Flesh, reward.Souls);
+        }
 
         Inventory inventory = levelManager?.GetComponent<Inventory>();
         if (inventory != null)
@@ -204,6 +214,36 @@ public class Enemy : MonoBehaviour
             }
 
             PoolManager.instance.UnregisterEnemy(this);
+        }
+    }
+}
+
+public enum EnemyRewardKind { None, Normal, Elite, Boss }
+
+public struct EnemyReward
+{
+    public readonly int Flesh;
+    public readonly int Souls;
+    public EnemyReward(int flesh, int souls) { Flesh = flesh; Souls = souls; }
+}
+
+// Two independent [0, 100) rolls keep the flesh and soul distributions explicit.
+public static class EnemyRewardRules
+{
+    public static EnemyReward Roll(EnemyRewardKind kind, int fleshRoll, int soulRoll)
+    {
+        if (fleshRoll < 0 || fleshRoll >= 100) throw new ArgumentOutOfRangeException(nameof(fleshRoll));
+        if (soulRoll < 0 || soulRoll >= 100) throw new ArgumentOutOfRangeException(nameof(soulRoll));
+        switch (kind)
+        {
+            case EnemyRewardKind.Normal:
+                return new EnemyReward(fleshRoll < 50 ? 1 : fleshRoll < 80 ? 2 : 3, soulRoll < 80 ? 0 : 1);
+            case EnemyRewardKind.Elite:
+                return new EnemyReward(10, soulRoll < 60 ? 0 : soulRoll < 85 ? 1 : 2);
+            case EnemyRewardKind.Boss:
+                return new EnemyReward(100, soulRoll < 50 ? 1 : soulRoll < 80 ? 2 : 3);
+            default:
+                return new EnemyReward(0, 0);
         }
     }
 }

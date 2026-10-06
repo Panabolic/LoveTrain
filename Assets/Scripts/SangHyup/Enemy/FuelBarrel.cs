@@ -4,7 +4,7 @@ using UnityEngine;
 // A shootable fuel container; reward is granted only by the death path, never by cleanup.
 public class FuelBarrel : Enemy
 {
-    [SerializeField] private float fuelReward = 20f;
+    [SerializeField, Range(0f, 1f)] private float fuelRewardPercent = 0.1f;
     [SerializeField] private float driftSpeed = 1.5f;
     [SerializeField] private float lifetime = 25f;
     private float age;
@@ -21,7 +21,7 @@ public class FuelBarrel : Enemy
         box.isTrigger = true;
         var body = gameObject.AddComponent<Rigidbody2D>();
         body.bodyType = RigidbodyType2D.Kinematic;
-        hp = 15f; damage = 0f; exp = 5f;
+        hp = 15f; damage = 0f; exp = 0f;
         base.Awake();
         direction = targetRigid != null && transform.position.x < targetRigid.position.x ? 1f : -1f;
     }
@@ -43,7 +43,7 @@ public class FuelBarrel : Enemy
         if (levelManager != null)
         {
             var train = levelManager.GetComponent<Train>();
-            if (train != null) train.ModifyFuel(fuelReward);
+            if (train != null) train.HealPercent(fuelRewardPercent);
         }
         yield return base.Die();
         Destroy(gameObject);

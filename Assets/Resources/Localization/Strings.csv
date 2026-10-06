@@ -338,3 +338,45 @@ It will work next time.","머신 스피릿_Sel1 / specialText"
 "ui.toggle_window","Space를 통해 창을 여닫을 수 있습니다.","Press Space to open or close this window.","Fixed UI label"
 "ui.total","총합","Total","Fixed UI label"
 "ui.victory","승리","Victory","Fixed UI label"
+workbench.create_title,부품 제작,Create part,Train item workbench
+workbench.upgrade_title,부품 강화,Upgrade parts,Train item workbench
+workbench.resources,살점 {0}   영혼 {1},Flesh {0}   Souls {1},Train item workbench
+workbench.creation_hint,원하는 칸으로 드래그하여 장착 · 제작 비용 {0},Drag onto a compatible slot · Creation cost {0},Train item workbench
+workbench.free_reroll,리롤 · 무료 {0}회,Reroll · {0} free,Train item workbench
+workbench.soul_reroll,리롤 · 영혼 {0},Reroll · {0} souls,Train item workbench
+workbench.max_upgrade,최대 강화 단계,Maximum upgrade level,Train item workbench
+workbench.cost_pending,강화 비용 미정,Upgrade cost pending,Train item workbench
+workbench.upgrade_cost,강화 비용 · 살점 {0},Upgrade cost · {0} flesh,Train item workbench
+workbench.select_item,기차의 아이템을 클릭하여 선택,Click a train item to select it,Train item workbench
+workbench.upgrade,강화,Upgrade,Train item workbench
+workbench.remove,아이템 제거,Remove item,Train item workbench
+workbench.cancel,취소,Cancel,Train item workbench
+workbench.close,닫기,Close,Train item workbench
+workbench.remove_available,아이템 제거 · 1회,Remove item · 1 left,Train item workbench
+workbench.remove_used,아이템 제거 · 0회,Remove item · 0 left,Train item workbench
+permanent.title,영구 강화,Permanent upgrades,Permanent upgrade menu
+permanent.cost,영혼 {0},{0} souls,Permanent upgrade menu
+permanent.balance,보유 영혼 {0},Souls available: {0},Permanent upgrade menu
+permanent.hint,마우스를 올려 효과 확인 · 클릭하여 강화 · 휠로 스크롤,Hover for details · Click to upgrade · Scroll to browse,Permanent upgrade menu
+permanent.start,게임 시작,Start game,Permanent upgrade menu
+permanent.saved,구매한 강화는 다음 플레이에도 유지됩니다.,Purchased upgrades carry over to future runs.,Permanent upgrade menu
+permanent.save_error,저장 정보를 읽을 수 없어 강화 구매가 잠겼습니다.,Upgrades are locked because save data could not be read.,Permanent upgrade menu
+permanent.purchase_done,{0} · 강화 완료,{0} · Purchased,Permanent upgrade menu
+permanent.tooltip_cost,비용: 영혼 {0} · {1},Cost: {0} souls · {1},Permanent upgrade menu
+permanent.available,강화 가능,Available,Permanent upgrade menu
+permanent.purchased,구매 완료,Purchased,Permanent upgrade menu
+permanent.prerequisite,선행 강화 필요,Previous tier required,Permanent upgrade menu
+permanent.insufficient,영혼 부족,Not enough souls,Permanent upgrade menu
+permanent.unconfigured,준비 중,Coming soon,Permanent upgrade menu
+permanent.progress,진척도: {0} / {1},Progress: {0} / {1},Permanent upgrade menu
+permanent.current,현재: {0},Current: {0},Permanent upgrade menu
+permanent.next,다음: {0},Next: {0},Permanent upgrade menu
+permanent.none,없음,None,Permanent upgrade menu
+permanent.max,최대 단계,Maximum level,Permanent upgrade menu
+workbench.before,강화 전,Before upgrade,Train item workbench
+workbench.after,강화 후,After upgrade,Train item workbench
+hud.flesh_amount,살점 {0},Flesh {0},Flesh HUD
+hud.soul_amount,영혼 {0},Souls {0},Flesh HUD
+hud.creation,조직 창조,Create tissue,Flesh HUD
+hud.creation_multiple,조직 창조 X {0},Create tissue X {0},Flesh HUD
+hud.creation_cost,비용 {0},Cost {0},Flesh HUD

@@ -5,6 +5,8 @@ public class LaserGun : MonoBehaviour, IInstantiatedItem, IItemCooldownView
     private LaserGun_SO itemData;
     private Gun gunController;
     private LaserSpriteStrategy laserStrategy;
+    private GunStats previousBaseStats;
+    private bool restored;
 
     public bool HasCooldown => laserStrategy != null && laserStrategy.HasCooldown;
 
@@ -22,6 +24,17 @@ public class LaserGun : MonoBehaviour, IInstantiatedItem, IItemCooldownView
     {
         itemData = data;
         gunController = user.GetComponentInChildren<Gun>();
+        if (gunController != null) previousBaseStats = gunController.BaseStats;
+    }
+
+    public void RestoreProjectileWeapon()
+    {
+        if (restored || gunController == null) return;
+        restored = true;
+        gunController.SetWeapon(new ProjectileStrategy());
+        gunController.ChangeBaseStats(previousBaseStats);
+        gunController.SetWeaponDamageRatio(1f);
+        gunController.UnequipVisual();
     }
 
     public void UpgradeInstItem(ItemInstance instance)

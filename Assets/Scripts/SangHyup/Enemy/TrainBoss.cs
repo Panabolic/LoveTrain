@@ -154,6 +154,8 @@ public class TrainBoss : Boss
 
     protected override IEnumerator Die()
     {
+        if (!isAlive) yield break;
+        isAlive = false;
         yield return base.Die();
         Vector2 explosionEffectPivot = new Vector2(-5f, 2f);
 

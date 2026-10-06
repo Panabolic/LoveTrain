@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Revolver", menuName = "Items/Revolver")]
@@ -19,7 +19,7 @@ public class Revolver_SO : Item_SO
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
         // 1. 부모의 공통 함수를 호출해 '로직+시각' 프리팹 생성
-        GameObject revolverGO = InstantiateVisual(user);
+        GameObject revolverGO = InstantiateVisual(user, instance);
         if (revolverGO == null) return null;
 
         // --- 여기서부터 'Revolver'만의 추가 로직 ---

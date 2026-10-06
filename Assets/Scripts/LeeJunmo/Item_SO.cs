@@ -2,6 +2,26 @@
 using NUnit.Framework;
 using UnityEngine;
 
+[System.Flags]
+public enum EquipmentSlotMask
+{
+    LegacySocket = 0,
+    HeadTop = 1 << 0,
+    HeadFront = 1 << 1,
+    HeadCenter = 1 << 2,
+    MiddleTop = 1 << 3,
+    MiddleLeft = 1 << 4,
+    MiddleRight = 1 << 5,
+    TailTop = 1 << 6,
+    TailRear = 1 << 7,
+    TailCenter = 1 << 8,
+    Wheel = 1 << 9,
+    Head = HeadTop | HeadFront | HeadCenter,
+    Middle = MiddleTop | MiddleLeft | MiddleRight,
+    Tail = TailTop | TailRear | TailCenter,
+    All = Head | Middle | Tail | Wheel
+}
+
 public class Item_SO : ScriptableObject
 {
     [Header("아이템 이름")]
@@ -18,6 +38,31 @@ public class Item_SO : ScriptableObject
     [Header("부착 위치 설정")]
     [Tooltip("아이템이 부착될 소켓 이름 (예: WeaponSocket). 비워두면 루트에 부착됨.")]
     public string attachmentSocketName; // <-- [추가]
+    [Tooltip("장착 가능 위치. LegacySocket은 기존 소켓에 해당하는 기차 칸 3칸을 사용하며 톱니바퀴는 바퀴 1칸을 사용함.")]
+    public EquipmentSlotMask allowedEquipmentSlots = EquipmentSlotMask.LegacySocket;
+    [Min(1), Tooltip("향후 칸당 강화 비용 계산용 메타데이터. 현재 아이템 장착은 모두 한 슬롯이며 다중 슬롯 배치는 별도 정의가 필요함.")]
+    public int equipmentCellCount = 1;
+
+    public EquipmentSlotMask AllowedEquipmentSlots
+    {
+        get
+        {
+            if (allowedEquipmentSlots != EquipmentSlotMask.LegacySocket) return allowedEquipmentSlots;
+            switch (Inventory.AttachmentSection(this))
+            {
+                case 0: return EquipmentSlotMask.Head;
+                case 2: return EquipmentSlotMask.Tail;
+                case 3: return EquipmentSlotMask.Wheel;
+                default: return EquipmentSlotMask.Middle;
+            }
+        }
+    }
+
+    public bool CanEquipInSlot(int slotIndex)
+    {
+        return slotIndex >= 0 && slotIndex < Inventory.EquipmentSlotCount
+            && (((int)AllowedEquipmentSlots & (1 << slotIndex)) != 0);
+    }
     [Header("아이콘")]
     public Sprite iconSprite;
     [Header("비주얼 업그레이드 (공통)")]
@@ -51,13 +96,15 @@ public class Item_SO : ScriptableObject
     public virtual GameObject OnEquip(GameObject user, ItemInstance instance)
     {
         // '박동하는 심장' 같은 아이템은 이 헬퍼 함수를 호출합니다.
-        return InstantiateVisual(user);
+        return InstantiateVisual(user, instance);
     }
+
+    public virtual void OnUnequip(GameObject user, ItemInstance instance) { }
 
     /// <summary>
     /// [수정] 자식들이 공통으로 사용할 '프리팹 실체화' 헬퍼 함수
     /// </summary>
-    protected GameObject InstantiateVisual(GameObject user)
+    protected GameObject InstantiateVisual(GameObject user, ItemInstance instance = null)
     {
         // 1. 프리팹이 없으면 아무것도 안 함 (비주얼이 없는 아이템)
         if (instantiatedPrefab == null)
@@ -66,8 +113,11 @@ public class Item_SO : ScriptableObject
         }
 
         // 2. 부착될 소켓 찾기 (기본값 = user 루트)
-        Transform parentTransform = user.transform;
-        if (!string.IsNullOrEmpty(attachmentSocketName))
+        Transform parentTransform = null;
+        Inventory inventory = user.GetComponent<Inventory>();
+        if (instance != null && inventory != null)
+            parentTransform = inventory.GetEquipmentAnchor(instance.equippedSlotIndex);
+        if (parentTransform == null && !string.IsNullOrEmpty(attachmentSocketName))
         {
             Transform socket = FindChildSocket(user.transform, attachmentSocketName);
             if (socket != null)
@@ -79,6 +129,7 @@ public class Item_SO : ScriptableObject
                 Debug.LogWarning($"[ItemSO] {user.name}에서 '{attachmentSocketName}' 소켓을 못찾음.");
             }
         }
+        if (parentTransform == null) parentTransform = user.transform;
 
         // 3. 소켓에 프리팹 생성 및 위치 초기화
         GameObject itemGO = Instantiate(instantiatedPrefab, parentTransform);

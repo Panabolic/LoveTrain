@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "RedGear", menuName = "Items/RedGear")]
@@ -10,7 +10,7 @@ public class RedGear_SO : Item_SO
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        GameObject RedGear = InstantiateVisual(user);
+        GameObject RedGear = InstantiateVisual(user, instance);
 
         // 장착 시 1레벨 효과 적용
         ApplyStats(user, DamageByLevel[0] / 100f);
@@ -30,8 +30,7 @@ public class RedGear_SO : Item_SO
         {
             float difference = DamageByLevel[currentLevelIdx] - DamageByLevel[prevLevelIdx];
 
-            // ✨ [수정] FindFirstObjectByType 사용
-            Gun gun = FindFirstObjectByType<Gun>();
+            Gun gun = instance.Owner != null ? instance.Owner.GetComponentInChildren<Gun>() : null;
             if (gun != null)
             {
                 gun.AddDamageMultiplier(difference / 100f);
@@ -39,9 +38,16 @@ public class RedGear_SO : Item_SO
         }
     }
 
+    public override void OnUnequip(GameObject user, ItemInstance instance)
+    {
+        if (DamageByLevel == null || DamageByLevel.Length == 0) return;
+        int index = Mathf.Clamp(instance.currentUpgrade - 1, 0, DamageByLevel.Length - 1);
+        ApplyStats(user, -DamageByLevel[index] / 100f);
+    }
+
     private void ApplyStats(GameObject user, float amount)
     {
-        Gun gun = user.GetComponent<Gun>();
+        Gun gun = user.GetComponentInChildren<Gun>();
         // ✨ [수정] FindFirstObjectByType 사용
         if (gun == null) gun = FindFirstObjectByType<Gun>();
 

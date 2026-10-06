@@ -35,6 +35,7 @@ public class EventManager : MonoBehaviour
     [SerializeField] private GameObject playerObject;
 
     private SO_Event currentEvent;
+    private Inventory playerInventory;
     private List<Button> selectionButtons = new List<Button>();
 
     // --- 상태 변수들 ---
@@ -52,6 +53,7 @@ public class EventManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        if (playerObject != null) playerInventory = playerObject.GetComponent<Inventory>();
 
         if (eventSelections != null)
         {
@@ -83,6 +85,11 @@ public class EventManager : MonoBehaviour
     public void RequestEvent(SO_Event e)
     {
         if (e == null || GameManager.Instance == null) return;
+        if (!EventDatabase.IsEligible(e, playerInventory))
+        {
+            RandomEventStart();
+            return;
+        }
 
         SoundEventBus.Publish(SoundID.UI_Event);
         GameManager.Instance.RegisterUIQueue(() => ProcessEvent(e));
@@ -93,6 +100,7 @@ public class EventManager : MonoBehaviour
     {
         if (isAnimatingPanel) return;
         if (e == null ||
+            !EventDatabase.IsEligible(e, playerInventory) ||
             e.Selections == null ||
             e.Selections.Count == 0 ||
             eventBoardRect == null ||
@@ -131,7 +139,7 @@ public class EventManager : MonoBehaviour
     {
         if (isAnimatingPanel || eventDatabase == null) return;
 
-        SO_Event e = eventDatabase.GetRandomEvent();
+        SO_Event e = eventDatabase.GetRandomEvent(playerInventory);
         if (e != null) RequestEvent(e); // 큐 등록 함수 호출
     }
 

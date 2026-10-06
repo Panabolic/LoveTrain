@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CrownOfThorns", menuName = "Items/CrownOfThorns")]
@@ -23,7 +23,7 @@ public class CrownOfThorns_SO : Item_SO
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        GameObject obj = InstantiateVisual(user);
+        GameObject obj = InstantiateVisual(user, instance);
         if (obj == null) return null;
 
         CrownOfThorns logic = obj.GetComponent<CrownOfThorns>();

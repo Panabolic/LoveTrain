@@ -55,4 +55,11 @@ public class LaserGun_SO : Item_SO
             { "Cooldown", cooldownByLevel[index].ToString() }
         };
     }
+
+    public override void OnUnequip(GameObject user, ItemInstance instance)
+    {
+        if (instance.InstantiatedObject == null) return;
+        LaserGun logic = instance.InstantiatedObject.GetComponent<LaserGun>();
+        if (logic != null) logic.RestoreProjectileWeapon();
+    }
 }

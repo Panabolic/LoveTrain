@@ -61,7 +61,7 @@ public class EyeBoss : Boss
 
     public override void TakeDamage(float damageAmount)
     {
-        if (isInvincible) return;
+        if (!isAlive || !hasEnteredScreen || isInvincible) return;
 
         float predictedHP = currentHP - damageAmount;
         float thresholdHP = calibratedMaxHP * EnragePatternThreshold;
@@ -243,6 +243,8 @@ public class EyeBoss : Boss
 
     protected override IEnumerator Die()
     {
+        if (!isAlive) yield break;
+        isAlive = false;
         ClearAllTentacles();
 
         if (killExplosionEffect != null)

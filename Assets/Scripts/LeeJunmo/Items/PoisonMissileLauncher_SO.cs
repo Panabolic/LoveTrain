@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PoisonMissileLauncher", menuName = "Items/PoisonMissileLauncher")]
@@ -23,7 +23,7 @@ public class PoisonMissileLauncher_SO : Item_SO
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
         // 1. 비주얼 생성
-        GameObject obj = InstantiateVisual(user);
+        GameObject obj = InstantiateVisual(user, instance);
         if (obj == null) return null;
 
         // 2. 로직 컴포넌트 확인 및 추가

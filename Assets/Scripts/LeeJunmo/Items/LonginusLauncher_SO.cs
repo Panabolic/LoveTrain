@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LonginusLauncher", menuName = "Items/LonginusLauncher")]
@@ -20,7 +20,7 @@ public class LonginusLauncher_SO : Item_SO
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        GameObject obj = InstantiateVisual(user);
+        GameObject obj = InstantiateVisual(user, instance);
         if (obj == null) return null;
 
         LonginusLauncher logic = obj.GetComponent<LonginusLauncher>();

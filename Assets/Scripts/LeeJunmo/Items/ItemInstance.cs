@@ -7,8 +7,14 @@ public class ItemInstance : IItemCooldownView
     public float currentCooldown;
     public float maxCooldown;
     private GameObject instantiatedObject = null; // 실체화된 오브젝트
+    private readonly System.Collections.Generic.List<GameObject> ownedEffects = new System.Collections.Generic.List<GameObject>();
+    private bool isUnequipped;
 
     public int currentUpgrade = 1;
+    public int equippedSlotIndex = -1;
+    public GameObject InstantiatedObject => instantiatedObject;
+    public bool IsUnequipped => isUnequipped;
+    public GameObject Owner { get; private set; }
 
     public bool HasCooldown
     {
@@ -33,12 +39,51 @@ public class ItemInstance : IItemCooldownView
 
     public void HandleEquip(GameObject user)
     {
+        isUnequipped = false;
+        Owner = user;
         instantiatedObject = itemData.OnEquip(user, this);
+    }
+
+    public void TrackOwnedEffect(GameObject effect)
+    {
+        if (effect == null) return;
+        ownedEffects.RemoveAll(owned => owned == null);
+        if (isUnequipped)
+        {
+            effect.SetActive(false);
+            Object.Destroy(effect);
+            return;
+        }
+        ownedEffects.Add(effect);
+    }
+
+    public void HandleUnequip(GameObject user)
+    {
+        if (isUnequipped) return;
+        isUnequipped = true;
+        if (itemData != null) itemData.OnUnequip(user, this);
+        foreach (GameObject effect in ownedEffects)
+        {
+            if (effect == null) continue;
+            effect.SetActive(false);
+            Object.Destroy(effect);
+        }
+        ownedEffects.Clear();
+        if (instantiatedObject != null)
+        {
+            instantiatedObject.SetActive(false);
+            Object.Destroy(instantiatedObject);
+            instantiatedObject = null;
+        }
+        currentCooldown = 0f;
+        maxCooldown = 0f;
+        Owner = null;
     }
 
     // ✨ [수정됨] 쿨타임 로직
     public void Tick(float deltaTime, GameObject user)
     {
+        if (isUnequipped || itemData == null || GameManager.Instance == null) return;
         if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss
             && GameManager.Instance.CurrentState != GameState.Ending) return;
 
@@ -142,6 +187,7 @@ public class ItemInstance : IItemCooldownView
     // ✨ [추가됨] 외부(장판)에서 호출하여 쿨타임을 강제로 시작시키는 메서드
     public void StartCooldownManual(float cooldownTime)
     {
+        if (isUnequipped) return;
         this.maxCooldown = cooldownTime;
         this.currentCooldown = cooldownTime; // 여기서 값을 설정하면 Tick이 다시 돌기 시작함
         // Debug.Log($"[ItemInstance] 수동 쿨타임 시작: {cooldownTime}초");

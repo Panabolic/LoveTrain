@@ -26,6 +26,7 @@ public class HealingItem : MonoBehaviour, IInstantiatedItem
 
     // --- 스탯 ---
     private float healPercent;
+    private float appliedMaxSpeedBonus;
 
     // ✨ 0~9 숫자 스프라이트 배열 (인스펙터에서 할당 필요 없게 SO에서 가져오거나 여기서 직접 관리)
     // 여기서는 SO에 있는 countSprites 배열을 0~9 순서대로 채워져 있다고 가정하고 사용합니다.
@@ -55,16 +56,26 @@ public class HealingItem : MonoBehaviour, IInstantiatedItem
 
         // 최대 속도 증가 로직
         float currentBonus = itemData.maxSpeedBonusByLevel[levelIdx];
-        float prevBonus = (levelIdx > 0) ? itemData.maxSpeedBonusByLevel[levelIdx - 1] : 0f;
-        float increaseAmount = currentBonus - prevBonus;
+        float increaseAmount = currentBonus - appliedMaxSpeedBonus;
 
-        if (train != null && increaseAmount > 0f)
+        if (train != null && increaseAmount != 0f)
         {
             train.IncreaseMaxSpeed(increaseAmount);
             train.ModifySpeed(increaseAmount);
+            appliedMaxSpeedBonus = currentBonus;
         }
 
         UpdateVisual();
+    }
+
+    public void RemoveEquipmentStats()
+    {
+        if (train != null && appliedMaxSpeedBonus != 0f)
+        {
+            train.IncreaseMaxSpeed(-appliedMaxSpeedBonus);
+            train.ModifySpeed(0f);
+        }
+        appliedMaxSpeedBonus = 0f;
     }
 
     public void OnEnemyKilled()

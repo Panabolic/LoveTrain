@@ -39,6 +39,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7a795d7bb54c5c9ca05139a43aa839, type: 3}
   m_Name:
   m_EditorClassIdentifier:
-  fuelReward: 20
+  fuelRewardPercent: 0.1
   driftSpeed: 1.5
   lifetime: 25

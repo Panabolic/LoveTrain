@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GiantMaw", menuName = "Items/GiantMaw")]
@@ -14,7 +14,7 @@ public class GiantMaw_SO : Item_SO
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        GameObject giantMawGO = InstantiateVisual(user);
+        GameObject giantMawGO = InstantiateVisual(user, instance);
         if (giantMawGO == null) return null;
 
         GiantMaw giantMaw = giantMawGO.GetComponent<GiantMaw>();

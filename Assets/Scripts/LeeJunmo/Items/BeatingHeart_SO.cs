@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BeatingHeart", menuName = "Items/BeatingHeart")]
@@ -19,7 +19,7 @@ public class BeatingHeart_SO : Item_SO
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
         // 1. 부모의 공통 함수를 호출해 '시각적' 프리팹만 생성
-        GameObject visualGO = InstantiateVisual(user);
+        GameObject visualGO = InstantiateVisual(user, instance);
 
         visualTrasform = visualGO.GetComponent<Transform>();
 

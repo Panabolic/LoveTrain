@@ -1,154 +1,220 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
-using System; // Action (이벤트)을 사용하기 위해 필요
+using System;
 
 public class Inventory : MonoBehaviour
 {
+    public const int EquipmentSlotCount = 10;
+
     [Header("데이터")]
     [Tooltip("현재 소지(장착)한 아이템 인스턴스 목록")]
     public List<ItemInstance> items = new List<ItemInstance>();
 
-    [Tooltip("아이템 획득/업그레이드 시 UI가 갱신되도록 알리는 이벤트")]
+    [Header("실제 기차 부착 위치 (미지정 시 기차 칸 아래 자동 생성)")]
+    [Tooltip("머리 위/앞/중앙, 가운데 위/왼쪽/오른쪽, 꼬리 위/뒤/중앙, 바퀴 순서")]
+    [SerializeField] private Transform[] equipmentAnchors = new Transform[EquipmentSlotCount];
+    [SerializeField] private Vector3[] equipmentSlotOffsets =
+    {
+        new Vector3(0f, 1.3f, 0f), new Vector3(1.7f, 0.1f, 0f), new Vector3(-0.6f, 0.1f, 0f),
+        new Vector3(0f, 1.3f, 0f), new Vector3(-0.9f, 0.1f, 0f), new Vector3(0.9f, 0.1f, 0f),
+        new Vector3(0f, 1.3f, 0f), new Vector3(-1.7f, 0.1f, 0f), new Vector3(0.6f, 0.1f, 0f),
+        new Vector3(0f, -0.75f, 0f)
+    };
+    private readonly Transform[] generatedAnchors = new Transform[EquipmentSlotCount];
+
     public event Action OnInventoryChanged;
 
-    /// <summary>
-    // 매 프레임 모든 아이템의 '패시브' 쿨타임을 갱신합니다.
-    /// </summary>
-    void Update()
+    private void Awake() => EnsureSlotAssignments();
+
+    private void Update()
     {
-        // 'this.gameObject'는 플레이어 자신을 의미합니다.
         foreach (ItemInstance instance in items)
-        {
-            instance.Tick(Time.deltaTime, this.gameObject);
-        }
+            if (instance != null && instance.itemData != null) instance.Tick(Time.deltaTime, gameObject);
     }
 
-    /// <summary>
-    /// 적 처치 이벤트를 처리하고, 모든 장착 아이템의 OnKillEnemy 훅을 호출합니다.
-    /// 이 함수는 Enemy.cs의 Die()에서 호출됩니다.
-    /// </summary>
     public void ProcessKillEvent(GameObject killedEnemy)
     {
-        // 'this.gameObject'는 플레이어(Train) 자신입니다.
         foreach (ItemInstance instance in items)
-        {
-            // Item_SO에 정의된 OnKillEnemy 훅 호출
-            instance.itemData.OnKillEnemy(this.gameObject, killedEnemy);
-        }
+            if (instance != null && instance.itemData != null) instance.itemData.OnKillEnemy(gameObject, killedEnemy);
     }
 
-    /// <summary>
-    /// 투사체/레이저가 적을 타격했을 때 호출 (MagicBullet 등이 사용)
-    /// </summary>
     public void ProcessHitEvent(GameObject target, GameObject source)
     {
         foreach (ItemInstance instance in items)
-        {
-            // ✨ [수정] instance를 인자로 함께 전달
-            instance.itemData.OnDealDamage(this.gameObject, target, source, instance);
-        }
+            if (instance != null && instance.itemData != null) instance.itemData.OnDealDamage(gameObject, target, source, instance);
     }
 
-    /// <summary>
-    /// 새 아이템을 획득(또는 업그레이드)합니다.
-    /// UI 갱신 이벤트를 호출합니다.
-    /// </summary>
     public static int AttachmentSection(Item_SO item)
     {
+        if (item == null) return -1;
         if (item is BlueGear_SO || item is RedGear_SO) return 3;
         if (item.attachmentSocketName == "TrainF") return 0;
         if (item.attachmentSocketName == "TrainR") return 2;
         return 1;
     }
 
+    public static int SlotSection(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= EquipmentSlotCount) return -1;
+        return slotIndex == 9 ? 3 : slotIndex / 3;
+    }
+
     public bool CanAcquireItem(Item_SO item)
     {
-        if (item == null || FindItem(item) != null) return false;
-        int section = AttachmentSection(item), count = 0;
-        foreach (var owned in items)
-            if (owned != null && owned.itemData != null && AttachmentSection(owned.itemData) == section) count++;
-        return count < (section == 3 ? 1 : 3);
+        if (item == null || !PermanentUpgradeProgress.IsItemUnlocked(item) || FindItem(item) != null) return false;
+        EnsureSlotAssignments();
+        for (int i = 0; i < EquipmentSlotCount; i++)
+            if (item.CanEquipInSlot(i) && FindAtAssignedSlot(i) == null) return true;
+        return false;
     }
 
-    public void AcquireItem(Item_SO newItemSO)
+    public bool CanEquipAt(Item_SO item, int slotIndex)
     {
-        if (!CanAcquireItem(newItemSO)) return;
+        if (item == null || !PermanentUpgradeProgress.IsItemUnlocked(item)
+            || !item.CanEquipInSlot(slotIndex) || FindItem(item) != null) return false;
+        EnsureSlotAssignments();
+        return FindAtAssignedSlot(slotIndex) == null;
+    }
 
-        // 4. 없으면 신규 아이템으로 추가
-        ItemInstance newInstance = new ItemInstance(newItemSO);
-        items.Add(newInstance);
+    public bool TryEquipAt(Item_SO item, int slotIndex, out ItemInstance equippedInstance)
+    {
+        equippedInstance = null;
+        if (!CanEquipAt(item, slotIndex)) return false;
 
-        // 5. 아이템 장착(실체화) 로직 실행
-        newInstance.HandleEquip(this.gameObject);
-
-        // 6. UI 갱신 알림
+        ItemInstance instance = new ItemInstance(item) { equippedSlotIndex = slotIndex };
+        items.Add(instance);
+        instance.HandleEquip(gameObject);
+        equippedInstance = instance;
         OnInventoryChanged?.Invoke();
+        return true;
     }
 
-    /// <summary>
-    /// [추가] 특정 아이템 인스턴스를 1레벨 업그레이드하고 UI를 갱신합니다.
-    /// (이벤트 시스템의 Upgrade 효과들이 이 함수를 사용)
-    /// </summary>
-    public void UpgradeItemInstance(ItemInstance instance)
+    // 기존 이벤트의 자동 획득은 첫 번째 빈 허용 위치를 사용한다.
+    public void AcquireItem(Item_SO item)
     {
-        if (instance == null) return;
-
-        // 1. 실제 업그레이드 로직 실행
-        // (최대 레벨 체크는 호출하는 쪽에서 하거나 여기서 추가로 해도 됨)
-        if (instance.currentUpgrade < instance.itemData.MaxUpgrade)
-        {
-            instance.UpgradeLevel(); // 내부 로직(스탯 갱신 등) 실행
-
-            // 2. [핵심] UI 갱신 알림
-            OnInventoryChanged?.Invoke();
-        }
+        for (int i = 0; i < EquipmentSlotCount; i++)
+            if (TryEquipAt(item, i, out _)) return;
     }
 
+    public ItemInstance GetItemAtSlot(int slotIndex)
+    {
+        if (SlotSection(slotIndex) < 0) return null;
+        EnsureSlotAssignments();
+        return FindAtAssignedSlot(slotIndex);
+    }
 
-    // --- 헬퍼 함수 (UI 및 이벤트 시스템용) ---
+    public int GetAssignedSlot(ItemInstance instance)
+    {
+        if (instance == null || !items.Contains(instance)) return -1;
+        EnsureSlotAssignments();
+        return instance.equippedSlotIndex;
+    }
 
-    /// <summary>
-    /// 인벤토리에서 특정 아이템(SO)에 해당하는 인스턴스를 찾습니다.
-    /// </summary>
-    /// <returns>찾은 ItemInstance, 없으면 null</returns>
+    public int OccupiedSlotCount(ItemInstance instance) => OccupiedSlotCount(instance != null ? instance.itemData : null);
+    public int OccupiedSlotCount(Item_SO item) => item != null ? Mathf.Max(1, item.equipmentCellCount) : 0;
+
+    public bool RemoveItemInstance(ItemInstance instance)
+    {
+        if (instance == null || !items.Remove(instance)) return false;
+        instance.HandleUnequip(gameObject);
+        instance.equippedSlotIndex = -1;
+        OnInventoryChanged?.Invoke();
+        return true;
+    }
+
+    public bool TryUpgradeItemInstance(ItemInstance instance)
+    {
+        if (instance == null || instance.itemData == null || !items.Contains(instance)
+            || instance.currentUpgrade >= instance.itemData.MaxUpgrade) return false;
+        instance.UpgradeLevel();
+        OnInventoryChanged?.Invoke();
+        return true;
+    }
+
+    public void UpgradeItemInstance(ItemInstance instance) => TryUpgradeItemInstance(instance);
+
     public ItemInstance FindItem(Item_SO itemToFind)
     {
+        if (itemToFind == null) return null;
         foreach (ItemInstance instance in items)
-        {
-            if (instance.itemData == itemToFind)
-            {
-                return instance; // 찾았음
-            }
-        }
-        return null; // 못 찾았음
+            if (instance != null && instance.itemData == itemToFind) return instance;
+        return null;
     }
 
-    /// <summary>
-    /// 현재 소지한 아이템 중 '최대 레벨'이 아닌 아이템 목록을 반환합니다.
-    /// (이벤트 시스템의 '랜덤 업그레이드' 효과가 사용)
-    /// </summary>
     public List<ItemInstance> GetUpgradableItems()
     {
-        List<ItemInstance> upgradableList = new List<ItemInstance>();
+        List<ItemInstance> result = new List<ItemInstance>();
         foreach (ItemInstance instance in items)
-        {
-            if (instance.currentUpgrade < instance.itemData.MaxUpgrade)
-            {
-                upgradableList.Add(instance);
-            }
-        }
-        return upgradableList;
+            if (instance != null && instance.itemData != null && instance.currentUpgrade < instance.itemData.MaxUpgrade)
+                result.Add(instance);
+        return result;
     }
 
-    /// <summary>
-    /// 특정 아이템 SO가 현재 인벤토리에서 최대 레벨인지 확인합니다.
-    /// (레벨 업 UI, 이벤트 시스템에서 사용)
-    /// </summary>
     public bool IsItemMaxed(Item_SO itemToFind)
     {
         ItemInstance instance = FindItem(itemToFind);
-        if (instance == null) return false; // 아직 없으므로 Max가 아님
+        return instance != null && instance.currentUpgrade >= instance.itemData.MaxUpgrade;
+    }
 
-        return instance.currentUpgrade >= instance.itemData.MaxUpgrade;
+    // 이전 인스턴스의 슬롯(-1)을 배정하되 기존의 유효한 선택 슬롯을 먼저 보존한다.
+    public void EnsureSlotAssignments()
+    {
+        int used = 0;
+        foreach (ItemInstance instance in items)
+        {
+            if (instance == null || instance.itemData == null) continue;
+            int index = instance.equippedSlotIndex;
+            if (!instance.itemData.CanEquipInSlot(index) || (used & (1 << index)) != 0)
+                instance.equippedSlotIndex = -1;
+            else used |= 1 << index;
+        }
+        foreach (ItemInstance instance in items)
+        {
+            if (instance == null || instance.itemData == null || instance.equippedSlotIndex >= 0) continue;
+            for (int i = 0; i < EquipmentSlotCount; i++)
+            {
+                if ((used & (1 << i)) != 0 || !instance.itemData.CanEquipInSlot(i)) continue;
+                instance.equippedSlotIndex = i;
+                used |= 1 << i;
+                break;
+            }
+        }
+    }
+
+    public Transform GetEquipmentAnchor(int slotIndex)
+    {
+        if (SlotSection(slotIndex) < 0) return null;
+        if (equipmentAnchors != null && slotIndex < equipmentAnchors.Length && equipmentAnchors[slotIndex] != null)
+            return equipmentAnchors[slotIndex];
+        if (generatedAnchors[slotIndex] != null) return generatedAnchors[slotIndex];
+
+        int section = SlotSection(slotIndex);
+        string carName = section == 0 ? "TrainF" : section == 2 ? "TrainR" : "TrainM";
+        Transform parentCar = FindDescendant(transform, carName);
+        if (parentCar == null) return null;
+        Transform anchor = new GameObject("EquipmentSlot_" + slotIndex).transform;
+        anchor.SetParent(parentCar, false);
+        if (equipmentSlotOffsets != null && slotIndex < equipmentSlotOffsets.Length)
+            anchor.localPosition = equipmentSlotOffsets[slotIndex];
+        generatedAnchors[slotIndex] = anchor;
+        return anchor;
+    }
+
+    private ItemInstance FindAtAssignedSlot(int slotIndex)
+    {
+        foreach (ItemInstance instance in items)
+            if (instance != null && instance.itemData != null && instance.equippedSlotIndex == slotIndex) return instance;
+        return null;
+    }
+
+    private static Transform FindDescendant(Transform parent, string objectName)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == objectName) return child;
+            Transform found = FindDescendant(child, objectName);
+            if (found != null) return found;
+        }
+        return null;
     }
 }

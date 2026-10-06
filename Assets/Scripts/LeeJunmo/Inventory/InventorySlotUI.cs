@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI; // Image를 사용하기 위해 필요
 
 // (파일 이름과 클래스 이름이 'InventorySlotUI'로 동일해야 합니다)
-public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IDropHandler
 {
     [Header("UI 구성요소")]
     // [SerializeField]를 제거하고 private으로 변경
@@ -17,12 +17,46 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField] private LevelSpriteAtlas levelAtlas;
 
     private ItemInstance currentInstance;
+    private LevelUpUIManager workbench;
+    private int equipmentSlotIndex = -1;
+    private Image frame;
+    private Color frameColor;
+    private bool previewHidden;
+    public ItemInstance CurrentInstance => currentInstance;
+
+    public void ConfigureWorkbench(LevelUpUIManager owner, int index)
+    {
+        workbench = owner;
+        equipmentSlotIndex = index;
+    }
+
+    public void SetInvalidDropTarget(bool invalid)
+    {
+        if (frame != null) frame.color = invalid ? new Color(1f, 0.15f, 0.2f, 1f) : frameColor;
+    }
+
+    public void SetPreviewHidden(bool hidden)
+    {
+        previewHidden = hidden;
+        if (itemIcon != null) itemIcon.enabled = !hidden && currentInstance != null;
+        if (levelIcon != null) levelIcon.enabled = !hidden && currentInstance != null && levelIcon.sprite != null;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left && currentInstance != null)
+            workbench?.SelectUpgradeItem(currentInstance, this);
+    }
+
+    public void OnDrop(PointerEventData eventData) => workbench?.DropCreationItem(equipmentSlotIndex);
 
     /// <summary>
     /// 스크립트가 활성화될 때 자동으로 컴포넌트를 찾습니다.
     /// </summary>
     private void Awake()
     {
+        frame = GetComponent<Image>();
+        if (frame != null) { frameColor = frame.color; frame.raycastTarget = true; }
         itemIcon = FindChildImage("ItemIcon") ?? GetChildImage(0);
         levelIcon = FindChildImage("Level") ?? GetChildImage(1);
         cooldownFill = FindChildImage("CoolDownFill") ?? GetChildImage(2);
@@ -64,13 +98,14 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
         // 2. '아이템 아이콘' 갱신
         itemIcon.sprite = instance.itemData.iconSprite;
-        itemIcon.enabled = true;
+        itemIcon.enabled = !previewHidden;
 
         // 3. '레벨 스프라이트' 갱신
         Sprite levelSprite;
 
         // 3a. 최대 레벨인지 확인
-        if (instance.currentUpgrade >= instance.itemData.MaxUpgrade)
+        if (levelAtlas == null) levelSprite = null;
+        else if (instance.currentUpgrade >= instance.itemData.MaxUpgrade)
         {
             levelSprite = levelAtlas.maxLevelSprite;
         }
@@ -83,7 +118,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (levelSprite != null)
         {
             levelIcon.sprite = levelSprite;
-            levelIcon.enabled = true;
+            levelIcon.enabled = !previewHidden;
         }
         else
         {
@@ -158,13 +193,18 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (currentInstance == null) return;
+        if (workbench != null && workbench.IsOpen)
+        {
+            workbench.ShowItemTooltip(currentInstance.itemData, currentInstance.currentUpgrade, eventData);
+            return;
+        }
 
         Item_SO so = currentInstance.itemData;
         int level = currentInstance.currentUpgrade;
 
         // ... (제목, 레벨 스프라이트, 설명 가져오는 로직은 그대로) ...
         string title = so.LocalizedName;
-        Sprite levelSprite = (level >= so.MaxUpgrade) ? levelAtlas.maxLevelSprite : levelAtlas.GetSpriteForLevel(level);
+        Sprite levelSprite = levelAtlas == null ? null : (level >= so.MaxUpgrade) ? levelAtlas.maxLevelSprite : levelAtlas.GetSpriteForLevel(level);
         string content = so.GetFormattedDescription(level);
 
         // [변경] Show 함수에 'transform.position' (슬롯의 위치) 추가 전달
@@ -177,6 +217,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     // 마우스 뗐을 때
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (workbench != null && workbench.IsOpen) { workbench.HideItemTooltip(); return; }
         if (currentInstance == null) return;
 
         if (TooltipSystem.TryGetInstance(out TooltipSystem tooltip))

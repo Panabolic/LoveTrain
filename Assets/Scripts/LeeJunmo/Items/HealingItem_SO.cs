@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HealingItem", menuName = "Items/HealingItem")]
@@ -19,7 +19,7 @@ public class HealingItem_SO : Item_SO
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        GameObject itemObj = InstantiateVisual(user);
+        GameObject itemObj = InstantiateVisual(user, instance);
         if (itemObj == null) return null;
 
         HealingItem logic = itemObj.GetComponent<HealingItem>();
@@ -35,6 +35,13 @@ public class HealingItem_SO : Item_SO
     {
         HealingItem logic = user.GetComponentInChildren<HealingItem>();
         if (logic != null) logic.OnEnemyKilled();
+    }
+
+    public override void OnUnequip(GameObject user, ItemInstance instance)
+    {
+        if (instance.InstantiatedObject == null) return;
+        HealingItem logic = instance.InstantiatedObject.GetComponent<HealingItem>();
+        if (logic != null) logic.RemoveEquipmentStats();
     }
 
     protected override Dictionary<string, string> GetStatReplacements(int level)

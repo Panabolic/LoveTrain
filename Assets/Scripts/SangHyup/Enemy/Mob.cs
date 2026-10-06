@@ -15,6 +15,7 @@ public class Mob : Enemy
     protected Vector2 moveDirection = Vector2.zero;
 
     protected Train playerTrain;
+    protected override EnemyRewardKind RewardKind => isEliteMob ? EnemyRewardKind.Elite : EnemyRewardKind.Normal;
 
     protected bool isStunned    = false;
     private float stunDuration  = 0.5f;
@@ -102,18 +103,16 @@ public class Mob : Enemy
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!isAlive) return;
+        if (Time.timeScale <= 0f || GameManager.Instance == null ||
+            (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss)) return;
         if (collision.gameObject.layer == LayerMask.NameToLayer("Train"))
         {
             Train train = collision.transform.GetComponentInParent<Train>();
 
             if (train != null)
             {
-                train.TakeDamage(damage); // Train 스크립트에 맞게 수정 필요
-                if (CameraShakeManager.Instance != null)
-                {
-                    CameraShakeManager.Instance.ShakeCamera(); // 기본 설정으로 흔들기
-                                                               // 또는 원하는 값으로 흔들기: CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
-                }
+                train.TakeCollisionDamage(isEliteMob ? 15f : 10f, isEliteMob ? 30f : 20f);
             }
 
             StartCoroutine(Die());
@@ -202,6 +201,8 @@ public class Mob : Enemy
 
     protected override IEnumerator Die()
     {
+        if (!isAlive) yield break;
+        isAlive = false;
         if (GameManager.Instance != null)
         {
             GameManager.Instance.AddKillCount(isEliteMob);

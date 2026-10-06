@@ -25,6 +25,45 @@ public class EventDatabase : ScriptableObject
         return eventList[randomIndex];
     }
 
+    public SO_Event GetRandomEvent(Inventory inventory)
+    {
+        if (eventList == null) return null;
+        SO_Event selected = null;
+        int eligibleCount = 0;
+        foreach (SO_Event candidate in eventList)
+        {
+            if (!IsEligible(candidate, inventory)) continue;
+            // Reservoir sampling keeps every eligible event equally likely.
+            eligibleCount++;
+            if (Random.Range(0, eligibleCount) == 0) selected = candidate;
+        }
+        return selected;
+    }
+
+    public static bool IsEligible(SO_Event candidate, Inventory inventory)
+    {
+        if (candidate == null || candidate.Selections == null || candidate.Selections.Count == 0) return false;
+        if (inventory == null) return true;
+        foreach (SO_Event.Selection selection in candidate.Selections)
+        {
+            GameEventSO logic = selection.eventToTrigger;
+            if (logic == null || logic.rollGroups == null) continue;
+            foreach (EventRollGroup group in logic.rollGroups)
+            {
+                if (group == null || group.outcomes == null) continue;
+                foreach (WeightedEventOutcome outcome in group.outcomes)
+                {
+                    if (outcome == null || outcome.weight <= 0f || outcome.parameters == null) continue;
+                    bool specificReward = outcome.effectLogic is Effect_AcquireSpecificItem ||
+                        outcome.effectLogic is Effect_AcquireItem;
+                    if (specificReward && outcome.parameters.soReference is Item_SO item && inventory.FindItem(item) != null)
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /// <summary>
     /// [3] 지정된 인덱스(순번)의 이벤트를 반환합니다.
     /// </summary>

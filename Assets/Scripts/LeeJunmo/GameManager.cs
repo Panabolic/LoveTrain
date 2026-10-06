@@ -187,7 +187,7 @@ public class GameManager : MonoBehaviour
 
     public void RegisterUIQueue(Action uiAction)
     {
-        if (IsTimeForEnding || CurrentState == GameState.Ending) return;
+        if (uiAction == null || CurrentState == GameState.Ending || CurrentState == GameState.Die) return;
         uiRequestQueue.Enqueue(uiAction);
         if (!isUIProcessing && CurrentState != GameState.Pause) ProcessNextUI();
     }
@@ -231,6 +231,19 @@ public class GameManager : MonoBehaviour
     }
 
     public void CloseUI() { ProcessNextUI(); }
+
+    // A destroyed/disabled modal must release its pause without opening another queued window.
+    public void CancelUIQueue()
+    {
+        uiRequestQueue.Clear();
+        if (CurrentState == GameState.Die || CurrentState == GameState.Ending)
+        {
+            isUIProcessing = false;
+            Time.timeScale = 1f;
+            Physics2D.simulationMode = SimulationMode2D.FixedUpdate;
+        }
+        else ProcessNextUI();
+    }
     public void StartGame() { if (CurrentState == GameState.Start) ChangeState(GameState.Playing); }
     public void AppearBoss() { if (CurrentState == GameState.Playing) ChangeState(GameState.Boss); }
     public void PlayerDied() { ChangeState(GameState.Die); }

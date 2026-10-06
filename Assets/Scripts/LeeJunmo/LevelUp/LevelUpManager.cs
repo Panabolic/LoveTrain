@@ -1,481 +1,435 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class LevelUpUIManager : MonoBehaviour
 {
     public static LevelUpUIManager Instance;
-
-    [Header("UI")]
+    // Preserve the authored legacy references; the old choice cards remain inactive.
     [SerializeField] private GameObject levelUpPanel;
     [SerializeField] private LevelUpChoiceUI choiceSlot1;
     [SerializeField] private LevelUpChoiceUI choiceSlot2;
     [SerializeField] private LevelUpChoiceUI choiceSlot3;
     [SerializeField] private RectTransform levelUpTitleText;
-
-    [Header("데이터")]
     [SerializeField] private ItemDatabase itemDatabase;
     [SerializeField] private Inventory playerInventory;
+    [Header("Train item workbench")]
+    [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private TrainItemWorkbenchView workbenchPrefab;
+    [SerializeField] private float trainPanelScale = 1.25f;
+    [SerializeField] private float panelMoveDuration = 0.35f;
+    [Tooltip("Pending design: negative means upgrades remain disabled until a cost is authored.")]
+    [SerializeField] private int upgradeCostPerCell = -1;
 
-    [Header("Animation")]
-    [SerializeField] private float titleIntroDuration = 0.18f;
-    [SerializeField] private float titleHoldDuration = 0.12f;
-    [SerializeField] private float titleSettleDuration = 0.2f;
-    [SerializeField] private float choiceIntroDuration = 0.18f;
-    [SerializeField] private float choiceStaggerDelay = 0.06f;
-    [SerializeField] private Vector2 titleIntroOffset = new Vector2(0f, -360f);
-    [SerializeField] private Vector2 choiceIntroOffset = new Vector2(0f, -220f);
-
-    private readonly List<LevelUpChoiceUI> choiceSlots = new List<LevelUpChoiceUI>();
-    private readonly List<RectTransform> choiceRects = new List<RectTransform>();
-    private readonly List<Vector2> choiceOriginalPositions = new List<Vector2>();
-    private readonly List<bool> choiceShouldReveal = new List<bool>();
-
-    private RectTransform titleTextRect;
-    private Vector2 titleOriginalPosition;
-    private bool hasCachedLayout;
-    private bool isRevealing;
-    private Sequence revealSequence;
-
-    private TrainLevelManager creationWallet;
-    private Item_SO creationOffer;
-    private Item_SO pendingCreationOffer;
-    private TMP_Text creationHelp;
-    private Button rerollButton;
-    private Button cancelButton;
-    private int creationOpenedFrame;
-
-    public void ShowCreation(TrainLevelManager wallet)
+    private enum Mode { None, Creation, Upgrade }
+    private Mode mode;
+    private TrainItemWorkbenchView view;
+    private TrainLevelManager wallet;
+    private Item_SO[] offers = new Item_SO[3];
+    private int draggingChoice = -1;
+    private int openingFrame;
+    private ItemInstance selectedItem;
+    private InventorySlotUI selectedSlot;
+    private bool removalUsed;
+    private bool transitionBusy;
+    private bool closing;
+    private Sequence transition;
+    private RectTransform equipmentRect;
+    private Transform savedParent;
+    private int savedSibling;
+    private Vector2 savedAnchorMin, savedAnchorMax, savedPivot, savedSize, savedPosition;
+    private Vector3 savedScale;
+    private bool savedLayout;
+    private Inventory availabilityInventory;
+    private ItemDatabase availabilityDatabase;
+    private bool creationAvailabilityDirty = true;
+    private bool hasCreationCandidate;
+    public bool IsOpen => mode != Mode.None;
+    public bool CanShowCreation
     {
-        ResetLevelUpUIState();
-        creationWallet = wallet;
-        creationOpenedFrame = Time.frameCount;
-        if (wallet == null || wallet.Flesh < wallet.CreationCost || itemDatabase == null || playerInventory == null || choiceSlot2 == null || levelUpPanel == null || itemDatabase.allItems == null)
-        { CloseLevelUpUI(); return; }
-        EnsureCreationControls();
-        creationHelp.gameObject.SetActive(true);
-        rerollButton.gameObject.SetActive(true);
-        cancelButton.gameObject.SetActive(true);
-        levelUpPanel.SetActive(true);
-        if (titleTextRect != null) titleTextRect.gameObject.SetActive(false);
-        if (pendingCreationOffer != null && playerInventory.CanAcquireItem(pendingCreationOffer))
+        get
         {
-            creationOffer = pendingCreationOffer;
-            SetupSlot(choiceSlot2, creationOffer);
-            choiceSlot2.GetComponent<Button>().interactable = true;
-            UpdateCreationHelp();
+            if (IsOpen || !isActiveAndEnabled || inventoryUI == null || inventoryUI.EquipmentRect == null ||
+                workbenchPrefab == null || playerInventory == null || itemDatabase == null || itemDatabase.allItems == null) return false;
+            if (availabilityDatabase != itemDatabase)
+            {
+                availabilityDatabase = itemDatabase;
+                creationAvailabilityDirty = true;
+            }
+            if (creationAvailabilityDirty)
+            {
+                hasCreationCandidate = false;
+                foreach (var item in itemDatabase.allItems)
+                    if (playerInventory.CanAcquireItem(item)) { hasCreationCandidate = true; break; }
+                creationAvailabilityDirty = false;
+            }
+            return hasCreationCandidate;
         }
-        else RollCreationOffer();
-    }
-
-    private void EnsureCreationControls()
-    {
-        if (creationHelp != null) return;
-        var source = choiceSlot2.GetComponentInChildren<TMP_Text>(true);
-        var label = new GameObject("CreationHelp", typeof(RectTransform));
-        label.transform.SetParent(levelUpPanel.transform, false);
-        creationHelp = label.AddComponent<TextMeshProUGUI>();
-        if (source != null) creationHelp.font = source.font;
-        creationHelp.fontSize = 14;
-        creationHelp.alignment = TextAlignmentOptions.Center;
-        creationHelp.raycastTarget = false;
-        var rect = (RectTransform)label.transform;
-        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = new Vector2(0, -150);
-        rect.sizeDelta = new Vector2(440, 38);
-        rerollButton = CreateCreationButton("Reroll", new Vector2(-85, -195), () => RerollCreation());
-        cancelButton = CreateCreationButton("Cancel", new Vector2(85, -195), () => CloseLevelUpUI());
-    }
-
-    private Button CreateCreationButton(string label, Vector2 position, UnityEngine.Events.UnityAction action)
-    {
-        var go = new GameObject(label, typeof(RectTransform), typeof(Image), typeof(Button));
-        go.transform.SetParent(levelUpPanel.transform, false);
-        var rect = (RectTransform)go.transform;
-        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = position; rect.sizeDelta = new Vector2(150, 32);
-        go.GetComponent<Image>().color = new Color(0.15f, 0.18f, 0.23f);
-        var textGo = new GameObject("Label", typeof(RectTransform));
-        textGo.transform.SetParent(go.transform, false);
-        var text = textGo.AddComponent<TextMeshProUGUI>();
-        text.font = creationHelp.font; text.fontSize = 14; text.text = label == "Reroll" ? "R · Reroll" : "Esc · Cancel";
-        text.alignment = TextAlignmentOptions.Center; text.raycastTarget = false;
-        var tr = (RectTransform)textGo.transform; tr.anchorMin = Vector2.zero; tr.anchorMax = Vector2.one; tr.sizeDelta = Vector2.zero;
-        var button = go.GetComponent<Button>(); button.onClick.AddListener(action); return button;
-    }
-
-    private List<Item_SO> GetCreationCandidates()
-    {
-        return itemDatabase.allItems.Where(item => playerInventory.CanAcquireItem(item)).Distinct().ToList();
-    }
-
-    private void RollCreationOffer()
-    {
-        var candidates = GetCreationCandidates();
-        if (candidates.Count == 0) { CloseLevelUpUI(); return; }
-        if (candidates.Count > 1) candidates.Remove(creationOffer);
-        creationOffer = candidates[Random.Range(0, candidates.Count)];
-        pendingCreationOffer = creationOffer;
-        SetupSlot(choiceSlot2, creationOffer);
-        choiceSlot2.GetComponent<Button>().interactable = true;
-        UpdateCreationHelp();
-    }
-
-    private void UpdateCreationHelp()
-    {
-        creationHelp.text = $"F / Click · Create {creationWallet.CreationCost}   |   Reroll {creationWallet.RerollCost}   |   Flesh {creationWallet.Flesh}";
-        rerollButton.interactable = GetCreationCandidates().Count > 1 && (long)creationWallet.Flesh >= (long)creationWallet.CreationCost + creationWallet.RerollCost;
-    }
-
-    private void RerollCreation()
-    {
-        if (creationWallet == null || !rerollButton.interactable) return;
-        if (creationWallet.TrySpendFlesh(creationWallet.RerollCost)) RollCreationOffer();
-    }
-
-    private void Update()
-    {
-        if (creationWallet == null || levelUpPanel == null || !levelUpPanel.activeSelf || Keyboard.current == null || Time.frameCount <= creationOpenedFrame) return;
-        if (GameManager.Instance == null || GameManager.Instance.CurrentState != GameState.Event) return;
-        if (Keyboard.current.escapeKey.wasPressedThisFrame) CloseLevelUpUI();
-        else if (Keyboard.current.rKey.wasPressedThisFrame) RerollCreation();
-        else if (Keyboard.current.fKey.wasPressedThisFrame) OnChoiceSelected(creationOffer);
     }
 
     private void Awake()
     {
-        // 싱글톤 보호 로직 (중복 생성 방지)
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
+        if (levelUpPanel != null) levelUpPanel.SetActive(false);
+    }
 
-        CacheChoiceSlots();
-        CacheRuntimeReferences();
-        ResetLevelUpUIState();
+    private void Start()
+    {
+        if (inventoryUI != null) inventoryUI.ConfigureWorkbench(this);
+        if (GameManager.Instance != null) GameManager.Instance.OnGameStateChanged += HandleGameState;
+    }
+
+    private void OnEnable()
+    {
+        availabilityInventory = playerInventory;
+        if (availabilityInventory != null) availabilityInventory.OnInventoryChanged += InvalidateCreationAvailability;
+        InvalidateCreationAvailability();
     }
 
     private void OnDisable()
     {
-        KillRevealSequence();
-        isRevealing = false;
+        if (availabilityInventory != null) availabilityInventory.OnInventoryChanged -= InvalidateCreationAvailability;
+        availabilityInventory = null;
+        AbortWorkbench();
     }
 
+    private void InvalidateCreationAvailability() => creationAvailabilityDirty = true;
     private void OnDestroy()
     {
+        if (GameManager.Instance != null) GameManager.Instance.OnGameStateChanged -= HandleGameState;
         if (Instance == this) Instance = null;
     }
-
-    // ✨ GameManager의 큐에서 호출됨
-    public void ShowLevelUpChoices()
+    private void HandleGameState(GameState state)
     {
-        ResetLevelUpUIState();
-        if (levelUpPanel == null ||
-            choiceSlot1 == null ||
-            choiceSlot2 == null ||
-            choiceSlot3 == null ||
-            itemDatabase == null ||
-            itemDatabase.allItems == null ||
-            playerInventory == null)
-        {
-            CloseLevelUpUI();
-            return;
-        }
-
-        List<Item_SO> availableItems = new List<Item_SO>();
-
-        SoundEventBus.Publish(SoundID.UI_LevelUp);
-        foreach (Item_SO item in itemDatabase.allItems)
-        {
-            if (item == null) continue;
-
-            ItemInstance instance = playerInventory.FindItem(item);
-
-            // 1. 아직 없는 아이템이면 획득 가능
-            if (playerInventory.CanAcquireItem(item))
-            {
-                availableItems.Add(item);
-            }
-            // 2. 이미 있는 아이템이면 Max 레벨이 아닐 때만 강화 가능
-
-        }
-
-        // ✨ [핵심 수정] 획득/강화 가능한 아이템이 하나도 없으면 스킵
-        if (availableItems.Count == 0)
-        {
-            Debug.Log("모든 아이템이 만렙이거나 획득 불가능하여 레벨업 선택지를 건너뜁니다.");
-
-            // UI를 띄우지 않고 바로 닫기 처리 (게임 시간 재개)
-            CloseLevelUpUI();
-            return;
-        }
-
-        // --- 기존 로직 (선택지 섞고 표시) ---
-        System.Random rng = new System.Random();
-        List<Item_SO> randomChoices = availableItems.OrderBy(x => rng.Next()).Take(3).ToList();
-
-        choiceSlot1.gameObject.SetActive(true);
-        choiceSlot2.gameObject.SetActive(true);
-        choiceSlot3.gameObject.SetActive(true);
-
-        SetupSlot(choiceSlot1, randomChoices.ElementAtOrDefault(0));
-        SetupSlot(choiceSlot2, randomChoices.ElementAtOrDefault(1));
-        SetupSlot(choiceSlot3, randomChoices.ElementAtOrDefault(2));
-
-        levelUpPanel.SetActive(true);
-
-        CacheRuntimeReferences();
-        SetChoiceInteractable(false);
-
-        if (titleTextRect == null)
-        {
-            Debug.LogWarning("[LevelUpUIManager] levelUpTitleText가 연결되지 않아 레벨업 순차 연출을 건너뜁니다.");
-            ResetAnimatedElementsToOriginal();
-            SetChoiceInteractable(true);
-            return;
-        }
-
-        PlayRevealSequence();
+        if (state == GameState.Die || state == GameState.Ending) AbortWorkbench();
     }
 
-    private void SetupSlot(LevelUpChoiceUI slot, Item_SO item)
+    public void ShowCreation(TrainLevelManager source)
     {
-        if (slot == null) return;
-
-        if (item != null) slot.DisplayChoice(item, playerInventory, this);
-        else slot.gameObject.SetActive(false); // 아이템이 부족하면 슬롯 끄기
+        if (IsOpen) return;
+        if (source == null || !source.CanPurchaseCreation || !EnsureView()) { ReleaseQueue(); return; }
+        if (!OffersRemainValid()) RollOffers();
+        if (offers[0] == null) { ReleaseQueue(); return; }
+        Open(Mode.Creation, source);
+        ShowOffers();
     }
 
-    public void OnChoiceSelected(Item_SO selectedItemSO)
+    public void ShowUpgradeEvent()
     {
-        if (isRevealing) return;
-        if (creationWallet != null)
-        {
-            if (selectedItemSO != creationOffer || !playerInventory.CanAcquireItem(selectedItemSO)) { CloseLevelUpUI(); return; }
-            if (!creationWallet.TrySpendFlesh(creationWallet.CreationCost)) return;
-            playerInventory.AcquireItem(selectedItemSO);
-            creationWallet.CompleteCreation();
-            pendingCreationOffer = null;
-            CloseLevelUpUI();
-            return;
-        }
-
-        if (selectedItemSO == null || playerInventory == null)
-        {
-            CloseLevelUpUI();
-            return;
-        }
-
-        KillRevealSequence();
-        ResetAnimatedElementsToOriginal();
-        playerInventory.AcquireItem(selectedItemSO);
-        ResetLevelUpUIState();
-        if (GameManager.Instance != null) GameManager.Instance.CloseUI();
+        if (IsOpen) return;
+        TrainLevelManager source = playerInventory != null ? playerInventory.GetComponent<TrainLevelManager>() : null;
+        if (source == null || !EnsureView()) { ReleaseQueue(); return; }
+        removalUsed = false;
+        Open(Mode.Upgrade, source);
+        RefreshUpgrade();
     }
 
-    private void CacheChoiceSlots()
+    public void ShowLevelUpChoices() => ShowCreation(playerInventory != null ? playerInventory.GetComponent<TrainLevelManager>() : null);
+    public void OnChoiceSelected(Item_SO item) { } // Old cards no longer grant/equip items by click.
+
+    private bool EnsureView()
     {
-        choiceSlots.Clear();
-        choiceSlots.Add(choiceSlot1);
-        choiceSlots.Add(choiceSlot2);
-        choiceSlots.Add(choiceSlot3);
+        if (view != null) return true;
+        if (inventoryUI == null || inventoryUI.EquipmentRect == null || workbenchPrefab == null || playerInventory == null || itemDatabase == null)
+        {
+            Debug.LogError("[ItemWorkbench] Required prefab, inventory HUD or database reference is missing.", this);
+            return false;
+        }
+        equipmentRect = inventoryUI.EquipmentRect;
+        inventoryUI.ConfigureWorkbench(this);
+        view = Instantiate(workbenchPrefab, inventoryUI.transform.parent);
+        view.name = "TrainItemWorkbench";
+        var rect = (RectTransform)view.transform;
+        rect.anchorMin = Vector2.zero; rect.anchorMax = Vector2.one;
+        rect.offsetMin = rect.offsetMax = Vector2.zero;
+        view.Bind(this);
+        view.gameObject.SetActive(false);
+        return true;
     }
 
-    private void CacheRuntimeReferences()
+    private void Open(Mode nextMode, TrainLevelManager source)
     {
-        if (levelUpPanel == null) return;
-
-        titleTextRect = levelUpTitleText;
-        CacheChoiceRects();
-
-        if (!hasCachedLayout)
+        mode = nextMode; closing = false; transitionBusy = true; openingFrame = Time.frameCount;
+        wallet = source;
+        wallet.OnResourcesChanged += RefreshResources;
+        playerInventory.OnInventoryChanged += HandleInventoryChanged;
+        view.gameObject.SetActive(true);
+        view.transform.SetAsLastSibling();
+        view.SetMode(mode == Mode.Creation);
+        if (mode == Mode.Creation) { view.SetCreationControlsVisible(false); view.ChoicesGroup.alpha = 0f; }
+        view.RootGroup.alpha = 0f;
+        view.RootGroup.interactable = false;
+        view.RootGroup.blocksRaycasts = true;
+        SaveTrainLayout();
+        Vector3 position = equipmentRect.position;
+        equipmentRect.SetParent(view.TrainHost, true);
+        equipmentRect.anchorMin = equipmentRect.anchorMax = new Vector2(0.5f, 0.5f);
+        equipmentRect.position = position;
+        transition?.Kill();
+        transition = DOTween.Sequence().SetUpdate(true);
+        transition.Join(view.RootGroup.DOFade(1f, 0.15f));
+        transition.Join(equipmentRect.DOAnchorPos(Vector2.zero, panelMoveDuration).SetEase(Ease.OutCubic));
+        transition.Join(equipmentRect.DOScale(savedScale * trainPanelScale, panelMoveDuration).SetEase(Ease.OutCubic));
+        if (mode == Mode.Creation)
         {
-            CacheOriginalLayout();
+            transition.AppendCallback(() => view.SetCreationControlsVisible(true));
+            transition.Append(view.ChoicesGroup.DOFade(1f, 0.16f));
         }
+        transition.OnComplete(() => { transitionBusy = false; view.RootGroup.interactable = true; transition = null; });
+        RefreshResources();
+        HideLegacyTooltip();
     }
 
-    private void CacheChoiceRects()
+    private void SaveTrainLayout()
     {
-        choiceRects.Clear();
-        foreach (LevelUpChoiceUI slot in choiceSlots)
-        {
-            choiceRects.Add(slot != null ? slot.GetComponent<RectTransform>() : null);
-        }
+        savedParent = equipmentRect.parent; savedSibling = equipmentRect.GetSiblingIndex();
+        savedAnchorMin = equipmentRect.anchorMin; savedAnchorMax = equipmentRect.anchorMax;
+        savedPivot = equipmentRect.pivot; savedSize = equipmentRect.sizeDelta;
+        savedPosition = equipmentRect.anchoredPosition; savedScale = equipmentRect.localScale; savedLayout = true;
     }
 
-    private void CacheOriginalLayout()
+    private void ReparentTrainForReturn()
     {
-        if (titleTextRect != null)
-        {
-            titleOriginalPosition = titleTextRect.anchoredPosition;
-        }
-
-        choiceOriginalPositions.Clear();
-        foreach (RectTransform choiceRect in choiceRects)
-        {
-            choiceOriginalPositions.Add(choiceRect != null ? choiceRect.anchoredPosition : Vector2.zero);
-        }
-
-        hasCachedLayout = true;
+        if (!savedLayout || equipmentRect == null || savedParent == null) return;
+        Vector3 position = equipmentRect.position;
+        equipmentRect.SetParent(savedParent, true);
+        equipmentRect.SetSiblingIndex(savedSibling);
+        equipmentRect.anchorMin = savedAnchorMin; equipmentRect.anchorMax = savedAnchorMax;
+        equipmentRect.pivot = savedPivot; equipmentRect.sizeDelta = savedSize;
+        equipmentRect.position = position;
     }
 
-    private void PlayRevealSequence()
+    public void CloseWorkbench()
     {
-        isRevealing = true;
-
-        Vector2 titleCenterPosition = Vector2.zero;
-        titleTextRect.gameObject.SetActive(true);
-        titleTextRect.anchoredPosition = titleCenterPosition + titleIntroOffset;
-
-        choiceShouldReveal.Clear();
-        for (int i = 0; i < choiceSlots.Count; i++)
+        if (!IsOpen || closing) return;
+        closing = true; transitionBusy = true;
+        transition?.Kill();
+        EndCreationDrag();
+        ClearSelectionImmediately(false);
+        view.HideTooltip();
+        view.RootGroup.interactable = false;
+        ReparentTrainForReturn();
+        transition = DOTween.Sequence().SetUpdate(true);
+        transition.Join(view.RootGroup.DOFade(0f, 0.2f));
+        transition.Join(equipmentRect.DOAnchorPos(savedPosition, panelMoveDuration).SetEase(Ease.InOutCubic));
+        transition.Join(equipmentRect.DOScale(savedScale, panelMoveDuration).SetEase(Ease.InOutCubic));
+        transition.OnComplete(() =>
         {
-            LevelUpChoiceUI slot = choiceSlots[i];
-            RectTransform choiceRect = GetChoiceRect(i);
-            bool shouldReveal = slot != null && choiceRect != null && slot.gameObject.activeSelf;
-            choiceShouldReveal.Add(shouldReveal);
-            if (!shouldReveal) continue;
-
-            choiceRect.anchoredPosition = GetChoiceOriginalPosition(i) + choiceIntroOffset;
-            slot.gameObject.SetActive(false);
-        }
-
-        revealSequence = DOTween.Sequence().SetUpdate(true);
-        revealSequence.Append(titleTextRect.DOAnchorPos(titleCenterPosition, titleIntroDuration).SetEase(Ease.OutCubic));
-        revealSequence.AppendInterval(titleHoldDuration);
-        revealSequence.Append(titleTextRect.DOAnchorPos(titleOriginalPosition, titleSettleDuration).SetEase(Ease.OutBack));
-
-        for (int i = 0; i < choiceSlots.Count; i++)
-        {
-            LevelUpChoiceUI slot = choiceSlots[i];
-            RectTransform choiceRect = GetChoiceRect(i);
-            if (slot == null || choiceRect == null || !GetChoiceShouldReveal(i)) continue;
-
-            Vector2 targetPosition = GetChoiceOriginalPosition(i);
-            revealSequence.AppendCallback(() => slot.gameObject.SetActive(true));
-            revealSequence.Append(choiceRect.DOAnchorPos(targetPosition, choiceIntroDuration).SetEase(Ease.OutBack));
-
-            if (choiceStaggerDelay > 0f)
-            {
-                revealSequence.AppendInterval(choiceStaggerDelay);
-            }
-        }
-
-        revealSequence.OnComplete(() =>
-        {
-            isRevealing = false;
-            revealSequence = null;
-            SetChoiceInteractable(true);
+            FinishSession();
+            ReleaseQueue();
         });
     }
 
-    private void ResetAnimatedElementsToOriginal()
+    private void AbortWorkbench()
     {
-        if (titleTextRect != null)
+        if (!IsOpen && !savedLayout) return;
+        bool wasOpen = IsOpen;
+        transition?.Kill(); transition = null;
+        EndCreationDrag(); ClearSelectionImmediately();
+        ReparentTrainForReturn();
+        if (savedLayout && equipmentRect != null)
+        { equipmentRect.anchoredPosition = savedPosition; equipmentRect.localScale = savedScale; }
+        FinishSession();
+        if (wasOpen && GameManager.Instance != null) GameManager.Instance.CancelUIQueue();
+    }
+
+    private void FinishSession()
+    {
+        if (wallet != null) wallet.OnResourcesChanged -= RefreshResources;
+        if (playerInventory != null) playerInventory.OnInventoryChanged -= HandleInventoryChanged;
+        wallet = null; selectedItem = null; selectedSlot = null;
+        savedLayout = false; mode = Mode.None; closing = false; transitionBusy = false; transition = null;
+        if (view != null) { view.HideTooltip(); view.ClearPreview(); view.gameObject.SetActive(false); }
+    }
+
+    private void Update()
+    {
+        if (!IsOpen || closing || Time.frameCount <= openingFrame || Keyboard.current == null) return;
+        if (Keyboard.current.escapeKey.wasPressedThisFrame) CloseWorkbench();
+    }
+
+    private bool OffersRemainValid()
+    {
+        if (offers[0] == null) return false;
+        foreach (var offer in offers) if (offer != null && !playerInventory.CanAcquireItem(offer)) return false;
+        return true;
+    }
+
+    private List<Item_SO> AvailableItems()
+    {
+        var candidates = new List<Item_SO>();
+        if (itemDatabase.allItems == null) return candidates;
+        foreach (var item in itemDatabase.allItems)
+            if (playerInventory.CanAcquireItem(item) && !candidates.Contains(item)) candidates.Add(item);
+        return candidates;
+    }
+
+    private void RollOffers()
+    {
+        var candidates = AvailableItems();
+        var newCandidates = candidates.FindAll(item => Array.IndexOf(offers, item) < 0);
+        Item_SO fresh = newCandidates.Count > 0 ? newCandidates[UnityEngine.Random.Range(0, newCandidates.Count)] : null;
+        for (int i = candidates.Count - 1; i > 0; i--)
         {
-            titleTextRect.anchoredPosition = titleOriginalPosition;
+            int chosen = UnityEngine.Random.Range(0, i + 1);
+            Item_SO temp = candidates[i]; candidates[i] = candidates[chosen]; candidates[chosen] = temp;
         }
-
-        for (int i = 0; i < choiceSlots.Count; i++)
+        if (fresh != null)
         {
-            RectTransform choiceRect = GetChoiceRect(i);
-            if (choiceRect != null)
-            {
-                choiceRect.anchoredPosition = GetChoiceOriginalPosition(i);
-            }
+            candidates.Remove(fresh); candidates.Insert(0, fresh);
         }
+        offers = new Item_SO[3];
+        for (int i = 0; i < 3 && i < candidates.Count; i++) offers[i] = candidates[i];
     }
 
-    private void SetChoiceInteractable(bool interactable)
+    private void ShowOffers()
     {
-        foreach (LevelUpChoiceUI slot in choiceSlots)
-        {
-            if (slot == null) continue;
-
-            Button button = slot.GetComponent<Button>();
-            if (button != null)
-            {
-                button.interactable = interactable && slot.gameObject.activeInHierarchy;
-            }
-        }
+        for (int i = 0; i < view.Choices.Length; i++) view.Choices[i].Show(i < offers.Length ? offers[i] : null);
+        RefreshResources();
     }
 
-    private void SetChoiceSlotsActive(bool active)
+    public void RerollCreation()
     {
-        foreach (LevelUpChoiceUI slot in choiceSlots)
-        {
-            if (slot != null)
-            {
-                slot.gameObject.SetActive(active);
-            }
-        }
+        if (mode != Mode.Creation || closing || transitionBusy || draggingChoice >= 0 || !HasAlternativeOffers() || !wallet.CanReroll) return;
+        if (!wallet.TryReroll()) return;
+        view.HideTooltip(); RollOffers(); ShowOffers();
     }
+    private bool HasAlternativeOffers() => AvailableItems().Exists(item => Array.IndexOf(offers, item) < 0);
 
-    private void ResetLevelUpUIState()
+    private void RefreshResources()
     {
-        creationWallet = null;
-        creationOffer = null;
-        if (creationHelp != null) creationHelp.gameObject.SetActive(false);
-        if (rerollButton != null) rerollButton.gameObject.SetActive(false);
-        if (cancelButton != null) cancelButton.gameObject.SetActive(false);
-        KillRevealSequence();
-        isRevealing = false;
-        choiceShouldReveal.Clear();
-
-        CacheRuntimeReferences();
-        ResetAnimatedElementsToOriginal();
-        SetChoiceInteractable(false);
-        SetChoiceSlotsActive(false);
-
-        if (titleTextRect != null)
-        {
-            titleTextRect.gameObject.SetActive(true);
-        }
-
-        if (levelUpPanel != null)
-        {
-            levelUpPanel.SetActive(false);
-        }
+        if (view == null || wallet == null) return;
+        view.RefreshResources(wallet);
+        view.SetRerollEnabled(mode == Mode.Creation && wallet.CanReroll && HasAlternativeOffers());
+        if (mode == Mode.Upgrade) RefreshUpgrade();
     }
+    private void HandleInventoryChanged() { if (mode == Mode.Upgrade) RefreshUpgrade(); }
 
-    private RectTransform GetChoiceRect(int index)
+    public bool BeginCreationDrag(int index, PointerEventData pointer)
     {
-        return index >= 0 && index < choiceRects.Count ? choiceRects[index] : null;
+        if (mode != Mode.Creation || closing || transitionBusy || index < 0 || index >= offers.Length || offers[index] == null) return false;
+        draggingChoice = index; view.HideTooltip();
+        view.FloatingIcon.sprite = offers[index].iconSprite;
+        view.FloatingIcon.color = Color.white; view.FloatingIcon.gameObject.SetActive(true);
+        view.FloatingIcon.rectTransform.localScale = Vector3.one;
+        view.PlaceFloatingIcon(pointer);
+        inventoryUI.MarkDropTargets(offers[index]);
+        return true;
     }
-
-    private Vector2 GetChoiceOriginalPosition(int index)
+    public void MoveCreationDrag(PointerEventData pointer) { if (draggingChoice >= 0 && !transitionBusy) view.PlaceFloatingIcon(pointer); }
+    public void EndCreationDrag()
     {
-        return index >= 0 && index < choiceOriginalPositions.Count ? choiceOriginalPositions[index] : Vector2.zero;
+        draggingChoice = -1;
+        if (inventoryUI != null) inventoryUI.MarkDropTargets(null);
+        if (view != null && !transitionBusy) view.FloatingIcon.gameObject.SetActive(false);
     }
 
-    private bool GetChoiceShouldReveal(int index)
+    public void DropCreationItem(int slotIndex)
     {
-        return index >= 0 && index < choiceShouldReveal.Count && choiceShouldReveal[index];
+        if (mode != Mode.Creation || transitionBusy || closing || draggingChoice < 0) return;
+        Item_SO item = offers[draggingChoice];
+        if (!playerInventory.CanEquipAt(item, slotIndex) || !wallet.CanPurchaseCreation) return;
+        ItemInstance equipped = null;
+        if (!wallet.TryPurchaseCreation(() => playerInventory.TryEquipAt(item, slotIndex, out equipped))) return;
+        int selected = draggingChoice; draggingChoice = -1; transitionBusy = true;
+        inventoryUI.MarkDropTargets(null); offers = new Item_SO[3];
+        HideItemTooltip();
+        InventorySlotUI slot = inventoryUI.GetEquipmentSlot(slotIndex);
+        transition?.Kill();
+        transition = DOTween.Sequence().SetUpdate(true);
+        if (slot != null) transition.Join(view.FloatingIcon.rectTransform.DOMove(slot.transform.position, 0.16f).SetEase(Ease.OutQuad));
+        for (int i = 0; i < view.Choices.Length; i++)
+            if (view.Choices[i].gameObject.activeSelf)
+                transition.Join(view.Choices[i].transform.DOScale(Vector3.zero, i == selected ? 0.12f : 0.18f).SetEase(Ease.InBack));
+        transition.OnComplete(() => { view.FloatingIcon.gameObject.SetActive(false); transitionBusy = false; CloseWorkbench(); });
     }
 
-    private void KillRevealSequence()
+    public void SelectUpgradeItem(ItemInstance item, InventorySlotUI sourceSlot)
     {
-        if (revealSequence != null && revealSequence.IsActive())
-        {
-            revealSequence.Kill();
-        }
-
-        revealSequence = null;
+        if (mode != Mode.Upgrade || closing || item == null || sourceSlot == null || selectedItem == item) return;
+        if (transitionBusy && selectedItem == null) return; // Opening animation.
+        transition?.Kill(); transition = null;
+        if (selectedSlot != null) selectedSlot.SetPreviewHidden(false);
+        selectedItem = item; selectedSlot = sourceSlot; transitionBusy = true;
+        selectedSlot.SetPreviewHidden(true);
+        view.HideTooltip(); RefreshUpgrade(); view.SetPreviewIconVisible(false);
+        var floating = view.FloatingIcon;
+        floating.sprite = item.itemData.iconSprite; floating.color = Color.white;
+        floating.gameObject.SetActive(true); floating.rectTransform.localScale = Vector3.one;
+        floating.rectTransform.position = sourceSlot.transform.position;
+        transition = DOTween.Sequence().SetUpdate(true);
+        transition.Append(floating.rectTransform.DOMove(view.UpgradeSlot.position, 0.25f).SetEase(Ease.OutCubic));
+        transition.OnComplete(() => { floating.gameObject.SetActive(false); transitionBusy = false; view.SetPreviewIconVisible(true); transition = null; });
     }
 
-    private void CloseLevelUpUI()
+    public void CancelUpgradeSelection()
     {
-        ResetLevelUpUIState();
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.CloseUI();
-        }
+        if (mode != Mode.Upgrade || selectedItem == null || closing) return;
+        Vector3 iconPosition = view.FloatingIcon.gameObject.activeSelf ? view.FloatingIcon.rectTransform.position : view.UpgradeSlot.position;
+        transition?.Kill(); transitionBusy = true;
+        var oldSlot = selectedSlot;
+        var floating = view.FloatingIcon;
+        floating.sprite = selectedItem.itemData.iconSprite; floating.color = Color.white;
+        floating.gameObject.SetActive(true); floating.rectTransform.position = iconPosition;
+        selectedItem = null; selectedSlot = null;
+        view.ClearPreview();
+        transition = DOTween.Sequence().SetUpdate(true);
+        if (oldSlot != null) transition.Append(floating.rectTransform.DOMove(oldSlot.transform.position, 0.25f).SetEase(Ease.OutCubic));
+        transition.OnComplete(() =>
+        { oldSlot?.SetPreviewHidden(false); floating.gameObject.SetActive(false); transitionBusy = false; transition = null; RefreshUpgrade(); });
     }
+
+    private void ClearSelectionImmediately(bool clearPreview = true)
+    {
+        if (selectedSlot != null) selectedSlot.SetPreviewHidden(false);
+        if (inventoryUI != null) for (int i = 0; i < 10; i++) inventoryUI.GetEquipmentSlot(i)?.SetPreviewHidden(false);
+        selectedItem = null; selectedSlot = null;
+        if (view != null) { view.FloatingIcon.gameObject.SetActive(false); if (clearPreview) view.ClearPreview(); }
+    }
+
+    private int UpgradeCost(ItemInstance item) => upgradeCostPerCell < 0 ? -1 :
+        (int)Math.Min(int.MaxValue, (long)upgradeCostPerCell * playerInventory.OccupiedSlotCount(item));
+    private bool CanUpgrade(ItemInstance item) => item != null && playerInventory.items.Contains(item) &&
+        item.currentUpgrade < item.itemData.MaxUpgrade && UpgradeCost(item) >= 0 && wallet.Flesh >= UpgradeCost(item);
+    private bool NoUpgradeActionsRemain()
+    {
+        foreach (var item in playerInventory.items)
+            if (item != null && item.itemData != null && (CanUpgrade(item) || !removalUsed)) return false;
+        return true;
+    }
+    private void RefreshUpgrade()
+    {
+        if (mode != Mode.Upgrade || wallet == null) return;
+        if (selectedItem != null && !playerInventory.items.Contains(selectedItem)) ClearSelectionImmediately();
+        if (selectedItem == null) { view.ClearPreview(); view.SetNoActionsRemain(NoUpgradeActionsRemain()); return; }
+        view.ShowPreview(selectedItem, UpgradeCost(selectedItem), CanUpgrade(selectedItem), !removalUsed, NoUpgradeActionsRemain());
+        if (transitionBusy) view.SetPreviewIconVisible(false);
+    }
+
+    public void UpgradeSelectedItem()
+    {
+        if (mode != Mode.Upgrade || transitionBusy || closing || !CanUpgrade(selectedItem)) return;
+        int cost = UpgradeCost(selectedItem);
+        if (!wallet.TrySpendFlesh(cost)) return;
+        if (!playerInventory.TryUpgradeItemInstance(selectedItem)) wallet.AddFlesh(cost);
+        RefreshUpgrade();
+    }
+    public void RemoveSelectedItem()
+    {
+        if (mode != Mode.Upgrade || transitionBusy || closing || removalUsed || selectedItem == null) return;
+        var item = selectedItem;
+        ClearSelectionImmediately();
+        if (playerInventory.RemoveItemInstance(item)) removalUsed = true;
+        RefreshUpgrade();
+    }
+    public void ShowItemTooltip(Item_SO item, int level, PointerEventData pointer)
+    { if (IsOpen && !closing && !transitionBusy && draggingChoice < 0 && item != null) view.ShowTooltip(item, level, pointer); }
+    public void HideItemTooltip() { if (view != null) view.HideTooltip(); }
+    private static void HideLegacyTooltip() { if (TooltipSystem.TryGetInstance(out TooltipSystem tooltip)) tooltip.Hide(); }
+    private static void ReleaseQueue() { if (GameManager.Instance != null) GameManager.Instance.CloseUI(); }
 }

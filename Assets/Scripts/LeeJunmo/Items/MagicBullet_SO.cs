@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MagicBullet", menuName = "Items/MagicBullet")]
@@ -9,7 +9,7 @@ public class MagicBullet_SO : Item_SO
 
     public override GameObject OnEquip(GameObject user, ItemInstance instance)
     {
-        return InstantiateVisual(user);
+        return InstantiateVisual(user, instance);
     }
 
     public override void OnDealDamage(GameObject user, GameObject target, GameObject source, ItemInstance instance)
