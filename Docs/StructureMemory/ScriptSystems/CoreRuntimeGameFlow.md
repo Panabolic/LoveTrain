@@ -98,3 +98,16 @@ Train은 이제 연료(CurrentFuel/MaxFuel)가 체력이며 속도로 사망하�
 2026-10-04 넓은 화면: Junmo 카메라 size24/y4.22581, 두 BeltScroll 프리팹 Lane 시각1.5배 및 collider 높이/두께 역보정. AutoScrollBackground는 viewport 기준 타일 수/초기 커버리지/재배치를 담당. 지상/비행 스폰 영역 확대. 상세 검증은 `Docs/SessionLogs/2026-10-04-camera-wide-view.md`.
 
 2026-10-04 확대 비율 수정(이전1.5배 설정 대체): 원본 기준1.3배, Junmo 카메라 size20.8/y2.535486591. 선로 시각1.3배/collider 역보정 및 스폰/단색 배경 범위도 원본 기준1.3배로 재계산. 상세는 같은 날짜 camera-wide-view 로그 마지막 항목.
+
+## 2026-10-06 영구 강화 / 런 시작
+
+StartMenuManager.LoadPlayScene은 기존 Start 애니메이션 콜백에서 Resources/PermanentUpgradeMenu 프리팹을 한 번 인스턴스화하여 연다. EnterStartState의 기존 후속 콜백은 하단 게임 시작 확정 전에는 상태를 변경하지 않는다. StartGameFromUpgrades만 기존 playSceneName을 로드하며 Junmo의 레버 시작 흐름을 유지한다. UI Canvas/버튼/TMP/진척도/툴팁은 프리팹에 제작되어 있고 PermanentUpgradeMenu/Card는 직렬화 참조로 표시를 갱신한다. 800×450 콘텐츠 영역, 5열×2행 GridLayoutGroup, 제목 아래 영혼 잔액 한 줄, 호버 툴팁, 하단 시작 버튼으로 구성된다.
+
+PermanentUpgradeNode는 기존 24개 구매 항목을 표시용 10종 노드로 묶으며 상태를 소유하지 않는다. 연료/기본총기 5단계, 필살기/질주 시간/질주 속도 3단계, 레이저/산탄총/기관총/두 보스 아이템 각각 1단계이다. Card.NodeId와 canonical Node.Id로 연결하고 한 클릭은 NextStage 하나만 구매 요청한다. 버튼 아래 별도 비상호작용 Image 배열은 구매한 단계 수만큼 왼쪽부터 채운다. MAX/영혼 부족/미설정 버튼의 구매는 잠기지만 마우스 설명은 유지한다. 프리팹의 기본 안내문은 없고 구매 결과/저장 오류만 하단에 표시한다.
+
+PermanentUpgradeProgress가 영혼 잔액과 구매 ID의 공용 원본을 version1 JSON에 저장한다. 기존 Souls.v1 잔액은 최초 마이그레이션 및 호환 미러에 사용한다. TrainLevelManager는 런 지갑 생성 전 Reload하고 보상·재추첨 후 SetSouls로 동기화한다. Train.Start는 카탈로그의 구매한 연료/질주 효과를 런 초기값에 반영한다. 미정 효과는 구매를 차단한다. 수치 해석과 설정/검증은 SessionLogs/2026-10-06-permanent-upgrades.md 참조.
+
+
+## 2026-10-06 Item workbench update
+
+2026-10-06 러브트레인2: 속도구간별연료/질주총30, 일반·엘리트충돌피해와감속분리, 몬스터확률살점/영혼보상, 연료통10%회복·재화없음, 제작30+10/무료리롤5+영혼1~5. 모달상태피격차단/강제닫기UI큐복구. Unity격리import+Editor메서드103검사와규칙332개통과; 실제PlayMode미검증. 상세는 `Docs/SessionLogs/2026-10-06-item-workbench.md`.

@@ -1,0 +1,14 @@
+# Publish final evidence and reproducible checks, keeping local builds/backups private.
+*
+!.gitignore
+!README.md
+!BuildSources.ps1
+!FleshHudValidation.cs
+!FleshHudPlayValidation.cs
+!Test-FleshCreationProgress.ps1
+!math-validation-result.txt
+!unity-hud-validation-result.txt
+!unity-hud-play-validation-result.txt
+!unity-hud-play-console.txt
+!scene-audit.json
+!unity-hud-*.png

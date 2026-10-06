@@ -1,0 +1,3 @@
+PASS: actual FleshCreationProgress.cs compiled in memory; 19 boundary cases and 1000 independent repeated-purchase comparisons.
+Source SHA256: 994E2B28CF5EBF5851C6FE6E14A01C49B8234D5065BCAC998591A2AE64D90990
+Calculation source only. This does not verify HUD Unity compilation, scene import, Play Mode, or a player build.

@@ -1,0 +1,46 @@
+{
+  "utc": "2026-10-06T02:05:35.058381+00:00",
+  "editor": "6000.2.3f1",
+  "hashes": {
+    "Assets/EventObjectSpawner.cs": {
+      "original": "faf75af090fc8fefda82d4679809379af0d2c2e286577397fa64e12066aa7502",
+      "copy": "faf75af090fc8fefda82d4679809379af0d2c2e286577397fa64e12066aa7502"
+    },
+    "Assets/EventTriggerObject.cs": {
+      "original": "80877ed376550f89a8e7ad809dad654af54025d650011d2adf4400ab62bc7876",
+      "copy": "80877ed376550f89a8e7ad809dad654af54025d650011d2adf4400ab62bc7876"
+    },
+    "Assets/Scripts/LeeJunmo/LevelUp/LevelUpManager.cs": {
+      "original": "85b002ded0b7d5d3266202325400a1d96333e9073804b1d822abcde4dc5091e7",
+      "copy": "85b002ded0b7d5d3266202325400a1d96333e9073804b1d822abcde4dc5091e7"
+    },
+    "Assets/Scripts/LeeJunmo/LevelUp/TrainItemWorkbenchView.cs": {
+      "original": "856193f741abecfc4b3afe09bf569e7f9e4de3f94284bedc1f21d761f1eb9fdc",
+      "copy": "856193f741abecfc4b3afe09bf569e7f9e4de3f94284bedc1f21d761f1eb9fdc"
+    },
+    "Assets/Scripts/LeeJunmo/Inventory/Inventory.cs": {
+      "original": "8457df84ce0743af5f3d3d1f407750eab296fc83a361d240c3d5572ea53fd765",
+      "copy": "8457df84ce0743af5f3d3d1f407750eab296fc83a361d240c3d5572ea53fd765"
+    },
+    "Assets/Scripts/LeeJunmo/Inventory/InventoryUI.cs": {
+      "original": "3951fbc97d2a127f904a8ff6c66a595d27c792935a6147b3b466e6ef99e756fa",
+      "copy": "3951fbc97d2a127f904a8ff6c66a595d27c792935a6147b3b466e6ef99e756fa"
+    },
+    "Assets/Scripts/LeeJunmo/LevelUp/TrainLevelManager.cs": {
+      "original": "d9597b6b5f44980a4fa24a994c66b6572566956ae1970ee43176a7c66b065868",
+      "copy": "d9597b6b5f44980a4fa24a994c66b6572566956ae1970ee43176a7c66b065868"
+    },
+    "Assets/Scripts/LeeJunmo/Train.cs": {
+      "original": "17fb58ca1be1e3cc300bf1669203d0fe4e055d21e18af3990a34b5de0bc1e12f",
+      "copy": "17fb58ca1be1e3cc300bf1669203d0fe4e055d21e18af3990a34b5de0bc1e12f"
+    },
+    "Assets/Prefabs/TrainItemWorkbench.prefab": {
+      "original": "4c54225b76a93cf6610df66ab6079418978d14d5309ddb7afb09294577522045",
+      "copy": "4c54225b76a93cf6610df66ab6079418978d14d5309ddb7afb09294577522045"
+    },
+    "Assets/Scenes/Junmo.unity": {
+      "original": "85d81fc27e1cf99751d699b86808e751e5e84ec35d192007a680428db811ae3b",
+      "copy": "85d81fc27e1cf99751d699b86808e751e5e84ec35d192007a680428db811ae3b"
+    }
+  }
+}

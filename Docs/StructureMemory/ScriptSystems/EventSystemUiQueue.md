@@ -69,3 +69,8 @@ See [Localization](./Localization.md) for the keyed CSV workflow. EventManager r
 ## Promotion Candidate
 
 This map can become a future UI/event contract if more gameplay popup systems begin sharing the queue.
+
+
+## 2026-10-06 Item workbench update
+
+2026-10-06 강화이벤트: EventObjectSpawner 60초/스테이지3회, stage1두번째테스트강화/stage2첫강화/stage3+랜덤. 붉은Station 충돌이ShowUpgradeEvent를 공유큐로실행. StageEventSchedule은 예정경계로시계진행. CancelUIQueue는강제모달닫기의pause복구, 실제Ending/Die 신규UI거부. 마지막보스시간900 도달만으로이벤트를차단하지않음. 상세/검증은 `Docs/SessionLogs/2026-10-06-item-workbench.md`.

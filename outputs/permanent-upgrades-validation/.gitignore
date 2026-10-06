@@ -1,0 +1,10 @@
+# Keep reusable source checks and the report; generated build state stays local.
+*
+!.gitignore
+!README.md
+!ValidationReport.md
+!BuildSources.ps1
+!BehaviorChecks.cs
+!NodeBehaviorChecks.cs
+!FakeUnity.cs
+!audit_upgrade_prefab.py

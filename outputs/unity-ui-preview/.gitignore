@@ -1,0 +1,6 @@
+*
+!.gitignore
+!README.md
+!WorkbenchRenderPreview-layout-v2.cs
+!render-result-v2.txt
+!*-layout-v2.png

@@ -1,0 +1,57 @@
+START: isolated Junmo PlayMode HUD lifecycle fixture.
+PASS Native scene owners initialize
+INPUT transient-settings-installed: frame=41, update=Editor, updateCount=41, focused=False, keyboardEnabled=True, keyboardCurrent=True, isPressed=False, wasPressedThisFrame=False, gameState=Start, timeScale=1, flesh=0, cost=30, walletActive=True, creationQueued=False, committing=False, uiQueueCount=0, uiProcessing=False, workbenchOpen=False, canRequest=False, inputMode=ProcessEventsInDynamicUpdate, editorInput=AllDeviceInputAlwaysGoesToGameView, background=IgnoreFocus
+PASS Native wallet Awake loads isolated souls and starts with zero flesh
+PASS Native FleshHud.OnEnable subscribes to authored wallet
+PASS Native FleshHud.Start reflects post-Awake soul initialization
+PASS Native startup renders zero flesh
+PASS Native currency labels use the same authored font size
+PASS Native flesh and soul labels use authored right alignment
+PASS Real AddFlesh/OnResourcesChanged refreshes amount without calling HUD methods
+PASS Native LateUpdate shows F in Playing after reward
+PASS Native reward shows two available creations
+PASS Normal scene equipment rectangle and authored currency Canvas resolve in actual PlayMode
+PASS Normal equipment slots and currency HUD share their actual scene Canvas
+LAYOUT slot=0, slotCanvasRect=(x:98.00, y:-165.00, width:36.00, height:36.00), currencyCanvasRect=(x:230.00, y:-208.00, width:150.00, height:92.00), overlap=False
+LAYOUT slot=1, slotCanvasRect=(x:142.00, y:-203.00, width:36.00, height:36.00), currencyCanvasRect=(x:230.00, y:-208.00, width:150.00, height:92.00), overlap=False
+LAYOUT slot=2, slotCanvasRect=(x:80.00, y:-203.00, width:36.00, height:36.00), currencyCanvasRect=(x:230.00, y:-208.00, width:150.00, height:92.00), overlap=False
+LAYOUT slot=3, slotCanvasRect=(x:-18.00, y:-165.00, width:36.00, height:36.00), currencyCanvasRect=(x:230.00, y:-208.00, width:150.00, height:92.00), overlap=False
+LAYOUT slot=4, slotCanvasRect=(x:-39.00, y:-203.00, width:36.00, height:36.00), currencyCanvasRect=(x:230.00, y:-208.00, width:150.00, height:92.00), overlap=False
+LAYOUT slot=5, slotCanvasRect=(x:3.00, y:-203.00, width:36.00, height:36.00), currencyCanvasRect=(x:230.00, y:-208.00, width:150.00, height:92.00), overlap=False
+LAYOUT slot=6, slotCanvasRect=(x:-134.00, y:-165.00, width:36.00, height:36.00), currencyCanvasRect=(x:230.00, y:-208.00, width:150.00, height:92.00), overlap=False
+LAYOUT slot=7, slotCanvasRect=(x:-178.00, y:-203.00, width:36.00, height:36.00), currencyCanvasRect=(x:230.00, y:-208.00, width:150.00, height:92.00), overlap=False
+LAYOUT slot=8, slotCanvasRect=(x:-116.00, y:-203.00, width:36.00, height:36.00), currencyCanvasRect=(x:230.00, y:-208.00, width:150.00, height:92.00), overlap=False
+LAYOUT slot=9, slotCanvasRect=(x:186.00, y:-187.00, width:36.00, height:36.00), currencyCanvasRect=(x:230.00, y:-208.00, width:150.00, height:92.00), overlap=False
+LAYOUT actual active normal equipment slots measured=10, total overlaps=0. Collected before input checks; final phase still fails when any overlap exists. Geometric overlap evidence; no rendered gameplay appearance claim.
+CAPTURE requested real PlayMode frame: 640x480, frame=43, flesh=105
+NOT AVAILABLE: native ScreenCapture did not write a PNG in this hidden batch GameView. Continue core input/lifecycle checks; no actual gameplay screenshot claim.
+PASS Real owner creation transaction succeeds once
+PASS Real first transaction leaves 75 and raises cost to 40
+PASS First transaction event refreshes native HUD
+PASS One available creation removes X count
+PASS Real second owner transaction succeeds once
+PASS Second transaction leaves 35 and raises cost to 50
+PASS Second transaction event refreshes native HUD
+PASS Native LateUpdate hides F below current cost
+PASS Subsequent real reward restores creation availability
+PASS Actual Event transition hides hint
+PASS Actual PauseGame hides hint while native LateUpdate still runs
+PASS Actual ResumeGame restores hint
+PASS Native OnDisable hides hint and releases wallet subscription
+PASS Disabled HUD receives no wallet event
+PASS Native OnEnable refreshes current wallet and restores hint
+PASS Real LanguageChanged refreshes creation text
+PASS Real LanguageChanged refreshes cost text
+INPUT armed-before-Dynamic: frame=73, update=Editor, updateCount=73, focused=False, keyboardEnabled=True, keyboardCurrent=True, isPressed=False, wasPressedThisFrame=False, gameState=Playing, timeScale=1, flesh=106, cost=50, walletActive=True, creationQueued=False, committing=False, uiQueueCount=0, uiProcessing=False, workbenchOpen=False, canRequest=True, inputMode=ProcessEventsInDynamicUpdate, editorInput=AllDeviceInputAlwaysGoesToGameView, background=IgnoreFocus
+INPUT Dynamic-press-queued: frame=74, update=Dynamic, updateCount=74, focused=False, keyboardEnabled=True, keyboardCurrent=True, isPressed=False, wasPressedThisFrame=False, gameState=Playing, timeScale=1, flesh=106, cost=50, walletActive=True, creationQueued=False, committing=False, uiQueueCount=0, uiProcessing=False, workbenchOpen=False, canRequest=True, inputMode=ProcessEventsInDynamicUpdate, editorInput=AllDeviceInputAlwaysGoesToGameView, background=IgnoreFocus
+INPUT after-official-Dynamic: frame=74, update=Dynamic, updateCount=74, focused=False, keyboardEnabled=True, keyboardCurrent=True, isPressed=True, wasPressedThisFrame=True, gameState=Playing, timeScale=1, flesh=106, cost=50, walletActive=True, creationQueued=False, committing=False, uiQueueCount=0, uiProcessing=False, workbenchOpen=False, canRequest=True, inputMode=ProcessEventsInDynamicUpdate, editorInput=AllDeviceInputAlwaysGoesToGameView, background=IgnoreFocus
+INPUT next-Dynamic-release-queued: frame=75, update=Dynamic, updateCount=75, focused=False, keyboardEnabled=True, keyboardCurrent=True, isPressed=True, wasPressedThisFrame=False, gameState=Event, timeScale=0, flesh=106, cost=50, walletActive=True, creationQueued=False, committing=False, uiQueueCount=0, uiProcessing=True, workbenchOpen=True, canRequest=False, inputMode=ProcessEventsInDynamicUpdate, editorInput=AllDeviceInputAlwaysGoesToGameView, background=IgnoreFocus
+INPUT after-official-Dynamic: frame=75, update=Dynamic, updateCount=75, focused=False, keyboardEnabled=True, keyboardCurrent=True, isPressed=False, wasPressedThisFrame=False, gameState=Event, timeScale=0, flesh=106, cost=50, walletActive=True, creationQueued=False, committing=False, uiQueueCount=0, uiProcessing=True, workbenchOpen=True, canRequest=False, inputMode=ProcessEventsInDynamicUpdate, editorInput=AllDeviceInputAlwaysGoesToGameView, background=IgnoreFocus
+PASS Official Dynamic input pipeline observed F isPressed and wasPressedThisFrame
+PASS Synthetic F reaches actual wallet Update and UI queue, opening modal Event pause
+PASS Opened native workbench hides F hint
+PASS Opening through F does not charge a creation
+PASS Native close animation and queue release restore gameplay and HUD hint
+PASS No error stack trace directly references new HUD/progress/availability paths
+PASS CurrencyHUD has zero overlaps with actual active normal equipment slots; measured overlap count=0
+PASS: 36 actual Junmo PlayMode HUD lifecycle, reward, transaction, state, disable/re-enable, localization and synthetic F checks. Other world/engine errors preserved for baseline comparison: 0. No player-build or physical keyboard claim.

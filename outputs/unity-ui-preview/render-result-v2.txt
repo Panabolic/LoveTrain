@@ -1,0 +1,1 @@
+PASS: four actual Unity 6000.2.3f1 UI-only EditMode renders from copied TrainItemWorkbench.prefab and Junmo InventoryUI. No Play Mode, screen capture, live project change, gameplay, or GraphicRaycaster claim. Representative real item assets, 100 flesh and 7 souls fixture data. Built-in UI camera on neutral backdrop.

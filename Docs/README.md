@@ -2,12 +2,21 @@
 status: active
 authority: docs-router
 category: router
-last_reviewed: 2026-06-07
+last_reviewed: 2026-10-06
 ---
 
 # LoveTrain Project Docs Guide
 
 This folder is the Markdown project memory for LoveTrain. Markdown is the source of truth for agent-facing project context. No Presentation HTML layer exists.
+
+## Work Rules And TaskBrief
+
+- [AGENTS.md](../AGENTS.md): CapstoneProject와 같은 작업 모드·승인 범위·Unity 안전·검증 규칙. 이해 확인과 설계 논의는 구현 승인이 아니다.
+- [TaskBriefGuide](./Guides/TaskBriefGuide.md): 브리프 작성과 모드 선택/승인 기준.
+- [TaskBrief template](./_templates/TaskBrief.md): 복사해서 사용하는 빈 양식.
+- [task-brief skill](../.agents/skills/task-brief/SKILL.md): 구체적인 요청을 채워진 브리프로 정리한다. 기능 구현을 시작하지 않는다.
+
+모드가 모호하면 Investigation이며 자동으로 구현 모드로 전환하지 않는다. 중지된 기능 작업은 명시적 재개 지시를 기다린다.
 
 ## Task Routing Order
 
@@ -37,7 +46,7 @@ When implementation or architecture documents conflict, follow this order:
 1. Root [AGENTS.md](../AGENTS.md) safety and verification policy
 2. Future `Contracts/`, if an approved task creates source-of-truth contracts
 3. Future `Architecture/`, if an approved task promotes stable architecture docs
-4. Future `Guides/`, if an approved task creates implementation guides
+4. [Guides/](./Guides/TaskBriefGuide.md)
 5. [DecisionLog.md](./DecisionLog.md)
 6. [ErrorLog.md](./ErrorLog.md)
 7. [StructureMemory/](./StructureMemory/)

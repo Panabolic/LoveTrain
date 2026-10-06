@@ -97,3 +97,7 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Local chat attachments and intermediate UI extraction data
+/.codex-remote-attachments/
+/outputs/ui-preview/

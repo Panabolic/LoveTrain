@@ -1469,3 +1469,26 @@ Implications:
 - Tooltip and mouse-aim screen bounds should use the controller content rect when available, with full-screen fallback for scenes without the controller.
 - Windowed resolution selection is only active in windowed mode. Fullscreen and borderless use the native/current display resolution.
 - `Option` screen controls should use previous/next selector buttons for screen mode and windowed resolution instead of legacy dropdown controls.
+
+## 2026-10-06 - Adopt Capstone TaskBrief Work Rules
+
+Decision:
+사용자 요청에 따라 LoveTrain에서도 CapstoneProject와 같은 작업 모드/TaskBrief/승인 범위 규칙을 사용한다. 원본은 루트 AGENTS.md이며 Docs/Guides/TaskBriefGuide.md, Docs/_templates/TaskBrief.md와 저장소 task-brief 스킬로 연결한다.
+
+Reason:
+이해 확인 질문 뒤에 곧바로 구현이 시작되는 일을 막고, 설계 논의와 구현 승인을 구분한다.
+
+Implications:
+- 이해 확인·질문·설계 논의를 구현 승인으로 해석하지 않는다. 비단순 구현은 TaskBrief와 범위를 제시하고 합의한 계획 또는 명시적으로 허용한 범위만 구현한다.
+- 모드가 모호하면 Investigation. 모드를 자동 전환하지 않는다. 하위 에이전트에도 동일한 범위와 중지 규칙을 적용한다.
+- 새 UI는 씬/프리팹 제작과 직렬화 참조가 기본이다. 런타임 UI 자동 생성은 명시적인 프로토타입 요청 또는 사전 설계 승인에 한정한다.
+- 같은 범위의 기존 승인은 유지하며 불필요한 재승인은 요구하지 않는다. 중지된 작업은 명시적인 재개 지시가 필요하다.
+- 기존 RefactorLog와 Markdown 라우팅을 유지한다. 없는 Contracts/Architecture/Presentation/AHK 계층을 이 규칙 적용만으로 만들지 않는다.
+- 기존 runtime FixedAspectRatioController 등 승인된 구현은 그대로 유지한다. 이번 규칙 도입은 기존 UI의 자동 개편/프리팹 이행/롤백 승인이 아니다.
+- 영구 강화 UI 작업은 계속 중지 상태이며, 이번 요청은 규칙 문서 적용에만 한정된다.
+
+## 2026-10-06 — Permanent Upgrade Node UI
+
+사용자가 종류별 버튼/버튼 아래 직사각형 진척도 견본을 승인하고 명시적으로 구현을 재개했다. 영구 강화는 10종 노드(개별 총기/보스 해금 포함), 5열×2행, 한 클릭에 다음 단계 하나 구매, 왼쪽부터 진척도 채움으로 제작한다. 제목 아래는 보유 영혼만 표시한다.
+
+UI는 Resources/PermanentUpgradeMenu 프리팹에 작성하고 직렬화 참조로 갱신한다. 표시용 Node는 기존 24개 definition과 stable ID를 묶기만 하며, 구매/저장 권한은 PermanentUpgradeProgress가 유지한다. 기존 수치·저장 형식·게임 시작 계약을 변경하지 않는다. 이전 작업 중지 상태는 위 명시적 재개 지시로 해제되었다.

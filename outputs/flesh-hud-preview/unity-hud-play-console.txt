@@ -1,0 +1,20 @@
+All warning/error messages are preserved. Non-HUD runtime errors require baseline classification.
+[Warning][BASELINE_COMPARISON_REQUIRED] DontDestroyOnLoad only works for root GameObjects or components on root GameObjects.
+UnityEngine.Object:DontDestroyOnLoad (UnityEngine.Object)
+SceneLoader:Awake () (at Assets/Scripts/LeeJunmo/SceneLoader.cs:22)
+
+[Warning][BASELINE_COMPARISON_REQUIRED] DontDestroyOnLoad only works for root GameObjects or components on root GameObjects.
+UnityEngine.Object:DontDestroyOnLoad (UnityEngine.Object)
+PoolManager:Awake () (at Assets/Scripts/SangHyup/Enemy/PoolManager.cs:52)
+
+[Warning][BASELINE_COMPARISON_REQUIRED] DontDestroyOnLoad only works for root GameObjects or components on root GameObjects.
+UnityEngine.Object:DontDestroyOnLoad (UnityEngine.Object)
+GameManager:Awake () (at Assets/Scripts/LeeJunmo/GameManager.cs:46)
+
+[Warning][BASELINE_COMPARISON_REQUIRED] DontDestroyOnLoad only works for root GameObjects or components on root GameObjects.
+UnityEngine.Object:DontDestroyOnLoad (UnityEngine.Object)
+SoundManager:Awake () (at Assets/SoundManager.cs:34)
+
+[Warning][BASELINE_COMPARISON_REQUIRED] StartObject 'StartObj'에 isTrigger가 체크된 Collider2D가 없습니다!
+UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
+StartObject:Start () (at Assets/Scripts/LeeJunmo/StartObject.cs:30)

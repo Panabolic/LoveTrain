@@ -1,0 +1,409 @@
+PASS Refuse all probes unless disposable PlayerPrefs identity is verified
+PASS EditMode only
+PASS Authored CurrencyHUD exists
+PASS Authored FleshHud script resolves
+PASS Authored reference: wallet
+PASS Authored reference: fleshAmount
+PASS Authored reference: soulAmount
+PASS Authored reference: creationLabel
+PASS Authored reference: costLabel
+PASS Authored reference: completedFill
+PASS Authored reference: progressFill
+PASS Authored reference: creationHint
+PASS Wallet no longer writes over FleshHud's authored labels
+PASS HUD has its existing Canvas
+PASS F instruction remains a passive keyboard hint
+PASS Passive HUD graphic: HudBackground
+PASS Passive HUD graphic: FleshText
+PASS Passive HUD graphic: SoulText
+PASS Passive HUD graphic: TopBorder
+PASS Passive HUD graphic: BottomBorder
+PASS Passive HUD graphic: LeftBorder
+PASS Passive HUD graphic: RightBorder
+PASS Passive HUD graphic: TopLeftCorner
+PASS Passive HUD graphic: TopRightCorner
+PASS Passive HUD graphic: FleshGauge
+PASS Passive HUD graphic: CompletedFill
+PASS Passive HUD graphic: ProgressFill
+PASS Passive HUD graphic: PixelDivider1
+PASS Passive HUD graphic: PixelDivider2
+PASS Passive HUD graphic: PixelDivider3
+PASS Passive HUD graphic: PixelDivider4
+PASS Passive HUD graphic: PixelDivider5
+PASS Passive HUD graphic: PixelDivider6
+PASS Passive HUD graphic: PixelDivider7
+PASS Passive HUD graphic: PixelDivider8
+PASS Passive HUD graphic: PixelDivider9
+PASS Passive HUD graphic: PixelDivider10
+PASS Passive HUD graphic: PixelDivider11
+PASS Passive HUD graphic: PixelDivider12
+PASS Passive HUD graphic: PixelDivider13
+PASS Passive HUD graphic: PixelDivider14
+PASS Passive HUD graphic: PixelDivider15
+PASS Passive HUD graphic: PixelDivider16
+PASS Passive HUD graphic: PixelDivider17
+PASS Passive HUD graphic: PixelDivider18
+PASS Passive HUD graphic: PixelDivider19
+PASS Passive HUD graphic: PixelDivider20
+PASS Passive HUD graphic: FKey
+PASS Passive HUD graphic: KeyText
+PASS Passive HUD graphic: KeyShadow
+PASS Passive HUD graphic: CreationLabel
+PASS Passive HUD graphic: CreationCost
+PASS HUD has no missing scripts
+PASS HUD wallet and workbench share the same inventory owner
+PASS Candidate cache starts with an available authored slot
+PASS First availability query resolves dirty cache
+PASS Repeated LateUpdate queries reuse the resolved availability state
+PASS Inventory event invalidates availability cache
+PASS Occupied candidate slot hides hint on the next real LateUpdate method
+PASS Released candidate slot restores hint after inventory event
+PASS Replacing the database invalidates a previously positive cached result
+PASS Restoring candidate database invalidates a previously negative cached result
+PASS OnDisable releases the inventory invalidation subscription
+PASS OnEnable resets the availability cache
+PASS zero: actual flesh quantity at uniform text size
+PASS zero: actual soul quantity
+PASS zero: current cost
+PASS zero: no removed fraction labels
+PASS zero: next increasing-cost fraction
+PASS zero: sprite-free Simple gauge width matches progress
+PASS zero: overflow palette color
+PASS zero: completed layer visibility
+PASS zero: creation hint visibility
+PASS partial: actual flesh quantity at uniform text size
+PASS partial: actual soul quantity
+PASS partial: current cost
+PASS partial: no removed fraction labels
+PASS partial: next increasing-cost fraction
+PASS partial: sprite-free Simple gauge width matches progress
+PASS partial: overflow palette color
+PASS partial: completed layer visibility
+PASS partial: creation hint visibility
+PASS one-short: actual flesh quantity at uniform text size
+PASS one-short: actual soul quantity
+PASS one-short: current cost
+PASS one-short: no removed fraction labels
+PASS one-short: next increasing-cost fraction
+PASS one-short: sprite-free Simple gauge width matches progress
+PASS one-short: overflow palette color
+PASS one-short: completed layer visibility
+PASS one-short: creation hint visibility
+PASS one-ready: actual flesh quantity at uniform text size
+PASS one-ready: actual soul quantity
+PASS one-ready: current cost
+PASS one-ready: no removed fraction labels
+PASS one-ready: next increasing-cost fraction
+PASS one-ready: sprite-free Simple gauge width matches progress
+PASS one-ready: overflow palette color
+PASS one-ready: completed layer visibility
+PASS one-ready: completed palette color
+PASS one-ready: creation hint visibility
+PASS one-ready: creation count wording
+PASS two-exact: actual flesh quantity at uniform text size
+PASS two-exact: actual soul quantity
+PASS two-exact: current cost
+PASS two-exact: no removed fraction labels
+PASS two-exact: next increasing-cost fraction
+PASS two-exact: sprite-free Simple gauge width matches progress
+PASS two-exact: overflow palette color
+PASS two-exact: completed layer visibility
+PASS two-exact: completed palette color
+PASS two-exact: creation hint visibility
+PASS two-exact: creation count wording
+PASS two-and-overflow: actual flesh quantity at uniform text size
+PASS two-and-overflow: actual soul quantity
+PASS two-and-overflow: current cost
+PASS two-and-overflow: no removed fraction labels
+PASS two-and-overflow: next increasing-cost fraction
+PASS two-and-overflow: sprite-free Simple gauge width matches progress
+PASS two-and-overflow: overflow palette color
+PASS two-and-overflow: completed layer visibility
+PASS two-and-overflow: completed palette color
+PASS two-and-overflow: creation hint visibility
+PASS two-and-overflow: creation count wording
+PASS three-exact: actual flesh quantity at uniform text size
+PASS three-exact: actual soul quantity
+PASS three-exact: current cost
+PASS three-exact: no removed fraction labels
+PASS three-exact: next increasing-cost fraction
+PASS three-exact: sprite-free Simple gauge width matches progress
+PASS three-exact: overflow palette color
+PASS three-exact: completed layer visibility
+PASS three-exact: completed palette color
+PASS three-exact: creation hint visibility
+PASS three-exact: creation count wording
+PASS rainbow-complete: actual flesh quantity at uniform text size
+PASS rainbow-complete: actual soul quantity
+PASS rainbow-complete: current cost
+PASS rainbow-complete: no removed fraction labels
+PASS rainbow-complete: next increasing-cost fraction
+PASS rainbow-complete: sprite-free Simple gauge width matches progress
+PASS rainbow-complete: overflow palette color
+PASS rainbow-complete: completed layer visibility
+PASS rainbow-complete: completed palette color
+PASS rainbow-complete: creation hint visibility
+PASS rainbow-complete: creation count wording
+PASS pink-complete: actual flesh quantity at uniform text size
+PASS pink-complete: actual soul quantity
+PASS pink-complete: current cost
+PASS pink-complete: no removed fraction labels
+PASS pink-complete: next increasing-cost fraction
+PASS pink-complete: sprite-free Simple gauge width matches progress
+PASS pink-complete: overflow palette color
+PASS pink-complete: completed layer visibility
+PASS pink-complete: completed palette color
+PASS pink-complete: creation hint visibility
+PASS pink-complete: creation count wording
+PASS cyan-complete: actual flesh quantity at uniform text size
+PASS cyan-complete: actual soul quantity
+PASS cyan-complete: current cost
+PASS cyan-complete: no removed fraction labels
+PASS cyan-complete: next increasing-cost fraction
+PASS cyan-complete: sprite-free Simple gauge width matches progress
+PASS cyan-complete: overflow palette color
+PASS cyan-complete: completed layer visibility
+PASS cyan-complete: completed palette color
+PASS cyan-complete: creation hint visibility
+PASS cyan-complete: creation count wording
+PASS white-complete: actual flesh quantity at uniform text size
+PASS white-complete: actual soul quantity
+PASS white-complete: current cost
+PASS white-complete: no removed fraction labels
+PASS white-complete: next increasing-cost fraction
+PASS white-complete: sprite-free Simple gauge width matches progress
+PASS white-complete: overflow palette color
+PASS white-complete: completed layer visibility
+PASS white-complete: completed palette color
+PASS white-complete: creation hint visibility
+PASS white-complete: creation count wording
+PASS palette-wrap: actual flesh quantity at uniform text size
+PASS palette-wrap: actual soul quantity
+PASS palette-wrap: current cost
+PASS palette-wrap: no removed fraction labels
+PASS palette-wrap: next increasing-cost fraction
+PASS palette-wrap: sprite-free Simple gauge width matches progress
+PASS palette-wrap: overflow palette color
+PASS palette-wrap: completed layer visibility
+PASS palette-wrap: completed palette color
+PASS palette-wrap: creation hint visibility
+PASS palette-wrap: creation count wording
+PASS In-memory fixture purchases first cost
+PASS after-first: actual flesh quantity at uniform text size
+PASS after-first: actual soul quantity
+PASS after-first: current cost
+PASS after-first: no removed fraction labels
+PASS after-first: next increasing-cost fraction
+PASS after-first: sprite-free Simple gauge width matches progress
+PASS after-first: overflow palette color
+PASS after-first: completed layer visibility
+PASS after-first: completed palette color
+PASS after-first: creation hint visibility
+PASS after-first: creation count wording
+PASS In-memory fixture purchases increased cost
+PASS after-second: actual flesh quantity at uniform text size
+PASS after-second: actual soul quantity
+PASS after-second: current cost
+PASS after-second: no removed fraction labels
+PASS after-second: next increasing-cost fraction
+PASS after-second: sprite-free Simple gauge width matches progress
+PASS after-second: overflow palette color
+PASS after-second: completed layer visibility
+PASS after-second: creation hint visibility
+PASS Hint gate: Boss
+PASS Hint gate: Pause
+PASS Hint gate: Event
+PASS Hint gate: Die
+PASS Hint gate: StageTransition
+PASS Hint gate: Start
+PASS Paused timescale hides F hint
+PASS Queued creation hides F hint
+PASS Creation transaction hides F hint
+PASS An open workbench hides F hint
+PASS No acquisition candidate hides F hint
+PASS F hint restores when creation is available again
+PASS English label preserves available count
+PASS English label is localized
+PASS English flesh label and value
+PASS English soul label and value
+PASS English cost label and value
+PASS Korean label restores
+PASS 1920x1080: HUD corner inside production 16:9 content area
+PASS 1920x1080: HUD corner inside production 16:9 content area
+PASS 1920x1080: HUD corner inside production 16:9 content area
+PASS 1920x1080: HUD corner inside production 16:9 content area
+Rendered size 1920x1080; production content pixel rect (x:0.00, y:0.00, width:1920.00, height:1080.00); HUD logical rect (x:-150.00, y:0.00, width:150.00, height:92.00)
+PASS Flesh and soul text use the same font size
+PASS Flesh and soul text are both right aligned
+PASS Currency labels and quantities have no smaller rich-text size
+PASS Flesh and soul text share their screen right edge
+CURRENCY ALIGNMENT font=12, fleshRight=1848, soulRight=1848
+TEXT FleshText: preferred=48.01x12.01, rect=130x16, font=12, overflow=False, value=살점 105
+PASS Text fits: FleshText = 살점 105
+PASS One-line HUD label: FleshText
+TEXT SoulText: preferred=36.01x12.01, rect=130x16, font=12, overflow=False, value=영혼 7
+PASS Text fits: SoulText = 영혼 7
+PASS One-line HUD label: SoulText
+TEXT KeyText: preferred=5.01x10.01, rect=16x16, font=10, overflow=False, value=F
+PASS Text fits: KeyText = F
+PASS One-line HUD label: KeyText
+TEXT CreationLabel: preferred=58.51x9.01, rect=74x17, font=9, overflow=False, value=조직 창조 X 2
+PASS Text fits: CreationLabel = 조직 창조 X 2
+PASS One-line HUD label: CreationLabel
+TEXT CreationCost: preferred=28.01x8.01, rect=33x17, font=8, overflow=False, value=비용 30
+PASS Text fits: CreationCost = 비용 30
+PASS One-line HUD label: CreationCost
+PASS 1280x720: HUD corner inside production 16:9 content area
+PASS 1280x720: HUD corner inside production 16:9 content area
+PASS 1280x720: HUD corner inside production 16:9 content area
+PASS 1280x720: HUD corner inside production 16:9 content area
+Rendered size 1280x720; production content pixel rect (x:0.00, y:0.00, width:1280.00, height:720.00); HUD logical rect (x:-150.00, y:0.00, width:150.00, height:92.00)
+PASS Flesh and soul text use the same font size
+PASS Flesh and soul text are both right aligned
+PASS Currency labels and quantities have no smaller rich-text size
+PASS Flesh and soul text share their screen right edge
+CURRENCY ALIGNMENT font=12, fleshRight=1232, soulRight=1232
+TEXT FleshText: preferred=48.01x12.01, rect=130x16, font=12, overflow=False, value=살점 105
+PASS Text fits: FleshText = 살점 105
+PASS One-line HUD label: FleshText
+TEXT SoulText: preferred=36.01x12.01, rect=130x16, font=12, overflow=False, value=영혼 7
+PASS Text fits: SoulText = 영혼 7
+PASS One-line HUD label: SoulText
+TEXT KeyText: preferred=5.01x10.01, rect=16x16, font=10, overflow=False, value=F
+PASS Text fits: KeyText = F
+PASS One-line HUD label: KeyText
+TEXT CreationLabel: preferred=58.51x9.01, rect=74x17, font=9, overflow=False, value=조직 창조 X 2
+PASS Text fits: CreationLabel = 조직 창조 X 2
+PASS One-line HUD label: CreationLabel
+TEXT CreationCost: preferred=28.01x8.01, rect=33x17, font=8, overflow=False, value=비용 30
+PASS Text fits: CreationCost = 비용 30
+PASS One-line HUD label: CreationCost
+PASS Render first creation cost
+PASS Render second creation cost
+PASS Flesh and soul text use the same font size
+PASS Flesh and soul text are both right aligned
+PASS Currency labels and quantities have no smaller rich-text size
+PASS Flesh and soul text share their screen right edge
+CURRENCY ALIGNMENT font=12, fleshRight=1232, soulRight=1232
+TEXT FleshText: preferred=54.01x12.01, rect=130x16, font=12, overflow=False, value=Flesh 105
+PASS Text fits: FleshText = Flesh 105
+PASS One-line HUD label: FleshText
+TEXT SoulText: preferred=42.01x12.01, rect=130x16, font=12, overflow=False, value=Souls 7
+PASS Text fits: SoulText = Souls 7
+PASS One-line HUD label: SoulText
+TEXT KeyText: preferred=5.01x10.01, rect=16x16, font=10, overflow=False, value=F
+PASS Text fits: KeyText = F
+PASS One-line HUD label: KeyText
+TEXT CreationLabel: preferred=76.51x9.01, rect=74x17, font=8.7, overflow=False, value=Create tissue X 2
+PASS Text fits: CreationLabel = Create tissue X 2
+PASS One-line HUD label: CreationLabel
+TEXT CreationCost: preferred=28.01x8.01, rect=33x17, font=8, overflow=False, value=Cost 30
+PASS Text fits: CreationCost = Cost 30
+PASS One-line HUD label: CreationCost
+PASS Flesh and soul text use the same font size
+PASS Flesh and soul text are both right aligned
+PASS Currency labels and quantities have no smaller rich-text size
+PASS Flesh and soul text share their screen right edge
+CURRENCY ALIGNMENT font=12, fleshRight=1232, soulRight=1232
+TEXT FleshText: preferred=54.01x12.01, rect=130x16, font=12, overflow=False, value=살점 1170
+PASS Text fits: FleshText = 살점 1170
+PASS One-line HUD label: FleshText
+TEXT SoulText: preferred=36.01x12.01, rect=130x16, font=12, overflow=False, value=영혼 7
+PASS Text fits: SoulText = 영혼 7
+PASS One-line HUD label: SoulText
+TEXT KeyText: preferred=5.01x10.01, rect=16x16, font=10, overflow=False, value=F
+PASS Text fits: KeyText = F
+PASS One-line HUD label: KeyText
+TEXT CreationLabel: preferred=63.01x9.01, rect=74x17, font=9, overflow=False, value=조직 창조 X 13
+PASS Text fits: CreationLabel = 조직 창조 X 13
+PASS One-line HUD label: CreationLabel
+TEXT CreationCost: preferred=28.01x8.01, rect=33x17, font=8, overflow=False, value=비용 30
+PASS Text fits: CreationCost = 비용 30
+PASS One-line HUD label: CreationCost
+PASS Flesh and soul text use the same font size
+PASS Flesh and soul text are both right aligned
+PASS Currency labels and quantities have no smaller rich-text size
+PASS Flesh and soul text share their screen right edge
+CURRENCY ALIGNMENT font=12, fleshRight=1232, soulRight=1232
+TEXT FleshText: preferred=90.01x12.01, rect=130x16, font=12, overflow=False, value=살점 2147483647
+PASS Text fits: FleshText = 살점 2147483647
+PASS One-line HUD label: FleshText
+TEXT SoulText: preferred=36.01x12.01, rect=130x16, font=12, overflow=False, value=영혼 7
+PASS Text fits: SoulText = 영혼 7
+PASS One-line HUD label: SoulText
+TEXT KeyText: preferred=5.01x10.01, rect=16x16, font=10, overflow=False, value=F
+PASS Text fits: KeyText = F
+PASS One-line HUD label: KeyText
+TEXT CreationLabel: preferred=76.51x9.01, rect=74x17, font=8.7, overflow=False, value=조직 창조 X 20721
+PASS Text fits: CreationLabel = 조직 창조 X 20721
+PASS One-line HUD label: CreationLabel
+TEXT CreationCost: preferred=28.01x8.01, rect=33x17, font=8, overflow=False, value=비용 30
+PASS Text fits: CreationCost = 비용 30
+PASS One-line HUD label: CreationCost
+PASS Flesh and soul text use the same font size
+PASS Flesh and soul text are both right aligned
+PASS Currency labels and quantities have no smaller rich-text size
+PASS Flesh and soul text share their screen right edge
+CURRENCY ALIGNMENT font=12, fleshRight=1232, soulRight=1232
+TEXT FleshText: preferred=60.01x12.01, rect=130x16, font=12, overflow=False, value=Flesh 1170
+PASS Text fits: FleshText = Flesh 1170
+PASS One-line HUD label: FleshText
+TEXT SoulText: preferred=42.01x12.01, rect=130x16, font=12, overflow=False, value=Souls 7
+PASS Text fits: SoulText = Souls 7
+PASS One-line HUD label: SoulText
+TEXT KeyText: preferred=5.01x10.01, rect=16x16, font=10, overflow=False, value=F
+PASS Text fits: KeyText = F
+PASS One-line HUD label: KeyText
+TEXT CreationLabel: preferred=81.01x9.01, rect=74x17, font=8.2, overflow=False, value=Create tissue X 13
+PASS Text fits: CreationLabel = Create tissue X 13
+PASS One-line HUD label: CreationLabel
+TEXT CreationCost: preferred=28.01x8.01, rect=33x17, font=8, overflow=False, value=Cost 30
+PASS Text fits: CreationCost = Cost 30
+PASS One-line HUD label: CreationCost
+PASS Flesh and soul text use the same font size
+PASS Flesh and soul text are both right aligned
+PASS Currency labels and quantities have no smaller rich-text size
+PASS Flesh and soul text share their screen right edge
+CURRENCY ALIGNMENT font=12, fleshRight=1232, soulRight=1232
+TEXT FleshText: preferred=96.01x12.01, rect=130x16, font=12, overflow=False, value=Flesh 2147483647
+PASS Text fits: FleshText = Flesh 2147483647
+PASS One-line HUD label: FleshText
+TEXT SoulText: preferred=42.01x12.01, rect=130x16, font=12, overflow=False, value=Souls 7
+PASS Text fits: SoulText = Souls 7
+PASS One-line HUD label: SoulText
+TEXT KeyText: preferred=5.01x10.01, rect=16x16, font=10, overflow=False, value=F
+PASS Text fits: KeyText = F
+PASS One-line HUD label: KeyText
+TEXT CreationLabel: preferred=94.51x9.01, rect=74x17, font=7, overflow=False, value=Create tissue X 20721
+PASS Text fits: CreationLabel = Create tissue X 20721
+PASS One-line HUD label: CreationLabel
+TEXT CreationCost: preferred=28.01x8.01, rect=33x17, font=8, overflow=False, value=Cost 30
+PASS Text fits: CreationCost = Cost 30
+PASS One-line HUD label: CreationCost
+PASS 1024x768: HUD corner inside production 16:9 content area
+PASS 1024x768: HUD corner inside production 16:9 content area
+PASS 1024x768: HUD corner inside production 16:9 content area
+PASS 1024x768: HUD corner inside production 16:9 content area
+Rendered size 1024x768; production content pixel rect (x:0.00, y:96.00, width:1024.00, height:576.00); HUD logical rect (x:-150.00, y:0.00, width:150.00, height:92.00)
+PASS Flesh and soul text use the same font size
+PASS Flesh and soul text are both right aligned
+PASS Currency labels and quantities have no smaller rich-text size
+PASS Flesh and soul text share their screen right edge
+CURRENCY ALIGNMENT font=12, fleshRight=985.6, soulRight=985.6
+TEXT FleshText: preferred=48.01x12.01, rect=130x16, font=12, overflow=False, value=살점 105
+PASS Text fits: FleshText = 살점 105
+PASS One-line HUD label: FleshText
+TEXT SoulText: preferred=36.01x12.01, rect=130x16, font=12, overflow=False, value=영혼 7
+PASS Text fits: SoulText = 영혼 7
+PASS One-line HUD label: SoulText
+TEXT KeyText: preferred=5.01x10.01, rect=16x16, font=10, overflow=False, value=F
+PASS Text fits: KeyText = F
+PASS One-line HUD label: KeyText
+TEXT CreationLabel: preferred=58.51x9.01, rect=74x17, font=9, overflow=False, value=조직 창조 X 2
+PASS Text fits: CreationLabel = 조직 창조 X 2
+PASS One-line HUD label: CreationLabel
+TEXT CreationCost: preferred=28.01x8.01, rect=33x17, font=8, overflow=False, value=비용 30
+PASS Text fits: CreationCost = 비용 30
+PASS One-line HUD label: CreationCost
+PASS: 356 actual copied-source / authored-scene EditMode checks; 10 UI-only RenderTexture images.
+No original project changes, PlayMode, gameplay, real F key injection, GraphicRaycaster, or player-build claim.
