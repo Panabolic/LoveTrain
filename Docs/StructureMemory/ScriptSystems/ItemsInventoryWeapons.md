@@ -2,10 +2,25 @@
 status: active
 authority: structure-memory
 category: items-inventory-weapons
-last_reviewed: 2026-05-18
+last_reviewed: 2026-10-07
 ---
 
 # Items Inventory And Weapons
+
+## Current composition branch — 2026-10-07
+
+On `codex/runtime-composition`, current source takes precedence over the historical helper inventory below. The former ItemCooldownState/InventoryItemDispatcher-style notes are historical; they must not be assumed to exist in the current source.
+
+- Item_SO and its 13 authoring subclasses retain asset fields/identity and supply a cached ItemDefinition with executable CompositionDefinition factories. No owner/timer/visual instance is stored in the shared definition.
+- ItemInstance owns per-equipped IItemEffect instances, owner/level/slot, SpawnScope, generated view and public compatibility cooldown mirrors. ItemAttachment performs common prefab initialization/upgrade; StatModifier owns applied stat differences; CombatProc owns proc/counters; TimedProc owns its AttackCycle; LaserGun owns WeaponOverride.
+- Inventory keeps the existing public virtual item hit/kill dispatch. Base hooks reach instance effects; custom overrides remain valid. Inventory ticks only timed inventory effects, not attached launcher clocks.
+- LonginusLauncher owns SummonAndAwait; PoisonMissileLauncher owns AnimatedPortFire. Their scope, local PresentationLink and public Animation Event adapters preserve emission multiplicity and different cooldown start times. ReleaseAttachment disconnects owner callbacks before deferred destruction.
+- ObjectHost is a plain C# per-object binding part. PresentationLink owns Unity presentation references/signals, not gameplay state. SpawnScope tracks bound children and guards owner-return callbacks; independent flight/area objects keep their own scope.
+- PoisonMissile owns HomingFlight; LonginusSpear owns FlightLifetime; LaserBeamSprite/PoisonGas own AreaPresence. Laser catch-up/residual time differs from gas's one-tick/reset behavior. BurstEmission is reused by burst/fan generation, and TargetQuery uses cached target capabilities with each caller's original filter.
+- TargetRegistry.Resolve retains exact same-object collider resolution. TargetHandle retains Unity owner liveness; its damage request does not imply that a hit was accepted or that every caller uses the same eligibility policy.
+- Definition/recipe storage is currently a runtime bridge over unchanged SO assets. Existing serialized authoring inheritance is retained; asset/schema migration remains separate scope.
+
+See [active scope](../../ActiveTasks/runtime-composition-comparison.md), [actual UML and evidence](../../Validation/2026-10-07-runtime-composition/README.md) and [session](../../SessionLogs/2026-10-07-runtime-composition.md).
 
 ## Purpose
 

@@ -1,0 +1,16 @@
+[
+  {
+    "Revision": "baseline",
+    "CsFiles": 148,
+    "Classes": 167,
+    "SourceLines": 18482,
+    "NominalTargetLookups": 15
+  },
+  {
+    "Revision": "working",
+    "CsFiles": 177,
+    "Classes": 196,
+    "SourceLines": 18693,
+    "NominalTargetLookups": 6
+  }
+]

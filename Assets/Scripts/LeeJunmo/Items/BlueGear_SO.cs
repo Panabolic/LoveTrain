@@ -8,58 +8,9 @@ public class BlueGear_SO : Item_SO
     [Tooltip("레벨별 공격속도 증가량 (%)")]
     public float[] AttackSpeedByLevel = { 10f, 20f, 30f };
 
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        GameObject BlueGearGO = InstantiateVisual(user, instance);
-
-        // 장착 시 1레벨 효과 적용
-        ApplyStats(user, AttackSpeedByLevel[0] / 100f);
-
-        if (BlueGearGO == null) return null;
-        return BlueGearGO;
-    }
-
-    public override void UpgradeLevel(ItemInstance instance)
-    {
-        base.UpgradeLevel(instance);
-
-        int currentLevelIdx = instance.currentUpgrade - 1;
-        int prevLevelIdx = currentLevelIdx - 1;
-
-        if (currentLevelIdx < AttackSpeedByLevel.Length && prevLevelIdx >= 0)
-        {
-            float difference = AttackSpeedByLevel[currentLevelIdx] - AttackSpeedByLevel[prevLevelIdx];
-
-            Gun gun = instance.Owner != null ? instance.Owner.GetComponentInChildren<Gun>() : null;
-            if (gun != null)
-            {
-                gun.AddFireRateMultiplier(difference / 100f);
-            }
-        }
-    }
-
-    public override void OnUnequip(GameObject user, ItemInstance instance)
-    {
-        if (AttackSpeedByLevel == null || AttackSpeedByLevel.Length == 0) return;
-        int index = Mathf.Clamp(instance.currentUpgrade - 1, 0, AttackSpeedByLevel.Length - 1);
-        ApplyStats(user, -AttackSpeedByLevel[index] / 100f);
-    }
-
-    private void ApplyStats(GameObject user, float amount)
-    {
-        Gun gun = user.GetComponentInChildren<Gun>();
-        // ✨ [수정] FindFirstObjectByType 사용
-        if (gun == null) gun = FindFirstObjectByType<Gun>();
-
-        if (gun != null)
-        {
-            gun.AddFireRateMultiplier(amount);
-        }
-        else
-        {
-            Debug.LogWarning("[BlueGear] Gun 컴포넌트를 찾을 수 없습니다.");
-        }
-    }
+    internal override ItemDefinition CreateRuntimeDefinition() => new ItemDefinition(this,
+        CompositionDefinition.Visual(this),
+        CompositionDefinition.Stat(StatChannel.GunFireRate, level => AttackSpeedByLevel[CompositionDefinition.LevelIndex(level, AttackSpeedByLevel.Length)] / 100f));
 
     protected override Dictionary<string, string> GetStatReplacements(int level)
     {

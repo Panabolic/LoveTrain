@@ -7,7 +7,8 @@ public class ItemInstance : IItemCooldownView
     public float currentCooldown;
     public float maxCooldown;
     private GameObject instantiatedObject = null; // 실체화된 오브젝트
-    private readonly System.Collections.Generic.List<GameObject> ownedEffects = new System.Collections.Generic.List<GameObject>();
+    private IItemEffect[] effects;
+    private SpawnScope scope;
     private bool isUnequipped;
 
     public int currentUpgrade = 1;
@@ -15,6 +16,14 @@ public class ItemInstance : IItemCooldownView
     public GameObject InstantiatedObject => instantiatedObject;
     public bool IsUnequipped => isUnequipped;
     public GameObject Owner { get; private set; }
+    internal SpawnScope RuntimeScope
+    {
+        get
+        {
+            if (scope == null) scope = new SpawnScope(Owner != null ? (Object)Owner : itemData);
+            return scope;
+        }
+    }
 
     public bool HasCooldown
     {
@@ -41,20 +50,64 @@ public class ItemInstance : IItemCooldownView
     {
         isUnequipped = false;
         Owner = user;
+        effects = null;
+        scope = new SpawnScope(user);
         instantiatedObject = itemData.OnEquip(user, this);
     }
+
+    private void EnsureEffects()
+    {
+        if (effects == null && itemData != null) effects = itemData.RuntimeDefinition.CreateEffects(this);
+    }
+
+    internal GameObject EquipComposition(GameObject user)
+    {
+        Owner = user;
+        EnsureEffects();
+        if (effects != null) foreach (IItemEffect effect in effects) effect.Equip();
+        return instantiatedObject;
+    }
+
+    internal void SetInstantiatedObject(GameObject value) => instantiatedObject = value;
+    internal T GetEffect<T>() where T : class, IItemEffect
+    {
+        EnsureEffects();
+        if (effects != null) foreach (IItemEffect effect in effects) if (effect is T match) return match;
+        return null;
+    }
+    internal void UpgradeComposition(int previousLevel)
+    {
+        EnsureEffects();
+        if (effects != null) foreach (IItemEffect effect in effects) effect.Upgrade(previousLevel);
+    }
+    internal void ReleaseComposition()
+    {
+        if (effects != null) foreach (IItemEffect effect in effects) effect.Release();
+    }
+    internal void ProcessKill(GameObject target)
+    {
+        if (isUnequipped) return;
+        EnsureEffects();
+        if (effects != null) foreach (IItemEffect effect in effects) if (effect is CombatProc proc) proc.Kill(target);
+    }
+    internal void ProcessHit(GameObject target, GameObject source)
+    {
+        if (isUnequipped) return;
+        EnsureEffects();
+        if (effects != null) foreach (IItemEffect effect in effects) if (effect is CombatProc proc) proc.Hit(target, source);
+    }
+    internal void ActivateCooldown(GameObject user) => GetEffect<TimedProc>()?.Activate(user);
 
     public void TrackOwnedEffect(GameObject effect)
     {
         if (effect == null) return;
-        ownedEffects.RemoveAll(owned => owned == null);
         if (isUnequipped)
         {
             effect.SetActive(false);
             Object.Destroy(effect);
             return;
         }
-        ownedEffects.Add(effect);
+        RuntimeScope.Track(effect);
     }
 
     public void HandleUnequip(GameObject user)
@@ -62,13 +115,7 @@ public class ItemInstance : IItemCooldownView
         if (isUnequipped) return;
         isUnequipped = true;
         if (itemData != null) itemData.OnUnequip(user, this);
-        foreach (GameObject effect in ownedEffects)
-        {
-            if (effect == null) continue;
-            effect.SetActive(false);
-            Object.Destroy(effect);
-        }
-        ownedEffects.Clear();
+        scope?.ReleaseBoundObjects();
         if (instantiatedObject != null)
         {
             instantiatedObject.SetActive(false);
@@ -87,42 +134,8 @@ public class ItemInstance : IItemCooldownView
         if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss
             && GameManager.Instance.CurrentState != GameState.Ending) return;
 
-        // 쿨타임이 없는 아이템(패시브 등)은 무시
-        float levelMaxCooldown = itemData.GetCooldownForLevel(currentUpgrade);
-        if (levelMaxCooldown <= 0f) return;
-        maxCooldown = levelMaxCooldown;
-
-        // 1. 수동 모드 대기 상태(float.MaxValue)가 아니라면 시간 감소
-        // (float.MaxValue인 경우는 장판이 깔려있는 상태이므로 시간을 줄이지 않음)
-        if (currentCooldown < float.MaxValue && currentCooldown > 0f)
-        {
-            currentCooldown -= deltaTime;
-        }
-
-        // 2. ✨ [수정] 쿨타임 감소 후(혹은 처음부터 0일 때) 즉시 체크
-        if (currentCooldown <= 0f)
-        {
-            // 쿨타임 보정 (음수로 내려가는 것 방지)
-            currentCooldown = 0f;
-
-            // A. 효과 발동 (장판 생성, 데미지 처리 등)
-            itemData.OnCooldownComplete(user, this);
-
-            // B. 쿨타임 재설정 분기
-            if (itemData.IsManualCooldown)
-            {
-                // [수동 모드] (예: 성서)
-                // 장판이 사라질 때까지 대기하기 위해 무한대 값으로 설정
-                currentCooldown = float.MaxValue;
-            }
-            else
-            {
-                // [자동 모드] (예: 심장)
-                // 즉시 다음 쿨타임 적용
-                maxCooldown = levelMaxCooldown;
-                currentCooldown = levelMaxCooldown;
-            }
-        }
+        // Only inventory-owned timed procs are ticked here. Attached launchers own their Update.
+        GetEffect<TimedProc>()?.Tick(deltaTime, user);
     }
 
     public float GetCooldownFillAmount()
@@ -188,8 +201,9 @@ public class ItemInstance : IItemCooldownView
     public void StartCooldownManual(float cooldownTime)
     {
         if (isUnequipped) return;
-        this.maxCooldown = cooldownTime;
-        this.currentCooldown = cooldownTime; // 여기서 값을 설정하면 Tick이 다시 돌기 시작함
+        TimedProc proc = GetEffect<TimedProc>();
+        if (proc != null) proc.Restart(cooldownTime);
+        else { maxCooldown = cooldownTime; currentCooldown = cooldownTime; }
         // Debug.Log($"[ItemInstance] 수동 쿨타임 시작: {cooldownTime}초");
     }
 
@@ -202,30 +216,7 @@ public class ItemInstance : IItemCooldownView
     {
         if (instantiatedObject == null) return;
 
-        IInstantiatedItem logic = instantiatedObject.GetComponent<IInstantiatedItem>();
-        if (logic != null) logic.UpgradeInstItem(this);
-        else ApplyVisualUpgrade();
+        GetEffect<ItemAttachment>()?.Refresh();
     }
 
-    private void ApplyVisualUpgrade()
-    {
-        int levelIndex = this.currentUpgrade - 1;
-        if (levelIndex < 0 || itemData == null) return;
-
-        // 애니메이터 교체 시도
-        Animator animator = instantiatedObject.GetComponent<Animator>();
-        if (animator != null && itemData.controllersByLevel != null && levelIndex < itemData.controllersByLevel.Length)
-        {
-            RuntimeAnimatorController newController = itemData.controllersByLevel[levelIndex];
-            if (newController != null) { animator.runtimeAnimatorController = newController; return; }
-        }
-
-        // 스프라이트 교체 시도
-        SpriteRenderer spriteRenderer = instantiatedObject.GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null && itemData.spritesByLevel != null && levelIndex < itemData.spritesByLevel.Length)
-        {
-            Sprite newSprite = itemData.spritesByLevel[levelIndex];
-            if (newSprite != null) spriteRenderer.sprite = newSprite;
-        }
-    }
 }

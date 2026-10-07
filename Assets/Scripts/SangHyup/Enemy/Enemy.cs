@@ -20,10 +20,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private RewardPickup fleshPickupPrefab;
     [SerializeField] private RewardPickup soulPickupPrefab;
 
-    protected float calibratedMaxHP;
-    protected float currentHP;
-    protected bool isAlive = true;
-    protected bool deathRewardGranted;
+    private readonly HealthState health = new HealthState();
+    private readonly DeathLifecycle death = new DeathLifecycle();
+    // Compatibility accessors keep derived adapters on one authoritative state object.
+    protected float calibratedMaxHP { get => health.Maximum; set => health.Maximum = value; }
+    protected float currentHP { get => health.Current; set => health.Current = value; }
+    protected bool isAlive { get => death.IsAlive; set => death.IsAlive = value; }
+    protected bool deathRewardGranted { get => death.RewardGranted; set => death.RewardGranted = value; }
     protected virtual EnemyRewardKind RewardKind => EnemyRewardKind.None;
 
     protected bool hasEnteredScreen = false;
@@ -35,6 +38,28 @@ public class Enemy : MonoBehaviour
     protected TrainLevelManager levelManager;
 
     public bool IsTargetable => isAlive && hasEnteredScreen;
+    private TargetHandle combatTarget;
+    private protected ObjectHost RuntimeHost { get; private set; }
+    public TargetHandle CombatTarget
+    {
+        get
+        {
+            if (combatTarget == null)
+            {
+                Mob mob = this as Mob;
+                combatTarget = new TargetHandle(this, () => isAlive, () => IsTargetable,
+                    TakeDamage, DespawnWithoutExp, GetComponent<Boss>() != null,
+                    mob != null ? (Action<Vector2, float>)mob.Knockback : null);
+            }
+            return combatTarget;
+        }
+    }
+    protected bool TryBeginDeath() { return death.TryBegin(); }
+    protected void ApplyHealthDamage(float amount) { health.ApplyDamage(amount); }
+    protected bool HealthIsDepleted => health.IsDepleted;
+    protected void ResetHealth(float maximum) { health.Reset(maximum); }
+    protected void ResetRuntimeLifetime() { death.Reset(); RuntimeHost.Activate(); }
+    protected void CompleteDeathPresentation() { death.CompletePresentation(); }
 
     protected virtual void Awake()
     {
@@ -57,13 +82,14 @@ public class Enemy : MonoBehaviour
             targetRigid = playerObj.GetComponent<Rigidbody2D>();
             levelManager = playerObj.GetComponent<TrainLevelManager>();
         }
+        RuntimeHost = new ObjectHost(gameObject);
+        RuntimeHost.BindUpdate(_ => AdvanceScreenEntry());
     }
 
     protected virtual void OnEnable()
     {
         currentHP = CalculateCalibratedHP();
-        isAlive = true;
-        deathRewardGranted = false;
+        ResetRuntimeLifetime();
 
         // ✨ [수정] null 체크 추가
         if (sprite != null)
@@ -95,6 +121,11 @@ public class Enemy : MonoBehaviour
     }
 
     protected virtual void Update()
+    {
+        RuntimeHost.Update(Time.deltaTime);
+    }
+
+    private void AdvanceScreenEntry()
     {
         if (!hasEnteredScreen && isAlive)
         {
@@ -147,14 +178,14 @@ public class Enemy : MonoBehaviour
     {
         if (!isAlive || !hasEnteredScreen) return;
 
-        currentHP -= damageAmount;
+        health.ApplyDamage(damageAmount);
 
         // ✨ [수정] HitEffect는 material이 있을 때만 실행
         if (material != null) StartCoroutine(HitEffect());
 
         SoundEventBus.Publish(SoundID.Enemy_Hit);
 
-        if (currentHP <= 0)
+        if (health.IsDepleted)
             StartCoroutine(Die());
     }
 
@@ -169,9 +200,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual IEnumerator Die()
     {
-        if (deathRewardGranted) yield break;
-        deathRewardGranted = true;
-        isAlive = false;
+        if (!death.TryGrantReward()) yield break;
         // XP retains its original death-time reward; physical currency is paid on collection.
         if (levelManager != null) levelManager.GainExperience(exp);
         if (levelManager != null && RewardKind != EnemyRewardKind.None)
@@ -189,7 +218,7 @@ public class Enemy : MonoBehaviour
 
         if (sprite != null)
         {
-            sprite.enabled = false;
+            RuntimeHost.Presentation.ShowSprite(false);
         }
 
         if (killParticle != null)
@@ -212,6 +241,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnDisable()
     {
+        RuntimeHost?.Deactivate();
         if (PoolManager.instance != null)
         {
             if (material != null)

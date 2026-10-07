@@ -17,32 +17,10 @@ public class HealingItem_SO : Item_SO
     [Header("리소스")]
     public Sprite[] countSprites;
 
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        GameObject itemObj = InstantiateVisual(user, instance);
-        if (itemObj == null) return null;
-
-        HealingItem logic = itemObj.GetComponent<HealingItem>();
-        if (logic == null) logic = itemObj.AddComponent<HealingItem>();
-
-        logic.Initialize(this, user);
-        logic.UpgradeInstItem(instance);
-
-        return itemObj;
-    }
-
-    public override void OnKillEnemy(GameObject user, GameObject killedEnemy)
-    {
-        HealingItem logic = user.GetComponentInChildren<HealingItem>();
-        if (logic != null) logic.OnEnemyKilled();
-    }
-
-    public override void OnUnequip(GameObject user, ItemInstance instance)
-    {
-        if (instance.InstantiatedObject == null) return;
-        HealingItem logic = instance.InstantiatedObject.GetComponent<HealingItem>();
-        if (logic != null) logic.RemoveEquipmentStats();
-    }
+    internal override ItemDefinition CreateRuntimeDefinition() => new ItemDefinition(this,
+        CompositionDefinition.Attach<HealingItem>(this, (logic, user, instance) => logic.Initialize(this, user)),
+        CompositionDefinition.Stat(StatChannel.TrainMaxSpeed, level => maxSpeedBonusByLevel[CompositionDefinition.LevelIndex(level, maxSpeedBonusByLevel.Length)]),
+        CompositionDefinition.Healing(this));
 
     protected override Dictionary<string, string> GetStatReplacements(int level)
     {

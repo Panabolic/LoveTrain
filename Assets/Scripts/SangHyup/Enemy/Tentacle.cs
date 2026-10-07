@@ -1,6 +1,5 @@
 ﻿using System; // ✨ Action 사용을 위해 필수
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Tentacle : Enemy
@@ -13,11 +12,10 @@ public class Tentacle : Enemy
     // 보스에게서 받아올 변수들
     private float attackWaitTime;
     private float animationLength;
-    private bool attackActive;
+    private readonly TimedStrike strike = new TimedStrike();
     private Coroutine attackCoroutine;
     private Camera gameCamera;
-    private readonly HashSet<Train> damagedTrains = new HashSet<Train>();
-    public bool AttackStarted { get; private set; }
+    public bool AttackStarted => strike.AttackStarted;
     private static readonly int AttackState = Animator.StringToHash("EyeBoss_Attack");
 
     // ✨ [추가] 공격 시 실행할 콜백 (보스의 사운드 함수)
@@ -30,9 +28,7 @@ public class Tentacle : Enemy
         this.damage = damageAmount;
         this.attackWaitTime = waitTime;
         gameCamera = Camera.main;
-        attackActive = false;
-        AttackStarted = false;
-        damagedTrains.Clear();
+        strike.Reset();
         animationLength = 1f;
 
         // 보스가 전달해준 사운드 재생 함수 저장
@@ -83,9 +79,9 @@ public class Tentacle : Enemy
 
     private void TryDamageTrain(Collider2D other)
     {
-        if (!isAlive || !attackActive || !CombatIsRunning()) return;
+        if (!isAlive || !strike.IsActive || !CombatIsRunning()) return;
         Train train = other.GetComponentInParent<Train>();
-        if (train != null && damagedTrains.Add(train)) train.TakeDamage(damage);
+        if (train != null && strike.TryConsumeHit(train)) train.TakeDamage(damage);
     }
 
     public static bool WarningIsVisible(Camera camera, Vector3 position)
@@ -106,10 +102,10 @@ public class Tentacle : Enemy
     {
         // Unparented world placement keeps the warning and eventual strike aligned
         // while the belt/camera move. Offscreen warnings are cancelled and rerolled.
-        float remaining = Mathf.Max(0f, attackWaitTime);
-        while (remaining > 0f)
+        strike.BeginWait(attackWaitTime);
+        while (strike.Remaining > 0f)
         {
-            if (CombatIsRunning()) remaining -= Time.deltaTime;
+            strike.Advance(Time.deltaTime, CombatIsRunning());
             yield return null;
         }
         while (!CombatIsRunning()) yield return null;
@@ -119,27 +115,26 @@ public class Tentacle : Enemy
             yield break;
         }
 
-        AttackStarted = true;
+        strike.MarkAttackStarted();
         if (animator != null)
         {
-            animator.SetTrigger("attack");
+            RuntimeHost.Presentation.Trigger("attack");
             // Both existing controllers use this state. Avoid their warning exit
             // time/transition delaying the strike beyond the advertised deadline.
             animator.Play(AttackState, 0, 0f);
         }
-        attackActive = true;
+        strike.BeginAttack(animationLength);
         onAttackCallback?.Invoke();
-        remaining = animationLength;
-        while (remaining > 0f)
+        strike.BeginWait(animationLength);
+        while (strike.Remaining > 0f)
         {
-            if (CombatIsRunning()) remaining -= Time.deltaTime;
+            strike.Advance(Time.deltaTime, CombatIsRunning());
             yield return null;
         }
-        attackActive = false;
-        remaining = Mathf.Max(0f, toDestroy);
-        while (remaining > 0f)
+        strike.EndAttack(toDestroy);
+        while (strike.Remaining > 0f)
         {
-            if (CombatIsRunning()) remaining -= Time.deltaTime;
+            strike.Advance(Time.deltaTime, CombatIsRunning());
             yield return null;
         }
         isAlive = false;
@@ -149,7 +144,7 @@ public class Tentacle : Enemy
     private void CancelAttack()
     {
         isAlive = false;
-        attackActive = false;
+        strike.Cancel();
         StopAllCoroutines();
         if (collision != null) collision.enabled = false;
         Destroy(gameObject);
@@ -159,14 +154,14 @@ public class Tentacle : Enemy
     {
         if (!isAlive) return;
 
-        currentHP -= damageAmount;
+        ApplyHealthDamage(damageAmount);
         StartCoroutine(HitEffect());
         SoundEventBus.Publish(SoundID.Enemy_Hit);
 
-        if (currentHP <= 0)
+        if (HealthIsDepleted)
         {
             isAlive = false;
-            attackActive = false;
+            strike.Cancel();
             StopAllCoroutines();
             if (collision != null) collision.enabled = false;
             if (killParticle != null)
@@ -184,11 +179,8 @@ public class Tentacle : Enemy
         if (GameManager.Instance == null || PoolManager.instance == null) return hp;
 
         int gameTimeMin = (int)(GameManager.Instance.gameTime / 60.0f);
-        float increaseRate = PoolManager.instance.hpIncrease / 100.0f;
-        float calibratedValue = 1.0f + (gameTimeMin * increaseRate);
-        float eventDebuff = 1.0f + (PoolManager.instance.eventDebuff / 100.0f);
-
-        calibratedMaxHP = hp * calibratedValue * eventDebuff;
+        calibratedMaxHP = HealthState.TimeScaled(hp, gameTimeMin, PoolManager.instance.hpIncrease,
+            PoolManager.instance.eventDebuff);
         return calibratedMaxHP;
     }
 
@@ -202,7 +194,7 @@ public class Tentacle : Enemy
 
     protected override void OnDisable()
     {
-        attackActive = false;
+        strike.Cancel();
         StopAllCoroutines();
         attackCoroutine = null;
         if (owner != null) owner.UnregisterTentacle(gameObject);

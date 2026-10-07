@@ -21,19 +21,8 @@ public class CrownOfThorns_SO : Item_SO
     [Header("프리팹")]
     public GameObject LightningPrefab;
 
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        GameObject obj = InstantiateVisual(user, instance);
-        if (obj == null) return null;
-
-        CrownOfThorns logic = obj.GetComponent<CrownOfThorns>();
-        if (logic == null) logic = obj.AddComponent<CrownOfThorns>();
-
-        logic.Initialize(this);
-        logic.UpgradeInstItem(instance);
-
-        return obj;
-    }
+    internal override ItemDefinition CreateRuntimeDefinition() => new ItemDefinition(this,
+        CompositionDefinition.Attach<CrownOfThorns>(this, (logic, user, instance) => logic.Initialize(this), true));
 
     protected override Dictionary<string, string> GetStatReplacements(int level)
     {

@@ -10,6 +10,8 @@ public class Train : MonoBehaviour
     // Components
     public Animator[] carsAnim;
     private TrainController trainController;
+    private Animator[] carAnimationBinding;
+    private PresentationLink carPresentation;
 
     [Tooltip("기차의 속도 최대치 값입니다.")]
     [SerializeField] private float maxSpeedValue = 460;
@@ -27,7 +29,8 @@ public class Train : MonoBehaviour
     [SerializeField] private float dashDuration = 5f;
     [Tooltip("질주 전체 시간 동안 소모하는 총 연료입니다.")]
     [SerializeField] private float dashFuelCost = 30f;
-    public float CurrentFuel { get; private set; }
+    private readonly FuelState fuel = new FuelState();
+    public float CurrentFuel { get => fuel.Current; private set => fuel.Reset(value); }
     public float MaxFuel => maxFuel;
     public bool IsDashing => drive.DashRemaining > 0f;
     public float FuelDrainPerSecond => IsDashing ? Mathf.Max(0f, dashFuelCost) / Mathf.Max(0.01f, dashDuration) : TrainDriveState.GetFuelDrainPerSecond(CurrentSpeed);
@@ -77,8 +80,10 @@ public class Train : MonoBehaviour
     [SerializeField] private Animator overlayEffectAnim;
 
     // --- 상태 변수 ---
-    private bool isDead = false;
-    private bool isDying = false;
+    private readonly DeathLifecycle death = new DeathLifecycle();
+    private bool isDead { get => !death.IsAlive; set => death.IsAlive = !value; }
+    private bool isDying { get => death.PresentationActive; set => death.PresentationActive = value; }
+    private ObjectHost runtimeHost;
 
     // 손의 원래 위치 저장용 변수
     private Vector3 handInitialPos;
@@ -92,6 +97,8 @@ public class Train : MonoBehaviour
     {
         carsAnim = GetComponentsInChildren<Animator>();
         trainController = GetComponent<TrainController>();
+        runtimeHost = new ObjectHost(gameObject);
+        runtimeHost.BindUpdate(AdvanceTrain);
         CaptureSpeedBaseline();
     }
 
@@ -128,6 +135,14 @@ public class Train : MonoBehaviour
 
     void Update()
     {
+        runtimeHost.Update(Time.deltaTime);
+    }
+
+    private void OnEnable() { runtimeHost?.Activate(); }
+    private void OnDisable() { runtimeHost?.Deactivate(); }
+
+    private void AdvanceTrain(float deltaTime)
+    {
         if (isDead) return;
         _currentSpeedForInspector = CurrentSpeed;
 
@@ -136,12 +151,12 @@ public class Train : MonoBehaviour
         if (!combat || Time.timeScale <= 0f) { SetCarAnimSpeed(0f); return; }
         bossContacts.RemoveWhere(IsInactiveContact);
         bool shift = Keyboard.current != null && (Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed);
-        float fuelUsed = drive.Advance(Time.deltaTime, shift, baseSpeed, maxSpeedValue, acceleration,
+        float fuelUsed = drive.Advance(deltaTime, shift, baseSpeed, maxSpeedValue, acceleration,
             deceleration, decelerationDelay, dashDuration, dashSpeedMultiplier,
             dashFuelCost, bossContacts.Count > 0);
         relativeWorldSpeed = Mathf.MoveTowards(relativeWorldSpeed,
             Mathf.Max(0f, CurrentSpeed - baseSpeed) * Mathf.Max(0f, relativeSpeedScale),
-            Mathf.Max(0.01f, relativeSpeedChangeRate) * Time.deltaTime);
+            Mathf.Max(0.01f, relativeSpeedChangeRate) * deltaTime);
         ModifyFuel(-fuelUsed);
         SetCarAnimSpeed(CurrentSpeed * 0.05f);
     }
@@ -149,16 +164,18 @@ public class Train : MonoBehaviour
     public void ModifyFuel(float amount)
     {
         if (isDead) return;
-        CurrentFuel = Mathf.Clamp(CurrentFuel + amount, 0f, maxFuel);
-        if (CurrentFuel <= 0f) { drive.Reset(); relativeWorldSpeed = 0f; CurrentSpeed = 0f; Die(); }
+        if (fuel.Modify(amount, maxFuel)) { drive.Reset(); relativeWorldSpeed = 0f; CurrentSpeed = 0f; Die(); }
     }
 
     private void SetCarAnimSpeed(float speed)
     {
-        foreach (Animator carAnim in carsAnim)
+        // carsAnim stays public; replacing its array rebinds presentation at this boundary.
+        if (carPresentation == null || !ReferenceEquals(carAnimationBinding, carsAnim))
         {
-            carAnim.SetFloat("moveSpeed", speed);
+            carAnimationBinding = carsAnim;
+            carPresentation = new PresentationLink(this, null, carsAnim);
         }
+        carPresentation.SetFloat("moveSpeed", speed);
     }
 
     public virtual void TakeDamage(float damageAmount, bool isBossAttack = false)
@@ -318,8 +335,7 @@ public class Train : MonoBehaviour
         // 이미 엔딩 상태라면 죽지 않음
         if (GameManager.Instance != null && GameManager.Instance.CurrentState == GameState.Ending) return;
 
-        if (isDead) return;
-        isDead = true;
+        if (!death.TryBegin()) return;
         isDying = false;
         bossContacts.Clear();
         drive.CancelDash();

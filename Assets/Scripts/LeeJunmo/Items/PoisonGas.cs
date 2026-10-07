@@ -1,101 +1,56 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine;
 
 public class PoisonGas : MonoBehaviour
 {
     private float damagePerTick;
     private float tickRate;
     private float moveSpeed;
-
-    private float tickTimer = 0f;
     private float destroyXPos = -40f;
-
-    private List<Enemy> enemiesInGas = new List<Enemy>();
-
-    // ✨ [추가] 내 콜라이더 제어용 변수
     private Collider2D myCollider;
+    private readonly AreaPresence area = new AreaPresence();
+    private ObjectHost host;
+    private System.Action<TargetHandle> damageTarget;
 
     private void Awake()
     {
         myCollider = GetComponent<Collider2D>();
+        host = new ObjectHost(gameObject);
+        damageTarget = ApplyDamage;
+        host.BindUpdate(StepArea);
+        host.Presentation.BindSignal(nameof(AnimEvent_EnableGas), () =>
+        {
+            if (myCollider != null) myCollider.enabled = true;
+        });
     }
 
     public void Initialize(float damage, float tickRate, float speed)
     {
-        this.damagePerTick = damage;
+        damagePerTick = damage;
         this.tickRate = tickRate;
-        this.moveSpeed = speed;
-
-        // ✨ [핵심] 생성 초기에는 콜라이더를 꺼서 데미지 판정을 막음
-        if (myCollider != null)
-        {
-            myCollider.enabled = false;
-        }
-
-        // 초기화 시 리스트 비우기 (풀링 대비)
-        enemiesInGas.Clear();
+        moveSpeed = speed;
+        if (myCollider != null) myCollider.enabled = false;
+        // Preserve the existing initialization: clear contacts without resetting elapsed ticks.
+        area.Clear();
     }
 
-    // ✨ [Animation Event] 애니메이션의 특정 프레임(가스가 퍼진 시점)에서 호출
-    public void AnimEvent_EnableGas()
-    {
-        if (myCollider != null)
-        {
-            myCollider.enabled = true;
-        }
-    }
+    public void AnimEvent_EnableGas() { host.Presentation.Signal(nameof(AnimEvent_EnableGas)); }
 
     private void Update()
     {
         if (Time.timeScale == 0) return;
-
-        transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
-
-        if (transform.position.x < destroyXPos)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        tickTimer += Time.deltaTime;
-        if (tickTimer >= tickRate)
-        {
-            DealDamage();
-            tickTimer = 0f;
-        }
+        host.Update(Time.deltaTime);
     }
 
-    private void DealDamage()
+    private void StepArea(float deltaTime)
     {
-        for (int i = enemiesInGas.Count - 1; i >= 0; i--)
-        {
-            Enemy enemy = enemiesInGas[i];
-            if (enemy != null && enemy.gameObject.activeSelf)
-            {
-                enemy.TakeDamage(damagePerTick);
-            }
-            else
-            {
-                enemiesInGas.RemoveAt(i);
-            }
-        }
+        transform.position += MovementRules.Linear(transform.TransformDirection(Vector3.left), moveSpeed, deltaTime);
+        if (transform.position.x < destroyXPos) { Destroy(gameObject); return; }
+        area.Advance(deltaTime, tickRate, damageTarget);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Enemy enemy = collision.GetComponent<Enemy>();
-        if (enemy != null && !enemiesInGas.Contains(enemy))
-        {
-            enemiesInGas.Add(enemy);
-        }
-    }
+    private void ApplyDamage(TargetHandle target) { target.RequestDamage(damagePerTick); }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        Enemy enemy = collision.GetComponent<Enemy>();
-        if (enemy != null && enemiesInGas.Contains(enemy))
-        {
-            enemiesInGas.Remove(enemy);
-        }
-    }
+    private void OnTriggerEnter2D(Collider2D collision) { area.Enter(TargetRegistry.Resolve(collision)); }
+    private void OnTriggerExit2D(Collider2D collision) { area.Exit(TargetRegistry.Resolve(collision)); }
+    private void OnDestroy() { host?.Release(); }
 }

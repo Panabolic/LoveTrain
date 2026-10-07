@@ -2,10 +2,23 @@
 status: active
 authority: structure-memory
 category: enemy-spawn-boss-flow
-last_reviewed: 2026-05-18
+last_reviewed: 2026-10-07
 ---
 
 # Enemy Spawn And Boss Flow
+
+## Current composition branch — 2026-10-07
+
+On `codex/runtime-composition`, current source uses HealthState, DeathLifecycle, KnockbackState and MovementRules behind the existing Enemy/Mob/Boss authoring adapters. HP, alive/reward and stun state have one owner, while existing protected accessors preserve subclass call sites. Public and serialized fields/GUIDs remain in place. The long historical helper inventory below is not the current class list.
+
+- Enemy caches an ObjectHost and TargetHandle. Damage eligibility, presentation/coroutine order and calibrated authoring values remain at the adapter boundary; numeric/life state is delegated.
+- Mob/FlyMob share the ObjectHost FixedUpdate execution path and select ground/flying calculations. Ground Y preservation, flying XY calculation, train relative velocity, stun behavior and post-death movement are retained.
+- PoolManager owns TargetRegistry over the existing public activeEnemies list; replacement of that list rebinds the registry. Targets are cached capability handles. Exact collider resolution and the compatibility boss-maintenance policy are preserved.
+- TrainBoss owns BossContactTracker and KnockbackState; EyeBoss owns AttackReservation and a SpawnScope for tentacles; Tentacle owns TimedStrike for combat-time warning/attack/cleanup and target-once state.
+- Scope release snapshots its children before deactivation so child OnDisable unregister is safe. Scope callbacks target the owner's activation; independent projectiles are not stopped when an equipment scope closes.
+- FuelBarrel/CreditEnemy retain their pickup/text/specific lifetime policies while using common health/life state. No new monster subtype is required for numeric prefab variants.
+
+Existing inheritance is a retained Unity authoring/API bridge. Removing it requires a separate asset and external-contract migration, not deletion of the parent fields. See [scope](../../ActiveTasks/runtime-composition-comparison.md), [UML/evidence](../../Validation/2026-10-07-runtime-composition/README.md) and [session](../../SessionLogs/2026-10-07-runtime-composition.md).
 
 ## Purpose
 

@@ -1,10 +1,9 @@
-﻿using NUnit.Framework.Interfaces;
 using UnityEngine;
 
 public class ProjectileStrategy : IWeaponStrategy
 {
     private Gun gun;
-    private float currentCooldown = 0f;
+    private readonly AttackCycle cycle = new AttackCycle();
 
     public void Initialize(Gun gunController, GunStats stats)
     {
@@ -13,13 +12,13 @@ public class ProjectileStrategy : IWeaponStrategy
 
     public void Process(bool isTriggerHeld)
     {
-        if (currentCooldown > 0) currentCooldown -= Time.deltaTime;
+        cycle.Elapse(Time.deltaTime);
 
         // 버튼 누름 + 쿨타임 완료 -> 발사
-        if (isTriggerHeld && currentCooldown <= 0f)
+        if (isTriggerHeld && cycle.IsReady)
         {
             Fire();
-            currentCooldown = gun.CurrentStats.fireRate;
+            cycle.StartCooldown(gun.CurrentStats.fireRate);
         }
     }
 

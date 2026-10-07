@@ -66,7 +66,7 @@ public class CreditEnemy : Enemy
         if (Time.timeScale == 0) return;
 
         // 아래로 이동
-        transform.Translate(Vector3.down * dropSpeed * Time.deltaTime);
+        transform.Translate(MovementRules.Linear(Vector3.down, dropSpeed, Time.deltaTime));
 
         // 화면 밖으로 벗어나면 삭제
         if (transform.position.y < -20f)
@@ -120,11 +120,13 @@ public class CreditEnemy : Enemy
         if (contentText != null) contentText.DOKill();
 
         yield return null;
+        CompleteDeathPresentation();
         Destroy(gameObject);
     }
 
     protected override void OnDisable()
     {
+        RuntimeHost?.Deactivate();
         if (PoolManager.instance != null)
         {
             PoolManager.instance.UnregisterEnemy(this);

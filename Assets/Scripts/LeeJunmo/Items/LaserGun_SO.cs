@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LaserGun", menuName = "Items/LaserGun")]
@@ -20,31 +20,7 @@ public class LaserGun_SO : Item_SO
     [Tooltip("교체할 거치대 이미지 (선택)")]
     public Sprite HolderSprite;
 
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        Gun gun = user.GetComponentInChildren<Gun>();
-        if (gun == null)
-        {
-            Debug.LogError($"[LaserGun_SO] {user.name}에서 Gun을 찾을 수 없습니다!");
-            return null;
-        }
-
-        GameObject createdWeaponObj = gun.EquipVisual(this.instantiatedPrefab, this.HolderSprite);
-
-        if (createdWeaponObj != null)
-        {
-            LaserGun logic = createdWeaponObj.GetComponent<LaserGun>();
-            if (logic == null)
-            {
-                logic = createdWeaponObj.AddComponent<LaserGun>();
-            }
-
-            logic.Initialize(this, user);
-            logic.UpgradeInstItem(instance);
-        }
-
-        return createdWeaponObj;
-    }
+    internal override ItemDefinition CreateRuntimeDefinition() => new ItemDefinition(this, CompositionDefinition.Weapon(this));
 
     protected override Dictionary<string, string> GetStatReplacements(int level)
     {
@@ -56,10 +32,4 @@ public class LaserGun_SO : Item_SO
         };
     }
 
-    public override void OnUnequip(GameObject user, ItemInstance instance)
-    {
-        if (instance.InstantiatedObject == null) return;
-        LaserGun logic = instance.InstantiatedObject.GetComponent<LaserGun>();
-        if (logic != null) logic.RestoreProjectileWeapon();
-    }
 }

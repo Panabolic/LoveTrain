@@ -36,6 +36,21 @@ public class PoolManager : MonoBehaviour
     private Dictionary<string, List<GameObject>> dynamicPools = new Dictionary<string, List<GameObject>>();
 
     public List<Enemy> activeEnemies = new List<Enemy>();
+    private TargetRegistry combatTargets;
+    private List<Enemy> registrySource;
+    public TargetRegistry CombatTargets
+    {
+        get
+        {
+            // Rebinding the legacy public list changes the registry's source at this boundary.
+            if (combatTargets == null || !ReferenceEquals(registrySource, activeEnemies))
+            {
+                registrySource = activeEnemies;
+                combatTargets = new TargetRegistry(registrySource);
+            }
+            return combatTargets;
+        }
+    }
 
     [Header("Calibration")]
     public int hpIncrease = 10;
@@ -148,28 +163,17 @@ public class PoolManager : MonoBehaviour
         return selected;
     }
 
-    public void RegisterEnemy(Enemy enemy) { if (!activeEnemies.Contains(enemy)) activeEnemies.Add(enemy); }
-    public void UnregisterEnemy(Enemy enemy) { if (activeEnemies.Contains(enemy)) activeEnemies.Remove(enemy); }
+    public void RegisterEnemy(Enemy enemy) { CombatTargets.Register(enemy); }
+    public void UnregisterEnemy(Enemy enemy) { CombatTargets.Unregister(enemy); }
 
     public void DespawnAllEnemies()
     {
-        for (int i = activeEnemies.Count - 1; i >= 0; i--)
-            if (activeEnemies[i] != null) activeEnemies[i].DespawnWithoutExp();
+        CombatTargets.Despawn(false);
     }
 
     public void DespawnAllEnemiesExceptBoss()
     {
-        for (int i = activeEnemies.Count - 1; i >= 0; i--)
-        {
-            Enemy enemy = activeEnemies[i];
-            if (enemy != null)
-            {
-                // Boss 컴포넌트가 있으면 건너뜀 (살려둠)
-                if (enemy.GetComponent<Boss>() != null) continue;
-
-                enemy.DespawnWithoutExp();
-            }
-        }
+        CombatTargets.Despawn(true);
     }
 
 }

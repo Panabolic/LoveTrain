@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 [System.Serializable]
@@ -46,6 +46,7 @@ public class Gun : MonoBehaviour
     private GameObject currentVisualObj;
 
     private IWeaponStrategy currentStrategy;
+    private ObjectHost host;
 
     // 외부에서 현재 총구 위치를 가져갈 수 있는 프로퍼티
     public Transform FirePoint { get; private set; }
@@ -64,6 +65,8 @@ public class Gun : MonoBehaviour
 
         if (holderRenderer != null) defaultHolderSprite = holderRenderer.sprite;
 
+        host = new ObjectHost(gameObject);
+        host.BindUpdate(_ => ProcessWeapon());
         FirePoint = defaultFirePoint;
         baseStats = CurrentStats;
         defaultBaseStats = baseStats;
@@ -73,6 +76,7 @@ public class Gun : MonoBehaviour
 
     private void OnEnable()
     {
+        host.Activate();
         if (fireAction != null) fireAction.action.Enable();
         if (levelManager != null) levelManager.OnLevelUp += OnLevelUpDamageIncrease;
         UpdateStats();
@@ -80,6 +84,7 @@ public class Gun : MonoBehaviour
 
     private void OnDisable()
     {
+        host.Deactivate();
         if (fireAction != null) fireAction.action.Disable();
         if (levelManager != null) levelManager.OnLevelUp -= OnLevelUpDamageIncrease;
     }
@@ -101,6 +106,7 @@ public class Gun : MonoBehaviour
         if (defaultGunRenderer != null) defaultGunRenderer.enabled = false;
 
         currentVisualObj = Instantiate(visualPrefab, transform);
+        host.Scope.Track(currentVisualObj);
         currentVisualObj.transform.localPosition = Vector3.zero;
         currentVisualObj.transform.localRotation = Quaternion.identity;
 
@@ -167,23 +173,8 @@ public class Gun : MonoBehaviour
         // Preserve the original Lv.1 +2 growth and the default gun's permanent bonus.
         float startingGunBonus = UsesDefaultGunStats() ? permanentDamageBonus : 0f;
         float growthDamage = (levelManager != null ? levelManager.CurrentLevel : 1) * damageEachLevel;
-        CurrentStats.damage = (baseStats.damage + startingGunBonus + growthDamage)
-                              * (1f + damageMultiplier)
-                              * weaponDamageRatio;
-
-        // 공속 계산
-        if (1f + fireRateMultiplier > 0)
-        {
-            CurrentStats.fireRate = baseStats.fireRate / (1f + fireRateMultiplier);
-        }
-        else
-        {
-            CurrentStats.fireRate = baseStats.fireRate;
-        }
-
-        CurrentStats.speed = baseStats.speed;
-        CurrentStats.projectilePrefab = baseStats.projectilePrefab;
-        CurrentStats.laserPrefab = baseStats.laserPrefab;
+        CurrentStats = WeaponStatRules.Calculate(baseStats, startingGunBonus, growthDamage,
+            damageMultiplier, fireRateMultiplier, weaponDamageRatio);
 
         if (currentStrategy != null)
         {
@@ -218,9 +209,12 @@ public class Gun : MonoBehaviour
     private void OnDestroy()
     {
         currentStrategy?.Unequip();
+        host?.Release();
     }
 
-    void Update()
+    void Update() { host.Update(Time.deltaTime); }
+
+    private void ProcessWeapon()
     {
         bool shouldFire = false;
         if (GameManager.Instance != null && Time.timeScale > 0f)

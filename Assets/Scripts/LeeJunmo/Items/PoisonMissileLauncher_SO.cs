@@ -20,22 +20,9 @@ public class PoisonMissileLauncher_SO : Item_SO
     public GameObject MissilePrefab;
     public GameObject GasPrefab;
 
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        // 1. 비주얼 생성
-        GameObject obj = InstantiateVisual(user, instance);
-        if (obj == null) return null;
-
-        // 2. 로직 컴포넌트 확인 및 추가
-        PoisonMissileLauncher logic = obj.GetComponent<PoisonMissileLauncher>();
-        if (logic == null) logic = obj.AddComponent<PoisonMissileLauncher>();
-
-        // 3. 초기화
-        logic.Initialize(this, user);
-        logic.UpgradeInstItem(instance);
-
-        return obj;
-    }
+    internal override ItemDefinition CreateRuntimeDefinition() => new ItemDefinition(this,
+        CompositionDefinition.Attach<PoisonMissileLauncher>(this, (logic, user, instance) => logic.Initialize(this, user), true,
+            logic => logic.ReleaseAttachment()));
 
     // 툴팁용 텍스트 변환
     protected override Dictionary<string, string> GetStatReplacements(int level)

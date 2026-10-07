@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GunRotator : MonoBehaviour
@@ -26,9 +26,6 @@ public class GunRotator : MonoBehaviour
 
         // 3. 방향 계산
         Vector3 direction = worldMousePos - targetTransform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // 4. 회전 적용 (Offset 보정 포함)
-        targetTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + angleOffset));
+        targetTransform.rotation = MovementRules.LookRotation2D(direction, angleOffset);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrainBoss : Boss
@@ -26,19 +25,17 @@ public class TrainBoss : Boss
     [Tooltip("넉백 지속시간 (second)")]
     [Range(0f, 1.0f)]
     [SerializeField] private float stunDuration = 0.4f;
-    private bool isStunned = false;
+    private readonly KnockbackState knockback = new KnockbackState();
+    private bool isStunned { get => knockback.IsStunned; set => knockback.IsStunned = value; }
 
     private bool isPhase2 = false;
 
     // 넉백 쿨타임 (다단히트 방지)
     private float knockbackCooldown = 0.2f;
-    private float lastKnockbackTime = -999f;
 
     private Vector2 moveDirection = Vector2.zero;
     private const float ContactPushSpeed = 7f;
-    private readonly List<Collider2D> trainContacts = new List<Collider2D>();
-    private Train contactTrain;
-    private TrainController contactController;
+    private BossContactTracker contacts;
 
     [Header("Phase Colliders")]
     [Tooltip("1페이즈용 콜라이더")]
@@ -50,6 +47,12 @@ public class TrainBoss : Boss
     {
         base.Awake();
         rigid2D = GetComponent<Rigidbody2D>();
+        contacts = new BossContactTracker(ResolveContact, OverlapsActivePhase, () =>
+        {
+            if (CameraShakeManager.Instance != null)
+                CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
+        });
+        RuntimeHost.BindFixedUpdate(AdvanceMovement);
         SoundEventBus.Publish(SoundID.Boss_TrainBossSpawn);
 
         // ✨ [추가] 콜라이더 초기화 (1페이즈 ON, 2페이즈 OFF)
@@ -60,26 +63,25 @@ public class TrainBoss : Boss
     protected override void OnEnable()
     {
         base.OnEnable();
-        isStunned = false;
+        knockback.Reset();
         isPhase2 = false;
-        lastKnockbackTime = -999f;
         if (phase1Collider != null) phase1Collider.enabled = true;
         if (phase2Collider != null) phase2Collider.enabled = false;
     }
 
     private void FixedUpdate()
     {
+        RuntimeHost.FixedUpdate(Time.fixedDeltaTime);
+    }
+
+    private void AdvanceMovement(float deltaTime)
+    {
         if (!isAlive || !CombatIsRunning())
         {
             ClearTrainContacts();
             return;
         }
-        RefreshTrainContacts();
-        if (contactTrain != null)
-        {
-            contactTrain.SetBossContact(this, true);
-            if (contactController != null) contactController.PushLeft(ContactPushSpeed * Time.fixedDeltaTime);
-        }
+        contacts.Advance(ContactPushSpeed * deltaTime);
         if (rigid2D == null || targetRigid == null) return;
 
         // 2. 방향 설정 (무조건 왼쪽)
@@ -88,7 +90,7 @@ public class TrainBoss : Boss
         // 3. 스턴 상태가 아니면 이동 (플레이어 생존 여부 상관없이 계속 전진)
         if (!isStunned)
         {
-            rigid2D.linearVelocity = new Vector2(moveDirection.x * moveSpeed, rigid2D.linearVelocity.y);
+            rigid2D.linearVelocity = MovementRules.GroundVelocity(moveDirection, moveSpeed, rigid2D.linearVelocity.y, 0f);
         }
     }
 
@@ -96,7 +98,7 @@ public class TrainBoss : Boss
     {
         // 플레이어 위치와 상관없이 무조건 왼쪽으로 이동
         moveDirection = Vector2.left;
-        if (sprite != null) sprite.flipX = false;
+        RuntimeHost.Presentation.SetFlipX(false);
     }
 
     public override void TakeDamage(float damageAmount)
@@ -108,10 +110,10 @@ public class TrainBoss : Boss
         CheckPhase();
 
         // 넉백 쿨타임 체크
-        if (Time.time >= lastKnockbackTime + knockbackCooldown)
+        if (knockback.CanApply(Time.time, knockbackCooldown))
         {
             Knockback();
-            lastKnockbackTime = Time.time;
+            knockback.MarkApplied(Time.time);
         }
     }
 
@@ -126,7 +128,7 @@ public class TrainBoss : Boss
             SoundEventBus.Publish(SoundID.Boss_Roar);
         }
         isPhase2 = true;
-        if (animator != null) animator.SetTrigger("phase2");
+        RuntimeHost.Presentation.Trigger("phase2");
 
         // ✨ [추가] 콜라이더 교체
         if (phase1Collider != null) phase1Collider.enabled = false;
@@ -170,38 +172,29 @@ public class TrainBoss : Boss
     private void RegisterTrainContact(Collider2D other)
     {
         if (!isAlive || !CombatIsRunning() || other == null) return;
+        contacts.Register(other);
+    }
+
+    private BossContactTracker.Binding ResolveContact(Collider2D other)
+    {
         Train train = other.GetComponentInParent<Train>();
-        if (train == null || train.IsDead || (contactTrain != null && contactTrain != train)) return;
-        if (!trainContacts.Contains(other)) trainContacts.Add(other);
-        if (contactTrain == null)
-        {
-            contactTrain = train;
-            contactController = train.GetComponent<TrainController>();
-            if (CameraShakeManager.Instance != null)
-                CameraShakeManager.Instance.ShakeCamera(0.3f, 1f, 15, 90f);
-        }
-        // This is a continuous movement constraint, including contact during dash.
-        // Contact no longer subtracts the prefab's old instant-kill fuel damage.
-        train.SetBossContact(this, true);
+        if (train == null) return default;
+        TrainController controller = train.GetComponent<TrainController>();
+        return new BossContactTracker.Binding(train, () => train != null && !train.IsDead,
+            active => { if (train != null) train.SetBossContact(this, active); },
+            distance => { if (controller != null) controller.PushLeft(distance); });
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         // Phase changes may deliver old-collider Exit after new-collider Enter.
         // Keep the reservation while either current phase collider still overlaps.
-        if (!OverlapsActivePhase(other)) trainContacts.Remove(other);
-        RefreshTrainContacts();
+        contacts.Exit(other);
     }
 
     private void RefreshTrainContacts()
     {
-        for (int i = trainContacts.Count - 1; i >= 0; i--)
-        {
-            Collider2D other = trainContacts[i];
-            if (other == null || !other.enabled || !other.gameObject.activeInHierarchy || !OverlapsActivePhase(other))
-                trainContacts.RemoveAt(i);
-        }
-        if (trainContacts.Count == 0 || contactTrain == null || contactTrain.IsDead) ClearTrainContacts();
+        contacts.Refresh();
     }
 
     private bool OverlapsActivePhase(Collider2D other)
@@ -224,10 +217,7 @@ public class TrainBoss : Boss
 
     private void ClearTrainContacts()
     {
-        if (contactTrain != null) contactTrain.SetBossContact(this, false);
-        contactTrain = null;
-        contactController = null;
-        trainContacts.Clear();
+        contacts?.Clear();
     }
 
     protected override void OnDisable()
@@ -241,8 +231,7 @@ public class TrainBoss : Boss
 
     protected override IEnumerator Die()
     {
-        if (!isAlive) yield break;
-        isAlive = false;
+        if (!TryBeginDeath()) yield break;
         ClearTrainContacts();
         if (phase1Collider != null) phase1Collider.enabled = false;
         if (phase2Collider != null) phase2Collider.enabled = false;
@@ -280,6 +269,7 @@ public class TrainBoss : Boss
             }
         }
 
+        CompleteDeathPresentation();
         Destroy(gameObject);
     }
 }

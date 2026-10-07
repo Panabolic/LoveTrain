@@ -18,19 +18,9 @@ public class LonginusLauncher_SO : Item_SO
     [Tooltip("LonginusPathData가 붙은 경로 프리팹")]
     public GameObject PathDataPrefab;
 
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        GameObject obj = InstantiateVisual(user, instance);
-        if (obj == null) return null;
-
-        LonginusLauncher logic = obj.GetComponent<LonginusLauncher>();
-        if (logic == null) logic = obj.AddComponent<LonginusLauncher>();
-
-        logic.Initialize(this, user);
-        logic.UpgradeInstItem(instance);
-
-        return obj;
-    }
+    internal override ItemDefinition CreateRuntimeDefinition() => new ItemDefinition(this,
+        CompositionDefinition.Attach<LonginusLauncher>(this, (logic, user, instance) => logic.Initialize(this, user), true,
+            logic => logic.ReleaseAttachment()));
 
     protected override Dictionary<string, string> GetStatReplacements(int level)
     {

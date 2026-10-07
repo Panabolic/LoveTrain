@@ -1,61 +1,53 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class LonginusSpear : MonoBehaviour
 {
     private float damage;
-    private float speed;
-    private float lifeTime; // 수명
-    private Vector3 moveDirection;
-
     private System.Action onDisappearCallback;
-    private float timer = 0f; // 경과 시간
+    private readonly FlightLifetime flight = new FlightLifetime();
+    private ObjectHost host;
 
-    // ✨ [수정] Initialize에서 lifeTime을 받도록 변경
+    private void Awake()
+    {
+        host = new ObjectHost(gameObject);
+        host.BindUpdate(StepFlight);
+        host.BindCollision(Hit);
+    }
+
     public void Initialize(float damage, float speed, float lifeTime, Vector3 startPos, Vector3 targetPos, System.Action onDisappear)
     {
         this.damage = damage;
-        this.speed = speed;
-        this.lifeTime = lifeTime;
-        this.onDisappearCallback = onDisappear;
-
+        onDisappearCallback = onDisappear;
         transform.position = startPos;
-
-        // 이동 방향 계산 (목표를 향해)
-        this.moveDirection = (targetPos - startPos).normalized;
-
-        // 회전 설정
-        float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        this.timer = 0f;
+        Vector3 direction = (targetPos - startPos).normalized;
+        flight.Initialize(direction, speed, lifeTime);
+        transform.rotation = MovementRules.LookRotation2D(direction);
     }
 
     private void Update()
     {
         if (Time.timeScale == 0) return;
-
-        // 1. 이동 (방향대로 계속 직진)
-        transform.position += moveDirection * speed * Time.deltaTime;
-
-        // 2. ✨ [핵심] 시간 체크 (3초 지나면 파괴)
-        timer += Time.deltaTime;
-        if (timer >= lifeTime)
-        {
-            Disappear();
-        }
+        host.Update(Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void StepFlight(float deltaTime)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        Vector3 position = transform.position;
+        bool expired = flight.Advance(deltaTime, ref position);
+        transform.position = position;
+        if (expired) Disappear();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) { host.Collision(collision); }
+
+    private void Hit(Collider2D collision)
+    {
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Enemy")) return;
+        TargetHandle target = TargetRegistry.Resolve(collision);
+        if (target != null && target.IsActive)
         {
-            Enemy enemy = collision.GetComponent<Enemy>();
-            if (enemy != null && enemy.gameObject.activeSelf)
-            {
-                SoundEventBus.Publish(SoundID.Item_Longinus);
-                enemy.TakeDamage(damage);
-            }
+            SoundEventBus.Publish(SoundID.Item_Longinus);
+            target.RequestDamage(damage);
         }
     }
 
@@ -64,4 +56,6 @@ public class LonginusSpear : MonoBehaviour
         onDisappearCallback?.Invoke();
         Destroy(gameObject);
     }
+
+    private void OnDestroy() { host?.Release(); }
 }

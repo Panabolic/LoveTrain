@@ -1,132 +1,96 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PoisonMissileLauncher : MonoBehaviour, IInstantiatedItem, IItemCooldownView
 {
     private PoisonMissileLauncher_SO itemData;
-    // private Gun playerGun; // <-- [삭제] 총기 참조 필요 없음 (독립 스탯 사용)
-
     [Header("연결")]
     [Tooltip("미사일이 발사될 위치들")]
     [SerializeField] private Transform[] spawnPoints;
-
     [Header("비주얼")]
     [SerializeField] private Animator animatorFront;
     [SerializeField] private Animator animatorBack;
-
-    // --- 스탯 ---
     private float missileSpeed;
     private float verticalDistance;
     private float cooldown;
     private float gasMoveSpeed;
     private float gasDamage;
     private float gasTickRate;
-
     private GameObject missilePrefab;
     private GameObject gasPrefab;
-
-    // 내부 변수
-    private float cooldownTimer = 0f;
-    private int currentSpawnIndex = 0;
+    private ObjectHost host;
+    private PresentationLink presentation;
+    private AnimatedPortFire attack;
 
     public bool HasCooldown => cooldown > 0f;
+    public float GetCooldownFillAmount() => attack == null ? 0f : ItemCooldownFill.FromRemaining(attack.Cycle.RemainingCooldown, cooldown);
 
-    public float GetCooldownFillAmount()
-    {
-        return ItemCooldownFill.FromRemaining(cooldownTimer, cooldown);
-    }
+    private void Awake() { EnsureComposition(); }
 
-    private void Awake()
+    private void EnsureComposition()
     {
+        if (host != null) return;
         if (animatorFront == null) animatorFront = transform.Find("FrontVisual")?.GetComponent<Animator>();
         if (animatorBack == null) animatorBack = transform.Find("BackVisual")?.GetComponent<Animator>();
+        host = new ObjectHost(gameObject);
+        presentation = new PresentationLink(this, null, animatorFront, animatorBack);
+        attack = new AnimatedPortFire(
+            () => PoolManager.instance != null && PoolManager.instance.activeEnemies.Count > 0,
+            BeginPresentation, EmitMissile, () => spawnPoints.Length, () => cooldown);
+        presentation.BindSignal(nameof(SpawnMissileFromAnim), attack.EmitFromAnimation);
+        host.BindUpdate(attack.Advance);
     }
 
-    public void Initialize(PoisonMissileLauncher_SO data, GameObject user)
-    {
-        this.itemData = data;
-        // this.playerGun = ...; // <-- [삭제] 총기 정보 안 가져옴
-    }
+    public void Initialize(PoisonMissileLauncher_SO data, GameObject user) { itemData = data; }
 
     public void UpgradeInstItem(ItemInstance instance)
     {
-        int lv = Mathf.Clamp(instance.currentUpgrade - 1, 0, itemData.gasDamageByLevel.Length - 1);
-
-        this.gasDamage = itemData.gasDamageByLevel[lv];
-        this.gasTickRate = itemData.gasTickRateByLevel[lv];
-        this.cooldown = itemData.cooldownByLevel[lv]; // SO의 쿨타임 그대로 사용
-        this.gasMoveSpeed = itemData.gasMoveSpeed;
-
-        this.missileSpeed = itemData.missileSpeed;
-        this.verticalDistance = itemData.verticalDistance;
-        this.missilePrefab = itemData.MissilePrefab;
-        this.gasPrefab = itemData.GasPrefab;
-
+        EnsureComposition();
+        int level = Mathf.Clamp(instance.currentUpgrade - 1, 0, itemData.gasDamageByLevel.Length - 1);
+        gasDamage = itemData.gasDamageByLevel[level];
+        gasTickRate = itemData.gasTickRateByLevel[level];
+        cooldown = itemData.cooldownByLevel[level];
+        gasMoveSpeed = itemData.gasMoveSpeed;
+        missileSpeed = itemData.missileSpeed;
+        verticalDistance = itemData.verticalDistance;
+        missilePrefab = itemData.MissilePrefab;
+        gasPrefab = itemData.GasPrefab;
         if (!gameObject.activeSelf) gameObject.SetActive(true);
-
         Debug.Log($"독 미사일 런처 업그레이드 완료 (Lv.{instance.currentUpgrade})");
     }
 
     private void Update()
     {
-        if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss 
-            && GameManager.Instance.CurrentState != GameState.Ending) return;
-
+        if (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss &&
+            GameManager.Instance.CurrentState != GameState.Ending) return;
         if (Time.timeScale == 0) return;
-
-        if (cooldownTimer > 0)
-        {
-            cooldownTimer -= Time.deltaTime;
-        }
-        else
-        {
-            if (PoolManager.instance != null && PoolManager.instance.activeEnemies.Count > 0)
-            {
-                FireSequence();
-            }
-        }
+        host.Update(Time.deltaTime);
     }
 
-    private void FireSequence()
+    private void BeginPresentation()
     {
-        // ✨ [수정] 공속 배율 계산 삭제 -> 항상 1배속으로 동작
-        float speedMult = 1f;
-
-        if (animatorFront != null)
-        {
-            animatorFront.speed = speedMult; // 1.0f
-            animatorFront.SetTrigger("Fire");
-        }
-
-        if (animatorBack != null)
-        {
-            animatorBack.speed = speedMult; // 1.0f
-            animatorBack.SetTrigger("Fire");
-        }
-
-        if (animatorFront == null && animatorBack == null)
-        {
-            SpawnMissileFromAnim();
-        }
-
-        // ✨ [수정] 쿨타임도 SO 설정값 그대로 사용
-        cooldownTimer = cooldown;
+        presentation.SetPlaybackSpeed(1f);
+        presentation.Trigger("Fire");
+        if (animatorFront == null && animatorBack == null) SpawnMissileFromAnim();
     }
 
-    public void SpawnMissileFromAnim()
+    public void SpawnMissileFromAnim() { presentation.Signal(nameof(SpawnMissileFromAnim)); }
+
+    private bool EmitMissile(int index)
     {
-        if (missilePrefab == null || spawnPoints.Length == 0) return;
-
-        Transform currentPoint = spawnPoints[currentSpawnIndex];
-
-        GameObject missileObj = Instantiate(missilePrefab, currentPoint.position, currentPoint.rotation);
-        PoisonMissile missileScript = missileObj.GetComponent<PoisonMissile>();
+        if (missilePrefab == null || spawnPoints.Length == 0) return false;
+        Transform point = spawnPoints[index];
+        GameObject missile = host.Scope.Spawn(missilePrefab, point.position, point.rotation, false);
+        PoisonMissile logic = missile.GetComponent<PoisonMissile>();
         SoundEventBus.Publish(SoundID.Item_Missile);
-        if (missileScript != null)
-        {
-            // 가스 데미지도 배율 없이 SO 값 그대로(gasDamage) 전달
-            missileScript.Initialize(missileSpeed, verticalDistance, gasPrefab, gasDamage, gasTickRate, gasMoveSpeed);
-        }
-
-        currentSpawnIndex = (currentSpawnIndex + 1) % spawnPoints.Length;
+        if (logic != null) logic.Initialize(missileSpeed, verticalDistance, gasPrefab, gasDamage, gasTickRate, gasMoveSpeed);
+        return true;
     }
+
+    internal void ReleaseAttachment()
+    {
+        presentation?.ClearSignals();
+        host?.Release();
+    }
+
+    private void OnDestroy() { ReleaseAttachment(); }
 }

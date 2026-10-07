@@ -1,0 +1,710 @@
+[
+  {
+    "Path": "Assets\\LonginusPathData.cs",
+    "SHA256": "6F7BCFC5CA9F2CF0B8E3BB3F9BF9FEF56DE6C20A6EA46E8A9EEE37D7BD8F5B5F"
+  },
+  {
+    "Path": "Assets\\DestroyOnAnimationEnd.cs",
+    "SHA256": "75583FACBD4C149938A9D7B6B295C5511738500A1B83DB7DDD9817B9D0EA7015"
+  },
+  {
+    "Path": "Assets\\EventObjectSpawner.cs",
+    "SHA256": "BB2DE5755C21C027C64A1F8D0E6ED51FE47B89BB38BD57B04962024F7D7D1FBE"
+  },
+  {
+    "Path": "Assets\\EventTriggerObject.cs",
+    "SHA256": "80877ED376550F89A8E7AD809DAD654AF54025D650011D2ADF4400AB62BC7876"
+  },
+  {
+    "Path": "Assets\\SoundManager.cs",
+    "SHA256": "1662BCCE90B894304D5AE8D68FE61051917638AFA9769B0FDCF6B487708751D9"
+  },
+  {
+    "Path": "Assets\\SoundDataDrawer.cs",
+    "SHA256": "91B46C1A756AFCC1666B7E7568821AE37767CF31ACA80474C36074D2B3BDB642"
+  },
+  {
+    "Path": "Assets\\SmashEffectButton.cs",
+    "SHA256": "13C14E844146616FC1D2AE4700873BF1A2BFF1BFC95BB3C70375CC55D6718D28"
+  },
+  {
+    "Path": "Assets\\BossWarningLoopUI.cs",
+    "SHA256": "D31A94A223F061DBD07B6E167E7FF3FB100C4D797608AEAA18D9245C4C1DAB4B"
+  },
+  {
+    "Path": "Assets\\BossWarningUI.cs",
+    "SHA256": "7D2A5D812901FFDA68CC1ED58CDEB87809BF4837B63BB8194186506B404D2086"
+  },
+  {
+    "Path": "Assets\\AutoDestroy.cs",
+    "SHA256": "EBE9AA7FAAB3A011A0B5E0CE355652D2475F1716F2FA9BDAAF8089BB6C7D8078"
+  },
+  {
+    "Path": "Assets\\DestroyOnAnimationEndzz.cs",
+    "SHA256": "45F63FADF62BE29B5C6831D45E4742320D50E04DEFE82715F5EAAA055A0F1159"
+  },
+  {
+    "Path": "Assets\\RevolverBullet.cs",
+    "SHA256": "BF67A144029CF85C099B0800701DE848097474C373B827D55EABCEBCC19C7434"
+  },
+  {
+    "Path": "Assets\\Editor\\LocalizationVerification.cs",
+    "SHA256": "D15581A4339F65C8A17AA93E2D00141C8012E6A6B19DA6C47212EAAE72CA789B"
+  },
+  {
+    "Path": "Assets\\Editor\\LocalizationEditorTools.cs",
+    "SHA256": "200D1E5163346BCB290FCF1491477A10A440E5EC83783718A3B9AF0C91900698"
+  },
+  {
+    "Path": "Assets\\Editor\\LanguageOptionVerification.cs",
+    "SHA256": "4F50B5FF03436079CF2526BD7F92D7C9325FC7F201B0C31AD24D58534056BC7E"
+  },
+  {
+    "Path": "Assets\\Editor\\GameBalanceDashboard.cs",
+    "SHA256": "9CC6E46582B97C495AC0557FDDF103CDD991E271421DB87B0D6705846E4A12EB"
+  },
+  {
+    "Path": "Assets\\Editor\\EventTextFormatterVerification.cs",
+    "SHA256": "83059FD504DC45B4C5E288CBC0129A81E56F48359FAFC1C660478589535A9C4E"
+  },
+  {
+    "Path": "Assets\\Editor\\EventTemplateValidation.cs",
+    "SHA256": "41B7F774012F966939479AE398F2C20B2841ACEA4E93EFE0BD36DFE5097DD9F1"
+  },
+  {
+    "Path": "Assets\\Editor\\EventMaker.cs",
+    "SHA256": "9562BF3AB4DCF998F6688523E7E090EEB29162DEB4A12C6850A2D560FFB47379"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\UIButtonSound.cs",
+    "SHA256": "010C6BE2A3F2784538D2FD30AE3A4FB3737A89CE31FEB4A217E1CA81A84BF884"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\UIAlphaFader.cs",
+    "SHA256": "216B4F47E394DF08A0C0607102B80F19880859BEAE66FFBE7E410986A71D19A1"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\TrainController.cs",
+    "SHA256": "62BCEA2ED11B467A3D04118F9A87CEBEEDFDF013C1CB673CED58C858D8E469C5"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Train.cs",
+    "SHA256": "A5A1868A2571DE08122AEF449D5539FB2DACA0DFBBA19AF37828718D52E7A6E4"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\SteamIntegration.cs",
+    "SHA256": "5E64659C7B89E8D7A5E8D73E0BB28EE9C69C21F21782E2F6B9059A737051CEDB"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\StartObject.cs",
+    "SHA256": "8A17C2D8644A2BEBE16B9C59B0DECEDB4484B813A6EF20C8EDB865D52F144E73"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\StartMenuManager.cs",
+    "SHA256": "B05ED360D58AECAF255A23D7ABADF8FB54EE0CEF92870538DC31E7521C9212D7"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\StageProgressUI.cs",
+    "SHA256": "D0AB9FCF5DE32272BC25B359DEDD5FC11D82C5D97F063A4AAF820B1EB860D6CC"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\StageManager.cs",
+    "SHA256": "022119A099890BEAAA1AC4E51F5F375434EA7642D599DE6DF2D66A9823B08C99"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\StageDatabase.cs",
+    "SHA256": "E7524070ECD03950FD4D20AA48A8C91E75473009388A5F5DF39D5F83B23F2E4E"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\SpeedMeterUI.cs",
+    "SHA256": "A563958EE3B96892644F5AC3BBE2813B93D3A1C481457B95A8FE5F1FFAB217D1"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\SoundEventBus.cs",
+    "SHA256": "374F500BA086B94DC0F9B11A73A3159D9D0695D84E5375444333003251D1B311"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\SoundDefines.cs",
+    "SHA256": "5FC11DA89C8977B71780DEC49956D9855B1D4AB03358483003F66415D5170FC6"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\SimpleSpeedUI.cs",
+    "SHA256": "96C64D91450658D17CD32358A2F640BEA32E790A9F8C04461D13A1F97967437F"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\ScreenDisplaySettings.cs",
+    "SHA256": "8C6C3B9F9BB350F33ECAFDC15D22E71699968993E167DD39189003440240B8EB"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\SceneLoader.cs",
+    "SHA256": "B315C81652CD2CFBD06BAD913E295790DC841E9A0FF1F5F1374ADB3B11734DAF"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\PursuingHand.cs",
+    "SHA256": "8D904C452371AB514FAF02C63FE6D687AE14506968131B95ED943B6FAC3781DF"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\ProgressUIController.cs",
+    "SHA256": "B347377BB9E6E5E7C7263978AB9EDEBE0FA6F7BAFF2B86C3056979018D3CFA5B"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Projectile\\Projectile.cs",
+    "SHA256": "99350E95D5A3221F7C5711768C8F2BF4E4A893123A8C4034CDCB5CC7D76DB521"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\FontChanger.cs",
+    "SHA256": "5E736EAB52D2ABCB73493B8EEDF7EFC343886CB94A96F445883647CBCD52DAD0"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\FixedAspectRatioController.cs",
+    "SHA256": "D9E3DB4B1B7A4517219DC41999343EDE23B647DCE59ACE6027967B95F48D24D2"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Items\\GiantMaw_SO.cs",
+    "SHA256": "B9CB1C25B020F4FD52E0275BF8CEF20E80C43F030C2EF51192335D9B391C207D"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Items\\GiantMaw.cs",
+    "SHA256": "6500EA1B1C4833C6583B557F77E4040DD5D4F36E3E10DFC148BCACF4221A2FA3"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\PermanentUpgrades\\PermanentUpgradeProgress.cs",
+    "SHA256": "77DCBC6AE0BD30B43F8697AD460A3F8BF96149D91BEE9C29C20DA72B2D85714B"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\PermanentUpgrades\\PermanentUpgradeNode.cs",
+    "SHA256": "A62C1AF3D01C74EB0298F1796E9E5EB992779146520B49A8C18027F6E88309CB"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\PermanentUpgrades\\PermanentUpgradeMenu.cs",
+    "SHA256": "8CDFFA0A3DA883D983CC4382BCC842454A1BC8D3EF6A09AD1ECAF7A7B3485323"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\PermanentUpgrades\\PermanentUpgradeDefinition.cs",
+    "SHA256": "AE7F3ADF28BC35DCDF0EE1C6C632631C44EE9021CC82E4E8B7E40D27555ECC7E"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\PermanentUpgrades\\PermanentUpgradeCatalog.cs",
+    "SHA256": "1167B99C28B1692C57BF70F84EE5A40E5989C9CB0F6D5E9EAF8209481C9251E9"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\PermanentUpgrades\\PermanentUpgradeCard.cs",
+    "SHA256": "EF60BD7A908EA7112095A64423D8C01AA4BF72CDB69545C9A45B987C063720ED"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\ParallaxLayer.cs",
+    "SHA256": "E6A69D61C78DC5F791661239F014A88DFA3EA78DB64DAC067F0F9E997FDB39D3"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Option.cs",
+    "SHA256": "B052F60C8DD2FF27C495322BDE0540C97E684A3C7093857F83345EFA35A7304D"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\TrainBoss.cs",
+    "SHA256": "7197454F833A65668B4F34B890B250C546C0A2C17A8795FDB41D088CB65D3B83"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\TimedStrike.cs",
+    "SHA256": "C62FE8CB77ECDE37A1C4C3D30E038BB617E85771B91845BB20CBEFC65EC6AA81"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\Tentacle.cs",
+    "SHA256": "1663A29A2EF9A29137A601BE0745EA1A740B6CB9839CB2942D2C50A2C264311F"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\TargetRegistry.cs",
+    "SHA256": "F2634D7080DB87DCE03DF6503B45FC7026596028315973D9D6891D69ED5254BA"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\TargetHandle.cs",
+    "SHA256": "F05053415DD0F832508745D3DBBBCB76A49F4E7D98F68FAB98B98788381CBAE6"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\Spawner.cs",
+    "SHA256": "7AA63E6B3C0A2FCC841CD1DFD2650DC8AB5FDBCC5332922E71AA927799BFBC58"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\RewardPickup.cs",
+    "SHA256": "A6369224877B299DC715DA6F1ECCA31E6FD8D805270ACBEBF314C737FF391A3A"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\PoolManager.cs",
+    "SHA256": "BA496F36DD0D9B49230B399A1962E9310B83ABD6E89FEB728E9F6774DF8B4316"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\MovementRules.cs",
+    "SHA256": "F8C0F83DAFC0BA272936FBC4BC15C6763E0B51BA08E2BA05A765783D6FDFC853"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\Mob.cs",
+    "SHA256": "7AC28C16E6960E9CF88384992EAAC907DA938EDE87193E7700CD914AFC65292A"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\KnockbackState.cs",
+    "SHA256": "07E5C3180A3914E3E63CD5CC1E25560DB13FBB4B298C0E86F75FEB418DC56B1E"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\HealthState.cs",
+    "SHA256": "0925ED4B76AC3CAF870E7334FADC7B894B487E9FE94004D8C8D45960A1F8A1CC"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\FuelBarrel.cs",
+    "SHA256": "88EE81CCE05B3AE7FF5B20CE4C352CFFDF6CDE4CA670257053ABF1A246694FFA"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\FlyMob.cs",
+    "SHA256": "0B2A0631000455EA494691D62FBED04899B620DAE41CCCF070DF73C80BF2E5BB"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\EyeBossBelt.cs",
+    "SHA256": "A9E288340837221FEFF4C027AF0E06374359EF8B8C48F170101A98F73D7B941E"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\EyeBoss.cs",
+    "SHA256": "793A86858CA42C26B0D3A0FD1C01E8922002AC31531C6053B2CC49F4578DF691"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\Enemy.cs",
+    "SHA256": "AAE17574F2BFFFE9CDB7F88513230ECF781EDFB40B47B3D91DB0E9D7C96C55DD"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\DeathLifecycle.cs",
+    "SHA256": "11B24F61C8730BDA1AFC11BD693089F61ACE874D845FC69EDAB24F8284AAFBDD"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\BossContactTracker.cs",
+    "SHA256": "01CA5106016A2AB14A77B84A0B6129123938680AB3478608A4197891DF9159E0"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\Boss.cs",
+    "SHA256": "44FD83D78C83F07823A6533E4DF0F355ED5DFEEB89E16CDA0D6202B076390631"
+  },
+  {
+    "Path": "Assets\\Scripts\\SangHyup\\Enemy\\AttackReservation.cs",
+    "SHA256": "76D4418046FADFD6B16B34327AB235FFDA43F37DD3DBCB57B74A3652BA77F3C0"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\GunRotator.cs",
+    "SHA256": "8273A8DD853CB0E6A9CAE1DD5BD0166F55E89956F50244E4FB4B2BDC04F16040"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Gun.cs",
+    "SHA256": "D6F7D472618A3DB47F195DE763D67F1A1076D15D9360C472BA93A67AAE075B1D"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\GameManager.cs",
+    "SHA256": "901E6DD8794B66535D552AA6264A2D7BC4C15F6AC9B90AF5FCCFA73096A4CD11"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\FuelState.cs",
+    "SHA256": "3D0AF66CCE9CCBFC24DE605DAA0AF65F31AECF58C52878BEB456900B57BFC3D5"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\ForwardCameraFollow.cs",
+    "SHA256": "BD00CF43519084D88A0B2DA3536B2BA5BB36E463AF9F35321D7B784911893E37"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\WeightedEventOutcome.cs",
+    "SHA256": "54264DE00986FBB3CF6D568A8050AF36611471978FB8401842394BD846015D45"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\SO_Event.cs",
+    "SHA256": "25483D0FFF87B5D3DCACECE3731A5BF6B35A1016D8209126BA5A63AA70993F7A"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\GameEventSO.cs",
+    "SHA256": "6B733011353A4FC12C9800FCC92B83DA511FD42D2E1A8225FE1D83A1711E05CF"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\GameEffectSO.cs",
+    "SHA256": "E17CA4C462EE031E0B97D767EFEEF8BE6239F857A0DE769CB8B6E101F670A514"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\EventTextFormatter.cs",
+    "SHA256": "7F98BA8845ED710D25F9C27BF35CE63F6E2CD2007E32E8BC1767449C4D39796B"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\EventRollGroup.cs",
+    "SHA256": "AEFEAF3D531731BF1A54E09F6F55C87C2AA897004E4C66135E66A67FF3017771"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\EventResultOutput.cs",
+    "SHA256": "ED4B2C07E7BAE8A82B579F72332DD2BCEF7457250E2CE35A4BFD75EA0FD827D9"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\EventManager.cs",
+    "SHA256": "23D86255B6768CD5B6ECD85A6559F6E1D969F7517DA1B998F40B8C372B0F6682"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\EventDatabase.cs",
+    "SHA256": "5B2BDE9ECDA7273774D3F1951DEAA2437F8D75F1CEDDD55C89A4A58CDBFEE6F5"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Localization\\LocalizedText.cs",
+    "SHA256": "76E1637ED4FDC75EA94C90FFF8F2CA0A72945C093B37301029E439AC5BC0B745"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Localization\\LocalizationCsv.cs",
+    "SHA256": "5B0225D99EC89C9558F2146AF5F1EB51AB9120BE41052E2A6E5E15BD8C45AD8C"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Localization\\EnglishLocalization.cs",
+    "SHA256": "A4D7B17D3CC4C65E2AEF9DBA008662483E882865A69A13C2DA6EF7808D3B993D"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\Effects\\Effect_UpgradeRandomItemToMax.cs",
+    "SHA256": "3ABF7899B56F061E64F120BF593E42BA45051BB63949EB2C352ED75D17E66BD6"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\Effects\\Effect_UpgradeRandomItemNTimes.cs",
+    "SHA256": "F65E0BB514142263E9D710842BA11A78823CB853DE964A636BC88355F1C7D083"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\Effects\\Effect_SpawnMobPeriodically.cs",
+    "SHA256": "96133ADE4DAEDEAA04058479247892E35CFBEC14D3EE0547088F9F6EB9F506AC"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\Effects\\Effect_SpawnMobBatch.cs",
+    "SHA256": "E1373F4CBB0F3725BDBDA6A35F3461C0E830269EE3752B497B8C8ED703317E25"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\Effects\\Effect_ModifySpeed.cs",
+    "SHA256": "D908DB532C987C7C90976059DAD39964754DAC2BBBEDB1A943818D2A90F2A4FB"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\Effects\\Effect_IncreaseEnemyHealthBuff.cs",
+    "SHA256": "C40FFF27E389E7AF1DF571A57C307729943D6CD4FEE54C9BA961DEE70A187303"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\Effects\\Effect_AquireRandomItem.cs",
+    "SHA256": "0D11DF1B03E857840B3DE0522D4F3334B589F3DFCAD5CE8C939424A77DE80A7B"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\Effects\\Effect_AquireItem.cs",
+    "SHA256": "E9B209E4C07A335140E61C3940DABDB8EEBB884C71FDA3FE894CF4C96216ACCA"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\Effects\\Effect_AcquireSpecificItem.cs",
+    "SHA256": "A0781E4EE5F319D5615EECC9BB1098DE5E9D52F089A43FFB0A7690E7FA64FFC0"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\EffectParameters.cs",
+    "SHA256": "3DFD337B5D3D40ADEAADF8FD73D3D4C6800D3082647F434C545E0B474E834986"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Event\\BulletPoolManager.cs",
+    "SHA256": "CAC000A9DED6780E53DF5EF3D15C10364F55026292B83B7E229AAD028955F93D"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\EndingManager.cs",
+    "SHA256": "F97765C178D0CD48077E1048734A04BB6FB2A4AC91F0DCDD4C6C1B0070527ABC"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\CursorManager.cs",
+    "SHA256": "A6BB4A8663CE962442E1294BFB4F7EB563BCCC2EFEDD972B47B49449819AF364"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\CreditsUIController.cs",
+    "SHA256": "E825197C7EC9040E6E534857A3E15C5D4C1F9F821D8E388D1EE3984264FCB557"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\CreditEnemy.cs",
+    "SHA256": "2FCCC25A3F70BF5ABCFCF01FC9AF57A9F395FA818C0CAFE3940F4BE01CCBCA58"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\ComboKillUI.cs",
+    "SHA256": "9E8E05477FDBC6A24F5EF76D52AC5AEEB33690A99F420527B25B79205ED83F57"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\ComboKillState.cs",
+    "SHA256": "E1D99FAA770F91AD81B666783D3D330E44CBDFA53B840E3D9A5933FDF5292FBD"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\CameraShakerManager.cs",
+    "SHA256": "25A539F6BD0759093E38BFD76FAE95954F9DEF2D9D921D9B2AF7CAE11BFF03F5"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\bullet.cs",
+    "SHA256": "D200549922099A6CEE877DE7A06BBE93019F7335FB26FA987329C2AD8398E73E"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\BackGround.cs",
+    "SHA256": "9549D956C32BC71D89B79F2F2850426DCAE4A3F9080DE957CB5BBC82F2FF4E4A"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\AutoScrollBackground.cs",
+    "SHA256": "555A73B8C7DEE406502BBC72CA2796326E0EED2885F145E3CC592F86AAA5E281"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\AccelerationWindEffect.cs",
+    "SHA256": "814FCBA9F7E82AE9C3DEAFA9AA095A69AA58FF74E10E6E64C04C7D6D9EBEDD18"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\WeaponVisual.cs",
+    "SHA256": "0E5D9E9FF085D713F4D99773C7E35C902E49455845FFAE091DA1F53DCE3190AE"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\WeaponStatRules.cs",
+    "SHA256": "DADE238494D21E48D190F042C75582F9A0722FF5B2D259E15901C3FDB337C34F"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\WeaponOverride.cs",
+    "SHA256": "3A9691C36010DF0849D8EC005FED16C3C7555E6E96ACB2D563A04A4F3A59CD6E"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\ToolTipSystem.cs",
+    "SHA256": "8DE8E21C5699A344A3131497B25DEB9C809B69636A8D034FFCE0E0F545D8C0CF"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\TimedProc.cs",
+    "SHA256": "74EE1C08E925F813024D0EEE7E92CE81C684E6F3759A0E9FB39D3F67154F1500"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\TargetQuery.cs",
+    "SHA256": "FDA1112F898F05FEC1F97A16BFE768B024895B37E0F839E4B87D36E58E3EF374"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\SummonAndAwait.cs",
+    "SHA256": "BB9145FA4D11D41854ECE191025D2633638E0B5D243F972D356A188328AF664A"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\StatModifier.cs",
+    "SHA256": "7AF6FE06CFB561A3608140BDF274A63869730A50A4FB209FCEA81BC79AC69A73"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\SpawnScope.cs",
+    "SHA256": "01A1B4D5ED9D9DB7B5B5A216C794CDF4D07A01D6E9A77FFCB26FE2D21F182722"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\Revolver_SO.cs",
+    "SHA256": "7A5634DEC86287895D031BB4474809C47AB4C042910F701EEAAF924FD92820CA"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\Revolver.cs",
+    "SHA256": "29D4ED8D901B9B39C1C1DEF39CB99AE213F1B2F82DE043E7116E942817842368"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\RedGear_SO.cs",
+    "SHA256": "F48BB5C0777DD7ACA63C4530CE514609AFE1AF02951968C4A2D5643DD82FB604"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\RearGun_SO.cs",
+    "SHA256": "79860B7E09201FB34FEB1366E0BD7742D28B06E6CF1F0497976C3AF2F04FED8B"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\RearGun.cs",
+    "SHA256": "204F17D12977CE13DC33316894BEE0843891FF269ED0C592A59B8C84C3BFD316"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\ProjectileStrategy.cs",
+    "SHA256": "8A35B2487669BD21F48857AE597939391802C1E53B3FB96C877694DCE72E8129"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\PresentationLink.cs",
+    "SHA256": "24D77F75C94E4C17B265071CD7E2FAE69AC73C3240FAB7CF32665DEF2996449A"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\PoisonMissileLauncher_SO.cs",
+    "SHA256": "391F2BCECE81F13D23C6EBE71870BEF82BD26A2D923C41273F28108DDFE226F2"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\PoisonMissileLauncher.cs",
+    "SHA256": "A7777C938FF31859491EA6086964A4BB3501415DCF767A718C6E7A81C13FFBEA"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\PoisonMissile.cs",
+    "SHA256": "486051C83BBE8CC50C9E3158863245FAE4A0BE4527F0D51E0CB9394536262780"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\PoisonGas.cs",
+    "SHA256": "034A9C169D3AA965D69D2E04F732FB0BA66350295969BE8F1E573931EFDB4201"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\ObjectHost.cs",
+    "SHA256": "23C6A2C2BE63086DE910C8AFEB706DD007DC4BC86624BEA2902628D32348831D"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\MagicBullet_SO.cs",
+    "SHA256": "5B3F3AE967C4074FA6D64B02923FFFE30F65E9F58CD9779344CF1CE4E3E6D502"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\LonginusSpear.cs",
+    "SHA256": "7B51A140FC6D49DBA23C9B54DF5F27406C20BB6EB5C7DF8824F0BEFD8386BA8F"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\LonginusLauncher_SO.cs",
+    "SHA256": "E89509DCF14AEFE646598F6B6A3693A9A4940AB245D2C71865C4CD3B7DAA59C7"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\LonginusLauncher.cs",
+    "SHA256": "80320EDE3496F45FD10DFD1B0BB5AFCED10E4F1545F892B7B3401F914D1E45F5"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\LightningBolt.cs",
+    "SHA256": "4DA4E8A70B2B0B96CF5B2E85650B22A4D508A8B288EA33DB7E859A8EDD4AEFFF"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\LevelUpSpriteAtlas.cs",
+    "SHA256": "7DA83F1094650669BE8470EE232E91F6BE713429AB6600CFF19C8A9F9D24537C"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\LaserSpriteStrategy.cs",
+    "SHA256": "84AF6A391ED5DF09FEBF69831467B5081627C8E4BF2D4BF3E6A4AD87FD81501F"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\LaserGun_SO.cs",
+    "SHA256": "897A63AE4B1F58ED429549C06B6ECDE095425C474DA75DB4F085FCF5D85709A5"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\LaserGun.cs",
+    "SHA256": "747BEAF1CD18F6BF9AFEEFFF3A31AC2C5966651F38B6E9A6F366AD933B56219D"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\LaserBeamSprite.cs",
+    "SHA256": "0BC36F6C82A211365E54A534B13DD26A10227590BF22400A46E9B3878F57F4B7"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\IWeaponStrategy.cs",
+    "SHA256": "10465D40F7EC55760BBE6517D8BFC8418EC304E0D3D5B534511DA003505FD83D"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\ItemToolTip.cs",
+    "SHA256": "B8C64976FECD4BBA9D8CDA6D81FBCA0F52FC95785B5EB136AD91EFF7D096A327"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\ItemInstance.cs",
+    "SHA256": "DBE4E70E8371C65CBC032D3FFFC06CD60A6CAE700D85B35600F72A2430BBB08A"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\ItemDefinition.cs",
+    "SHA256": "06B3442780B621D01D5D6A4919FE1400F840CDF285D0C467BA76C6B24CF2B2E9"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\ItemDatabase.cs",
+    "SHA256": "1FCBD81C31C2133B7D30ECC66844CC820228501C1FA21ED875007C0E0AB37971"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\IItemEffect.cs",
+    "SHA256": "3F7E74DE77B7F49B1671CA73C22F7C255EEE8E2CF14E2C052A660C818E851A1F"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\IInstantiatedItem.cs",
+    "SHA256": "6146CA864528F05F6F66708536B2523ABC1E42654472B8D9947D8CEDD4328188"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\HomingFlight.cs",
+    "SHA256": "64AFDD94B1B9C929AB6677D1F8E9C6012E4390812B1CE5B960017EF0E740FF32"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\HealingItem_SO.cs",
+    "SHA256": "F2478F42470F139553A353AF9BEE06A324B04D664CC6ED9A02C776FA4661517D"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\HealingItem.cs",
+    "SHA256": "59E612370F6481B45EA1EBD7791A4F3CEC7F4CF037DE6B4A818971A434913C67"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\FlightLifetime.cs",
+    "SHA256": "35E595FE8AF8B0C18574F6F2ABE3EB8AC427FC6525F74C51244ECD6E07539939"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\CrownOfThorns_SO.cs",
+    "SHA256": "807C2B5B3DCC2FD672545BBE890C8311145E63E29B0B374C1FA5A9CBCE522336"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\CrownOfThorns.cs",
+    "SHA256": "C4A3B07793E3A005CDEFEB4EAFF7A1969BCB072B485C2479D87F8B1673C84842"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\CompositionDefinition.cs",
+    "SHA256": "DE71EE8A1E0C453A791618E8BE478CF0F424CA20684ABB79BA3DF69C78050045"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\CombatProc.cs",
+    "SHA256": "FFA2C0A7844396D9E44F797EDCF59151CF4AA44CFEB77BFA74C81F57B0F65809"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\BurstEmission.cs",
+    "SHA256": "EBEB3AC2DDB0A835B8055B5EF5A0EEBBAA6F54D4219D9B89B330C071B40DBE2E"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\BlueGear_SO.cs",
+    "SHA256": "AC01F5FE5DC1782BADD1AC3AAB3F6EC396D4450D7307774E9E87A70D0F9E5B44"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\BloodyBible_SO.cs",
+    "SHA256": "0B205125DC2F7ABE9CA0AC4E6F886D9D9B2D5C48C4E12C80C26827FA8FB6B1A7"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\BibleZone.cs",
+    "SHA256": "EC36E39D53F94C646EB648CA469349E60AA274045CC6981777D8EE0007FA9B25"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\BeatingHeart_SO.cs",
+    "SHA256": "3DF537BCAAB8F7F5D91E9025FFBC91CA9C3FEE0C529F00B9404D56EAEEB839B5"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\AttackCycle.cs",
+    "SHA256": "18A38DB83B3BCEA8D33C27AC0A2D785AC8D90CBFAAB657D4A1E6C5F70FA54A96"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\AreaPresence.cs",
+    "SHA256": "FE073F421240AB978E669D3E68B904C5CFDD84FA7CD59692EE647A63E35AF0C8"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Items\\AnimatedPortFire.cs",
+    "SHA256": "26D3807DB617452D2CD4B27510B0A7F0C95F501BFE50C278BE555EAE84AC2B2A"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\IRicochetSource.cs",
+    "SHA256": "BF5816B5C8F043EB72D4C8B7B68096CD8033972C4002F43CAC4073D72E14D400"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Item_SO.cs",
+    "SHA256": "119120C4B1E521A2CD686D1C8E6F82CE077EAA54C2333F889825D4121563294C"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\LevelUp\\WorkbenchChoiceUI.cs",
+    "SHA256": "A55E53B277614AFF49A4182A88AE29B3711AB24462BC73041B2446784E07C7EC"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\LevelUp\\TrainLevelManager.cs",
+    "SHA256": "4F97B70897ED4174FB88FF4444B487B6E4C7B9E8F238A1E6EB691D172380F080"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\LevelUp\\TrainItemWorkbenchView.cs",
+    "SHA256": "D8819C69FD107F1BEA8E2D8D67E70AB69D561E9A6C77CBFD1A141FA5324C8BCE"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\LevelUp\\LevelUpManager.cs",
+    "SHA256": "E3E71C3181D7B70AFA974F9AB5389FBB62F70B527BA4D1C3211C7EDEA56DA996"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\LevelUp\\LevelUpChoiceUI.cs",
+    "SHA256": "721F6CBE4D0C0A3272666CB56C71DEAF611004588794A9044CD96773416565E5"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\LevelUp\\LevelUI.cs",
+    "SHA256": "42FC2ACCB583105A9D375CBC6C2070027EC7C147761EDA6B2612FE92E4BD2009"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\LevelUp\\FleshHud.cs",
+    "SHA256": "ED0B4ABD1CEAF2E50E47881B1B1BB338B541E94763E711704C008D1CC652945F"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\LevelUp\\FleshCreationProgress.cs",
+    "SHA256": "994E2B28CF5EBF5851C6FE6E14A01C49B8234D5065BCAC998591A2AE64D90990"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Inventory\\InventoryUI.cs",
+    "SHA256": "3951FBC97D2A127F904A8FF6C66A595D27C792935A6147B3B466E6EF99E756FA"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Inventory\\InventorySlotUI.cs",
+    "SHA256": "844B9B73ABD89FA08D10FB8A4EB847D22EA38B69C7CEFB6B250E6B4BD888B886"
+  },
+  {
+    "Path": "Assets\\Scripts\\LeeJunmo\\Inventory\\Inventory.cs",
+    "SHA256": "8457DF84CE0743AF5F3D3D1F407750EAB296FC83A361D240C3D5572EA53FD765"
+  }
+]

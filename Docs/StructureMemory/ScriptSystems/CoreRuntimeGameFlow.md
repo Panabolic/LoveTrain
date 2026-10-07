@@ -2,10 +2,20 @@
 status: active
 authority: structure-memory
 category: core-runtime-game-flow
-last_reviewed: 2026-06-08
+last_reviewed: 2026-10-07
 ---
 
 # Core Runtime And Game Flow
+
+## Current composition branch — 2026-10-07
+
+On `codex/runtime-composition`, Train keeps its scene/public/serialized facade and owns FuelState for fuel, existing TrainDriveState for driving, and DeathLifecycle for life/death presentation state. Train's damage eligibility, dash immunity, acceleration block, death coroutine and scene-return requests remain in their existing execution order. TrainController uses MovementRules for bounded horizontal calculation and applies the result through its ObjectHost Unity binding.
+
+Train car Animator references are bound through PresentationLink and rebound if the public array reference changes. Optional presentation references do not own fuel or death state. Gun keeps IWeaponStrategy while WeaponStatRules holds shared numeric stat calculation. Item/equipment ownership is documented in the [Items map](./ItemsInventoryWeapons.md).
+
+GameManager/StageManager/SceneLoader/TrainLevelManager and permanent save contracts are not replaced by a new universal object or new global Manager. Historical TrainSpeedHealth/TrainLevelProgression/GameSimulationController references below are prior context, not declarations of current files.
+
+See [active scope](../../ActiveTasks/runtime-composition-comparison.md) and [comparison/evidence](../../Validation/2026-10-07-runtime-composition/README.md).
 
 ## Purpose
 

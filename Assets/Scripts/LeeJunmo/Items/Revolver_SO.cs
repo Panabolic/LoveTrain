@@ -16,26 +16,8 @@ public class Revolver_SO : Item_SO
     [Header("탄환")]
     public GameObject BulletPrefab;
 
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        // 1. 부모의 공통 함수를 호출해 '로직+시각' 프리팹 생성
-        GameObject revolverGO = InstantiateVisual(user, instance);
-        if (revolverGO == null) return null;
-
-        // --- 여기서부터 'Revolver'만의 추가 로직 ---
-        Revolver logic = revolverGO.GetComponent<Revolver>();
-        if (logic == null)
-        {
-            Debug.LogError($"{instantiatedPrefab.name}에 Revolver.cs가 없습니다!");
-            return revolverGO;
-        }
-
-        logic.Initialize(this);
-        logic.UpgradeInstItem(instance);
-        // --- 추가 로직 끝 ---
-
-        return revolverGO;
-    }
+    internal override ItemDefinition CreateRuntimeDefinition() => new ItemDefinition(this,
+        CompositionDefinition.Attach<Revolver>(this, (logic, user, instance) => logic.Initialize(this), false));
 
     protected override Dictionary<string, string> GetStatReplacements(int level)
     {

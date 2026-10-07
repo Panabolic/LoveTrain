@@ -2,10 +2,12 @@
 status: active
 authority: structure-memory
 category: script-system-map
-last_reviewed: 2026-05-18
+last_reviewed: 2026-10-07
 ---
 
 # LoveTrain Script System Map
+
+The `codex/runtime-composition` branch implements per-instance composition behind existing Unity authoring adapters. Read the 2026-10-07 current-branch sections of the Core/Items/Enemy maps before older helper inventories. The [active task](../ActiveTasks/runtime-composition-comparison.md) and [comparison/evidence](../Validation/2026-10-07-runtime-composition/README.md) define this branch's scope and actual validation limits.
 
 ## Purpose
 

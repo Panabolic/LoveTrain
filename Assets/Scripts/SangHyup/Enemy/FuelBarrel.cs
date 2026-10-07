@@ -35,17 +35,17 @@ public class FuelBarrel : Enemy
         base.Update();
         if (GameManager.Instance == null || Time.timeScale <= 0f ||
             (GameManager.Instance.CurrentState != GameState.Playing && GameManager.Instance.CurrentState != GameState.Boss)) return;
-        transform.position += Vector3.right * (direction * driftSpeed * Time.deltaTime);
+        transform.position += MovementRules.Linear(Vector3.right, direction * driftSpeed, Time.deltaTime);
         age += Time.deltaTime;
         if (age >= lifetime) DespawnWithoutExp();
     }
 
     protected override IEnumerator Die()
     {
-        if (!isAlive || deathRewardGranted) yield break;
-        isAlive = false;
+        if (deathRewardGranted || !TryBeginDeath()) yield break;
         RewardPickup.Spawn(fuelPickupPrefab, transform.position, levelManager, 0, 0, fuelRewardPercent);
         yield return base.Die();
+        CompleteDeathPresentation();
         Destroy(gameObject);
     }
 

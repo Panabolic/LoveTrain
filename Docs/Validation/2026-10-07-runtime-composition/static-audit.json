@@ -1,0 +1,8 @@
+{
+  "Baseline": "95a7d5e",
+  "MatchingSources": 177,
+  "ExistingAssetChanges": 0,
+  "UniqueAssetGuids": 3023,
+  "PreservedFieldDeclarations": 217,
+  "FieldCheck": "Static declaration check plus reviewer source inspection, not Unity serialization roundtrip"
+}

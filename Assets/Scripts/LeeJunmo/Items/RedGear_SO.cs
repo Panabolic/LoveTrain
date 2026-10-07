@@ -8,58 +8,9 @@ public class RedGear_SO : Item_SO
     [Tooltip("레벨별 공격력 증가량 (%)")]
     public float[] DamageByLevel = { 10f, 20f, 30f };
 
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        GameObject RedGear = InstantiateVisual(user, instance);
-
-        // 장착 시 1레벨 효과 적용
-        ApplyStats(user, DamageByLevel[0] / 100f);
-
-        if (RedGear == null) return null;
-        return RedGear;
-    }
-
-    public override void UpgradeLevel(ItemInstance instance)
-    {
-        base.UpgradeLevel(instance);
-
-        int currentLevelIdx = instance.currentUpgrade - 1;
-        int prevLevelIdx = currentLevelIdx - 1;
-
-        if (currentLevelIdx < DamageByLevel.Length && prevLevelIdx >= 0)
-        {
-            float difference = DamageByLevel[currentLevelIdx] - DamageByLevel[prevLevelIdx];
-
-            Gun gun = instance.Owner != null ? instance.Owner.GetComponentInChildren<Gun>() : null;
-            if (gun != null)
-            {
-                gun.AddDamageMultiplier(difference / 100f);
-            }
-        }
-    }
-
-    public override void OnUnequip(GameObject user, ItemInstance instance)
-    {
-        if (DamageByLevel == null || DamageByLevel.Length == 0) return;
-        int index = Mathf.Clamp(instance.currentUpgrade - 1, 0, DamageByLevel.Length - 1);
-        ApplyStats(user, -DamageByLevel[index] / 100f);
-    }
-
-    private void ApplyStats(GameObject user, float amount)
-    {
-        Gun gun = user.GetComponentInChildren<Gun>();
-        // ✨ [수정] FindFirstObjectByType 사용
-        if (gun == null) gun = FindFirstObjectByType<Gun>();
-
-        if (gun != null)
-        {
-            gun.AddDamageMultiplier(amount);
-        }
-        else
-        {
-            Debug.LogWarning("[RedGear] Gun 컴포넌트를 찾을 수 없습니다.");
-        }
-    }
+    internal override ItemDefinition CreateRuntimeDefinition() => new ItemDefinition(this,
+        CompositionDefinition.Visual(this),
+        CompositionDefinition.Stat(StatChannel.GunDamage, level => DamageByLevel[CompositionDefinition.LevelIndex(level, DamageByLevel.Length)] / 100f));
 
     protected override Dictionary<string, string> GetStatReplacements(int level)
     {

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class LaserSpriteStrategy : IWeaponStrategy, IItemCooldownView
 {
@@ -14,7 +14,7 @@ public class LaserSpriteStrategy : IWeaponStrategy, IItemCooldownView
 
     // --- 내부 타이머 ---
     private float currentDurationTimer = 0f;
-    private float currentCooldownTimer = 0f;
+    private readonly AttackCycle cooldown = new AttackCycle();
     private bool isFiring = false;
 
     public bool HasCooldown => cooldownTime > 0f;
@@ -26,7 +26,7 @@ public class LaserSpriteStrategy : IWeaponStrategy, IItemCooldownView
             return 1f;
         }
 
-        return ItemCooldownFill.FromRemaining(currentCooldownTimer, cooldownTime);
+        return ItemCooldownFill.FromRemaining(cooldown.RemainingCooldown, cooldownTime);
     }
 
     public void Initialize(Gun gunController, GunStats stats)
@@ -70,9 +70,9 @@ public class LaserSpriteStrategy : IWeaponStrategy, IItemCooldownView
         if (laserInstance == null || laserScript == null) return;
 
         // 1. 쿨타임 처리
-        if (currentCooldownTimer > 0)
+        if (cooldown.RemainingCooldown > 0)
         {
-            currentCooldownTimer -= Time.deltaTime;
+            cooldown.Elapse(Time.deltaTime);
             return;
         }
 
@@ -131,11 +131,11 @@ public class LaserSpriteStrategy : IWeaponStrategy, IItemCooldownView
 
         if (Time.timeScale == 0)
         {
-            currentCooldownTimer = 0f;
+            cooldown.StartCooldown(0f);
         }
         else
         {
-            currentCooldownTimer = cooldownTime;
+            cooldown.StartCooldown(cooldownTime);
         }
 
         if (laserInstance.activeSelf)

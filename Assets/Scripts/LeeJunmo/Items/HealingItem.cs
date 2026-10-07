@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class HealingItem : MonoBehaviour, IInstantiatedItem
 {
     private HealingItem_SO itemData;
-    private Train train;
+    private ItemInstance runtimeInstance;
 
     [Header("자식 오브젝트 연결")]
     [Tooltip("10의 자리 숫자를 보여줄 SpriteRenderer")]
@@ -19,14 +19,7 @@ public class HealingItem : MonoBehaviour, IInstantiatedItem
     [Tooltip("하트 애니메이션 재생 시간 (초)")]
     [SerializeField] private float heartAnimDuration = 1.5f;
 
-    // --- 상태 변수 ---
-    private int currentKillCount = 0;
-    private int targetKillCount;
     private bool isAnimating = false;
-
-    // --- 스탯 ---
-    private float healPercent;
-    private float appliedMaxSpeedBonus;
 
     // ✨ 0~9 숫자 스프라이트 배열 (인스펙터에서 할당 필요 없게 SO에서 가져오거나 여기서 직접 관리)
     // 여기서는 SO에 있는 countSprites 배열을 0~9 순서대로 채워져 있다고 가정하고 사용합니다.
@@ -34,75 +27,25 @@ public class HealingItem : MonoBehaviour, IInstantiatedItem
 
     public void Initialize(HealingItem_SO data, GameObject user)
     {
-        this.itemData = data;
-        this.train = user.GetComponent<Train>();
-
-        if (train == null) Debug.LogError("[HealingItem] Train을 찾을 수 없습니다.");
-
-        // 초기화: 숫자는 켜고, 하트는 끈다.
+        itemData = data;
+        if (user.GetComponent<Train>() == null) Debug.LogError("[HealingItem] Train을 찾을 수 없습니다.");
         SetNumberVisible(true);
         if (heartObject != null) heartObject.SetActive(false);
     }
 
     public void UpgradeInstItem(ItemInstance instance)
     {
-        int levelIdx = Mathf.Clamp(instance.currentUpgrade - 1, 0, itemData.maxSpeedBonusByLevel.Length - 1);
-
-        this.healPercent = itemData.healPercentByLevel[levelIdx];
-        this.targetKillCount = itemData.killCountCondition[levelIdx];
-
-        // ✨ SO의 countSprites 배열이 0, 1, 2... 9 순서로 들어있다고 가정
-        this.numberSprites = itemData.countSprites;
-
-        // 최대 속도 증가 로직
-        float currentBonus = itemData.maxSpeedBonusByLevel[levelIdx];
-        float increaseAmount = currentBonus - appliedMaxSpeedBonus;
-
-        if (train != null && increaseAmount != 0f)
-        {
-            train.IncreaseMaxSpeed(increaseAmount);
-            train.ModifySpeed(increaseAmount);
-            appliedMaxSpeedBonus = currentBonus;
-        }
-
+        runtimeInstance = instance;
+        numberSprites = itemData.countSprites;
         UpdateVisual();
     }
 
-    public void RemoveEquipmentStats()
-    {
-        if (train != null && appliedMaxSpeedBonus != 0f)
-        {
-            train.IncreaseMaxSpeed(-appliedMaxSpeedBonus);
-            train.ModifySpeed(0f);
-        }
-        appliedMaxSpeedBonus = 0f;
-    }
+    public void RemoveEquipmentStats() => runtimeInstance?.GetEffect<StatModifier>()?.Release();
 
-    public void OnEnemyKilled()
-    {
-        currentKillCount++;
+    public void OnEnemyKilled() => runtimeInstance?.GetEffect<CombatProc>()?.Kill(null);
 
-        if (currentKillCount >= targetKillCount)
-        {
-            TriggerHeal();
-            currentKillCount = 0;
-        }
-
-        if (!isAnimating)
-        {
-            UpdateVisual();
-        }
-    }
-
-    private void TriggerHeal()
-    {
-        if (train != null)
-        {
-            train.HealPercent(this.healPercent);
-        }
-
-        StartCoroutine(PlayHealAnimation());
-    }
+    internal void RefreshCounter() { if (!isAnimating) UpdateVisual(); }
+    internal void PlayHealPresentation() => StartCoroutine(PlayHealAnimation());
 
     private IEnumerator PlayHealAnimation()
     {
@@ -130,7 +73,7 @@ public class HealingItem : MonoBehaviour, IInstantiatedItem
         if (tensRenderer == null || unitsRenderer == null) return;
 
         // 남은 킬 수 계산
-        int remaining = Mathf.Max(0, targetKillCount - currentKillCount);
+        int remaining = runtimeInstance != null ? runtimeInstance.GetEffect<CombatProc>()?.RemainingKills ?? 0 : 0;
 
         // 0 이하면 하트가 나오고 있을 테니 무시 (또는 00으로 표시하고 싶으면 진행)
         // 여기서는 하트 연출 중엔 숫자를 끄므로 상관없음.

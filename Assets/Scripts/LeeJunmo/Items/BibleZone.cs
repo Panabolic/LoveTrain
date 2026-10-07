@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class BloodyZone : MonoBehaviour
 {
@@ -7,8 +7,6 @@ public class BloodyZone : MonoBehaviour
     [SerializeField] private Collider2D zoneCollider; // ✨ 충돌 체크용 콜라이더 참조
 
     // --- 내부 변수 (SO에서 받아옴) ---
-    private ItemInstance parentItem;
-    private float cooldownToApply;
 
     // ✨ SO에서 주입받을 변수들 (Inspector 노출 X)
     private float duration;
@@ -17,21 +15,25 @@ public class BloodyZone : MonoBehaviour
 
     private Gun buffedGun = null;
     private bool isBuffActive = false;
+    private StatModifier buff;
+    private ObjectHost host;
+    private System.Action restartCooldown;
 
     private void Awake()
     {
         if (animator == null) animator = GetComponent<Animator>();
         if (zoneCollider == null) zoneCollider = GetComponent<Collider2D>();
+        host = new ObjectHost(gameObject);
+        host.Presentation.BindSignal(nameof(OnBuffStart), BeginBuff);
     }
 
     // ✨ 초기화 함수 수정 (데이터 주입)
     public void Initialize(ItemInstance item, float cooldown, float duration, float buff, GameObject user)
     {
-        this.parentItem = item;
-        this.cooldownToApply = cooldown;
         this.duration = duration;
         this.buffAmount = buff;
         this.ownerUser = user; // 플레이어 참조 저장
+        restartCooldown = item != null ? item.RuntimeScope.Guard(() => item.StartCooldownManual(cooldown)) : null;
     }
 
     private void Start()
@@ -43,7 +45,9 @@ public class BloodyZone : MonoBehaviour
     // 애니메이션 이벤트
     // ----------------------------------------------------------------
 
-    public void OnBuffStart()
+    public void OnBuffStart() => host.Presentation.Signal(nameof(OnBuffStart));
+
+    private void BeginBuff()
     {
         if (isBuffActive) return;
 
@@ -89,16 +93,14 @@ public class BloodyZone : MonoBehaviour
     {
         RemoveBuff();
 
-        if (parentItem != null)
-        {
-            parentItem.StartCooldownManual(cooldownToApply);
-        }
+        restartCooldown?.Invoke();
     }
 
     private void OnDisable()
     {
         CancelInvoke();
         RemoveBuff();
+        host?.Deactivate();
     }
 
     // ----------------------------------------------------------------
@@ -132,19 +134,18 @@ public class BloodyZone : MonoBehaviour
         Gun gun = train.GetComponentInChildren<Gun>();
         if (gun != null)
         {
-            gun.AddFireRateMultiplier(buffAmount);
             buffedGun = gun;
+            buff = new StatModifier(() => 1, level => buffAmount,
+                (value, phase) => { if (gun != null) gun.AddFireRateMultiplier(value); });
+            buff.Equip();
             // Debug.Log($"[BloodyZone] 버프 적용: 공속 +{buffAmount * 100}%");
         }
     }
 
     private void RemoveBuff()
     {
-        if (buffedGun != null)
-        {
-            buffedGun.AddFireRateMultiplier(-buffAmount);
-            buffedGun = null;
-            // Debug.Log("[BloodyZone] 버프 해제");
-        }
+        buff?.Release();
+        buff = null;
+        buffedGun = null;
     }
 }

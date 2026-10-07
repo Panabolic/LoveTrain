@@ -20,19 +20,8 @@ public class RearGun_SO : Item_SO
     [Header("프리팹")]
     public GameObject BulletPrefab;
 
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        GameObject rearGunGO = InstantiateVisual(user, instance);
-        if (rearGunGO == null) return null;
-
-        RearGun logic = rearGunGO.GetComponent<RearGun>();
-        if (logic == null) logic = rearGunGO.AddComponent<RearGun>();
-
-        logic.Initialize(this, instance, user);
-        logic.UpgradeInstItem(instance);
-
-        return rearGunGO;
-    }
+    internal override ItemDefinition CreateRuntimeDefinition() => new ItemDefinition(this,
+        CompositionDefinition.Attach<RearGun>(this, (logic, user, instance) => logic.Initialize(this, instance, user), true));
 
     protected override Dictionary<string, string> GetStatReplacements(int level)
     {

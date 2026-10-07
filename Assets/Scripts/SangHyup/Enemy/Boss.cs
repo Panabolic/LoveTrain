@@ -15,10 +15,8 @@ public class Boss : Enemy
     protected override void OnEnable()
     {
         // init Default value
-        calibratedMaxHP = CalculateCalibratedHP();
-        currentHP = calibratedMaxHP;
-        isAlive = true;
-        deathRewardGranted = false;
+        ResetHealth(CalculateCalibratedHP());
+        ResetRuntimeLifetime();
         if (sprite != null) sprite.enabled = true;
 
         hasEnteredScreen = false;
@@ -37,13 +35,9 @@ public class Boss : Enemy
 
     protected override float CalculateCalibratedHP()
     {
-        float eventDebuff = PoolManager.instance != null
-            ? 1.0f + (PoolManager.instance.eventDebuff / 100.0f)
-            : 1.0f;
         int stageIndex = StageManager.Instance != null ? StageManager.Instance.CurrentStageIndex : 0;
-        float authoredHP = stageHitPoints != null && stageIndex >= 0 && stageIndex < stageHitPoints.Length && stageHitPoints[stageIndex] > 0f
-            ? stageHitPoints[stageIndex] : hp;
-        return authoredHP * eventDebuff;
+        return HealthState.StageScaled(hp, stageHitPoints, stageIndex,
+            PoolManager.instance != null ? PoolManager.instance.eventDebuff : 0f);
     }
 
     public void StartEntranceRoutine(Vector3 targetPos, float duration)

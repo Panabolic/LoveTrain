@@ -1,76 +1,18 @@
-﻿using UnityEngine;
+using UnityEngine;
 
+// Existing prefab/Inspector component: delegates the weapon transaction to its own effect.
 public class LaserGun : MonoBehaviour, IInstantiatedItem, IItemCooldownView
 {
-    private LaserGun_SO itemData;
-    private Gun gunController;
-    private LaserSpriteStrategy laserStrategy;
-    private GunStats previousBaseStats;
-    private bool restored;
-
-    public bool HasCooldown => laserStrategy != null && laserStrategy.HasCooldown;
-
-    public float GetCooldownFillAmount()
-    {
-        if (laserStrategy == null)
-        {
-            return 0f;
-        }
-
-        return laserStrategy.GetCooldownFillAmount();
-    }
+    private WeaponOverride weapon;
+    public bool HasCooldown => weapon != null && weapon.HasCooldown;
+    public float GetCooldownFillAmount() => weapon != null ? weapon.GetCooldownFillAmount() : 0f;
 
     public void Initialize(LaserGun_SO data, GameObject user)
     {
-        itemData = data;
-        gunController = user.GetComponentInChildren<Gun>();
-        if (gunController != null) previousBaseStats = gunController.BaseStats;
+        weapon = CompositionDefinition.CreateWeapon(data, user);
+        weapon.Equip();
     }
 
-    public void RestoreProjectileWeapon()
-    {
-        if (restored || gunController == null) return;
-        restored = true;
-        gunController.SetWeapon(new ProjectileStrategy());
-        gunController.ChangeBaseStats(previousBaseStats);
-        gunController.SetWeaponDamageRatio(1f);
-        gunController.UnequipVisual();
-    }
-
-    public void UpgradeInstItem(ItemInstance instance)
-    {
-        if (gunController == null) return;
-
-        int levelIndex = instance.currentUpgrade - 1;
-
-        // 1. SO에서 데이터 추출
-        float newDuration = itemData.durationByLevel[levelIndex];
-        float newTickRate = itemData.tickRateByLevel[levelIndex]; // 틱 주기
-        float newCooldown = itemData.cooldownByLevel[levelIndex];
-        float newlaserScale = itemData.laserScale[levelIndex];
-
-        // 2. Gun에게 스탯 전달
-
-        // ✨ [핵심 수정 1] 비율 설정
-        gunController.SetWeaponDamageRatio(itemData.damageRatio);
-
-        // ✨ [핵심 수정 2] CurrentStats가 아닌 '순수 BaseStats'를 가져와서 수정해야 함
-        // (이미 증폭된 데미지를 다시 Base로 넣는 실수 방지)
-        GunStats newBaseStats = gunController.BaseStats;
-
-        // 데미지는 건드리지 않습니다! (SetWeaponDamageRatio로 처리됨)
-        newBaseStats.fireRate = newTickRate; // 틱 주기 설정
-        newBaseStats.laserPrefab = itemData.LaserProjectilePrefab;
-
-        // 변경된 베이스 스탯 적용 (이때 UpdateStats가 돌면서 올바른 데미지가 계산됨)
-        gunController.ChangeBaseStats(newBaseStats);
-
-        // 3. 전략 설정
-        laserStrategy = new LaserSpriteStrategy();
-        laserStrategy.SetLaserStats(newDuration, newCooldown, newlaserScale);
-
-        gunController.SetWeapon(laserStrategy);
-
-        Debug.Log($"레이저 세팅 완료: 최종데미지 {gunController.CurrentStats.damage}");
-    }
+    public void RestoreProjectileWeapon() => weapon?.Release();
+    public void UpgradeInstItem(ItemInstance instance) => weapon?.ApplyLevel(instance.currentUpgrade);
 }

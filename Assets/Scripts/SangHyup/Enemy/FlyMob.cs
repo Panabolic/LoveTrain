@@ -8,51 +8,17 @@ public class FlyMob : Mob
 
     private void FixedUpdate()
     {
-        if (rigid2D == null) return;
-
-        if (!isAlive && !isStunned)
-        {
-            moveDirection           = Vector2.left;
-            float deathMoveSpeed    = 30.0f;
-
-            rigid2D.linearVelocity  = new Vector2(moveDirection.x * deathMoveSpeed, rigid2D.linearVelocity.y);
-
-            return;
-        }
-
-        // Movement Logic
-        if (isAlive && !isStunned)
-        {
-            if (targetRigid == null) return;
-
-            SetMoveDirection(targetRigid.position);
-
-            rigid2D.linearVelocity = moveDirection.normalized * moveSpeed -
-                Vector2.right * (playerTrain != null ? playerTrain.RelativeWorldSpeed : 0f);
-        }
+        RuntimeHost.FixedUpdate(Time.fixedDeltaTime);
     }
 
     protected override void SetMoveDirection(Vector2 targetPos)
     {
-        float deltaX = targetPos.x - transform.position.x;
-        
-        // 1) 수평 15 초과 → 좌/우로만 이동
-        if (Mathf.Abs(deltaX) > diveDistance)
-        {
-            moveDirection = (deltaX > 0f) ? Vector2.right : Vector2.left;
+        moveDirection = MovementRules.FlyingDirection(transform.position, targetPos, diveDistance);
+        RuntimeHost.Presentation.SetFlipX(moveDirection.x > 0f);
+    }
 
-            if (sprite != null) sprite.flipX = (moveDirection.x > 0f);
-
-            return;
-        }
-        else
-        {
-            moveDirection = (targetPos - (Vector2)transform.position).normalized;
-        }
-
-        // Set sprite to move direction
-        if (sprite != null) sprite.flipX = (moveDirection.x > 0f);
-
-        return;
+    protected override Vector2 PlanVelocity(float worldSpeed)
+    {
+        return MovementRules.FlyingVelocity(moveDirection, moveSpeed, worldSpeed);
     }
 }

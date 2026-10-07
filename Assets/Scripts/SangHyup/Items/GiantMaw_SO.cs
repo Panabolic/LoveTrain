@@ -12,17 +12,8 @@ public class GiantMaw_SO : Item_SO
     [SerializeField] public Vector2 knockbackDirection  = new Vector2(1.0f, 0.3f);
     [SerializeField] public float   knockbackPower      = 10.0f;
 
-    public override GameObject OnEquip(GameObject user, ItemInstance instance)
-    {
-        GameObject giantMawGO = InstantiateVisual(user, instance);
-        if (giantMawGO == null) return null;
-
-        GiantMaw giantMaw = giantMawGO.GetComponent<GiantMaw>();
-        giantMaw.Initialize(this, user);
-        giantMaw.UpgradeInstItem(instance);
-
-        return giantMawGO;
-    }
+    internal override ItemDefinition CreateRuntimeDefinition() => new ItemDefinition(this,
+        CompositionDefinition.Attach<GiantMaw>(this, (logic, user, instance) => logic.Initialize(this, user), false));
 
     public int GetDamageByLevel(int level)
     {

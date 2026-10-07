@@ -2,10 +2,22 @@
 status: active
 authority: project-log
 category: refactor-log
-last_reviewed: 2026-05-18
+last_reviewed: 2026-10-07
 ---
 
 # 리팩터링 로그
+
+## 2026-10-07 — 전체 런타임 부품 결합 비교 브랜치
+
+상태: 비교 브랜치 구현. 자산/상속 어댑터 이행은 보류.
+
+`codex/runtime-composition`에서 아이템 13종, 무기/공격 진행·애니메이션 신호, 발사체/영역, 몬스터/보스 및 플레이어의 실제 상태·행동 책임을 공용 부품으로 옮겼다. 기준은 `lovetrain2`의 `95a7d5e`다. 새 코드만 선언한 실험이 아니라 기존 실행 경로가 이를 사용한다.
+
+유지하는 부채: 기존 Enemy/Mob/Boss 및 named Item_SO 클래스는 직렬화·GUID·public API·에디터 데이터 연결을 보존하는 어댑터다. 클래스/파일 수는 전환 중 증가한다. 이를 제거하려면 타깃/장착/해금/초기화 호출부와 prefab/SO 직렬화를 함께 이행하는 별도 범위를 먼저 정해야 한다. 과거 helper 분리 완료 목록을 현행 소스로 가정하지 않는다.
+
+재작업 조건: 실제 Junmo 전체 전투/애니메이션·보스·장착 해제 검증 후 조합이 유용한지 사용자 비교; 정의 저장 방식과 자산 이행 승인. 모든 행동을 별도 클래스화하거나 모든 객체를 하나의 범용 superclass로 강제하지 않는다.
+
+검증과 남은 한계는 [비교/증거](./Validation/2026-10-07-runtime-composition/README.md), 현재 범위는 [ActiveTask](./ActiveTasks/runtime-composition-comparison.md), 결과는 [SessionLog](./SessionLogs/2026-10-07-runtime-composition.md)를 따른다. Architecture/Contracts 승격과 Presentation HTML 생성은 하지 않았다.
 
 이 문서는 LoveTrain에서 발견한 리팩터링 후보, 구조적 부채, 정리 필요 지점을 한국어로 기록합니다.
 

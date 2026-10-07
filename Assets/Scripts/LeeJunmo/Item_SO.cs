@@ -24,6 +24,10 @@ public enum EquipmentSlotMask
 
 public class Item_SO : ScriptableObject
 {
+    [System.NonSerialized] private ItemDefinition runtimeDefinition;
+    internal ItemDefinition RuntimeDefinition => runtimeDefinition ?? (runtimeDefinition = CreateRuntimeDefinition());
+    internal virtual ItemDefinition CreateRuntimeDefinition() => new ItemDefinition(this,
+        CompositionDefinition.Visual(this), CompositionDefinition.Timed(this));
     [Header("아이템 이름")]
     public string itemName;
     public string itemNameKey;
@@ -96,10 +100,10 @@ public class Item_SO : ScriptableObject
     public virtual GameObject OnEquip(GameObject user, ItemInstance instance)
     {
         // '박동하는 심장' 같은 아이템은 이 헬퍼 함수를 호출합니다.
-        return InstantiateVisual(user, instance);
+        return instance.EquipComposition(user);
     }
 
-    public virtual void OnUnequip(GameObject user, ItemInstance instance) { }
+    public virtual void OnUnequip(GameObject user, ItemInstance instance) => instance.ReleaseComposition();
 
     /// <summary>
     /// [수정] 자식들이 공통으로 사용할 '프리팹 실체화' 헬퍼 함수
@@ -138,6 +142,8 @@ public class Item_SO : ScriptableObject
         return itemGO;
     }
 
+    internal GameObject CreateAttachedVisual(GameObject user, ItemInstance instance) => InstantiateVisual(user, instance);
+
     // 4. 재귀적으로 소켓을 찾는 헬퍼 함수 (추가)
     private Transform FindChildSocket(Transform parent, string socketName)
     {
@@ -162,17 +168,20 @@ public class Item_SO : ScriptableObject
     /// 3. 소유자가 피해를 '입혔을' 때 호출됩니다.
     /// ✨ [수정] ItemInstance 파라미터 추가! (이제 레벨 정보를 알 수 있음)
     /// </summary>
-    public virtual void OnDealDamage(GameObject user, GameObject target, GameObject source, ItemInstance instance) { }
+    public virtual void OnDealDamage(GameObject user, GameObject target, GameObject source, ItemInstance instance) => instance.ProcessHit(target, source);
 
     /// <summary>
     /// 4. 소유자가 적을 처치했을 때 호출됩니다. (예: 영혼 흡수)
     /// </summary>
-    public virtual void OnKillEnemy(GameObject user, GameObject killedEnemy) { }
+    public virtual void OnKillEnemy(GameObject user, GameObject killedEnemy)
+    {
+        user.GetComponent<Inventory>()?.FindItem(this)?.ProcessKill(killedEnemy);
+    }
 
     /// <summary>
     /// 5. 설정된 쿨타임이 완료될 때마다 호출됩니다.
     /// </summary>
-    public virtual void OnCooldownComplete(GameObject user,ItemInstance instance) { }
+    public virtual void OnCooldownComplete(GameObject user,ItemInstance instance) => instance.ActivateCooldown(user);
 
     /// <summary>
     /// 6.ItemInstance가 자신의 현재 레벨에 맞는 쿨타임을 가져갈 수 있게 함
@@ -188,10 +197,10 @@ public class Item_SO : ScriptableObject
     public virtual void UpgradeLevel(ItemInstance instance)
     {
         // "일반적인" 업그레이드 로직 (레벨 1 증가)
-        instance.currentUpgrade++;
+        int previousLevel = instance.currentUpgrade++;
 
         // 실체화된 아이템이 있다면 동기화하도록 알림
-        instance.instantiatedItemUpgrade();
+        instance.UpgradeComposition(previousLevel);
     }
 
     /// <summary>

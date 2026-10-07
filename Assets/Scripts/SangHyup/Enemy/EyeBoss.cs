@@ -22,7 +22,7 @@ public class EyeBoss : Boss
     [SerializeField] private Transform[] tentacleSpawnPoints;
     [SerializeField] private EyeBossBelt belt;
 
-    private readonly List<GameObject> spawnedTentacles = new List<GameObject>();
+    private readonly AttackReservation pattern = new AttackReservation();
     private readonly List<int> visibleSpawnPoints = new List<int>(8);
     private Coroutine runningPatternCoroutine;
     private Train playerTrain;
@@ -42,6 +42,7 @@ public class EyeBoss : Boss
         base.OnEnable();
         lastAttackSoundTime = -10f;
         runningPatternCoroutine = null;
+        pattern.Cancel();
         if (belt != null) belt.ResetScroll();
     }
 
@@ -59,8 +60,13 @@ public class EyeBoss : Boss
         if (belt != null && gameCamera != null)
             belt.Advance(Time.deltaTime, playerTrain != null ? playerTrain.CurrentSpeed : 0f, gameCamera);
 
-        if (runningPatternCoroutine == null && gameCamera != null)
-            runningPatternCoroutine = StartCoroutine(SingleTentacleRoutine());
+        if (gameCamera != null && pattern.TryReserve())
+        {
+            Coroutine started = StartCoroutine(SingleTentacleRoutine());
+            // Instantiate callbacks can disable this owner before StartCoroutine returns.
+            if (pattern.IsReserved) runningPatternCoroutine = started;
+            else if (started != null) StopCoroutine(started);
+        }
     }
 
     private IEnumerator SingleTentacleRoutine()
@@ -82,23 +88,30 @@ public class EyeBoss : Boss
         {
             yield return null;
             runningPatternCoroutine = null;
+            pattern.Complete();
             yield break;
         }
 
         int index = visibleSpawnPoints[Random.Range(0, visibleSpawnPoints.Count)];
         GameObject prefab = weakTentaclePrefab != null && Random.Range(0, 4) == 0
             ? weakTentaclePrefab : tentaclePrefab;
-        GameObject obj = Instantiate(prefab, tentacleSpawnPoints[index].position, Quaternion.identity);
+        GameObject obj = RuntimeHost.Scope.Spawn(prefab, tentacleSpawnPoints[index].position, Quaternion.identity, true);
+        if (!RuntimeHost.Scope.IsActive || obj == null)
+        {
+            pattern.Cancel();
+            yield break;
+        }
         Tentacle tentacle = obj.GetComponent<Tentacle>();
         if (tentacle == null)
         {
             Destroy(obj);
             yield return null;
             runningPatternCoroutine = null;
+            pattern.Complete();
             yield break;
         }
 
-        tentacle.Setup(this, normalTentacleDamage, normalAttackDelay, TryPlayAttackSound);
+        tentacle.Setup(this, normalTentacleDamage, normalAttackDelay, RuntimeHost.Scope.Guard(TryPlayAttackSound));
         tentacle.BeginAttack();
         SoundEventBus.Publish(SoundID.Boss_TentacleSpawn);
 
@@ -116,6 +129,7 @@ public class EyeBoss : Boss
             yield return null;
         }
         runningPatternCoroutine = null;
+        pattern.Complete();
     }
 
     private static bool CombatIsRunning()
@@ -133,22 +147,21 @@ public class EyeBoss : Boss
 
     private void ClearAllTentacles()
     {
-        for (int i = spawnedTentacles.Count - 1; i >= 0; i--)
-            if (spawnedTentacles[i] != null) Destroy(spawnedTentacles[i]);
-        spawnedTentacles.Clear();
+        RuntimeHost?.Scope.ReleaseBoundObjects();
     }
 
     public void RegisterTentacle(GameObject tentacle)
     {
-        if (tentacle != null && !spawnedTentacles.Contains(tentacle)) spawnedTentacles.Add(tentacle);
+        RuntimeHost.Scope.Track(tentacle);
     }
 
-    public void UnregisterTentacle(GameObject tentacle) => spawnedTentacles.Remove(tentacle);
+    public void UnregisterTentacle(GameObject tentacle) => RuntimeHost?.Scope.Forget(tentacle);
 
     protected override void OnDisable()
     {
         StopAllCoroutines();
         runningPatternCoroutine = null;
+        pattern.Cancel();
         ClearAllTentacles();
         if (belt != null) belt.Hide();
         base.OnDisable();
@@ -156,10 +169,10 @@ public class EyeBoss : Boss
 
     protected override IEnumerator Die()
     {
-        if (!isAlive) yield break;
-        isAlive = false;
+        if (!TryBeginDeath()) yield break;
         if (runningPatternCoroutine != null) StopCoroutine(runningPatternCoroutine);
         runningPatternCoroutine = null;
+        pattern.Cancel();
         ClearAllTentacles();
         if (belt != null) belt.Hide();
 
@@ -180,6 +193,7 @@ public class EyeBoss : Boss
         else if (StageManager.Instance != null)
             StageManager.Instance.StartStageTransitionSequence();
 
+        CompleteDeathPresentation();
         Destroy(gameObject);
     }
 }

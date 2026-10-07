@@ -17,7 +17,8 @@ public class Mob : Enemy
     protected Train playerTrain;
     protected override EnemyRewardKind RewardKind => isEliteMob ? EnemyRewardKind.Elite : EnemyRewardKind.Normal;
 
-    protected bool isStunned    = false;
+    private readonly KnockbackState knockback = new KnockbackState();
+    protected bool isStunned { get => knockback.IsStunned; set => knockback.IsStunned = value; }
     private float stunDuration  = 0.5f;
 
     public Action<Mob> OnDied;
@@ -30,6 +31,7 @@ public class Mob : Enemy
         // Get components
         rigid2D     = GetComponent<Rigidbody2D>();
         hitEffect   = GetComponent<ParticleSystem>();
+        RuntimeHost.BindFixedUpdate(AdvanceMovement);
     }
 
     protected override void Start()
@@ -49,15 +51,18 @@ public class Mob : Enemy
 
     private void FixedUpdate()
     {
+        RuntimeHost.FixedUpdate(Time.fixedDeltaTime);
+    }
+
+    private void AdvanceMovement(float deltaTime)
+    {
         if (rigid2D == null) return;
 
         // Right after death
         if (!isAlive && !isStunned)
         {
             moveDirection           = Vector2.left;
-            float deathMoveSpeed    = 30.0f;
-
-            rigid2D.linearVelocity  = new Vector2(moveDirection.x * deathMoveSpeed, rigid2D.linearVelocity.y);
+            rigid2D.linearVelocity = MovementRules.DeathVelocity(rigid2D.linearVelocity.y);
 
             return;
         }
@@ -69,7 +74,7 @@ public class Mob : Enemy
 
             SetMoveDirection(targetRigid.position);
 
-            rigid2D.linearVelocity = new Vector2(moveDirection.x * moveSpeed - (playerTrain != null ? playerTrain.RelativeWorldSpeed : 0f), rigid2D.linearVelocity.y);
+            rigid2D.linearVelocity = PlanVelocity(playerTrain != null ? playerTrain.RelativeWorldSpeed : 0f);
         }
     }
 
@@ -78,27 +83,13 @@ public class Mob : Enemy
     /// </summary>
     protected virtual void SetMoveDirection(Vector2 targetPos)
     {
-        float x = targetPos.x - transform.position.x;
+        moveDirection = MovementRules.GroundDirection(transform.position, targetPos);
+        RuntimeHost.Presentation.SetFlipX(moveDirection.x > 0f);
+    }
 
-        if (x > 0f)
-        {
-            moveDirection = Vector2.right;
-            if (sprite != null) sprite.flipX = (moveDirection.x > 0f);
-            return;
-        }
-        if (x < 0f)
-        {
-            moveDirection = Vector2.left;
-            if (sprite != null) sprite.flipX = (moveDirection.x > 0f);
-            return;
-        }
-
-        moveDirection = Vector2.zero;
-
-        // Set sprite to move direction
-        if (sprite != null) sprite.flipX = (moveDirection.x > 0f);
-
-        return;
+    protected virtual Vector2 PlanVelocity(float worldSpeed)
+    {
+        return MovementRules.GroundVelocity(moveDirection, moveSpeed, rigid2D.linearVelocity.y, worldSpeed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -151,24 +142,12 @@ public class Mob : Enemy
         // 예: 0분 59초(0.9xxx) -> 0, 1분 1초(1.0xxx) -> 1
         int gameTimeMin = (int)(GameManager.Instance.gameTime / 60.0f);
 
-        // [수정 2] 순수 증가율만 계산 (기존의 1.0f + 제거)
-        // 예: 10% -> 0.1
-        float increaseRate = PoolManager.instance.hpIncrease / 100.0f;
-
-        // 체력 보정값 계산
-        // 공식: 기본배율(1) + (지나간 분 * 분당 증가율)
-        // 예: 0분 -> 1 + (0 * 0.1) = 1.0 (100%)
-        // 예: 2분 -> 1 + (2 * 0.1) = 1.2 (120%)
-        float calibratedValue = 1.0f + (gameTimeMin * increaseRate);
-
-        // 이벤트 디버프 계산 (이건 기존 유지, 배율이므로 1.0 + 방식 맞음)
-        float eventDebuff = 1.0f + (PoolManager.instance.eventDebuff / 100.0f);
-
         // 엘리트 몹 보정
         float eliteMultiplier = isEliteMob ? 1.5f : 1.0f;
 
         // 최종 보정 체력 계산
-        calibratedMaxHP = hp * calibratedValue * eventDebuff * eliteMultiplier;
+        calibratedMaxHP = HealthState.TimeScaled(hp, gameTimeMin, PoolManager.instance.hpIncrease,
+            PoolManager.instance.eventDebuff, eliteMultiplier);
 
         return calibratedMaxHP;
     }
@@ -184,7 +163,7 @@ public class Mob : Enemy
     {
         if (rigid2D == null) return;
 
-        Vector2 force = direction.normalized * power;
+        Vector2 force = KnockbackState.Impulse(direction, power);
 
         StartCoroutine(Stun());
         rigid2D.AddForce(force, ForceMode2D.Impulse);
@@ -201,8 +180,7 @@ public class Mob : Enemy
 
     protected override IEnumerator Die()
     {
-        if (!isAlive) yield break;
-        isAlive = false;
+        if (!TryBeginDeath()) yield break;
         if (GameManager.Instance != null)
         {
             GameManager.Instance.AddKillCount(isEliteMob);
@@ -213,6 +191,7 @@ public class Mob : Enemy
         SoundEventBus.Publish(SoundID.Enemy_Die);
 
         if (sprite != null) sprite.enabled = false;
+        CompleteDeathPresentation();
         gameObject.SetActive(false);
 
         if (OnDied != null) OnDied(this);
